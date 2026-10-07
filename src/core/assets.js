@@ -360,6 +360,7 @@
     a.push("assets/sprites/fx/huyet_ma_liem_fore.png");
     a.push("assets/sprites/mount/ngua_hac_tho.png");
     a.push("assets/sprites/mount/hac_tien.png");
+    a.push("assets/sprites/mount/ky_lan_xich_diem.png");
     a.push("assets/sprites/fx/loi_si_dieu_wings.png");
     a.push("assets/sprites/fx/loi_si_dieu_side_wing.png");
     a.push("assets/sprites/fx/loi_dong.png");

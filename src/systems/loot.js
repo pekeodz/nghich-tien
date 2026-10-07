@@ -25,6 +25,9 @@
       return a;
     }
     var o = e[_] && e[_][n];
+    if ("number" != typeof o && e[_] && "number" == typeof e[_].__default) {
+      o = e[_].__default;
+    }
     if ("number" != typeof o) {
       throw new Error("Bảng tỉ lệ kín thiếu " + _ + "." + n);
     }
