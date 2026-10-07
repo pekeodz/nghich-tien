@@ -841,7 +841,12 @@
           <button id="menu-gfx" class="btn-sub" type="button">Đồ hoạ: Bình thường</button>
           <button id="menu-weather" class="btn-sub" type="button">Thời tiết: Đầy đủ</button>
           <button id="menu-nguoi" class="btn-sub" type="button">Người chơi khác: Hiện tất cả</button>
-          <button id="menu-audio" class="btn-sub" type="button">Âm thanh: Vừa</button>
+          <button id="menu-audio" class="btn-sub" type="button" aria-expanded="false" aria-controls="menu-audio-opts">Âm thanh: Vừa</button>
+          <div id="menu-audio-opts" class="menu-audio-opts hidden">
+            <label><input id="audio-tick-music" type="checkbox"> <span>Nhạc nền</span></label>
+            <label><input id="audio-tick-sfx" type="checkbox"> <span>Hiệu ứng</span></label>
+            <button id="audio-vol" class="btn-sub" type="button">Âm lượng: Vừa</button>
+          </div>
           <button id="menu-guide" class="btn-sub" type="button">Mũi tên chỉ đường: Bật</button>
           <button id="menu-tutorial" class="btn-sub" type="button">Xem lại hướng dẫn</button>
           <button id="menu-debug" class="btn-sub" type="button">Lưới gỡ lỗi: Tắt</button>
@@ -1128,7 +1133,8 @@
 <script src="src/core/renderer.js?v=fe552a29a8fb"></script>
 <script src="src/core/camera.js?v=7e17f0d91264"></script>
 <script src="src/core/input.js?v=140c2f67978e"></script>
-<script src="src/fx/audio.js?v=72606a419e20"></script>
+<script src="src/fx/audio.js?v=ba6288f6df70"></script>
+<script src="src/fx/audio_panel.js?v=1"></script>
 <script src="src/fx/vfx.js?v=74504c06f1e9"></script>
 <script src="src/fx/am_hon.js?v=508f0df95d42"></script>
 <script src="src/fx/khoi_loi.js?v=d98fb63871da"></script>
