@@ -12,8 +12,8 @@
   var ICON = "assets/items/icon_ky_lan_xich_diem.png";
 
   // Khai báo ảnh với bộ nạp (manifest.js sinh tự động nên thêm ở đây)
-  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[SPRITE] = 94657; P.ASSET_MANIFEST[ICON] = 2163; }
-  if (P.ASSET_VERSIONS) { P.ASSET_VERSIONS[SPRITE] = "kylan03"; P.ASSET_VERSIONS[ICON] = "kylan01"; }
+  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[SPRITE] = 70025; P.ASSET_MANIFEST[ICON] = 2163; }
+  if (P.ASSET_VERSIONS) { P.ASSET_VERSIONS[SPRITE] = "kylan04"; P.ASSET_VERSIONS[ICON] = "kylan01"; }
 
   P.ITEMS.ky_lan_xich_diem = {
     id: "ky_lan_xich_diem",
