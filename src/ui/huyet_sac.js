@@ -21,7 +21,15 @@
     return t.indexOf(s()) >= 0;
   }
   function y(e, t) {
-    return d() ? n.Gateway.partySend(e, t || {}) : (n.HUD.setCaption("Huyết Xích Cấm Địa chỉ mở khi đang kết nối máy chủ."), !1);
+    if (d()) {
+      return n.Gateway.partySend(e, t || {});
+    }
+    // Nghịch Tiên: không có máy chủ → xử lý trên máy (huyet_sac_solo.js)
+    if (n.HuyetSacSolo) {
+      return n.HuyetSacSolo.send(e, t || {});
+    }
+    n.HUD.setCaption("Huyết Xích Cấm Địa chỉ mở khi đang kết nối máy chủ.");
+    return !1;
   }
   function g(e, t) {
     n.HUD.openDialog("Huyết Xích Cấm Địa", e, t || {});
@@ -144,6 +152,9 @@
         if (d()) {
           n.Gateway.partyEnterDungeon("rung_mang_xa");
         }
+        else if (n.HuyetSacSolo) {
+          n.HuyetSacSolo.dangKy();
+        }
         else {
           n.HUD.setCaption("Cần kết nối máy chủ để mở phó bản tổ đội.");
         }
@@ -164,6 +175,22 @@
             g(e && e.why || "Máy chủ chưa thể xử lý lần đột phá này.");
           }
         });
+      }
+      else if (n.HuyetSac && n.HuyetSac.attempt) {
+        // Nghịch Tiên: đột phá ngay trên máy — 70%, kèm Bảo Mệnh Phù 100% (luật của tác giả trong HuyetSac.attempt)
+        var pl = n.SceneWorld && n.SceneWorld.player;
+        var kq = pl ? n.HuyetSac.attempt(n, pl, !!e) : { ok: !1, why: "Chưa vào thế giới." };
+        if (kq.ok) {
+          if (n.HUD.refreshBag) {
+            n.HUD.refreshBag();
+          }
+          if (!(n.SceneWorld && n.SceneWorld.playFoundationBreakthrough && n.SceneWorld.playFoundationBreakthrough(kq))) {
+            g(kq.why);
+          }
+        }
+        else {
+          g(kq.why);
+        }
       }
       else {
         n.HUD.setCaption("Cần kết nối máy chủ để đột phá Trúc Cơ.");
