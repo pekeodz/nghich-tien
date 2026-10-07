@@ -484,6 +484,9 @@
         var v = n.downed && !n.sheetPending ? e.SpriteFactory.getPale(n.cfg) : n.sheet;
         e.SpriteFactory.drawBody(r, v, n.dir, s(n), c, h, n.cfg);
       }
+      if (n.flyRise > 0 && e.ThuCuoi && e.ThuCuoi.drawFront) {
+        e.ThuCuoi.drawFront(r, u, m - f, n);   // Nghịch Tiên: lớp trước của thú cưỡi
+      }
       if (w && !d && e.XichMaFX && e.XichMaFX.aura(r, u, m - f, n, n.animTime, "front"), n.flyRise > 0 && "canh" === g && "front" === P && e.Player.drawFlyWings && e.Player.drawFlyWings(r, u, m - f, n), !d && n.flyRise > 0 && "canh" === g && e.Player.drawPhongLoiFrontVfx && e.Player.drawPhongLoiFrontVfx(r, u, m - f, n), n.reviveShield > 0 && e.Player && e.Player.drawReviveShield && e.Player.drawReviveShield(r, u, m - f, n.reviveShield, n.animTime), !d && T && e.Player && e.Player.drawBackgroundAura && e.Player.drawBackgroundAura(r, u, m - f, n), x && e.Player && e.Player.drawPhiKiem) {
         if (e.Player.drawLucTinhKiemAura) {
           e.Player.drawLucTinhKiemAura(r, u, m - f, n, "front");

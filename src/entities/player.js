@@ -299,6 +299,9 @@
           var b = t.downed ? e.SpriteFactory.getPale(t.cfg) : t.sheet;
           e.SpriteFactory.drawBody(n, b, t.dir, T(t), h, u, t.cfg);
         }
+        if (t.flyRise > 0 && e.ThuCuoi && e.ThuCuoi.drawFront) {
+          e.ThuCuoi.drawFront(n, d, c - o, t);   // Nghịch Tiên: lớp trước của thú cưỡi (thu_cuoi.js)
+        }
         if (p && e.XichMaFX && e.XichMaFX.aura(n, d, c - o, t, t.animTime, "front"), t.flyRise > 0 && "canh" === v && "front" === M && Ke(n, d, c - o, t), t.flyRise > 0 && "canh" === v && Oa(n, d, c - o, t), y && ue(n, d, c - o, t), e.VFX && e.VFX.drawPlayerStatus && e.VFX.drawPlayerStatus(n, d, c - o, t, t.animTime, "front"), t.reviveShield > 0 && i.drawReviveShield(n, d, c - o, t.reviveShield, t.animTime), x) {
           if (e.Player.drawLucTinhKiemAura) {
             e.Player.drawLucTinhKiemAura(n, d, c - o, t, "front");

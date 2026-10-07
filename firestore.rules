@@ -28,9 +28,17 @@ service cloud.firestore {
         request.resource.data.updatedAt == request.time
       );
 
-      // Người chơi lưu tiến trình: không bị khoá, đang giữ đúng phiên bản admin mới nhất,
-      // và không đụng vào các trường của admin.
-      allow update: if isAdmin() || (
+      // Ai được sửa nhân vật:
+      //  1) Trang quản trị: luôn tăng adminRev (hoặc chỉ sửa ghi chú adminNote).
+      //  2) Game của chính chủ — KỂ CẢ khi chính chủ là admin: phải giữ đúng adminRev
+      //     mới nhất. Nhờ vậy game đang mở không lưu đè được thay đổi admin vừa làm;
+      //     bị từ chối thì game tự tải lại để nhận dữ liệu mới.
+      allow update: if (
+        isAdmin() && (
+          request.resource.data.get('adminRev', 0) > resource.data.get('adminRev', 0) ||
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['adminNote'])
+        )
+      ) || (
         isOwner(uid) &&
         resource.data.get('banned', false) != true &&
         request.resource.data.get('adminRev', 0) == resource.data.get('adminRev', 0) &&

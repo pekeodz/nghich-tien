@@ -158,7 +158,7 @@
   ];
   // Các chỉ số số học hay cần chỉnh (key trong save -> nhãn)
   var NUMS = [
-    ["exp", "Tu vi (exp)"], ["stones", "Linh thạch"], ["kills", "Số quái đã giết"],
+    ["exp", "Tu vi (exp)"], ["stones", "Linh thạch"],
     ["duocCong", "Dược công"], ["satNghiep", "Sát nghiệp"], ["stage", "Mốc nhiệm vụ (stage)"]
   ];
 
@@ -319,6 +319,20 @@
         el("input", { type: "number", "data-num": n[0], value: sv[n[0]] != null ? sv[n[0]] : 0, min: 0, step: 1 })]));
     });
     box.appendChild(el("div", { class: "card" }, [el("h3", { text: "Cảnh giới & chỉ số" }), numsGrid]));
+
+    // Thống kê diệt quái (Quest.flags.thong_ke — do thong_ke.js đếm)
+    var tk = (sv.flags && sv.flags.thong_ke) || null;
+    var tkBox = el("div", { class: "card" }, [el("h3", { text: "Thống kê diệt quái" })]);
+    if (!tk || !tk.tong) {
+      tkBox.appendChild(el("p", { class: "meta", text: "Chưa có số liệu. Bộ đếm bắt đầu từ bản cập nhật này: người chơi hạ quái xong là có." }));
+    } else {
+      tkBox.appendChild(el("p", { html: "Tổng: <b>" + tk.tong + "</b> quái · trong đó <b>" + (tk.boss || 0) + "</b> boss" }));
+      var loai = Object.keys(tk.loai || {}).sort(function (a, b) { return tk.loai[b] - tk.loai[a]; });
+      var tb2 = el("tbody");
+      loai.slice(0, 15).forEach(function (k) { tb2.appendChild(el("tr", null, [el("td", { text: k }), el("td", { text: String(tk.loai[k]) })])); });
+      tkBox.appendChild(el("table", { class: "bag" }, [el("thead", null, [el("tr", null, [el("th", { text: "Loại quái" }), el("th", { text: "Đã diệt" })])]), tb2]));
+    }
+    box.appendChild(tkBox);
 
     // Trang bị
     var eq = sv.equipment || {};
