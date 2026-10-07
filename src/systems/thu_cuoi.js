@@ -12,8 +12,8 @@
   var ICON = "assets/items/icon_ky_lan_xich_diem.png";
 
   // Khai báo ảnh với bộ nạp (manifest.js sinh tự động nên thêm ở đây)
-  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[SPRITE] = 30373; P.ASSET_MANIFEST[ICON] = 2163; }
-  if (P.ASSET_VERSIONS) { P.ASSET_VERSIONS[SPRITE] = "kylan05"; P.ASSET_VERSIONS[ICON] = "kylan01"; }
+  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[SPRITE] = 25585; P.ASSET_MANIFEST[ICON] = 1925; }
+  if (P.ASSET_VERSIONS) { P.ASSET_VERSIONS[SPRITE] = "kylan06"; P.ASSET_VERSIONS[ICON] = "kylan02"; }
 
   P.ITEMS.ky_lan_xich_diem = {
     id: "ky_lan_xich_diem",
@@ -32,7 +32,7 @@
 
   // Lớp trước: khi quay mặt xuống, đầu thú nằm trước người cưỡi nên phải vẽ lại
   // phần đầu SAU khi vẽ người. mount.front = { hướng: số pixel tính từ đỉnh khung }.
-  P.ITEMS.ky_lan_xich_diem.mount.front = { 0: 48 };
+  P.ITEMS.ky_lan_xich_diem.mount.front = { 0: 53 };
 
   function khungHienTai(o, n) {                // giống cách player.js chọn khung
     var h = (n && n.animTime) || 0, s;
