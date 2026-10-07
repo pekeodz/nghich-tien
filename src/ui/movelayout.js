@@ -5,69 +5,84 @@
   var i = "pntt.moveLayout";
   var o = { x: 0, y: 0, k: 1 };
   var r = { x: 0, y: 0, k: 1 };
-  var d = null;
-  function u() {
+  var d = { x: 0, y: 0 };
+  var u = null;
+  function s() {
     return [t.$("#dpad"), t.$("#joystick")].filter(function (e) {
       return !!e;
     });
   }
-  function s() {
-    for (var e = u(), t = 0; t < e.length; t++)
+  function a() {
+    for (var e = s(), t = 0; t < e.length; t++)
       if (!e[t].classList.contains("hidden")) {
         return e[t];
       }
     return e[0] || null;
   }
-  function a(e) {
+  function l() {
+    s().forEach(function (e) {
+      e.style.setProperty("--move-x", r.x + d.x + "px");
+      e.style.setProperty("--move-y", r.y + d.y + "px");
+      e.style.setProperty("--move-k", String(r.k));
+    });
+  }
+  function c(e) {
     r = function (e) {
       e = e || {};
       var t = Number(e.k);
       return { x: Number.isFinite(Number(e.x)) ? Math.round(Number(e.x)) : 0, y: Number.isFinite(Number(e.y)) ? Math.round(Number(e.y)) : 0, k: Number.isFinite(t) ? Math.max(.6, Math.min(1.6, t)) : 1 };
     }(e);
-    u().forEach(function (e) {
-      e.style.setProperty("--move-x", r.x + "px");
-      e.style.setProperty("--move-y", r.y + "px");
-      e.style.setProperty("--move-k", String(r.k));
-    });
+    d = { x: 0, y: 0 };
+    l();
   }
-  function l() {
-    var e = s();
-    if (e && "function" == typeof e.getBoundingClientRect) {
-      var t = e.getBoundingClientRect();
-      if (t.width > 0) {
-        var n = window.innerWidth;
-        var i = window.innerHeight;
-        var o = 0;
-        var d = 0;
-        if (t.left < 0) {
-          o = -t.left;
+  function v(e) {
+    var t = a();
+    if (t && "function" == typeof t.getBoundingClientRect) {
+      if ((d.x || d.y)) {
+        d = { x: 0, y: 0 };
+        l();
+      }
+      var n = t.getBoundingClientRect();
+      if (n.width > 0) {
+        var i = window.innerWidth;
+        var o = window.innerHeight;
+        var u = 0;
+        var s = 0;
+        if (n.left < 0) {
+          u = -n.left;
         }
         else {
-          if (t.right > n) {
-            o = n - t.right;
+          if (n.right > i) {
+            u = i - n.right;
           }
         }
-        if (t.top < 0) {
-          d = -t.top;
+        if (n.top < 0) {
+          s = -n.top;
         }
         else {
-          if (t.bottom > i) {
-            d = i - t.bottom;
+          if (n.bottom > o) {
+            s = o - n.bottom;
           }
         }
-        if ((o || d)) {
-          a({ x: r.x + o, y: r.y + d, k: r.k });
+        if ((u || s)) {
+          if (e) {
+            c({ x: r.x + u, y: r.y + s, k: r.k });
+          }
+          else {
+            d = { x: u, y: s };
+            l();
+          }
         }
       }
     }
   }
-  function c() {
+  function y() {
     t.store.set(i, r);
   }
-  function v() {
-    if (d) {
-      var e = s();
-      var t = d.querySelector(".move-edit-khung");
+  function h() {
+    if (u) {
+      var e = a();
+      var t = u.querySelector(".move-edit-khung");
       if (e) {
         var n = e.getBoundingClientRect();
         t.style.left = n.left + "px";
@@ -75,37 +90,36 @@
         t.style.width = n.width + "px";
         t.style.height = n.height + "px";
       }
-      d.querySelector(".move-edit-co").value = String(Math.round(100 * r.k));
-      d.querySelector(".move-edit-pt").textContent = Math.round(100 * r.k) + "%";
+      u.querySelector(".move-edit-co").value = String(Math.round(100 * r.k));
+      u.querySelector(".move-edit-pt").textContent = Math.round(100 * r.k) + "%";
     }
   }
   n.refresh = function () {
-    a(r);
-    l();
-    c();
+    c(r);
+    v(!!n.dangChinh);
     if (n.dangChinh) {
-      v();
+      y();
+      h();
     }
     return r;
   };
   n.load = function () {
-    a(t.store.get(i, o));
-    l();
-    c();
+    c(t.store.get(i, o));
+    v(!1);
   };
-  var h = null;
-  function m() {
+  var m = null;
+  function f() {
     n.refresh();
   }
   n.mo = function () {
-    if (!(d)) {
+    if (!(u)) {
       (function () {
-        (d = document.createElement("div")).id = "move-edit";
-        d.className = "hidden";
-        d.innerHTML = '<div class="move-edit-khung" aria-label="Kéo để dời nút di chuyển"></div><div class="move-edit-bang"><div>Kéo khung để dời nút di chuyển</div><label>Kích thước: <b class="move-edit-pt">100%</b><input class="move-edit-co" type="range" min="60" max="160" step="5" value="100"></label><div class="move-edit-nut"><button type="button" class="btn-sub move-edit-md">Mặc định</button><button type="button" class="btn-main move-edit-xong">Xong</button></div></div>';
-        document.body.appendChild(d);
-        var e = d.querySelector(".move-edit-khung");
-        var t = d.querySelector(".move-edit-co");
+        (u = document.createElement("div")).id = "move-edit";
+        u.className = "hidden";
+        u.innerHTML = '<div class="move-edit-khung" aria-label="Kéo để dời nút di chuyển"></div><div class="move-edit-bang"><div>Kéo khung để dời nút di chuyển</div><label>Kích thước: <b class="move-edit-pt">100%</b><input class="move-edit-co" type="range" min="60" max="160" step="5" value="100"></label><div class="move-edit-nut"><button type="button" class="btn-sub move-edit-md">Mặc định</button><button type="button" class="btn-main move-edit-xong">Xong</button></div></div>';
+        document.body.appendChild(u);
+        var e = u.querySelector(".move-edit-khung");
+        var t = u.querySelector(".move-edit-co");
         var i = null;
         e.addEventListener("pointerdown", function (t) {
           t.preventDefault();
@@ -116,51 +130,53 @@
         });
         e.addEventListener("pointermove", function (e) {
           if (i && i.id === e.pointerId) {
-            a({ x: i.x + e.clientX - i.sx, y: i.y + e.clientY - i.sy, k: r.k });
-            l();
-            v();
+            c({ x: i.x + e.clientX - i.sx, y: i.y + e.clientY - i.sy, k: r.k });
+            v(!0);
+            h();
           }
         });
-        var u = function (e) {
+        var d = function (e) {
           if (i && i.id === e.pointerId) {
             i = null;
           }
         };
-        e.addEventListener("pointerup", u);
-        e.addEventListener("pointercancel", u);
+        e.addEventListener("pointerup", d);
+        e.addEventListener("pointercancel", d);
         t.addEventListener("input", function () {
-          a({ x: r.x, y: r.y, k: Number(t.value) / 100 });
-          l();
-          v();
+          c({ x: r.x, y: r.y, k: Number(t.value) / 100 });
+          v(!0);
+          h();
         });
-        d.querySelector(".move-edit-md").addEventListener("click", function () {
-          a(o);
-          v();
+        u.querySelector(".move-edit-md").addEventListener("click", function () {
+          c(o);
+          v(!0);
+          h();
         });
-        d.querySelector(".move-edit-xong").addEventListener("click", n.dong);
+        u.querySelector(".move-edit-xong").addEventListener("click", n.dong);
       })();
     }
     var t = e.TouchUI;
-    h = t ? !!t.visible : null;
+    m = t ? !!t.visible : null;
     if (t && t.setVisible) {
       t.setVisible(!0);
     }
-    d.classList.remove("hidden");
+    u.classList.remove("hidden");
     n.dangChinh = !0;
-    v();
+    v(!0);
+    h();
   };
   n.dong = function () {
-    if (d) {
-      d.classList.add("hidden");
+    if (u) {
+      u.classList.add("hidden");
       n.dangChinh = !1;
-      c();
+      y();
       var t = e.TouchUI;
-      if (t && t.setVisible && !1 === h) {
+      if (t && t.setVisible && !1 === m) {
         t.setVisible(!1);
       }
     }
   };
-  window.addEventListener("resize", m, { passive: !0 });
-  window.addEventListener("orientationchange", m, { passive: !0 });
+  window.addEventListener("resize", f, { passive: !0 });
+  window.addEventListener("orientationchange", f, { passive: !0 });
   n.load();
 }(window.PNTT);

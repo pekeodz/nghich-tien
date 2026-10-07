@@ -609,7 +609,7 @@
     }
     if (n.KhoiLoi) {
       t.push({ label: "Khôi Lỗi", items: n.KhoiLoi.DEFS.filter(function (i) {
-          return n.Inventory.count(i.id) > 0 || e({ kind: "khoiloi", id: i.id });
+          return n.Inventory.count(i.id) > 0 && !n.KhoiLoi.xetDao(n, i.id) || e({ kind: "khoiloi", id: i.id });
         }).map(function (n) {
           return { kind: "khoiloi", id: n.id };
         }) });

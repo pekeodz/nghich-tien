@@ -230,7 +230,9 @@
   var B = null;
   var L = {};
   function K() {
-    return null;
+    var e = window.PNTT_RUNTIME_CONFIG || {};
+    var n = String(e.serverUrl || "").trim();
+    return n ? "auto" !== n ? n : "undefined" == typeof location || "file:" === location.protocol ? null : ("https:" === location.protocol ? "wss://" : "ws://") + location.host + "/" : null;
   }
   n.configured = function () {
     return !!K();

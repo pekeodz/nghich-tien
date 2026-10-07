@@ -6,13 +6,17 @@
   function a(u, a) {
     return u + n.GIO_KHAI[a] * _ + 6e4 * n.PHUT_KHAI_HOI - n.VN_OFFSET_MS;
   }
-  function t(n) {
+  function t(_, u) {
+    var a = n.SUAT_NGHI[new Date(_).getUTCDay()];
+    return !!a && a.indexOf(n.GIO_KHAI[u]) >= 0;
+  }
+  function i(n) {
     return (n < 10 ? "0" : "") + n;
   }
-  function i(_, u) {
+  function o(_, u) {
     return { id: n.maSuat(_), thuTu: u, moDangKyLuc: _ - n.MO_DANG_KY_TRUOC, moPhongChoLuc: _ - n.MO_PHONG_CHO_TRUOC, batDauLuc: _, ketThucLuc: _ + n.DAI_HOI_KEO_DAI };
   }
-  function o(n, _, u, a) {
+  function r(n, _, u, a) {
     return { id: n + ":v" + _ + ":t" + u, vong: _, aId: a, bId: null, trangThai: "XONG", thangId: a, thuaId: null, viSao: "MIEN_DAU", hanVaoLuc: 0, hetGioLuc: 0, daVao: {} };
   }
   n.VN_OFFSET_MS = 7 * _;
@@ -36,7 +40,7 @@
   n.TANG_TOI_DA = 13;
   n.BANG = { luyen_khi: { id: "luyen_khi", ten: "Luyện Khí" }, truc_co: { id: "truc_co", ten: "Trúc Cơ" } };
   n.THU_TU_BANG = ["luyen_khi", "truc_co"];
-  n.GIO_KHAI_TRUC_CO = [20];
+  n.GIO_KHAI_TRUC_CO = [13, 20];
   n.coBangTrucCo = function (_) {
     var u = _ ? n.GIO_KHAI[_.thuTu] : null;
     return n.GIO_KHAI_TRUC_CO.indexOf(u) >= 0;
@@ -57,21 +61,23 @@
         return _ + ":" + n.PHUT_KHAI_HOI;
       }).join(", ") + ". Kỳ này chỉ có bảng Luyện Khí." } : "pham_nhan" !== a && a ? { why: "Đại Hội chỉ dành cho Luyện Khí tầng " + n.TANG_TOI_THIEU + " đến " + n.TANG_TOI_DA + " và Trúc Cơ." } : { why: "Phải Luyện Khí tầng " + n.TANG_TOI_THIEU + " trở lên mới đủ tư cách. Đạo hữu đang ở tầng 0." };
   };
+  n.SUAT_NGHI = { 4: [20] };
   n.chuoiGioVN = function (_) {
     var u = new Date(Math.floor(Number(_) || 0) + n.VN_OFFSET_MS);
-    return t(u.getUTCHours()) + ":" + t(u.getUTCMinutes()) + ":" + t(u.getUTCSeconds());
+    return i(u.getUTCHours()) + ":" + i(u.getUTCMinutes()) + ":" + i(u.getUTCSeconds());
   };
   n.suatTai = function (_) {
-    for (var t = function (_) {
+    for (var i = function (_) {
       return Math.floor((_ + n.VN_OFFSET_MS) / u) * u;
-    }(_ = Math.floor(Number(_) || 0)), o = 0; o <= 1; o++)
-      for (var r = 0; r < n.SO_SUAT; r++) {
-        var h = a(t + o * u, r);
-        if (_ < h + n.DAI_HOI_KEO_DAI) {
-          return i(h, r);
+    }(_ = Math.floor(Number(_) || 0)), r = 0; r <= 1; r++)
+      for (var h = 0; h < n.SO_SUAT; h++)
+        if (!t(i + r * u, h)) {
+          var c = a(i + r * u, h);
+          if (_ < c + n.DAI_HOI_KEO_DAI) {
+            return o(c, h);
+          }
         }
-      }
-    return i(a(t + u, 0), 0);
+    return o(a(i + u, 0), 0);
   };
   n.maSuat = function (n) {
     return "dai_hoi:" + Math.floor(n);
@@ -101,21 +107,21 @@
     }
     var t = [];
     if (1 === a.length) {
-      t.push(o(u, _, 1, a[0]));
+      t.push(r(u, _, 1, a[0]));
       return t;
     }
     for (var i = function (n) {
       for (var _ = 1; _ < n;)
         _ *= 2;
       return _;
-    }(a.length), r = i / 2, h = i - a.length, c = 0, e = 0; e < r; e++) {
+    }(a.length), o = i / 2, h = i - a.length, c = 0, e = 0; e < o; e++) {
       var d = a[c++];
       if (void 0 === d) {
         break;
       }
       var T = e < h ? null : a[c++];
       if (null == T) {
-        t.push(o(u, _, e + 1, d));
+        t.push(r(u, _, e + 1, d));
       }
       else {
         t.push({ id: u + ":v" + _ + ":t" + (e + 1), vong: _, aId: d, bId: T, trangThai: "CHO_VAO", thangId: null, thuaId: null, viSao: null, hanVaoLuc: 0, hetGioLuc: 0, daVao: {} });
@@ -132,16 +138,16 @@
     return "truc_co" === n ? [{ id: "linh_thach", n: 1e3 }, { id: "yeu_dan_cap_4", n: 1 }, { id: "luc_tinh_thach", n: 20 }, { id: "yeu_dan_cap_1", n: 3 }] : [{ id: "linh_thach", n: 500 }, { id: "yeu_dan_cap_3", n: 1 }, { id: "truc_co_thao", n: 2 }, { id: "dia_linh_qua", n: 2 }];
   };
   n.TOP_NGAY_FLAG = "dai_hoi_top_ngay";
-  var r = "manh_yeu_dan_cap_3";
+  var h = "manh_yeu_dan_cap_3";
   n.quaHang = function (n, _) {
     var u = "truc_co" === n;
-    return 2 === _ ? u ? [{ id: "linh_thach", n: 400 }, { id: "phu_loi_dong", n: 2 }, { id: r, n: 1 }] : [{ id: "linh_thach", n: 200 }, { id: "phu_han_bang", n: 3 }, { id: r, n: 1 }] : 3 === _ || 4 === _ ? u ? [{ id: "linh_thach", n: 200 }, { id: "phu_hoa", n: 2 }, { id: r, n: 1 }] : [{ id: "linh_thach", n: 100 }, { id: "phu_toc_hanh", n: 2 }, { id: r, n: 1 }] : [];
+    return 2 === _ ? u ? [{ id: "linh_thach", n: 400 }, { id: "phu_loi_dong", n: 2 }, { id: h, n: 1 }] : [{ id: "linh_thach", n: 200 }, { id: "phu_han_bang", n: 3 }, { id: h, n: 1 }] : 3 === _ || 4 === _ ? u ? [{ id: "linh_thach", n: 200 }, { id: "phu_hoa", n: 2 }, { id: h, n: 1 }] : [{ id: "linh_thach", n: 100 }, { id: "phu_toc_hanh", n: 2 }, { id: h, n: 1 }] : [];
   };
   n.DIEM_FLAG = "dai_hoi_diem";
   n.DIEM_ID = "diem_dai_hoi";
   n.DIEM_TEN = "Điểm Đại Hội";
   n.DIEM_MOI_TRAN = 1;
-  n.QUAY_DOI = [{ id: "manh_yeu_dan_cap_3", gia: 30, khoa: !0 }];
+  n.QUAY_DOI = [{ id: "manh_yeu_dan_cap_3", gia: 20, khoa: !0 }];
   n.diemThang = function (_) {
     return Math.max(0, 0 | _) * n.DIEM_MOI_TRAN;
   };

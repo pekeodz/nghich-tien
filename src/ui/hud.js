@@ -1475,7 +1475,7 @@
       });
     }
     if (!t.emptySlot && e.HopUI && e.Inventory.HOP && e.Inventory.HOP[t.def.id]) {
-      N("Mở Hộp", "", function () {
+      N(t.def.moNhan || "Mở Hộp", "", function () {
         A(null);
         n.closeBag();
         e.HopUI.mo(t.def.id);
@@ -1791,7 +1791,7 @@
         if (i) {
           var o = e.Skills && e.Skills.DEFS ? e.Skills.DEFS[t.hinhId] : null;
           var r = i.lifesteal;
-          n.push({ key: "hinh", icon: o && o.icon, clock: q(a(t.hinhT)), tip: (o ? o.name : "Hoá thân") + " — đánh nhanh gấp " + i.speed + (r ? ", hút " + Math.round(1e3 * r.pct) / 10 + "% Khí Huyết mỗi nhát" : "") + (t.hinhGiap > 0 ? " · Ma Giáp còn " + Math.round(t.hinhGiap) : "") });
+          n.push({ key: "hinh", icon: o && o.icon, clock: q(a(t.hinhT)), tip: (o ? o.name : "Hoá thân") + " — đánh nhanh gấp " + i.speed + (r ? ", hút " + Math.round(1e3 * r.pct) / 10 + "% Khí Huyết mỗi nhát" : "") + (t.hinhGiap > 0 ? " · " + (i.giapTen || "Ma Giáp") + " còn " + Math.round(t.hinhGiap) : "") });
         }
         if (t.shieldT > 0 && t.shieldHp > 0) {
           n.push(t.shieldBell ? { key: "chuong", icon: "dong_hoang_chung", clock: q(a(t.shieldT)), tip: "Đông Hoàng Chung — hộ thuẫn còn " + Math.round(t.shieldHp) + " giáp · nuốt sát thương trước Giáp" } : { key: "kim_giap", icon: "phu_kim_giap", clock: q(a(t.shieldT)), tip: "Hộ thuẫn — còn " + Math.round(t.shieldHp) + " giáp · hộ thuẫn nuốt sát thương trước Giáp" });

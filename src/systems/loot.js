@@ -58,6 +58,8 @@
   n.MA_BAO_Y_PHUC = ["tuyet_son_kiem_y", "man_ho_tu_y", "than_kiem_y"];
   n.MA_BAO_THANH_TAM_Y = { ITEM: "thanh_tam_y", CHANCE: .01 };
   n.MA_BAO_MA_HON_PHE = { ITEM: "bi_tich_ma_hon_phe", CHANCE: .1 };
+  n.MA_BAO_CUU_U_MA_TRAO = { ITEM: "bi_tich_cuu_u_ma_trao", CHANCE: .02 };
+  n.MA_BAO_PHI_LONG = { ITEM: "bi_tich_phi_long_tai_thien", CHANCE: .02 };
   n.MA_BAO_BI_TICH_KET_DAN = [{ ITEM: "bi_tich_nguyet_quang", CHANCE: .01 }, { ITEM: "bi_tich_kim_quang_cu_kiem", CHANCE: .01 }, { ITEM: "bi_tich_ngu_sac_than_chuong", CHANCE: .01 }, { ITEM: "bi_tich_loi_thuong_quan_dia", CHANCE: .01 }, { ITEM: "bi_tich_ngu_loi_thuong_vu", CHANCE: .01 }];
   n.MA_BAO_HOANG_LOI_THUONG = { ITEM: "hoang_loi_thuong", CHANCE: .01 };
   n.MA_BAO_BANG_LINH_KIEM = { ITEM: "bang_linh_kiem", CHANCE: .01 };
@@ -79,8 +81,8 @@
     var o = t.Inventory;
     var u = !1;
     if (e && o && "linh_thuy" === a) {
-      var r = e.duLinhThuy ? e.duLinhThuy() : !(!e.flags || !e.flags.du_linh_thuy);
-      if (!((u = 11 === e.stage && !r && o.count(a) < e.NEED_LINH_THUY) || e.stage !== e.BI_TICH_STAGE || !e.biTichUnlocked || e.biTichUnlocked() || o.has("tu_khi_dan", 1))) {
+      var i = e.duLinhThuy ? e.duLinhThuy() : !(!e.flags || !e.flags.du_linh_thuy);
+      if (!((u = 11 === e.stage && !i && o.count(a) < e.NEED_LINH_THUY) || e.stage !== e.BI_TICH_STAGE || !e.biTichUnlocked || e.biTichUnlocked() || o.has("tu_khi_dan", 1))) {
         u = o.count(a) < e.NEED_LINH_THUY;
       }
     }
@@ -106,14 +108,14 @@
       }
     }
     else if ("yeu_quai_ha_pham" === a.type) {
-      var r = t.Quest.rollYeuQuaiDrop(e);
-      if (r) {
-        o.push(r);
+      var i = t.Quest.rollYeuQuaiDrop(e);
+      if (i) {
+        o.push(i);
       }
     }
     else if ("doc_dang_yeu" === a.type) {
-      var i = t.Quest && t.Quest.DOC_DANG_ITEM || "doc_dang_doc_dich";
-      var A = n.rollMaterialDrop(i, t, e);
+      var r = t.Quest && t.Quest.DOC_DANG_ITEM || "doc_dang_doc_dich";
+      var A = n.rollMaterialDrop(r, t, e);
       if (A) {
         o.push(A);
       }
@@ -156,22 +158,22 @@
       }
     }
     else if ("xuyen_son_giap" === a.type) {
-      var l = a.bienDi ? n.XUYEN_SON_BIEN_DI_CHANCE : n.rate("XUYEN_SON_CHANCE", t);
-      if ((e ? e() : Math.random()) < l) {
+      var H = a.bienDi ? n.XUYEN_SON_BIEN_DI_CHANCE : n.rate("XUYEN_SON_CHANCE", t);
+      if ((e ? e() : Math.random()) < H) {
         o.push(n.XUYEN_SON_ITEM);
       }
     }
     if (a.def && a.def.manhGiay && t.Quest && t.Quest.manhGiayCanRoi && t.Quest.manhGiayCanRoi(a.def.manhGiay)) {
       o.push(a.def.manhGiay);
     }
-    var H = 0 | (a.def && a.def.stones);
-    var d = !!n.BOSS_LINH_THACH[a.type];
+    var M = 0 | (a.def && a.def.stones);
+    var l = !!n.BOSS_LINH_THACH[a.type];
     var N = "number" == typeof a.stoneChance;
     if (!N) {
-      for (var M = 0; M < H; M++)
+      for (var d = 0; d < M; d++)
         o.push("linh_thach");
     }
-    if (a.def && a.def.ore && (e ? e() : Math.random()) < n.rateOf("ORE", a.type, t) && o.indexOf("huyen_thiet_khoang") < 0 && o.push("huyen_thiet_khoang"), N && (e ? e() : Math.random()) < a.stoneChance ? o.unshift("linh_thach") : !N && !H && !d && (e ? e() : Math.random()) < n.rate("STONE_CHANCE", t) && o.push("linh_thach"), (e ? e() : Math.random()) < n.rate("RARE_GEAR_CHANCE", t)) {
+    if (a.def && a.def.ore && (e ? e() : Math.random()) < n.rateOf("ORE", a.type, t) && o.indexOf("huyen_thiet_khoang") < 0 && o.push("huyen_thiet_khoang"), N && (e ? e() : Math.random()) < a.stoneChance ? o.unshift("linh_thach") : !N && !M && !l && (e ? e() : Math.random()) < n.rate("STONE_CHANCE", t) && o.push("linh_thach"), (e ? e() : Math.random()) < n.rate("RARE_GEAR_CHANCE", t)) {
       var g = Math.floor((e ? e() : Math.random()) * n.RARE_GEAR.length);
       o.push(n.RARE_GEAR[Math.min(n.RARE_GEAR.length - 1, Math.max(0, g))]);
     }
@@ -179,22 +181,22 @@
       var m = n.MA_BAO_Y_PHUC;
       o.push(m[Math.min(m.length - 1, Math.floor((e ? e() : Math.random()) * m.length))]);
     }
-    if ("song_duc_ma_bao" === a.type && (e ? e() : Math.random()) < n.MA_BAO_THANH_TAM_Y.CHANCE && o.push(n.MA_BAO_THANH_TAM_Y.ITEM), d) {
+    if ("song_duc_ma_bao" === a.type && (e ? e() : Math.random()) < n.MA_BAO_THANH_TAM_Y.CHANCE && o.push(n.MA_BAO_THANH_TAM_Y.ITEM), l) {
       for (var f = n.bossLinhThach(a.type, e), p = 0; p < f; p++)
         o.push("linh_thach");
     }
     if (n.YEU_DAN[a.type] && (e ? e() : Math.random()) < n.rate("PHU_CHU_CHANCE", t)) {
-      var T = Math.floor((e ? e() : Math.random()) * n.PHU_CHU_ROI.length);
-      o.push(n.PHU_CHU_ROI[Math.min(n.PHU_CHU_ROI.length - 1, Math.max(0, T))]);
+      var O = Math.floor((e ? e() : Math.random()) * n.PHU_CHU_ROI.length);
+      o.push(n.PHU_CHU_ROI[Math.min(n.PHU_CHU_ROI.length - 1, Math.max(0, O))]);
     }
-    var O = n.YEU_HUYET[a.type];
-    if (O && (e ? e() : Math.random()) < O.chance) {
-      o.push(O.item);
+    var T = n.YEU_HUYET[a.type];
+    if (T && (e ? e() : Math.random()) < T.chance) {
+      o.push(T.item);
     }
-    var s = n.TONG_MON_LENH[a.type];
-    if (s && (e ? e() : Math.random()) < s && o.push(n.TONG_MON_LENH_ITEM), "song_duc_ma_bao" === a.type && (e ? e() : Math.random()) < n.MA_BAO_MA_HON_PHE.CHANCE && o.push(n.MA_BAO_MA_HON_PHE.ITEM), "song_duc_ma_bao" === a.type) {
-      for (var I = 0; I < n.MA_BAO_BI_TICH_KET_DAN.length; I++) {
-        var y = n.MA_BAO_BI_TICH_KET_DAN[I];
+    var I = n.TONG_MON_LENH[a.type];
+    if (I && (e ? e() : Math.random()) < I && o.push(n.TONG_MON_LENH_ITEM), "song_duc_ma_bao" === a.type && (e ? e() : Math.random()) < n.MA_BAO_PHI_LONG.CHANCE && o.push(n.MA_BAO_PHI_LONG.ITEM), "song_duc_ma_bao" === a.type && (e ? e() : Math.random()) < n.MA_BAO_CUU_U_MA_TRAO.CHANCE && o.push(n.MA_BAO_CUU_U_MA_TRAO.ITEM), "song_duc_ma_bao" === a.type && (e ? e() : Math.random()) < n.MA_BAO_MA_HON_PHE.CHANCE && o.push(n.MA_BAO_MA_HON_PHE.ITEM), "song_duc_ma_bao" === a.type) {
+      for (var s = 0; s < n.MA_BAO_BI_TICH_KET_DAN.length; s++) {
+        var y = n.MA_BAO_BI_TICH_KET_DAN[s];
         if ((e ? e() : Math.random()) < y.CHANCE) {
           o.push(y.ITEM);
         }
@@ -236,14 +238,14 @@
   };
   n.capStones = function (a, t, h) {
     t = t || _;
-    for (var e = n.stoneToday(t, h), o = Math.max(0, e.tran - e.da), u = [], r = 0, i = 0, A = 0; A < a.length; A++) {
+    for (var e = n.stoneToday(t, h), o = Math.max(0, e.tran - e.da), u = [], i = 0, r = 0, A = 0; A < a.length; A++) {
       var c = a[A];
       if ("linh_thach" === ("string" == typeof c ? c : c && c.item)) {
         var E = "string" == typeof c ? 1 : Math.max(1, 0 | c.n);
-        var C = Math.min(E, o - r);
-        i += E - C;
+        var C = Math.min(E, o - i);
+        r += E - C;
         if (!(C <= 0)) {
-          r += C;
+          i += C;
           u.push("string" == typeof c ? c : { item: "linh_thach", n: C });
         }
       }
@@ -251,10 +253,10 @@
         u.push(c);
       }
     }
-    if (r > 0 && t.Quest && t.Quest.flags) {
-      t.Quest.flags[n.STONE_DAY_FLAG] = { ngay: e.ngay, da: e.da + r };
+    if (i > 0 && t.Quest && t.Quest.flags) {
+      t.Quest.flags[n.STONE_DAY_FLAG] = { ngay: e.ngay, da: e.da + i };
     }
-    return { drops: u, cat: i };
+    return { drops: u, cat: r };
   };
   n.award = function (n, a, t) {
     t = t || _;
@@ -306,17 +308,17 @@
       _.songDucMoc = h.MIN + o() * (h.MAX - h.MIN);
     }
     var u = _.songDucMoc * e;
-    var r = Math.max(0, _.hp || 0);
-    var i = null;
-    if (!_.songDucXong && a > u && r <= u) {
+    var i = Math.max(0, _.hp || 0);
+    var r = null;
+    if (!_.songDucXong && a > u && i <= u) {
       _.songDucXong = !0;
-      i = h.ITEM;
+      r = h.ITEM;
     }
-    if ((_.dead || r <= 0)) {
+    if ((_.dead || i <= 0)) {
       delete _.songDucMoc;
       delete _.songDucXong;
     }
-    return i;
+    return r;
   };
   n.GIUA_TRAN = { BOSSES: { than_thu_xich_long: { lt: [10, 40], phaCanh: .05, them: { tay_tam_dan: .05 } }, linh_ho_tran_son: { lt: [10, 40], phaCanh: .08, them: { tay_tam_dan: .1, phi_dao: .01, bich_nguc_ta_dao: .01 } }, song_duc_ma_bao: { lt: [100, 400], phaCanh: .2, them: { tay_tam_dan: .2, phi_dao: .05, bich_nguc_ta_dao: .03 } }, yl_toc_truong: { lt: [5, 15], phaCanh: 0, soCuc: [5, 8], heSoPhu: .5, khongTranBan: !0, them: { toc_truong_y: .001 } } }, SO_CUC: [5, 10], TRAN_BAN: { tran_ban_tu_linh: .04, tran_ban_liet_hoa: .03 }, PHU: { phu_thanh_tam: .5, phu_toc_hanh: .4, phu_tho_don: .3, phu_kim_giap: .3, phu_han_bang: .2, phu_hoa: .2, phu_loi_dong: .1 }, PHA_CANH: "pha_canh_dan", R_MIN: 60, R_MAX: 110 };
   n.keHoachGiuaTran = function (_, a) {
@@ -325,8 +327,8 @@
     if (!h) {
       return null;
     }
-    for (var e, o = a || Math.random, u = [], r = h.soCuc || t.SO_CUC, i = r[0] + Math.min(r[1] - r[0], Math.floor(o() * (r[1] - r[0] + 1))), A = 0; A < i; A++) {
-      var c = (A + .2 + .6 * o()) / i;
+    for (var e, o = a || Math.random, u = [], i = h.soCuc || t.SO_CUC, r = i[0] + Math.min(i[1] - i[0], Math.floor(o() * (i[1] - i[0] + 1))), A = 0; A < r; A++) {
+      var c = (A + .2 + .6 * o()) / r;
       var E = h.lt[0] + Math.min(h.lt[1] - h.lt[0], Math.floor(o() * (h.lt[1] - h.lt[0] + 1)));
       u.push({ moc: .95 - .9 * c, item: "linh_thach", n: E });
     }
@@ -339,9 +341,9 @@
       for (e in t.TRAN_BAN)
         C(e, t.TRAN_BAN[e]);
     }
-    var l = null != h.heSoPhu ? h.heSoPhu : 1;
+    var H = null != h.heSoPhu ? h.heSoPhu : 1;
     for (e in t.PHU)
-      C(e, t.PHU[e] * l);
+      C(e, t.PHU[e] * H);
     for (e in C(t.PHA_CANH, h.phaCanh), h.them || {})
       C(e, h.them[e]);
     u.sort(function (_, n) {
@@ -361,12 +363,12 @@
       _.giuaTranKe = n.keHoachGiuaTran(_.type, t) || [];
     }
     for (var e = Math.max(0, _.hp || 0), o = [], u = 0; u < _.giuaTranKe.length; u++) {
-      var r = _.giuaTranKe[u];
-      if (!r.xong) {
-        var i = r.moc * h;
-        if (a > i && e <= i) {
-          r.xong = !0;
-          o.push({ item: r.item, n: r.n });
+      var i = _.giuaTranKe[u];
+      if (!i.xong) {
+        var r = i.moc * h;
+        if (a > r && e <= r) {
+          i.xong = !0;
+          o.push({ item: i.item, n: i.n });
         }
       }
     }
@@ -400,18 +402,18 @@
       _.bitichMoc = h.MIN + o() * (h.MAX - h.MIN);
     }
     var u = _.bitichMoc * e;
-    var r = Math.max(0, _.hp || 0);
-    var i = null;
-    if (!_.bitichXong && a > u && r <= u) {
+    var i = Math.max(0, _.hp || 0);
+    var r = null;
+    if (!_.bitichXong && a > u && i <= u) {
       _.bitichXong = !0;
       var A = o() < h.TI_LE_MA ? h.DAO.ma : h.DAO.chinh;
-      i = A[Math.min(A.length - 1, Math.floor(o() * A.length))];
+      r = A[Math.min(A.length - 1, Math.floor(o() * A.length))];
     }
-    if ((_.dead || r <= 0)) {
+    if ((_.dead || i <= 0)) {
       delete _.bitichMoc;
       delete _.bitichXong;
     }
-    return i;
+    return r;
   };
   n.canPick = function (_, a, t) {
     return !(!_ || n.expired(t, _) || n.locked(t, _) && _.owner && _.owner !== a);

@@ -128,28 +128,29 @@
     var S;
     var H;
     var X;
-    var R;
-    var P;
-    var V = p();
-    V.build();
-    V.setSkills(n.SKILLS);
-    V.setHero(n.CAST.hero);
-    V.onSkip = o.skip;
-    V.anchor = ta;
-    V.show();
-    V.controls(!1);
-    V.bars(1, 1, 1);
-    V.barsVisible(!0);
-    V.hint(null);
-    V.dialogHide();
-    V.cardHide();
-    for (var D = 0; D < n.SKILLS.length; D++)
-      V.unlock(D, !1);
+    var _;
+    var V;
+    var E = p();
+    E.build();
+    E.setSkills(n.SKILLS);
+    E.setHero(n.CAST.hero);
+    E.onSkip = o.skip;
+    E.anchor = ea;
+    E.show();
+    E.controls(!1);
+    E.bars(1, 1, 1);
+    E.barsVisible(!0);
+    E.hint(null);
+    E.dialogHide();
+    E.cardHide();
+    for (var O = 0; O < n.SKILLS.length; O++)
+      E.unlock(O, !1);
     a.VFX.clear();
-    _();
-    P = n.CAST;
+    R(!0);
+    P();
+    V = n.CAST;
     H = F("hero");
-    r.hero = k(P.hero, (X = r.cfg, "male" === (R = Object.assign({}, a.DEFAULT_CHARACTER, X || {}, n.CAST.hero.cfgOver)).gender && Object.assign(R, n.CAST.hero.cfgOverMale), R), H.x, H.y, 2);
+    r.hero = k(V.hero, (X = r.cfg, "male" === (_ = Object.assign({}, a.DEFAULT_CHARACTER, X || {}, n.CAST.hero.cfgOver)).gender && Object.assign(_, n.CAST.hero.cfgOverMale), _), H.x, H.y, 2);
     r.hero.hp = 1;
     r.hero.shieldBell = !0;
     r.hero.shieldHp = n.SHIELD;
@@ -161,14 +162,14 @@
     r.hero.atkDur = .96;
     r.hero.flyRise = 0;
     r.hero.downed = !1;
-    r.hero.mp = P.hero.maxMp;
+    r.hero.mp = V.hero.maxMp;
     r.enemies = [];
     ["huyet", "hacsat", "tuyen", "lam"].forEach(function (t) {
       var e;
       var n = F(t);
-      var o = k(P[t], Object.assign({}, a.DEFAULT_CHARACTER, P[t].cfg), n.x, n.y, n.x < r.L.cx ? 2 : 1);
-      o.name = P[t].name;
-      if (P[t].spear) {
+      var o = k(V[t], Object.assign({}, a.DEFAULT_CHARACTER, V[t].cfg), n.x, n.y, n.x < r.L.cx ? 2 : 1);
+      o.name = V[t].name;
+      if (V[t].spear) {
         o.spear = (e = o, { cfg: Object.assign({}, a.DEFAULT_CHARACTER, { weapon: e.def.spear }), x: e.x, y: e.y, dir: e.dir, state: "idle", attackTime: 0, phiKiem: null, flyRise: 0, downed: !1, atkDur: 1 });
       }
       r.enemies.push(o);
@@ -290,7 +291,7 @@
       } }), M.push({ id: void 0, upd: function (a, t) {
         t.t += a;
         return t.t >= .6;
-      } }), M.push(na("huyet", "huyet1", "dlg1")), M.push(na("hero", "hero1")), M.push(oa("move", { pulse: null, start: function () {
+      } }), M.push(oa("huyet", "huyet1", "dlg1")), M.push(oa("hero", "hero1")), M.push(ra("move", { pulse: null, start: function () {
         r.tutAllowMove = !0;
         r.tutAllowAtk = !1;
         r.ai.on = !1;
@@ -312,9 +313,9 @@
         }
       }, end: function () {
         r.marker = null;
-      } })), M.push(ea(function () {
-      $("huyet", "huyet2");
-    }, 1.6)), M.push(oa("attack", { pulse: "atk", start: function () {
+      } })), M.push(na(function () {
+      aa("huyet", "huyet2");
+    }, 1.6)), M.push(ra("attack", { pulse: "atk", start: function () {
         r.tutAllowAtk = !0;
         p().lockAtk(!1);
         r.ai.on = !0;
@@ -322,7 +323,7 @@
         r.ai.lamLash = !0;
         r.lamHits = 0;
         r.heroFloor = .6;
-        $("lam", T.lam1, 2.4);
+        aa("lam", T.lam1, 2.4);
         r.onEnemyHit = function (a, t) {
           if ("lam" === a.id && "slash" === t.kind) {
             r.lamHits++;
@@ -334,28 +335,28 @@
         var t = r.actors.lam;
         r.ai.lamLash = !1;
         t.engaging = !1;
-        E(t, r.hero.x, r.hero.y, 150);
+        D(t, r.hero.x, r.hero.y, 150);
         t.stunT = .8;
         A(t, "hurt", .5);
-        Y(t);
-        K(t, t.home.x, t.home.y, 80, null);
-        $("lam", T.lam2, 2.6);
+        j(t);
+        B(t, t.home.x, t.home.y, 80, null);
+        aa("lam", T.lam2, 2.6);
         a.VFX.spawnFlash(.18, "#fff2d0");
       }, end: function () {
         r.onEnemyHit = null;
         r.ai.lamLash = !1;
         r.actors.lam.engaging = !1;
-      } })), M.push(ea(function () {
-      $("huyet", T.huyet3, 2.6);
-    }, 1)), M.push(oa("dodge", { pulse: null, start: function (a) {
+      } })), M.push(na(function () {
+      aa("huyet", T.huyet3, 2.6);
+    }, 1)), M.push(ra("dodge", { pulse: null, start: function (a) {
         r.heroFloor = .6;
         r.ai.on = !1;
-        $("hacsat", T.hac1, 2.6);
+        aa("hacsat", T.hac1, 2.6);
         r.sayCd.hacsat = r.t + 9;
         var t = r.actors.hacsat;
         m(.5, function () {
           if (r) {
-            var a = z(t, N.hacsat[0]);
+            var a = Q(t, Y.hacsat[0]);
             a.dur = 1.8;
             a.lead = Math.min(a.lead, .72);
             a.lock = .6;
@@ -369,10 +370,10 @@
         p().toast(a ? T.dodged : T.hit, !a);
       }, praise: !1, after: 1.3, end: function () {
         r.dodge = null;
-      } })), M.push(ea(function () {
-      $("hero", T.hero2, 2.6);
+      } })), M.push(na(function () {
+      aa("hero", T.hero2, 2.6);
       r.hero.mp = r.hero.maxMp;
-    }, .8)), M.push(oa("loi", { pulse: 0, unlock: 0, start: function () {
+    }, .8)), M.push(ra("loi", { pulse: 0, unlock: 0, start: function () {
         r.ai.on = !0;
         r.ai.allow = ["hacsat", "huyet"];
         r.ai.conc = 1;
@@ -387,13 +388,13 @@
           }
         };
         m(3.5, function () {
-          j("hacsat", 2);
+          z("hacsat", 2);
         });
       }, test: function () {
         return !!r.castedLoi;
-      }, after: 2.2 })), M.push(ea(function () {
-      $("hacsat", T.hac2, 2.8);
-    }, .8)), M.push(oa("bang", { pulse: 1, unlock: 1, start: function () {
+      }, after: 2.2 })), M.push(na(function () {
+      aa("hacsat", T.hac2, 2.8);
+    }, .8)), M.push(ra("bang", { pulse: 1, unlock: 1, start: function () {
         r.onCast = function (a) {
           if ("bang" === a) {
             r.castedBang = !0;
@@ -403,13 +404,13 @@
         r.autoLong = !0;
         r.longArm = 0;
         m(2.5, function () {
-          j("tuyen", 2);
+          z("tuyen", 2);
         });
       }, test: function () {
         return !!r.castedBang;
-      }, after: 2.6 })), M.push(ea(function () {
-      $("tuyen", T.tuyen1, 2.8);
-    }, .8)), M.push(oa("kim", { pulse: 2, unlock: 2, start: function () {
+      }, after: 2.6 })), M.push(na(function () {
+      aa("tuyen", T.tuyen1, 2.8);
+    }, .8)), M.push(ra("kim", { pulse: 2, unlock: 2, start: function () {
         r.onCast = function (a) {
           if ("kim" === a) {
             r.castedKim = !0;
@@ -424,10 +425,10 @@
         r.hero.mp = Math.max(r.hero.mp, 60);
         r.kimoT = 4;
         m(2, function () {
-          j("lam", 1);
+          z("lam", 1);
         });
         m(8, function () {
-          j("lam", 2);
+          z("lam", 2);
         });
       }, test: function () {
         return !!r.castedKim;
@@ -441,21 +442,21 @@
         r.enemies.forEach(function (a) {
           a.engaging = !1;
         });
-        $("hero", T.heroTruc, 2.6);
+        aa("hero", T.heroTruc, 2.6);
         m(.7, function () {
           if (r) {
-            q();
+            W();
           }
         });
         m(1.7, function () {
           if (r) {
-            $("huyet", T.huyetTruc, 3);
+            aa("huyet", T.huyetTruc, 3);
           }
         });
       }, upd: function (a, t) {
         t.t += a;
         return t.t >= 3.2;
-      } }), M.push(oa("trucfight", { pulse: "atk", start: function () {
+      } }), M.push(ra("trucfight", { pulse: "atk", start: function () {
         r.ai.on = !0;
         r.ai.allow = null;
         r.ai.conc = 2;
@@ -468,14 +469,14 @@
           d().setMood(r.fx, .5);
         }
         m(3.5, function () {
-          j("tuyen", 3);
+          z("tuyen", 3);
         });
       }, test: function () {
         return r.trucHits >= 5;
-      }, praise: !1, after: 1 })), M.push(ea(function () {
-      $("hero", T.hero3, 2.8);
+      }, praise: !1, after: 1 })), M.push(na(function () {
+      aa("hero", T.hero3, 2.8);
       r.hero.mp = r.hero.maxMp;
-    }, .8)), M.push(oa("van", { pulse: 3, unlock: 3, start: function () {
+    }, .8)), M.push(ra("van", { pulse: 3, unlock: 3, start: function () {
         r.onCast = function (a) {
           if ("van" === a) {
             r.castedVan = !0;
@@ -530,7 +531,7 @@
             case 0:
               if (!(e.sub)) {
                 e.sub = 1;
-                aa("tuyen", b(i.tuyen2), function () {
+                ta("tuyen", b(i.tuyen2), function () {
                   e.done = !0;
                 });
               }
@@ -548,7 +549,7 @@
                   A(t, "idle");
                   t.stunT = 0;
                   t.engaging = !1;
-                  K(t, o.x + a[1], o.y + a[2], 150, function () {
+                  B(t, o.x + a[1], o.y + a[2], 150, function () {
                     e.arrived++;
                   });
                 });
@@ -564,13 +565,13 @@
                   C(a, o.x, o.y);
                 });
                 [{ t: 0, who: "huyet", fn: function (a) {
-                      ra(a);
+                      ia(a);
                     } }, { t: .32, who: "lam", fn: function (a) {
                       u.spawnLoiTienLash(a.x, a.y, w(a.dir), o, { owner: a, weapon: "bach_loi_tien", crackAt: .22, strikeAt: .1, endAt: .5, sfx: "local", cancel: !1 });
                     } }, { t: .62, who: "hacsat", fn: function (a) {
                       u.spawnFanAttack(a.x, a.y, w(a.dir), o);
                     } }, { t: .92, who: "tuyen", fn: function (a) {
-                      ra(a);
+                      ia(a);
                       if (u.spawnBichNgucTaDao) {
                         u.spawnBichNgucTaDao(o.x, o.y - 12);
                       }
@@ -594,7 +595,7 @@
                       m(a.hold ? .42 : .16, function () {
                         if (r) {
                           o.invul = 0;
-                          U(a.hold ? .12 : .075, { fromX: t.x, fromY: t.y, kb: 40, noFloor: !1, force: !0 });
+                          q(a.hold ? .12 : .075, { fromX: t.x, fromY: t.y, kb: 40, noFloor: !1, force: !0 });
                           if (r.fx) {
                             d().pulseArray(r.fx, .5);
                           }
@@ -616,7 +617,7 @@
                 A(o, "down", 0);
                 o.shieldHp = 0;
                 r.hero.dir = 0;
-                aa("hero", b(i.hero4), function () {
+                ta("hero", b(i.hero4), function () {
                   e.done = !0;
                 });
               }
@@ -637,7 +638,7 @@
                 o.busy = 1;
                 r.tt = v.create(o.x, o.y + 2, k, { sq: .5, tier: y() });
                 l.banner(n.AUTO.tran.name, n.AUTO.tran.color);
-                $("hero", i.heroTran, 3);
+                aa("hero", i.heroTran, 3);
                 u.spawnFlash(.22, "#fff0c0");
                 u.spawnRing(o.x, o.y - 4, "#ffe9a8", 1.1 * k, .9);
                 u.spawnRing(o.x, o.y - 4, "#fff6d8", .6 * k, .6);
@@ -661,7 +662,7 @@
                   var e = (a.y - o.y) / r.tt.sq;
                   var n = Math.sqrt(t * t + e * e) || 1;
                   var i = 1.22 * k;
-                  K(a, o.x + t / n * i, o.y + e / n * i * r.tt.sq, 240, null, !0);
+                  B(a, o.x + t / n * i, o.y + e / n * i * r.tt.sq, 240, null, !0);
                 });
               }
               if (e.t > 1.6) {
@@ -675,11 +676,11 @@
                   (function (t) {
                     m(.2 + .58 * t, function () {
                       if (r && r.tt) {
-                        var e = B();
+                        var e = G();
                         var n = t % 4;
                         a.TuTuongBanFX.strike(r.tt, n, e);
                         e.forEach(function (a) {
-                          I(a, .012, { quiet: !0 });
+                          U(a, .012, { quiet: !0 });
                           if (1 === n) {
                             a.burnT = Math.max(a.burnT || 0, 2.5);
                           }
@@ -694,16 +695,16 @@
                           a.Camera.shake(2.2, .15);
                         }
                         if (1 === t) {
-                          $("huyet", i.huyetTran, 2.6);
+                          aa("huyet", i.huyetTran, 2.6);
                         }
                         if (2 === t) {
-                          $("hero", i.heroTran2, 2.6);
+                          aa("hero", i.heroTran2, 2.6);
                         }
                         if (3 === t) {
-                          $("hacsat", i.hacTran, 2.4);
+                          aa("hacsat", i.hacTran, 2.4);
                         }
                         if (5 === t) {
-                          $("tuyen", i.tuyenTran, 2.4);
+                          aa("tuyen", i.tuyenTran, 2.4);
                         }
                       }
                     });
@@ -722,7 +723,7 @@
                       C(t, o.x, o.y);
                       A(t, "attack", .35);
                       a.TuTuongBanFX.ripple(r.tt, Math.atan2((t.y - o.y) / r.tt.sq, t.x - o.x));
-                      ra(t);
+                      ia(t);
                       if (a.Camera) {
                         a.Camera.shake(3, .2);
                       }
@@ -743,9 +744,9 @@
                     f("hit_big");
                     r.enemies.forEach(function (a) {
                       a.stunT = 0;
-                      K(a, o.x + (a.x < o.x ? -46 : 46), o.y + (a.y < o.y ? -14 : 14), 210, null);
+                      B(a, o.x + (a.x < o.x ? -46 : 46), o.y + (a.y < o.y ? -14 : 14), 210, null);
                     });
-                    U(.12, { force: !0, noFloor: !0, fromX: o.x + 1, fromY: o.y, kb: 90 });
+                    q(.12, { force: !0, noFloor: !0, fromX: o.x + 1, fromY: o.y, kb: 90 });
                   }
                 });
               }
@@ -770,7 +771,7 @@
             case 4:
               if (!(e.sub)) {
                 e.sub = 1;
-                aa("hero", b(i.hero5), function () {
+                ta("hero", b(i.hero5), function () {
                   e.done = !0;
                 });
               }
@@ -799,7 +800,7 @@
                   a.Camera.shake(9, .7);
                 }
                 r.enemies.forEach(function (a) {
-                  E(a, o.x, o.y, 360);
+                  D(a, o.x, o.y, 360);
                   A(a, "hurt", .5);
                   if (!("tuyen" !== a.id && "lam" !== a.id)) {
                     m(.45, function () {
@@ -816,7 +817,7 @@
                     f("spell");
                     m(1.3, function () {
                       if (r) {
-                        I(x.huyet, .1, { quiet: !0, big: !0 });
+                        U(x.huyet, .1, { quiet: !0, big: !0 });
                         A(x.huyet, "hurt", .5);
                         f("hit_big");
                       }
@@ -829,7 +830,7 @@
                     f("spell");
                     m(1.8, function () {
                       if (r) {
-                        I(x.hacsat, .1, { quiet: !0, big: !0 });
+                        U(x.hacsat, .1, { quiet: !0, big: !0 });
                         A(x.hacsat, "hurt", .5);
                         f("hit_big");
                       }
@@ -847,7 +848,7 @@
                 o.hp = .1;
                 A(o, "down", 0);
                 o.down = !0;
-                aa("huyet", b(i.huyet4), function () {
+                ta("huyet", b(i.huyet4), function () {
                   e.done = !0;
                 });
               }
@@ -860,7 +861,7 @@
               if (!e.sub) {
                 e.sub = 1;
                 var M = x.huyet;
-                K(M, o.x - 30, o.y + 3, 120, function () {
+                B(M, o.x - 30, o.y + 3, 120, function () {
                   e.arrive = !0;
                 }, !0);
                 M.dir = 2;
@@ -897,7 +898,7 @@
               }
               break;
             case 8:
-              if (e.sub || (e.sub = 1, r.fx && d().setMood(r.fx, 1), aa("hero", b(i.hero6), function () {
+              if (e.sub || (e.sub = 1, r.fx && d().setMood(r.fx, 1), ta("hero", b(i.hero6), function () {
                 e.done = !0;
               })), e.t > .5 && !e.wisp) {
                 e.wisp = !0;
@@ -917,7 +918,7 @@
             case 9:
               if (!(e.sub)) {
                 e.sub = 1;
-                aa("hacsat", b(i.hac3), function () {
+                ta("hacsat", b(i.hac3), function () {
                   e.done = !0;
                 });
               }
@@ -946,6 +947,7 @@
             if (0 === e) {
               (function () {
                 r.phase = "rebirth";
+                R(!1, 2.5);
                 a.VFX.clear();
                 r.rebirth = { t: 0, line: 0, orb: { a: 2.3, r: 1 }, stars: [], flash: 0 };
                 for (var t = 0; t < 90; t++)
@@ -1117,9 +1119,9 @@
           a.st.t = 4.2;
         }
       } }), M);
-    Q();
+    J();
     if (l.startAt) {
-      J(l.startAt);
+      Z(l.startAt);
     }
   }
   function X(a, t) {
@@ -1132,10 +1134,15 @@
       }
       catch (a) {
       }
-      R();
+      _();
     }
   }
-  function R() {
+  function R(t, e) {
+    if (a.Audio && a.Audio.music) {
+      a.Audio.music("tientruyen", t, e);
+    }
+  }
+  function _() {
     if (r && !r.done) {
       r.done = !0;
       var t = r.params.onDone;
@@ -1147,7 +1154,7 @@
       }
     }
   }
-  function _() {
+  function P() {
     var t = a.Renderer;
     var e = y() >= 1 && (t.gfx || 1) >= 2 && t.w * t.h <= 62e4 ? 2 : 1;
     r.job = c().start(t.w, t.h, { S: e, tier: y() });
@@ -1156,10 +1163,10 @@
     r.w = t.w;
     r.h = t.h;
   }
-  function P(a) {
+  function V(a) {
     f("thunder", { gain: .28 });
   }
-  function V(a, t) {
+  function E(a, t) {
     if (a.kx || a.ky) {
       a.x += a.kx * t;
       a.y += a.ky * t;
@@ -1172,14 +1179,14 @@
       }
     }
   }
-  function E(a, t, e, n) {
+  function D(a, t, e, n) {
     var o = a.x - t;
     var r = .6 * (a.y - e);
     var i = Math.sqrt(o * o + r * r) || 1;
     a.kx += o / i * n;
     a.ky += r / i * n * .5;
   }
-  function D(a) {
+  function O(a) {
     for (var t = [r.hero].concat(r.enemies), e = 0; e < t.length; e++) {
       var n = t[e];
       if (n !== a && !n.dead && !n.hidden) {
@@ -1194,7 +1201,7 @@
       }
     }
   }
-  function O(a, t) {
+  function K(a, t) {
     var e = a.goTo;
     if (e) {
       var n = e.x - a.x;
@@ -1226,18 +1233,18 @@
       }
     }
   }
-  function K(a, t, e, n, o, r) {
+  function B(a, t, e, n, o, r) {
     a.goTo = { x: t, y: e, sp: n, cb: o, keepDir: r };
   }
-  function B() {
+  function G() {
     return r.enemies.filter(function (a) {
       return !a.dead && !a.hidden;
     });
   }
-  function G(a, t) {
+  function I(a, t) {
     var e = null;
     var n = t || 1e9;
-    B().forEach(function (t) {
+    G().forEach(function (t) {
       var o = x(a.x, a.y, t.x, t.y);
       if (o < n) {
         n = o;
@@ -1246,7 +1253,7 @@
     });
     return e;
   }
-  function I(t, e, n) {
+  function U(t, e, n) {
     if (n = n || {}, !t.dead) {
       var o = t.hp;
       t.hp = Math.max(t.floorHp, t.hp - e);
@@ -1259,7 +1266,7 @@
         A(t, "hurt", .28);
         t.stunT = Math.max(t.stunT, n.stun || .2);
         if (n.kb) {
-          E(t, null != n.fromX ? n.fromX : r.hero.x, null != n.fromY ? n.fromY : r.hero.y, 3.4 * n.kb);
+          D(t, null != n.fromX ? n.fromX : r.hero.x, null != n.fromY ? n.fromY : r.hero.y, 3.4 * n.kb);
         }
       }
       if (r.onEnemyHit) {
@@ -1267,7 +1274,7 @@
       }
     }
   }
-  function U(t, e) {
+  function q(t, e) {
     e = e || {};
     var o = r.hero;
     var i = a.VFX;
@@ -1301,7 +1308,7 @@
     A(o, "hurt", .3);
     o.busy = Math.max(o.busy, .12);
     if (null != e.fromX) {
-      E(o, e.fromX, e.fromY, e.kb || 60);
+      D(o, e.fromX, e.fromY, e.kb || 60);
     }
     i.spawnVignette("#8e1c14", .32, .55);
     i.spawnBloodSpit(o.x, o.y, o.dir, 3);
@@ -1311,7 +1318,7 @@
     }
     return !0;
   }
-  function q(t) {
+  function W(t) {
     var e = r.hero;
     var o = a.LucTinhTrucKiem;
     var i = a.VFX;
@@ -1340,7 +1347,7 @@
       }
     }
   }
-  function W(t) {
+  function N(t) {
     var e = n.SKILLS[t];
     var o = r.sk[t];
     var i = r.hero;
@@ -1360,7 +1367,7 @@
     o.used++;
     i.goal = null;
     r.idleT = 0;
-    var l = G(i, 320);
+    var l = I(i, 320);
     if (l) {
       C(i, l.x, l.y);
     }
@@ -1376,7 +1383,7 @@
         A(e, "cast", .42);
         e.busy = .38;
         var o;
-        var i = (o = e, B().map(function (a) {
+        var i = (o = e, G().map(function (a) {
           return { e: a, d: x(o.x, o.y, a.x, a.y) };
         }).filter(function (a) {
           return a.d <= 340;
@@ -1401,7 +1408,7 @@
                   n.spawnLoiDong(o.x, o.y);
                   n.spawnRing(o.x, o.y, "#d9b8ff", 38, .4);
                   if (!(o.fake)) {
-                    I(o, t.dmg, { kind: "loi", stun: .7, kb: 14, fromX: e.x, fromY: e.y, big: !0 });
+                    U(o, t.dmg, { kind: "loi", stun: .7, kb: 14, fromX: e.x, fromY: e.y, big: !0 });
                   }
                   f("thunder", { gain: .5 });
                   if (a.Camera) {
@@ -1430,16 +1437,16 @@
           }
           m(.34, function () {
             if (r) {
-              B().forEach(function (a) {
+              G().forEach(function (a) {
                 var e = (a.x - i) / 76;
                 var n = (a.y - l) / 45.6;
                 if (!(e * e + n * n > 1)) {
-                  I(a, t.dmg, { kind: "bang", stun: .3, kb: 0, quiet: !0, big: !0 });
+                  U(a, t.dmg, { kind: "bang", stun: .3, kb: 0, quiet: !0, big: !0 });
                   a.freezeT = 2.6;
                   a.slowT = 5;
                   A(a, "hurt", .2);
                   a.busy = 0;
-                  Y(a);
+                  j(a);
                 }
               });
               f("weapon_frost_sword", { gain: .8 });
@@ -1462,8 +1469,8 @@
             m(1.55, function () {
               if (r) {
                 if (!(i.fake || null == i.hp)) {
-                  I(i, t.dmg, { kind: "kim", stun: 1.2, kb: 46, fromX: n.x, fromY: n.y, big: !0 });
-                  Y(i);
+                  U(i, t.dmg, { kind: "kim", stun: 1.2, kb: 46, fromX: n.x, fromY: n.y, big: !0 });
+                  j(i);
                 }
                 o.spawnRing(i.x, i.y, "#ffe28a", 52, .5);
                 if (r.fx) {
@@ -1489,13 +1496,13 @@
             }
             m(1.7, function () {
               if (r) {
-                B().forEach(function (e, o) {
+                G().forEach(function (e, o) {
                   m(.07 * o, function () {
                     if (r) {
-                      I(e, t.dmg, { kind: "van", stun: 1.4, kb: 60, fromX: n.x, fromY: n.y, big: !0 });
+                      U(e, t.dmg, { kind: "van", stun: 1.4, kb: 60, fromX: n.x, fromY: n.y, big: !0 });
                       a.VFX.spawnRing(e.x, e.y, "#bff8ee", 46, .45);
                       a.VFX.spawnHitSpark(e.x, e.y - 26, 1, -.4);
-                      Y(e);
+                      j(e);
                     }
                   });
                 });
@@ -1548,6 +1555,7 @@
     }
   };
   o.exit = function () {
+    R(!1, .6);
     var t = p();
     if (t.built) {
       t.anchor = null;
@@ -1577,6 +1585,7 @@
   o.skip = function () {
     if (r && !r.finishing) {
       r.finishing = !0;
+      R(!1, 1.2);
       r.timers.length = 0;
       r.tele.length = 0;
       r.ai.on = !1;
@@ -1598,10 +1607,10 @@
     return r;
   };
   o.jump = function (a) {
-    return !!r && J(a);
+    return !!r && Z(a);
   };
   o.testAttack = function (a, t) {
-    return r && N[a] ? z(r.actors[a], N[a][t || 0]) : null;
+    return r && Y[a] ? Q(r.actors[a], Y[a][t || 0]) : null;
   };
   o.update = function (t) {
     if (r) {
@@ -1618,11 +1627,11 @@
               }
               r.art = null;
               r.fx = null;
-              _();
+              P();
               c().pump(r.job, 1e9);
               r.art = r.job.out;
               r.job = null;
-              r.fx = d().create(r.art, { tier: y(), onThunder: P });
+              r.fx = d().create(r.art, { tier: y(), onThunder: V });
               r.fx.mood = r.fx.moodGoal = n;
               r.baked = !0;
               var o = [r.hero].concat(r.enemies);
@@ -1663,7 +1672,7 @@
                 if (c().pump(r.job, a)) {
                   r.art = r.job.out;
                   r.job = null;
-                  r.fx = d().create(r.art, { tier: y(), onThunder: P });
+                  r.fx = d().create(r.art, { tier: y(), onThunder: V });
                   r.fx.mood = r.fx.moodGoal = r.mood;
                   r.baked = !0;
                 }
@@ -1693,15 +1702,15 @@
                   }
                   if (!r.script[r.si + 1]) {
                     r.cur = null;
-                    return void R();
+                    return void _();
                   }
-                  Q();
+                  J();
                 }
               }
             }(t), r)) {
               if (r.ambT = (null == r.ambT ? 2.5 : r.ambT) - t, r.ambT <= 0 && (r.ambT = 11 + 8 * Math.random(), "battle" === r.phase && r.baked ? f("huyet_hang_ambient", { gain: .38, rate: .9 + .1 * Math.random() }) : "mortal" === r.phase && f("huyet_rung_ambient", { gain: .3, rate: 1.05 + .1 * Math.random() })), r.fade += (r.fadeGoal - r.fade) * Math.min(1, t * r.fadeSpd * 3), Math.abs(r.fade - r.fadeGoal) < .004 && (r.fade = r.fadeGoal), r.bars += (r.barsGoal - r.bars) * Math.min(1, 3.2 * t), r.endAfterFade && r.fade >= .99) {
                 r.endAfterFade = !1;
-                return void R();
+                return void _();
               }
               if ("battle" === r.phase) {
                 if (!r.baked) {
@@ -1735,10 +1744,10 @@
                             e.spawnRing(t.x, t.y - 6, "#fff3c0", 28, .45);
                             p().banner(o.name, o.color);
                             f("spell", { gain: .5, rate: .85 });
-                            $("hero", "heroLong");
+                            aa("hero", "heroLong");
                             m(1, function () {
                               if (r) {
-                                $("huyet", "huyetLong");
+                                aa("huyet", "huyetLong");
                               }
                             });
                           })();
@@ -1750,7 +1759,7 @@
                           var t = r.hero;
                           var e = a.VFX;
                           var o = n.AUTO.kimo;
-                          var i = B();
+                          var i = G();
                           if (i.length && r.baked) {
                             var l = i[0];
                             var s = -1e9;
@@ -1782,8 +1791,8 @@
                             e.spawnKimO(t.x, t.y, u, h);
                             p().banner(o.name, o.color);
                             f("spell", { gain: .5, rate: .7 });
-                            $("hero", "heroKimO");
-                            B().forEach(function (n) {
+                            aa("hero", "heroKimO");
+                            G().forEach(function (n) {
                               var i = n.x - t.x;
                               var l = n.y - 18 - (t.y - 22);
                               var s = i * u + l * h;
@@ -1791,9 +1800,9 @@
                               if (!(s < 10 || s > 340 || c > 42)) {
                                 m(.72 + Math.min(.5, s / 340 * .55), function () {
                                   if (r && !n.dead) {
-                                    I(n, o.dmg, { kind: "kimo", stun: .6, kb: 28, fromX: t.x, fromY: t.y, big: !0, burn: 5 });
+                                    U(n, o.dmg, { kind: "kimo", stun: .6, kb: 28, fromX: t.x, fromY: t.y, big: !0, burn: 5 });
                                     e.spawnKimOImpact(n.x, n.y - 22, u, h);
-                                    Y(n);
+                                    j(n);
                                     f("thunder", { gain: .4, rate: .75 });
                                     f("hit_big", { gain: .5, rate: .8 });
                                     if (a.Camera) {
@@ -1805,7 +1814,7 @@
                             });
                             m(1.3, function () {
                               if (r && "play" === r.mode) {
-                                $("hacsat", "hacKimO");
+                                aa("hacsat", "hacKimO");
                               }
                             });
                           }
@@ -1825,7 +1834,7 @@
                       e.lunge = null;
                     }
                   }
-                  V(e, t);
+                  E(e, t);
                   var h = "play" === r.mode && !e.dead && !e.down;
                   if (e.moving = !1, h) {
                     var c = o.vector;
@@ -1877,7 +1886,7 @@
                       if (t.busy > 0 || t.atkCd > 0 || t.stunT > 0 || t.dead || t.down) {
                         return !1;
                       }
-                      var e = G(t, 130);
+                      var e = I(t, 130);
                       if (e) {
                         C(t, e.x, e.y);
                       }
@@ -1914,7 +1923,7 @@
                             }
                             var o = t && !t.dead && x(n.x, n.y, t.x, t.y) <= 68 ? t : null;
                             if (!o) {
-                              var i = G(n, 54);
+                              var i = I(n, 54);
                               if (i) {
                                 o = i;
                               }
@@ -1926,7 +1935,7 @@
                               if (r.truc) {
                                 r.trucHits++;
                               }
-                              I(o, .026 * (l ? 1.9 : 1) * (r.truc ? 1.5 : 1), { kind: "slash", big: l, kb: l ? 70 : 26, fromX: n.x, fromY: n.y, stun: l ? .45 : .18 });
+                              U(o, .026 * (l ? 1.9 : 1) * (r.truc ? 1.5 : 1), { kind: "slash", big: l, kb: l ? 70 : 26, fromX: n.x, fromY: n.y, stun: l ? .45 : .18 });
                               a.VFX.spawnLucTinhKiemImpact(o.x, o.y - 26, s, u - 6);
                               var h = a.Audio;
                               f(h && h.weaponImpactSfx ? h.weaponImpactSfx("luc_tinh_kiem") : "hit", { rate: .95 + .1 * Math.random() });
@@ -1955,7 +1964,7 @@
                       else if (e.busy <= 0 && e.stunT <= 0) {
                         var F = r.slotBuf.n;
                         r.slotBuf = null;
-                        W(F - 1);
+                        N(F - 1);
                       }
                   }
                   else {
@@ -1966,8 +1975,8 @@
                       A(e, "idle");
                     }
                   }
-                  O(e, t);
-                  D(e);
+                  K(e, t);
+                  O(e);
                   a.TuyetMenhFx.clamp(i, e, 3);
                 }(t);
                 (function (t) {
@@ -1989,11 +1998,11 @@
                           }
                         }
                       }
-                    }(i, t), i.burnT > 0 && (i.burnT -= t, i.burnTick = (i.burnTick || 0) + t, i.burnTick >= .7 && !i.dead && (i.burnTick = 0, I(i, .005, { quiet: !0 }))), i.freezeT > 0 && (i.freezeT -= t, i.freezeT <= 0 && (a.VFX.spawnRing(i.x, i.y - 20, "#bdf0ff", 34, .35), f("weapon_impact_pierce", { gain: .5 }))), i.poseDur > 0 && i.poseT >= i.poseDur && "down" !== i.pose && A(i, i.moving ? "walk" : "idle"), V(i, t), !i.dead) {
+                    }(i, t), i.burnT > 0 && (i.burnT -= t, i.burnTick = (i.burnTick || 0) + t, i.burnTick >= .7 && !i.dead && (i.burnTick = 0, U(i, .005, { quiet: !0 }))), i.freezeT > 0 && (i.freezeT -= t, i.freezeT <= 0 && (a.VFX.spawnRing(i.x, i.y - 20, "#bdf0ff", 34, .35), f("weapon_impact_pierce", { gain: .5 }))), i.poseDur > 0 && i.poseT >= i.poseDur && "down" !== i.pose && A(i, i.moving ? "walk" : "idle"), E(i, t), !i.dead) {
                       var l = i.freezeT > 0;
                       var s = i.stunT > 0;
                       if (i.moving = !1, i.goTo) {
-                        O(i, t);
+                        K(i, t);
                       }
                       else if ("play" === r.mode && !l && !s && i.busy <= 0 && !i.engaging) {
                         var u = i.home.x + 10 * Math.sin(.6 * r.t + i.ph);
@@ -2022,11 +2031,11 @@
                           A(i, "idle");
                         }
                       }
-                      if (!l && i.busy <= 0 && "hurt" !== i.pose && C(i, e.x, e.y), D(i), a.TuyetMenhFx.clamp(n, i, 1), "play" === r.mode && o.on && !l && !s && i.busy <= 0 && !i.engaging) {
+                      if (!l && i.busy <= 0 && "hurt" !== i.pose && C(i, e.x, e.y), O(i), a.TuyetMenhFx.clamp(n, i, 1), "play" === r.mode && o.on && !l && !s && i.busy <= 0 && !i.engaging) {
                         i.cd -= t;
                         var y = !o.allow || o.allow.indexOf(i.id) >= 0;
                         if (i.cd <= 0 && y && r.tele.length < o.conc && !e.dead) {
-                          z(i);
+                          Q(i);
                           i.cd = h(3.6, 5.6) * (o.slow || 1);
                         }
                       }
@@ -2068,7 +2077,7 @@
                           m(.3, function () {
                             if (!(!r || t.dead || t.freezeT > 0)) {
                               if (x(t.x, t.y, n.x, n.y) <= 86) {
-                                U(.045, { fromX: t.x, fromY: t.y, kb: 36 });
+                                q(.045, { fromX: t.x, fromY: t.y, kb: 36 });
                               }
                             }
                           });
@@ -2108,7 +2117,7 @@
                           console.error("[Prologue] chiêu địch", a);
                         }
                         if (u) {
-                          U(o.pat.dmg, { fromX: o.x, fromY: o.y, kb: 50 });
+                          q(o.pat.dmg, { fromX: o.x, fromY: o.y, kb: 50 });
                         }
                         if (r.dodge && r.dodge.tl === o) {
                           r.dodge.result = u ? "hit" : "dodged";
@@ -2210,7 +2219,7 @@
       }
     }
   };
-  var N = { huyet: [{ id: "cuuhuyet", windup: 1.15, lead: 1, r: 64, dmg: .078, color: "#ff4a6a", start: function (t, e, n) {
+  var Y = { huyet: [{ id: "cuuhuyet", windup: 1.15, lead: 1, r: 64, dmg: .078, color: "#ff4a6a", start: function (t, e, n) {
           a.VFX.spawnCuuHuyetTran(e, n, { colors: g("cuu_huyet_kiem_tran"), radius: 64 });
           f("weapon_blood_sword");
         }, hit: function (t, e, n) {
@@ -2289,7 +2298,7 @@
             a.Camera.shake(3, .2);
           }
         } }] };
-  function Y(a) {
+  function j(a) {
     for (var t = r.tele.length - 1; t >= 0; t--)
       r.tele[t].e === a && r.tele.splice(t, 1);
     if ("cast" === a.pose) {
@@ -2297,18 +2306,18 @@
     }
     a.busy = 0;
   }
-  function j(a, t) {
+  function z(a, t) {
     if (r && "play" === r.mode && !r.hero.dead && !r.hero.down) {
       var e = r.actors[a];
       if (!(!e || e.dead || e.freezeT > 0 || e.stunT > 0 || e.busy > 0)) {
-        z(e, N[a][t]);
+        Q(e, Y[a][t]);
       }
     }
   }
-  function z(a, t) {
+  function Q(a, t) {
     var e = r.hero;
     t = t || function (a) {
-      var t = N[a.id];
+      var t = Y[a.id];
       return t[Math.floor(Math.random() * t.length)];
     }(a);
     var n = t.windup * (r.ai.windMul || 1);
@@ -2326,7 +2335,7 @@
         if ("play" === r.mode && t) {
           if (!((r.sayCd[a.id] || 0) > r.t)) {
             r.sayCd[a.id] = r.t + 9;
-            $(a.id, t);
+            aa(a.id, t);
           }
         }
       })(a, t.say);
@@ -2337,7 +2346,7 @@
     f("whisper", { gain: .5 });
     return o;
   }
-  function Q() {
+  function J() {
     r.si++;
     r.cur = r.script[r.si] || null;
     if (r.cur) {
@@ -2347,7 +2356,7 @@
       }
     }
   }
-  function J(a) {
+  function Z(a) {
     for (var t = 0; t < r.script.length; t++)
       if (r.script[t].id === a) {
         if (r.cur && r.cur.end) {
@@ -2362,14 +2371,14 @@
         r.timers.length = 0;
         r.fade = 0;
         r.fadeGoal = 0;
-        Z(a);
+        $(a);
         r.si = t - 1;
-        Q();
+        J();
         return !0;
       }
     return !1;
   }
-  function Z(a) {
+  function $(a) {
     var t = ["move", "attack", "dodge", "loi", "bang", "kim", "truc", "van"].indexOf(a);
     if (r.barsGoal = 0, r.bars = 0, !(t < 0)) {
       r.mode = "play";
@@ -2380,7 +2389,7 @@
       for (var e = 0; e < Math.min(4, Math.max(0, t - 3)); e++)
         r.sk[e].unlocked = !0, p().unlock(e, !0);
       if (t >= 7) {
-        q(!0);
+        W(!0);
       }
       if (t >= 5) {
         r.autoLong = !0;
@@ -2388,18 +2397,18 @@
       }
     }
   }
-  function $(a, t, e) {
+  function aa(a, t, e) {
     var o = n.CAST[a];
     if (o && r) {
       var i = null != n.TEXT[t] ? n.TEXT[t] : t;
       p().bubble(a, { name: o.name, color: o.color, text: b(i), sec: e || 0, block: !1 });
     }
   }
-  function aa(a, t, e) {
+  function ta(a, t, e) {
     var o = n.CAST[a];
     p().bubble(a, { name: o.name, color: o.color, text: t, block: !0, cb: e });
   }
-  function ta(t) {
+  function ea(t) {
     if (!r || !r.actors) {
       return null;
     }
@@ -2413,7 +2422,7 @@
     var s = e.CHAR_ANCHOR_Y + (n === r.hero ? 8 : 26);
     return { x: i.left + (n.x + (l.ox || 0)) * o.zoom, y: i.top + (n.y - s + (l.oy || 0)) * o.zoom };
   }
-  function ea(a, t, e) {
+  function na(a, t, e) {
     return { id: e, start: function (t, e) {
         a(t, e);
       }, upd: function (a, e) {
@@ -2421,9 +2430,9 @@
         return e.t >= (t || 0);
       } };
   }
-  function na(a, t, e) {
+  function oa(a, t, e) {
     return { id: e, start: function (e) {
-        aa(a, function (a) {
+        ta(a, function (a) {
           return b(n.TEXT[a]);
         }(t), function () {
           e.done = !0;
@@ -2434,7 +2443,7 @@
         p().advance();
       } };
   }
-  function oa(a, t) {
+  function ra(a, t) {
     return { id: a, start: function (e, o) {
         r.mode = "play";
         r.barsGoal = 0;
@@ -2466,7 +2475,7 @@
             e.auto = !0;
             r.sk[t.unlock].cd = 0;
             r.hero.mp = Math.max(r.hero.mp, n.SKILLS[t.unlock].mp);
-            W(t.unlock);
+            N(t.unlock);
           }
           if (r.tutT > 90 && void 0 !== t.test) {
             e.force = !0;
@@ -2493,7 +2502,7 @@
         }
       } };
   }
-  function ra(t) {
+  function ia(t) {
     var e = a.WeaponArt && a.WeaponArt.arcOf ? a.WeaponArt.arcOf(t.cfg, w(t.dir)) : null;
     if (e) {
       a.VFX.spawnBladeArc(t.x, t.y, e);
@@ -2503,9 +2512,9 @@
     }
     f("swing", { rate: .85 });
   }
-  var ia = null;
   var la = null;
-  function sa(t, n, o) {
+  var sa = null;
+  function ua(t, n, o) {
     if (!(n.alpha <= .01 || n.hidden) && n.sheet) {
       var l = Math.round(n.x);
       var u = Math.round(n.y);
@@ -2558,28 +2567,28 @@
       var g = u - e.CHAR_ANCHOR_Y + Math.round(n.oy);
       if (n.flash > 0 ? function (t, e, n, o, r, i) {
         var l = e.sheet.ss || 1;
-        if (!(ia)) {
-          ia = document.createElement("canvas");
+        if (!(la)) {
+          la = document.createElement("canvas");
         }
         var s = Math.ceil(96 * l);
         var u = Math.ceil(112 * l);
-        if (!(ia.width === s && ia.height === u)) {
-          ia.width = s;
-          ia.height = u;
+        if (!(la.width === s && la.height === u)) {
+          la.width = s;
+          la.height = u;
         }
-        (la = ia.getContext("2d")).setTransform(1, 0, 0, 1, 0, 0);
-        la.clearRect(0, 0, s, u);
-        la.setTransform(l, 0, 0, l, 0, 0);
-        la.imageSmoothingEnabled = !1;
-        a.SpriteFactory.drawFrame(la, e.sheet, e.dir, S(e), 32, 40, 1, e.cfg);
-        la.setTransform(1, 0, 0, 1, 0, 0);
-        la.globalCompositeOperation = "source-atop";
-        la.globalAlpha = i;
-        la.fillStyle = "#ffffff";
-        la.fillRect(0, 0, s, u);
-        la.globalAlpha = 1;
-        la.globalCompositeOperation = "source-over";
-        t.drawImage(ia, 0, 0, s, u, n - 48, o - 102, 96, 112);
+        (sa = la.getContext("2d")).setTransform(1, 0, 0, 1, 0, 0);
+        sa.clearRect(0, 0, s, u);
+        sa.setTransform(l, 0, 0, l, 0, 0);
+        sa.imageSmoothingEnabled = !1;
+        a.SpriteFactory.drawFrame(sa, e.sheet, e.dir, S(e), 32, 40, 1, e.cfg);
+        sa.setTransform(1, 0, 0, 1, 0, 0);
+        sa.globalCompositeOperation = "source-atop";
+        sa.globalAlpha = i;
+        sa.fillStyle = "#ffffff";
+        sa.fillRect(0, 0, s, u);
+        sa.globalAlpha = 1;
+        sa.globalCompositeOperation = "source-over";
+        t.drawImage(la, 0, 0, s, u, n - 48, o - 102, 96, 112);
       }(t, n, l, u, 0, .75 * s(n.flash / .12, 0, 1)) : a.SpriteFactory.drawFrame(t, n.sheet, n.dir, S(n), m, g, 1, n.cfg), h.drawPlayerStatus && h.drawPlayerStatus(t, l, u, n, f, "front"), p && (c.drawLucTinhKiemAura && c.drawLucTinhKiemAura(t, l, u, n, "front"), d.drawLayer(t, n, 0, 0, "front", c.drawPhiKiem, l, u - 28)), n.spear && c && c.phiKiemPose) {
         var b = c.phiKiemPose(n.spear, f);
         if (b) {
@@ -2592,7 +2601,7 @@
       t.globalAlpha = 1;
     }
   }
-  function ua(t) {
+  function ha(t) {
     if (r) {
       var n = a.Renderer;
       var o = n.w;
@@ -2691,7 +2700,7 @@
         })(t);
         (function (a) {
           if ("play" === r.mode && r.hero && !r.hero.dead) {
-            var t = G(r.hero, 130);
+            var t = I(r.hero, 130);
             if (t) {
               var e = .5 + .5 * Math.sin(6 * r.t);
               a.save();
@@ -2712,7 +2721,7 @@
         var s = [];
         if ([r.hero].concat(r.enemies).forEach(function (a) {
           s.push({ y: a.y, fn: function (t) {
-              sa(t, a);
+              ua(t, a);
             } });
         }), r.tt) {
           for (var u = 0; u < 4; u++)
@@ -2975,7 +2984,7 @@
           a.quadraticCurveTo(T.x + 2, T.y - 1 - M, T.x + 4, T.y - M);
           a.stroke();
         }
-        for (sa(a, n.a, !0), a.globalCompositeOperation = "lighter", k = 0; k < n.motes.length; k++) {
+        for (ua(a, n.a, !0), a.globalCompositeOperation = "lighter", k = 0; k < n.motes.length; k++) {
           var A = n.motes[k];
           a.globalAlpha = .25 + .25 * Math.sin(1.5 * o + A.ph);
           a.fillStyle = "#ffd9a0";
@@ -3011,7 +3020,7 @@
   o.draw = function (t) {
     if (r) {
       try {
-        ua(t);
+        ha(t);
       }
       catch (e) {
         try {

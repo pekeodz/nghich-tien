@@ -9,13 +9,14 @@
   var r = null;
   var s = 0;
   var c = [];
-  var d = 0;
-  var h = { khong_co_trong_tui: "Ngươi không còn hộp này trong túi", khong_phai_hop: "Vật này không mở ra được", hop_rong: "Hộp trống rỗng, không có gì để bốc" };
-  function p(n) {
+  var d = "";
+  var h = 0;
+  var p = { khong_co_trong_tui: "Ngươi không còn hộp này trong túi", khong_phai_hop: "Vật này không mở ra được", hop_rong: "Hộp trống rỗng, không có gì để bốc" };
+  function g(n) {
     var t = e.ITEMS[n];
     return t ? t.name : n;
   }
-  function g(n, t, o) {
+  function u(n, t, o) {
     var i = e.ITEMS[t];
     if (i) {
       e.drawItemIcon(n.getContext("2d"), i.icon, 0, 0, o);
@@ -24,7 +25,7 @@
       }
     }
   }
-  function u() {
+  function m() {
     var n = r[s];
     !function (e) {
       i = [];
@@ -35,10 +36,10 @@
       e.forEach(function (e, n) {
         var t = document.createElement("div");
         t.className = "hop-card";
-        t.title = p(e);
+        t.title = g(e);
         var a = document.createElement("canvas");
         a.width = a.height = 32;
-        g(a, e, 32);
+        u(a, e, 32);
         t.appendChild(a);
         var l = document.createElement("span");
         l.className = "gacha-burst";
@@ -51,19 +52,19 @@
     o.step.textContent = s + 1 + "/" + r.length;
     o.next.disabled = !0;
     o.next.textContent = "Đang bốc…";
-    v("Phần " + (s + 1) + "/" + r.length + " · " + n.ten + "…");
+    f("Phần " + (s + 1) + "/" + r.length + " · " + n.ten + "…");
     t.rolling = !0;
     var d = n.pool.indexOf(n.item);
     if (d < 0) {
       d = 0;
     }
     var h = i.length;
-    var u = Math.floor(Math.random() * h);
+    var p = Math.floor(Math.random() * h);
     var m = Math.max(25, h + 4);
-    m += ((d - u - m) % h + h) % h;
-    var f = 0;
+    m += ((d - p - m) % h + h) % h;
+    var v = 0;
     !function x() {
-      if (C = (u + f) % h, l >= 0 && i[l] && i[l].el.classList.remove("lit"), i[l = C] && i[l].el.classList.add("lit"), e.Audio.play("ui", { gain: .35, rate: 1.4 }), f >= m) {
+      if (C = (p + v) % h, l >= 0 && i[l] && i[l].el.classList.remove("lit"), i[l = C] && i[l].el.classList.add("lit"), e.Audio.play("ui", { gain: .35, rate: 1.4 }), v >= m) {
         !function (n, i) {
           a = null;
           i.el.classList.remove("lit");
@@ -74,9 +75,9 @@
           i.el.classList.remove("burst");
           i.el.offsetWidth;
           i.el.classList.add("burst");
-          var d = p(n.item);
+          var d = g(n.item);
           c.push(d);
-          v(n.ten + ": " + d + (n.trung ? " (trùng — ngươi đã có đủ cả bể)" : "") + " · món khoá.");
+          f(n.ten + ": " + d + (n.trung ? " (trùng — ngươi đã có đủ cả bể)" : "") + (!1 === n.khoa ? "." : " · món khoá."));
           (function (n) {
             var t = e.ITEMS[n];
             if (t) {
@@ -85,7 +86,7 @@
               i.className = "gacha-chip";
               var a = document.createElement("canvas");
               a.width = a.height = 16;
-              g(a, n, 16);
+              u(a, n, 16);
               i.appendChild(a);
               var l = document.createElement("span");
               l.textContent = t.name;
@@ -102,31 +103,31 @@
         }(n, i[d]);
       }
       else {
-        var H = ++f / m;
+        var H = ++v / m;
         a = setTimeout(x, 40 + 280 * Math.pow(H, 3));
       }
       var C;
     }();
   }
-  function m() {
+  function v() {
     if (!(o.next.disabled)) {
       if (!r || s >= r.length - 1) {
         t.close();
       }
       else {
         s++;
-        u();
+        m();
       }
     }
   }
-  function v(e) {
+  function f(e) {
     if (o.say) {
       o.say.textContent = e;
     }
   }
   t.init = function () {
     o.root = n.$("#hop-mo");
-    return o.root ? (o.title = n.$("#hop-title"), o.step = n.$("#hop-step"), o.grid = n.$("#hop-grid"), o.say = n.$("#hop-say"), o.haul = n.$("#hop-haul"), o.next = n.$("#hop-next"), o.close = n.$("#hop-close"), o.next.addEventListener("click", m), o.close.addEventListener("click", function () {
+    return o.root ? (o.title = n.$("#hop-title"), o.step = n.$("#hop-step"), o.grid = n.$("#hop-grid"), o.say = n.$("#hop-say"), o.haul = n.$("#hop-haul"), o.next = n.$("#hop-next"), o.close = n.$("#hop-close"), o.next.addEventListener("click", v), o.close.addEventListener("click", function () {
       t.close();
     }), o.root.addEventListener("click", function (e) {
       if (e.target === o.root) {
@@ -141,6 +142,7 @@
         r = null;
         s = 0;
         c = [];
+        d = i.name;
         o.title.textContent = i.name;
         o.step.textContent = "…";
         o.grid.innerHTML = "";
@@ -149,31 +151,31 @@
         o.haul.innerHTML = "";
         o.next.disabled = !0;
         o.next.textContent = "Đang mở…";
-        v("Nắp hộp rung lên, khoá đồng bật ra…");
+        f("Nắp hộp rung lên, khoá đồng bật ra…");
         o.root.classList.remove("hidden");
         t.open = !0;
         t.rolling = !0;
         e.Audio.play("ui");
-        var a = ++d;
+        var a = ++h;
         var l = function (n) {
           var i = !!(n && !1 !== n.ok && n.ket && n.ket.length);
-          if (a === d && t.open) {
+          if (a === h && t.open) {
             if (!i) {
               t.rolling = !1;
               o.step.textContent = "";
               o.next.textContent = "Đóng";
               o.next.disabled = !1;
               e.Audio.play("deny");
-              return void v(n && (h[n.why] || n.why) || "Hộp chưa mở được lúc này");
+              return void f(n && (p[n.why] || n.why) || "Hộp chưa mở được lúc này");
             }
             r = n.ket;
-            u();
+            m();
           }
           else {
             if (i && e.HUD) {
               if (e.HUD.setCaption) {
-                e.HUD.setCaption("Hộp Vạn Bảo: " + n.ket.map(function (e) {
-                  return p(e.item);
+                e.HUD.setCaption(d + ": " + n.ket.map(function (e) {
+                  return g(e.item);
                 }).join(", ") + ".");
               }
               if (e.HUD.renderBag) {
@@ -206,8 +208,8 @@
       t.open = !1;
       t.rolling = !1;
       if (n && e.HUD && e.HUD.setCaption) {
-        e.HUD.setCaption("Hộp Vạn Bảo: " + r.map(function (e) {
-          return p(e.item);
+        e.HUD.setCaption(d + ": " + r.map(function (e) {
+          return g(e.item);
         }).join(", ") + ".");
       }
       if (e.HUD && e.HUD.renderBag) {

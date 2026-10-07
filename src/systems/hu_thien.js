@@ -6,7 +6,7 @@
   function h(n) {
     return Math.floor((n + t.VN_OFFSET_MS) / _) * _;
   }
-  function r(n) {
+  function o(n) {
     return (n < 10 ? "0" : "") + n;
   }
   t.VN_OFFSET_MS = 7 * a;
@@ -29,13 +29,14 @@
   t.NPC_MAP = "dong_mach_ngam";
   t.VE_O = { tx: 21, ty: 15 };
   t.THU_KHAI = [4];
-  t.GIO_KHAI = 22;
+  t.GIO_KHAI = 20;
+  t.PHUT_KHAI = 16;
   t.KEO_DAI = 18e5;
-  t.BAO_TRUOC = 18e5;
+  t.BAO_TRUOC = 96e4;
   t.DONG_CUA_SAU = 12e5;
   t.ngayVN = function (n) {
     var a = new Date(Math.floor(Number(n) || 0) + t.VN_OFFSET_MS);
-    return a.getUTCFullYear() + "-" + r(a.getUTCMonth() + 1) + "-" + r(a.getUTCDate());
+    return a.getUTCFullYear() + "-" + o(a.getUTCMonth() + 1) + "-" + o(a.getUTCDate());
   };
   t.laNgayKhai = function (n) {
     var a = new Date(h(Math.floor(Number(n) || 0))).getUTCDay();
@@ -46,13 +47,13 @@
     return { id: (_ || "htd") + ":" + n, ngay: t.ngayVN(n), baoLuc: n - t.BAO_TRUOC, batDauLuc: n, dongCuaLuc: n + Math.min(t.DONG_CUA_SAU, a), ketThucLuc: n + a };
   };
   t.kyTai = function (n) {
-    var r = h(n = Math.floor(Number(n) || 0)) + t.GIO_KHAI * a - t.VN_OFFSET_MS;
-    if (n >= r + t.KEO_DAI) {
-      r += _;
+    var o = h(n = Math.floor(Number(n) || 0)) + t.GIO_KHAI * a + 6e4 * t.PHUT_KHAI - t.VN_OFFSET_MS;
+    if (n >= o + t.KEO_DAI) {
+      o += _;
     }
-    for (var o = 0; o < 8 && !t.laNgayKhai(r); o++)
-      r += _;
-    return t.dungKy(r);
+    for (var r = 0; r < 8 && !t.laNgayKhai(o); r++)
+      o += _;
+    return t.dungKy(o);
   };
   t.giaiDoan = function (n, a) {
     return n < (a = a || t.kyTai(n)).baoLuc ? "NGHI" : n < a.batDauLuc ? "BAO" : n < a.ketThucLuc ? "MO" : "XONG";
@@ -62,11 +63,11 @@
   };
   t.gioDoc = function (n) {
     var a = new Date(Math.floor(Number(n) || 0) + t.VN_OFFSET_MS);
-    return r(a.getUTCHours()) + ":" + r(a.getUTCMinutes());
+    return o(a.getUTCHours()) + ":" + o(a.getUTCMinutes());
   };
   t.giayDoc = function (n) {
     var t = Math.max(0, Math.ceil((Number(n) || 0) / 1e3));
-    return Math.floor(t / 60) + ":" + r(t % 60);
+    return Math.floor(t / 60) + ":" + o(t % 60);
   };
   t.TUOI_TONG_MS = 3 * a;
   t.TUOI_THANH_VIEN_MS = 3 * a;
@@ -87,9 +88,9 @@
     }
     for (var a = Math.max(1, Math.round(n / t.TONG_MOI_BAN)); Math.ceil(n / a) > t.TONG_TOI_DA_BAN;)
       a++;
-    for (var _ = Math.floor(n / a), h = n % a, r = [], o = 0; o < a; o++)
-      r.push(_ + (o < h ? 1 : 0));
-    return r;
+    for (var _ = Math.floor(n / a), h = n % a, o = [], r = 0; r < a; r++)
+      o.push(_ + (r < h ? 1 : 0));
+    return o;
   };
   t.bamChuoi = function (n) {
     var t = 2166136261;
@@ -106,11 +107,11 @@
       var n = Math.imul ? Math.imul(_ ^ _ >>> 15, 1 | _) : (_ ^ _ >>> 15) * (1 | _);
       return (((n = n + (Math.imul ? Math.imul(n ^ n >>> 7, 61 | n) : (n ^ n >>> 7) * (61 | n)) ^ n) ^ n >>> 14) >>> 0) / 4294967296;
     }
-    for (var r = a.length - 1; r > 0; r--) {
-      var o = Math.floor(h() * (r + 1));
-      var i = a[r];
-      a[r] = a[o];
-      a[o] = i;
+    for (var o = a.length - 1; o > 0; o--) {
+      var r = Math.floor(h() * (o + 1));
+      var i = a[o];
+      a[o] = a[r];
+      a[r] = i;
     }
     return a;
   };
@@ -150,21 +151,21 @@
     if (!h) {
       return !1;
     }
-    var r = n.CONFIG && n.CONFIG.TILE || 32;
-    var o = Math.floor(a / r);
-    var i = Math.floor((_ - 1) / r);
-    return o >= h.tx0 && o <= h.tx1 && i >= h.ty0 && i <= h.ty1;
+    var o = n.CONFIG && n.CONFIG.TILE || 32;
+    var r = Math.floor(a / o);
+    var i = Math.floor((_ - 1) / o);
+    return r >= h.tx0 && r <= h.tx1 && i >= h.ty0 && i <= h.ty1;
   };
   t.trongVong = function (t, a, _) {
     if (!t) {
       return !1;
     }
     var h = n.CONFIG && n.CONFIG.TILE || 32;
-    var r = (t.tx + .5) * h;
-    var o = (t.ty + .5) * h;
+    var o = (t.tx + .5) * h;
+    var r = (t.ty + .5) * h;
     var i = t.r || 40;
-    var u = a - r;
-    var c = _ - o;
+    var u = a - o;
+    var c = _ - r;
     return u * u + c * c <= i * i;
   };
   t.trongHanhLang = function (t, a, _) {
@@ -172,36 +173,36 @@
     if (!h) {
       return !1;
     }
-    var r = n.CONFIG && n.CONFIG.TILE || 32;
-    var o = Math.floor(a / r);
-    var i = Math.floor((_ - 1) / r);
-    return o >= h.tx0 && o <= h.tx1 && i >= h.ty0 && i <= h.ty1;
+    var o = n.CONFIG && n.CONFIG.TILE || 32;
+    var r = Math.floor(a / o);
+    var i = Math.floor((_ - 1) / o);
+    return r >= h.tx0 && r <= h.tx1 && i >= h.ty0 && i <= h.ty1;
   };
   t.cachHanhLang = function (t, a, _) {
     var h = t && t.htCamChe;
     if (!h) {
       return 1 / 0;
     }
-    var r = n.CONFIG && n.CONFIG.TILE || 32;
-    var o = h.tx0 * r;
-    var i = h.ty0 * r;
-    var u = (h.tx1 + 1) * r;
-    var c = (h.ty1 + 1) * r;
-    var g = Math.max(o - a, 0, a - u);
+    var o = n.CONFIG && n.CONFIG.TILE || 32;
+    var r = h.tx0 * o;
+    var i = h.ty0 * o;
+    var u = (h.tx1 + 1) * o;
+    var c = (h.ty1 + 1) * o;
+    var g = Math.max(r - a, 0, a - u);
     var e = Math.max(i - _, 0, _ - c);
     return Math.sqrt(g * g + e * e);
   };
-  var o = 7 * _;
+  var r = 7 * _;
   var i = 4 * _;
   t.tuanSo = function (n) {
-    return Math.floor((Math.floor(Number(n) || 0) + t.VN_OFFSET_MS - i) / o);
+    return Math.floor((Math.floor(Number(n) || 0) + t.VN_OFFSET_MS - i) / r);
   };
   t.chotKeTiep = function (n) {
-    return (t.tuanSo(n) + 1) * o + i - t.VN_OFFSET_MS;
+    return (t.tuanSo(n) + 1) * r + i - t.VN_OFFSET_MS;
   };
-  t.PHAN_THUONG_HA_SAT = { 1: [{ id: "manh_yeu_dan_cap_3", n: 3 }, { id: "linh_thach", n: 1e3 }], 2: [{ id: "manh_yeu_dan_cap_3", n: 2 }, { id: "linh_thach", n: 700 }], 3: [{ id: "manh_yeu_dan_cap_3", n: 1 }, { id: "linh_thach", n: 500 }] };
+  t.PHAN_THUONG_HA_SAT = { 1: [{ id: "manh_yeu_dan_cap_3", n: 3 }, { id: "linh_thach", n: 1e3 }, { id: "ruong_khoi_loi", n: 1 }], 2: [{ id: "manh_yeu_dan_cap_3", n: 2 }, { id: "linh_thach", n: 700 }, { id: "ruong_khoi_loi", n: 1 }], 3: [{ id: "manh_yeu_dan_cap_3", n: 1 }, { id: "linh_thach", n: 500 }, { id: "ruong_khoi_loi", n: 1 }] };
   t.PHAN_THUONG_DINH = { 1: [{ id: "manh_yeu_dan_cap_3", n: 2 }, { id: "linh_thach", n: 800 }], 2: [{ id: "manh_yeu_dan_cap_3", n: 1 }, { id: "linh_thach", n: 500 }], 3: [{ id: "linh_thach", n: 300 }] };
-  t.LOI = { chua_mo: "Sỹ Sách Điện chưa mở.", khoa: "Sỹ Sách Điện đang đóng.", het_nhan: "Đã qua giờ nhận người mới.", chua_co_bang: "Bảng tông môn chốt lúc 21:30 tối Thứ Năm — chưa có bảng.", khong_o_tong: "Sỹ Sách Điện chỉ dành cho tông môn — đạo hữu chưa thuộc tông môn nào.", tong_non: "Tông môn chưa đủ 3 giờ tuổi.", moi_vao_tong: "Đạo hữu vào tông chưa đủ 3 giờ.", chua_du_canh_gioi: "Cần Luyện Khí tầng 7 trở lên.", tong_ngoai_bang: "Tông môn không có tên trong bảng kỳ này (cần 3 người đủ tư cách lúc 21:30).", xa_npc: "Hãy tới cạnh Thủ Điện Sỹ Sách ở Miếu Ông Trường Con.", tong_day: "Tông môn đã đủ 20 người trong điện.", ai1_dong: "Ải 1 đã đóng — tông môn chưa mở được cửa nên không vào nữa.", ai1_da_mo: "Tông môn đã mở cửa Ải 1 — không nhặt đồ ở đây nữa.", trong_thuong: "Có người đang trọng thương.", dang_tran: "Đang tỉ thí hoặc trong trận.", dang_giam: "Đang bị giam.", dang_giao_chien: "Vừa giao chiến, đợi một lát.", khong_trong: "Đạo hữu không ở trong Sỹ Sách Điện.", thieu_ngoc_phu: "Tông môn cần 3 Sỹ Sách Ngọc Phù để mở cửa Ải 1.", xoay_dong: "Vòng xoáy đã đóng.", xoay_day: "Mật Thất đã đủ tông.", xa_vat: "Đứng sát hơn nữa.", dang_van: "Đang vận rồi.", nguoi_khac_van: "Có người đang vận món này.", tui_day: "Túi đồ đã đầy.", tran_ky: "Đã nhặt đủ phần của đạo hữu kỳ này.", da_co_ngoc_phu: "Mỗi người chỉ mang 1 Ngọc Phù.", vung_an_toan: "Không vận trong vùng an toàn.", cho_hoi_sinh: "Chưa hồi sinh được." };
+  t.LOI = { chua_mo: "Sỹ Sách Điện chưa mở.", khoa: "Sỹ Sách Điện đang đóng.", het_nhan: "Đã qua giờ nhận người mới.", chua_co_bang: "Bảng tông môn chốt lúc 20:00 tối Thứ Năm — chưa có bảng.", khong_o_tong: "Sỹ Sách Điện chỉ dành cho tông môn — đạo hữu chưa thuộc tông môn nào.", tong_non: "Tông môn chưa đủ 3 giờ tuổi.", moi_vao_tong: "Đạo hữu vào tông chưa đủ 3 giờ.", chua_du_canh_gioi: "Cần Luyện Khí tầng 7 trở lên.", tong_ngoai_bang: "Tông môn không có tên trong bảng kỳ này (cần 3 người đủ tư cách lúc 20:00).", xa_npc: "Hãy tới cạnh Thủ Điện Sỹ Sách ở Miếu Ông Trường Con.", tong_day: "Tông môn đã đủ 20 người trong điện.", ai1_dong: "Ải 1 đã đóng — tông môn chưa mở được cửa nên không vào nữa.", ai1_da_mo: "Tông môn đã mở cửa Ải 1 — không nhặt đồ ở đây nữa.", trong_thuong: "Có người đang trọng thương.", dang_tran: "Đang tỉ thí hoặc trong trận.", dang_giam: "Đang bị giam.", dang_giao_chien: "Vừa giao chiến, đợi một lát.", khong_trong: "Đạo hữu không ở trong Sỹ Sách Điện.", thieu_ngoc_phu: "Tông môn cần 3 Sỹ Sách Ngọc Phù để mở cửa Ải 1.", xoay_dong: "Vòng xoáy đã đóng.", xoay_day: "Mật Thất đã đủ tông.", xa_vat: "Đứng sát hơn nữa.", dang_van: "Đang vận rồi.", nguoi_khac_van: "Có người đang vận món này.", tui_day: "Túi đồ đã đầy.", tran_ky: "Đã nhặt đủ phần của đạo hữu kỳ này.", da_co_ngoc_phu: "Mỗi người chỉ mang 1 Ngọc Phù.", vung_an_toan: "Không vận trong vùng an toàn.", cho_hoi_sinh: "Chưa hồi sinh được." };
   t.viLoi = function (n) {
     a = t.LOI;
     _ = n;

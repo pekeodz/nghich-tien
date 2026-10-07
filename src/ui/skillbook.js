@@ -73,7 +73,7 @@
             k.push(["Hút huyết", Math.round(1e3 * f.pct) / 10 + "% Khí Huyết tối đa mỗi nhát trúng" + (null != f.pvp && f.pvp < 1 ? " (đánh người: " + Math.round(f.pct * f.pvp * 1e3) / 10 + "%)" : "")]);
           }
           if (y.giap) {
-            k.push(["Ma Giáp", Math.round(100 * y.giap) + "% Giáp tối đa, đỡ đòn trước hộ thuẫn và Giáp"]);
+            k.push([y.giapTen || "Ma Giáp", Math.round(100 * y.giap) + "% Giáp tối đa, đỡ đòn trước hộ thuẫn và Giáp"]);
           }
           k.push(["Chiêu khác", "vẫn dùng được trong lúc hoá thân"]);
         }

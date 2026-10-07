@@ -17,7 +17,7 @@
   function g(n) {
     return !o(n) || isNaN(Number(n)) ? c(n, "—") : Number(n).toLocaleString("vi-VN");
   }
-  function l(n) {
+  function _(n) {
     if (!o(n) || isNaN(Number(n))) {
       return "—";
     }
@@ -28,7 +28,7 @@
     var i = t % 60;
     return Math.floor(t / 60) + " phút" + (i ? " " + i + " giây" : "");
   }
-  function _(n) {
+  function l(n) {
     return !o(n) || isNaN(Number(n)) ? "—" : Number(n).toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + " giây";
   }
   function s(n) {
@@ -68,14 +68,14 @@
     var i = n.ENEMY_DEFS && n.ENEMY_DEFS[t];
     return i ? c(i.name, t) : c(t);
   }
-  function N(n) {
+  function A(n) {
     return y(n).split("|")[0].split("·").map(function (n) {
       return n.trim();
     }).filter(function (n) {
       return n && !/^Yêu Thú Cấp/.test(n);
     }).join(" ");
   }
-  var A = { phong_tinh_mach: "phong_tinh_thach", mach_han_tinh: "han_tinh_thach", mach_tu_tinh: "tu_tinh_thach", mach_luc_tinh: "luc_tinh_thach", bich_ngoc_chop: "co_bich_moc" };
+  var N = { phong_tinh_mach: "phong_tinh_thach", mach_han_tinh: "han_tinh_thach", mach_tu_tinh: "tu_tinh_thach", mach_luc_tinh: "luc_tinh_thach", bich_ngoc_chop: "co_bich_moc" };
   function E(n) {
     return { duoc_lieu: "Dược liệu", dan_duoc: "Đan dược", nhiem_vu: "Vật phẩm nhiệm vụ", thuc_an_linh_thu: "Thức ăn linh thú", vat_pham: "Vật phẩm", thuc_pham: "Thực phẩm", tien_te: "Tiền tệ", nguyen_lieu_nhiem_vu: "Nguyên liệu nhiệm vụ", nguyen_lieu_ren_khi: "Nguyên liệu rèn khí", vat_pham_nhiem_vu: "Vật phẩm nhiệm vụ", nguyen_lieu: "Nguyên liệu", phu_chu: "Phù chú", bi_tich: "Bí tịch", tran_ban: "Trận bản", vu_khi: "Vũ khí", phap_bao: "Pháp bảo", hat_giong: "Hạt giống", food: "Ẩm thực", quest: "Nhiệm vụ", key: "Chìa khóa", misc: "Tạp vật" }[n] || c(n, "Vật phẩm");
   }
@@ -107,9 +107,9 @@
     if (g.indexOf(t) < 0) {
       g.push(t);
     }
-    var l = { id: String(n), kind: t, name: c(e, n), eyebrow: c(h, i[t] || "TƯ LIỆU"), description: c(a, "Chưa có ghi chú."), icon: r.icon || null, glyph: r.glyph || "✦", categories: g, stats: r.stats || [], use: c(r.use, "Cách dùng đang được cập nhật."), recipe: c(r.recipe, ""), obtain: c(r.obtain, "Nguồn sở hữu đang chờ được khai báo trong dữ liệu game."), tags: r.tags || [], group: o(r.group) ? Number(r.group) : null, shortName: c(r.shortName, "") };
-    l.searchText = u([l.name, l.eyebrow, l.description, l.use, l.recipe, l.obtain, l.tags.join(" ")].join(" "));
-    return l;
+    var _ = { id: String(n), kind: t, name: c(e, n), eyebrow: c(h, i[t] || "TƯ LIỆU"), description: c(a, "Chưa có ghi chú."), icon: r.icon || null, glyph: r.glyph || "✦", categories: g, stats: r.stats || [], use: c(r.use, "Cách dùng đang được cập nhật."), recipe: c(r.recipe, ""), obtain: c(r.obtain, "Nguồn sở hữu đang chờ được khai báo trong dữ liệu game."), tags: r.tags || [], group: o(r.group) ? Number(r.group) : null, shortName: c(r.shortName, "") };
+    _.searchText = u([_.name, _.eyebrow, _.description, _.use, _.recipe, _.obtain, _.tags.join(" ")].join(" "));
+    return _;
   }
   function O(n, t, i) {
     if (o(i)) {
@@ -238,10 +238,10 @@
     if (a) {
       O(u, "Phần thưởng", a.itemName || f(a.item));
     }
-    var l = a ? "Nhận tại Đại Phu." : "Nhận và tiếp tục tại NPC " + c(d(function () {
+    var _ = a ? "Nhận tại Đại Phu." : "Nhận và tiếp tục tại NPC " + c(d(function () {
       return n.Quest.turnInNpc && n.Quest.turnInNpc();
     }, "theo chỉ dẫn"), "theo chỉ dẫn") + ".";
-    return v(t, "quest", r, a ? "NHIỆM VỤ PHỤ · " + c(a.place, "THƯỜNG NGÀY") : "NHIỆM VỤ CHÍNH · GIAI ĐOẠN " + h, o || "Một đầu việc trong hành trình tu tiên.", { glyph: "☷", categories: ["quests"], stats: u, use: a ? a.hint || "Hoàn thành mục tiêu để nhận phần thưởng." : "Hoàn thành các mục tiêu được ghi trong sổ nhiệm vụ, rồi báo công đúng NPC.", obtain: l, tags: [r, a && a.place, e.join(" ")] });
+    return v(t, "quest", r, a ? "NHIỆM VỤ PHỤ · " + c(a.place, "THƯỜNG NGÀY") : "NHIỆM VỤ CHÍNH · GIAI ĐOẠN " + h, o || "Một đầu việc trong hành trình tu tiên.", { glyph: "☷", categories: ["quests"], stats: u, use: a ? a.hint || "Hoàn thành mục tiêu để nhận phần thưởng." : "Hoàn thành các mục tiêu được ghi trong sổ nhiệm vụ, rồi báo công đúng NPC.", obtain: _, tags: [r, a && a.place, e.join(" ")] });
   }
   function U() {
     var t = [];
@@ -285,7 +285,7 @@
             var u = o(t.attackTime) ? Number(t.attackTime) : a && o(a.ATTACK_TIME) ? Number(a.ATTACK_TIME) : .8;
             if (O(e, "Khoảng cách", g(r + (Number(t.reachBonus) || 0)) + " px"), u > 0 && O(e, "Tốc độ", (1 / u).toLocaleString("vi-VN", { maximumFractionDigits: 2 }) + " đòn/giây · " + (!o(i = u) || isNaN(Number(i)) ? "—" : Number(i).toLocaleString("vi-VN", { maximumFractionDigits: 2 }) + " giây/đòn")), t.flying ? O(e, "Cách đánh", "Ngự khí, tự lao tới mục tiêu") : t.projectile && O(e, "Cách đánh", "Phóng đạn, đơn mục tiêu"), t.lifesteal && o(t.lifesteal.pct)) {
               var d = o(t.lifesteal.pvp) ? t.lifesteal.pvp : 1;
-              O(e, "Hút huyết", s(t.lifesteal.pct) + " Khí Huyết tối đa · tỉ thí " + s(t.lifesteal.pct * d));
+              O(e, "Hút huyết", s(t.lifesteal.pct) + " Khí Huyết tối đa · tỉ thí " + (t.lifesteal.pct * d * 100).toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + "%");
             }
             if (t.burn && o(t.burn.time)) {
               O(e, "Thiêu đốt", g(t.burn.dps || 1) + " sát thương/giây · " + g(t.burn.time) + " giây");
@@ -332,8 +332,8 @@
           }(t);
           if (G) {
             O(e, "Hệ", G.element);
-            O(e, "Hồi chiêu", _(G.cooldown));
-            O(e, "Thời lượng", _(G.duration));
+            O(e, "Hồi chiêu", l(G.cooldown));
+            O(e, "Thời lượng", l(G.duration));
             O(e, "Phạm vi", G.range);
             if (o(G.dmg)) {
               O(e, "Sát thương", g(G.dmg));
@@ -353,7 +353,7 @@
             O(e, "Tác dụng", k.effect);
             O(e, "Bán kính", k.radius);
             O(e, "Kích hoạt", g(k.activationMp) + " MP");
-            O(e, "Duy trì", l(k.durationMs));
+            O(e, "Duy trì", _(k.durationMs));
             O(e, "Đá dựng", k.setupStones);
           }
           var B = function (t) {
@@ -363,7 +363,7 @@
           if (B) {
             O(e, "Hệ", B.element);
             O(e, "Chi phí", o(B.mp) ? g(B.mp) + " MP" : o(B.mpCost) ? g(B.mpCost) + " MP" : "");
-            O(e, "Hồi chiêu", _(B.cooldown));
+            O(e, "Hồi chiêu", l(B.cooldown));
           }
           if (t.food) {
             O(e, "Thời lượng", t.food.hours ? t.food.hours + " giờ" : "");
@@ -414,9 +414,9 @@
                 }
               });
             }
-            var l = n.Forge;
-            if (l && Array.isArray(l.RECIPES)) {
-              l.RECIPES.concat(n.KhoiLoi && n.KhoiLoi.RECIPES || []).forEach(function (e) {
+            var _ = n.Forge;
+            if (_ && Array.isArray(_.RECIPES)) {
+              _.RECIPES.concat(n.KhoiLoi && n.KhoiLoi.RECIPES || []).forEach(function (e) {
                 if (e && e.id === t) {
                   if ("nhiem_vu" === e.dropOnly && i.length) {
                     return;
@@ -425,20 +425,20 @@
                     return;
                   }
                   if (e.rewardOnly) {
-                    var h = l.REWARDS && l.REWARDS[e.rewardOnly];
+                    var h = _.REWARDS && _.REWARDS[e.rewardOnly];
                     return void S(i, h ? h.how : "Chỉ nhận làm phần thưởng.");
                   }
-                  S(i, e.dropOnly && l.dropNote ? l.dropNote(e, n).replace(/^Không rèn được — (.)/, function (n, t) {
+                  S(i, e.dropOnly && _.dropNote ? _.dropNote(e, n).replace(/^Không rèn được — (.)/, function (n, t) {
                     return t.toUpperCase();
                   }) + "." : "Rèn tại Lò Rèn Chân Núi.");
                 }
               });
             }
-            var _ = n.Gacha;
-            if (_) {
-              (_.POOLS ? Object.keys(_.POOLS).map(function (n) {
-                return _.POOLS[n];
-              }) : [{ id: "so_cap", label: "Tàng Kinh Các", pool: _.POOL }]).forEach(function (n) {
+            var l = n.Gacha;
+            if (l) {
+              (l.POOLS ? Object.keys(l.POOLS).map(function (n) {
+                return l.POOLS[n];
+              }) : [{ id: "so_cap", label: "Tàng Kinh Các", pool: l.POOL }]).forEach(function (n) {
                 (Array.isArray(n.pool) ? n.pool : []).forEach(function (e) {
                   if (("string" == typeof e ? e : e && (e.id || e.item)) === t) {
                     S(i, "Rút từ " + c(n.label, "Tàng Kinh Các") + ".");
@@ -483,7 +483,7 @@
             }) && S(i, "Luyện tại Đan Lô trong làng."), "manh_yeu_dan_cap_3" === t) {
               S(i, "Ghép 3 mảnh ở Đan Lô (mục Đan Khác) thành Yêu Đan Cấp 3: 70%, thất bại mất mảnh; kèm 3 Bảo Mệnh Phù thì 100%.");
               S(i, "Rơi từ kho bảo vật chung của Sỹ Sách Điện khi hạ boss (tối Chủ Nhật) — tổng mỗi bản cố định 10 mảnh.");
-              S(i, "Đổi 30 Điểm Đại Hội ở Chấp Sự Đại Hội (mảnh khoá: không giao dịch, vẫn ghép chung).");
+              S(i, "Đổi 20 Điểm Đại Hội ở Chấp Sự Đại Hội (mảnh khoá: không giao dịch, vẫn ghép chung).");
             }
             else if ("yeu_dan_cap_3" === t) {
               S(i, "Ghép 3 Mảnh Yêu Đan Cấp 3 ở Đan Lô (mục Đan Khác).");
@@ -495,35 +495,52 @@
             var v = n.Inventory && n.Inventory.HOP;
             if (v) {
               if (v[t]) {
-                S(i, "Quà của Vạn Bảo Phường, tặng một lần khi chợ được mở khoá. Mở hộp ngẫu nhiên ra: " + v[t].map(function (n) {
+                var O = v[t].map(function (n) {
                   return n.ten;
-                }).join(" · ") + " (đều khoá).");
+                }).join(" · ");
+                S(i, "hop_van_bao" === t ? "Quà của Vạn Bảo Phường, tặng một lần khi chợ được mở khoá. Mở hộp ngẫu nhiên ra: " + O + " (đều khoá)." : "Mở ra ngẫu nhiên: " + O + (v[t].some(function (n) {
+                  return !1 !== n.khoa;
+                }) ? " (đều khoá)." : " — không khoá, bán được ở chợ."));
               }
               Object.keys(v).forEach(function (n) {
-                if (v[n].some(function (n) {
+                var e = v[n].filter(function (n) {
                   return n.pool.indexOf(t) >= 0;
-                })) {
-                  S(i, "Có thể mở ra từ " + f(n) + " (ngẫu nhiên, món khoá).");
+                })[0];
+                if (e) {
+                  S(i, "Có thể mở ra từ " + f(n) + " (ngẫu nhiên" + (!1 === e.khoa ? ", không khoá" : ", món khoá") + ").");
                 }
               });
             }
-            var O = n.HuyetSac;
+            if (($ = n.HuThien)) {
+              [["PHAN_THUONG_HA_SAT", "Top Hạ Sát Sỹ Sách Điện"], ["PHAN_THUONG_DINH", "Top Sát Thương Đỉnh Sỹ Sách Điện"]].forEach(function (n) {
+                var e = $[n[0]] || {};
+                var h = Object.keys(e).filter(function (n) {
+                  return e[n].some(function (n) {
+                    return n.id === t;
+                  });
+                });
+                if ("linh_thach" !== t && h.length) {
+                  S(i, "Thưởng " + n[1] + " hằng tuần · hạng " + h.join(", ") + ".");
+                }
+              });
+            }
+            var M = n.HuyetSac;
             if ("bao_menh_phu" === t) {
               S(i, "Chế tại Đan Lô trong làng (mục Chế Phù) từ 12 Cổ Bích Mộc + 12 Trấn Thần Thạch.");
             }
             else {
-              if (O && O.recipes && O.recipes[t] && "truc_co_dan" !== t) {
+              if (M && M.recipes && M.recipes[t] && "truc_co_dan" !== t) {
                 S(i, "Đem nguyên liệu tới nữ tu Miếu Hoang để chế.");
               }
             }
-            var M = n.Tournament;
-            if (M && "function" == typeof M.phanThuong) {
-              var P = M.VONG_THUONG_DAN || 1;
+            var P = n.Tournament;
+            if (P && "function" == typeof P.phanThuong) {
+              var L = P.VONG_THUONG_DAN || 1;
               [["truc_co", "bảng Trúc Cơ"], ["", "Đại Hội Thăng Tiên"]].forEach(function (n) {
                 var e = n[0];
                 var h = n[1];
-                var a = M.phanThuong(P, !1, e) || [];
-                var r = M.phanThuong(P, !0, e) || [];
+                var a = P.phanThuong(L, !1, e) || [];
+                var r = P.phanThuong(L, !0, e) || [];
                 var o = function (n) {
                   for (var i = 0; i < n.length; i += 1)
                     if (n[i] && n[i].id === t) {
@@ -533,16 +550,16 @@
                 };
                 var c = o(a);
                 var u = c ? null : o(r);
-                var l = c || u;
-                if (l) {
-                  S(i, "Thưởng " + h + " · " + (c ? "thắng từ vòng " + P : "vô địch") + (l.n > 1 ? " (×" + g(l.n) + ")" : "") + ".");
+                var _ = c || u;
+                if (_) {
+                  S(i, "Thưởng " + h + " · " + (c ? "thắng từ vòng " + L : "vô địch") + (_.n > 1 ? " (×" + g(_.n) + ")" : "") + ".");
                 }
               });
             }
-            if (M && "function" == typeof M.quaHang) {
+            if (P && "function" == typeof P.quaHang) {
               [["truc_co", "bảng Trúc Cơ"], ["luyen_khi", "Đại Hội Thăng Tiên"]].forEach(function (n) {
                 [[2, "hạng 2"], [3, "hạng 3–4"]].forEach(function (e) {
-                  (M.quaHang(n[0], e[0]) || []).forEach(function (h) {
+                  (P.quaHang(n[0], e[0]) || []).forEach(function (h) {
                     if (h.id === t && "linh_thach" !== t) {
                       S(i, "Thưởng " + n[1] + " · " + e[1] + (h.n > 1 ? " (×" + g(h.n) + ")" : "") + ".");
                     }
@@ -550,27 +567,27 @@
                 });
               });
             }
-            var L = n.ChienBang;
-            if (L && L.PHAN_THUONG_HANG) {
+            var G = n.ChienBang;
+            if (G && G.PHAN_THUONG_HANG) {
               [2, 3, 4, 5].forEach(function (n) {
-                (L.PHAN_THUONG_HANG[n] || []).forEach(function (e) {
+                (G.PHAN_THUONG_HANG[n] || []).forEach(function (e) {
                   if (e.id === t && "linh_thach" !== t) {
                     S(i, "Thưởng Tán Tu Chiến Bảng · hạng " + n + " lúc chốt.");
                   }
                 });
               });
             }
-            if (L && Array.isArray(L.PHAN_THUONG)) {
-              L.PHAN_THUONG.forEach(function (n) {
+            if (G && Array.isArray(G.PHAN_THUONG)) {
+              G.PHAN_THUONG.forEach(function (n) {
                 if (n && n.id === t) {
                   S(i, "Thưởng Tán Tu Chiến Bảng · giữ hạng tới giờ chốt.");
                 }
               });
             }
-            var G = n.Quest && n.Quest.STAGE_REWARD;
-            if (G) {
-              p(G).forEach(function (n) {
-                var e = G[n] && G[n].items;
+            var k = n.Quest && n.Quest.STAGE_REWARD;
+            if (k) {
+              p(k).forEach(function (n) {
+                var e = k[n] && k[n].items;
                 if (Array.isArray(e)) {
                   e.forEach(function (e) {
                     if (e && e[0] === t) {
@@ -580,130 +597,125 @@
                 }
               });
             }
-            var k = n.Quest;
-            if (k && "function" == typeof k.seedTaskList) {
-              k.seedTaskList().forEach(function (n) {
+            var B = n.Quest;
+            if (B && "function" == typeof B.seedTaskList) {
+              B.seedTaskList().forEach(function (n) {
                 var e = n && n.def;
                 if (e && e.item === t) {
                   S(i, 'Làm việc Dược Công "' + c(e.shortName || e.name, e.id) + '" của Đại Phu' + (e.place ? " · " + e.place : "") + ".");
                 }
               });
             }
-            if (k && k.HANG_DONG_KEY === t) {
+            if (B && B.HANG_DONG_KEY === t) {
               S(i, "Rơi khi hạ Thạch Giáp Yêu trong Hang Động, lúc còn cần mở Linh Dược Rương.");
             }
-            if (k && k.MANH_HA === t) {
+            if (B && B.MANH_HA === t) {
               S(i, "Yêu quái nhả ra trong lúc làm nhiệm vụ tìm Bí Tịch (Luyện Khí 4).");
             }
-            var B = { linh_tuyen_thuy: "Vật phẩm của bản cũ — nhiệm vụ nay không còn múc nước đầu nguồn." };
-            B[k && k.COM_LINH_ME || "bat_com_linh_me"] = "Huấn Sư Huynh trao khi nhận việc diệt yêu ở giai đoạn 5.";
-            B.truc_kiem = "Huấn Sư Huynh trao khi nhận việc diệt yêu ở giai đoạn 5.";
-            B.phuong_tu_khi_dan = "Vật phẩm của bản cũ — đan lô nay biết sẵn công thức Tụ Khí Đan.";
-            B[k && k.NON_LA || "non_la"] = "Tặng lúc vào game nếu chọn đội nón khi tạo nhân vật.";
-            B[k && k.PHI_DIEP || "phi_diep"] = "Trao ở đầu mạch Bí Tịch Luyện Khí 4 (Đại Phu hoặc Tàng Kinh Lão Nhân).";
-            B.linh_ke_can = "Yên Lãng Sơn: khi Tộc Trưởng còn khoảng 30–50% máu thì rơi một phần xuống đất, ai nhặt trước được.";
-            B.hac_tien = "Yên Lãng Sơn: thỉnh thoảng có Hạc Tiên lạc vào Vọng Nguyệt Đài — hạ nó có tỉ lệ thấp rơi món này.";
-            if (B[t]) {
-              S(i, B[t]);
+            var D = { linh_tuyen_thuy: "Vật phẩm của bản cũ — nhiệm vụ nay không còn múc nước đầu nguồn." };
+            D[B && B.COM_LINH_ME || "bat_com_linh_me"] = "Huấn Sư Huynh trao khi nhận việc diệt yêu ở giai đoạn 5.";
+            D.truc_kiem = "Huấn Sư Huynh trao khi nhận việc diệt yêu ở giai đoạn 5.";
+            D.phuong_tu_khi_dan = "Vật phẩm của bản cũ — đan lô nay biết sẵn công thức Tụ Khí Đan.";
+            D[B && B.NON_LA || "non_la"] = "Tặng lúc vào game nếu chọn đội nón khi tạo nhân vật.";
+            D[B && B.PHI_DIEP || "phi_diep"] = "Trao ở đầu mạch Bí Tịch Luyện Khí 4 (Đại Phu hoặc Tàng Kinh Lão Nhân).";
+            D.linh_ke_can = "Yên Lãng Sơn: khi Tộc Trưởng còn khoảng 30–50% máu thì rơi một phần xuống đất, ai nhặt trước được.";
+            D.hac_tien = "Yên Lãng Sơn: thỉnh thoảng có Hạc Tiên lạc vào Vọng Nguyệt Đài — hạ nó có tỉ lệ thấp rơi món này.";
+            if (D[t]) {
+              S(i, D[t]);
             }
             if (n.HuThien && n.HuThien.NGOC_PHU === t) {
               S(i, "Rơi khi hạ Thủ Vệ ở Ải 1 Sỹ Sách Điện (tối Chủ Nhật). Mỗi người mang tối đa 1; đủ 3 viên thì tông tự mở cửa Ải 1. Không vào túi đồ.");
             }
-            var D = n.Food;
-            if (D && Array.isArray(D.SHOP)) {
-              D.SHOP.forEach(function (n) {
+            var R = n.Food;
+            if (R && Array.isArray(R.SHOP)) {
+              R.SHOP.forEach(function (n) {
                 if (n && n.id === t) {
                   S(i, "Mua ở quán ăn · " + g(n.cost) + " Linh Thạch.");
                 }
               });
             }
-            var R = { thang_tien_lenh: "Chưa có đường nhận trong game.", sat_luc_y: "Chưa có đường nhận trong game.", tan_mo_y: "Chưa có đường nhận trong game." };
-            if (n.KhoiLoi) {
-              n.KhoiLoi.IDS.forEach(function (n) {
-                R[n] = "Chưa có đường nhận trong game.";
-              });
+            var Y = { thang_tien_lenh: "Chưa có đường nhận trong game.", sat_luc_y: "Chưa có đường nhận trong game.", tan_mo_y: "Chưa có đường nhận trong game." };
+            if (!i.length && Y[t]) {
+              S(i, Y[t]);
             }
-            if (!i.length && R[t]) {
-              S(i, R[t]);
+            var K = n.Fishing;
+            if (!(!K || K.COMMON_FISH !== t && K.SPIRIT_FISH !== t)) {
+              S(i, K.SPIRIT_FISH === t ? "Câu được ở hồ/suối — hiếm hơn cá thường." : "Câu được ở hồ/suối.");
             }
-            var Y = n.Fishing;
-            if (!(!Y || Y.COMMON_FISH !== t && Y.SPIRIT_FISH !== t)) {
-              S(i, Y.SPIRIT_FISH === t ? "Câu được ở hồ/suối — hiếm hơn cá thường." : "Câu được ở hồ/suối.");
-            }
-            var K = n.Loot;
-            if (K) {
-              var x = K.BITICH_GIUA_TRAN;
-              if (x && (x.ITEMS || []).indexOf(t) >= 0) {
-                S(i, "Văng ra giữa trận từ " + (x.BOSSES || []).map(y).join(" hoặc ") + " — bốc thăm trong người có công.");
+            var x = n.Loot;
+            if (x) {
+              var F = x.BITICH_GIUA_TRAN;
+              if (F && (F.ITEMS || []).indexOf(t) >= 0) {
+                S(i, "Văng ra giữa trận từ " + (F.BOSSES || []).map(y).join(" hoặc ") + " — bốc thăm trong người có công.");
               }
-              var F = K.PHONG_SONG_DUC;
-              if (F && F.ITEM === t) {
-                S(i, "Văng ra giữa trận từ " + y(F.BOSS) + " — bốc thăm trong người có công.");
+              var w = x.PHONG_SONG_DUC;
+              if (w && w.ITEM === t) {
+                S(i, "Văng ra giữa trận từ " + y(w.BOSS) + " — bốc thăm trong người có công.");
               }
-              p(K.YEU_DAN).forEach(function (n) {
-                if (K.YEU_DAN[n] === t) {
+              p(x.YEU_DAN).forEach(function (n) {
+                if (x.YEU_DAN[n] === t) {
                   S(i, "Rơi giữa trận từ " + y(n) + ".");
                 }
               });
-              p(K.YEU_DAN_CHOT_HA).forEach(function (n) {
-                if (K.YEU_DAN_CHOT_HA[n] === t) {
+              p(x.YEU_DAN_CHOT_HA).forEach(function (n) {
+                if (x.YEU_DAN_CHOT_HA[n] === t) {
                   S(i, "Rơi khi hạ " + y(n) + ".");
                 }
               });
-              if (K.HUYET_SAC_BOSS_ITEM === t) {
-                S(i, "Rơi từ ba boss Huyết Xích Cấm Địa (" + (K.HUYET_SAC_BOSSES || []).map(y).join(" · ") + ") — mỗi người có công một lần bốc.");
+              if (x.HUYET_SAC_BOSS_ITEM === t) {
+                S(i, "Rơi từ ba boss Huyết Xích Cấm Địa (" + (x.HUYET_SAC_BOSSES || []).map(y).join(" · ") + ") — mỗi người có công một lần bốc.");
               }
-              if (K.HUYET_SAC_LONG_TUONG && K.HUYET_SAC_LONG_TUONG.ITEM === t) {
-                S(i, "Rơi từ ba boss Huyết Xích Cấm Địa (" + (K.HUYET_SAC_BOSSES || []).map(y).join(" · ") + ") · " + String(100 * K.HUYET_SAC_LONG_TUONG.CHANCE).replace(".", ",") + "%, mỗi người có công một lần bốc.");
+              if (x.HUYET_SAC_LONG_TUONG && x.HUYET_SAC_LONG_TUONG.ITEM === t) {
+                S(i, "Rơi từ ba boss Huyết Xích Cấm Địa (" + (x.HUYET_SAC_BOSSES || []).map(y).join(" · ") + ") · " + String(100 * x.HUYET_SAC_LONG_TUONG.CHANCE).replace(".", ",") + "%, mỗi người có công một lần bốc.");
               }
-              if (K.HUYET_BUC_CHUONG && K.HUYET_BUC_CHUONG.ITEM === t) {
-                S(i, "Rơi từ ba boss Huyết Xích Cấm Địa (" + (K.HUYET_SAC_BOSSES || []).map(y).join(" · ") + ") · " + s(K.HUYET_BUC_CHUONG.CHANCE) + ", mỗi người có công một lần bốc. Cũng có trong rương Tế Đàn Yên Lãng Sơn.");
+              if (x.HUYET_BUC_CHUONG && x.HUYET_BUC_CHUONG.ITEM === t) {
+                S(i, "Rơi từ ba boss Huyết Xích Cấm Địa (" + (x.HUYET_SAC_BOSSES || []).map(y).join(" · ") + ") · " + s(x.HUYET_BUC_CHUONG.CHANCE) + ", mỗi người có công một lần bốc. Cũng có trong rương Tế Đàn Yên Lãng Sơn.");
               }
-              if (K.HUYET_SAC_SONG_KICH && K.HUYET_SAC_SONG_KICH.ITEM === t) {
-                S(i, "Rơi từ ba boss Huyết Xích Cấm Địa (" + (K.HUYET_SAC_BOSSES || []).map(y).join(" · ") + ") · rất hiếm, mỗi người có công một lần bốc. Cũng có trong rương Tế Đàn Yên Lãng Sơn và rơi từ kho bảo vật Sỹ Sách Điện (mỗi loại tối đa 1 mỗi bản).");
+              if (x.HUYET_SAC_SONG_KICH && x.HUYET_SAC_SONG_KICH.ITEM === t) {
+                S(i, "Rơi từ ba boss Huyết Xích Cấm Địa (" + (x.HUYET_SAC_BOSSES || []).map(y).join(" · ") + ") · rất hiếm, mỗi người có công một lần bốc. Cũng có trong rương Tế Đàn Yên Lãng Sơn và rơi từ kho bảo vật Sỹ Sách Điện (mỗi loại tối đa 1 mỗi bản).");
               }
-              if (K.TONG_MON_LENH_ITEM === t) {
+              if (x.TONG_MON_LENH_ITEM === t) {
                 if (n.Sect && n.Sect.GIA_LENH) {
                   S(i, "Mua ở Tông Môn Quản Sự (Thành Thăng Long) · " + g(n.Sect.GIA_LENH) + " Linh Thạch.");
                 }
-                p(K.TONG_MON_LENH).forEach(function (n) {
-                  S(i, "Đòn chót " + y(n) + " · " + s(K.TONG_MON_LENH[n]) + ".");
+                p(x.TONG_MON_LENH).forEach(function (n) {
+                  S(i, "Đòn chót " + y(n) + " · " + s(x.TONG_MON_LENH[n]) + ".");
                 });
               }
-              if ((K.RARE_GEAR || []).indexOf(t) >= 0) {
+              if ((x.RARE_GEAR || []).indexOf(t) >= 0) {
                 S(i, "Bốc thăm trang bị hiếm khi hạ bất kỳ yêu thú nào.");
               }
-              var w = K.HO_PHAP_MA_BAO;
-              if (w && w.ITEMS.indexOf(t) >= 0) {
-                S(i, "Đòn chót " + y(w.TYPE) + " (hộ pháp Song Dực Ma Báo) — chắc chắn một trong " + w.ITEMS.length + " món.");
+              var j = x.HO_PHAP_MA_BAO;
+              if (j && j.ITEMS.indexOf(t) >= 0) {
+                S(i, "Đòn chót " + y(j.TYPE) + " (hộ pháp Song Dực Ma Báo) — chắc chắn một trong " + j.ITEMS.length + " món.");
               }
-              if ("xich_long_huyet" === t && o(K.XICH_LONG_HUYET_CHANCE)) {
-                S(i, "Rơi từ Thần Thú Xích Long · " + s(K.XICH_LONG_HUYET_CHANCE) + ".");
+              if ("xich_long_huyet" === t && o(x.XICH_LONG_HUYET_CHANCE)) {
+                S(i, "Rơi từ Thần Thú Xích Long · " + s(x.XICH_LONG_HUYET_CHANCE) + ".");
               }
-              if (K.MA_BAO_THANH_TAM_Y && K.MA_BAO_THANH_TAM_Y.ITEM === t) {
-                S(i, "Rơi từ Song Dực Ma Báo · " + s(K.MA_BAO_THANH_TAM_Y.CHANCE) + ".");
+              if (x.MA_BAO_THANH_TAM_Y && x.MA_BAO_THANH_TAM_Y.ITEM === t) {
+                S(i, "Rơi từ Song Dực Ma Báo · " + s(x.MA_BAO_THANH_TAM_Y.CHANCE) + ".");
               }
-              if (K.MA_BAO_MA_HON_PHE && K.MA_BAO_MA_HON_PHE.ITEM === t) {
-                S(i, "Rơi từ Song Dực Ma Báo · " + s(K.MA_BAO_MA_HON_PHE.CHANCE) + ".");
+              if (x.MA_BAO_MA_HON_PHE && x.MA_BAO_MA_HON_PHE.ITEM === t) {
+                S(i, "Rơi từ Song Dực Ma Báo · " + s(x.MA_BAO_MA_HON_PHE.CHANCE) + ".");
               }
-              (K.MA_BAO_BI_TICH_KET_DAN || []).concat(K.MA_BAO_HOANG_LOI_THUONG ? [K.MA_BAO_HOANG_LOI_THUONG] : [], K.MA_BAO_BANG_LINH_KIEM ? [K.MA_BAO_BANG_LINH_KIEM] : []).forEach(function (n) {
+              (x.MA_BAO_BI_TICH_KET_DAN || []).concat(x.MA_BAO_HOANG_LOI_THUONG ? [x.MA_BAO_HOANG_LOI_THUONG] : [], x.MA_BAO_BANG_LINH_KIEM ? [x.MA_BAO_BANG_LINH_KIEM] : [], x.MA_BAO_CUU_U_MA_TRAO ? [x.MA_BAO_CUU_U_MA_TRAO] : [], x.MA_BAO_PHI_LONG ? [x.MA_BAO_PHI_LONG] : []).forEach(function (n) {
                 if (n.ITEM === t) {
                   S(i, "Rơi từ Song Dực Ma Báo · " + s(n.CHANCE) + ".");
                 }
               });
-              if ((K.MA_BAO_Y_PHUC || []).indexOf(t) >= 0) {
-                S(i, "Rơi từ Song Dực Ma Báo · " + s(K.MA_BAO_Y_PHUC_CHANCE) + " (một trong " + K.MA_BAO_Y_PHUC.length + " bộ).");
+              if ((x.MA_BAO_Y_PHUC || []).indexOf(t) >= 0) {
+                S(i, "Rơi từ Song Dực Ma Báo · " + s(x.MA_BAO_Y_PHUC_CHANCE) + " (một trong " + x.MA_BAO_Y_PHUC.length + " bộ).");
               }
-              if (K.MA_BAO_QUAN_DUI_ITEM === t && o(K.MA_BAO_QUAN_DUI_CHANCE)) {
-                S(i, "Rơi từ Song Dực Ma Báo · " + s(K.MA_BAO_QUAN_DUI_CHANCE) + ".");
+              if (x.MA_BAO_QUAN_DUI_ITEM === t && o(x.MA_BAO_QUAN_DUI_CHANCE)) {
+                S(i, "Rơi từ Song Dực Ma Báo · " + s(x.MA_BAO_QUAN_DUI_CHANCE) + ".");
               }
-              var j = K.GIUA_TRAN;
-              if (j && j.BOSSES) {
-                var V = [];
-                p(j.BOSSES).forEach(function (n) {
-                  var i = j.BOSSES[n] || {};
+              var V = x.GIUA_TRAN;
+              if (V && V.BOSSES) {
+                var q = [];
+                p(V.BOSSES).forEach(function (n) {
+                  var i = V.BOSSES[n] || {};
                   var e = null;
-                  if (j.PHA_CANH === t) {
+                  if (V.PHA_CANH === t) {
                     e = i.phaCanh;
                   }
                   else {
@@ -711,82 +723,82 @@
                       e = i.them[t];
                     }
                     else {
-                      if (j.TRAN_BAN && o(j.TRAN_BAN[t])) {
-                        e = i.khongTranBan ? null : j.TRAN_BAN[t];
+                      if (V.TRAN_BAN && o(V.TRAN_BAN[t])) {
+                        e = i.khongTranBan ? null : V.TRAN_BAN[t];
                       }
                       else {
-                        if (j.PHU && o(j.PHU[t])) {
-                          e = j.PHU[t] * (null != i.heSoPhu ? i.heSoPhu : 1);
+                        if (V.PHU && o(V.PHU[t])) {
+                          e = V.PHU[t] * (null != i.heSoPhu ? i.heSoPhu : 1);
                         }
                       }
                     }
                   }
                   if (o(e) && e > 0) {
-                    V.push(N(n) + " " + s(e));
+                    q.push(A(n) + " " + s(e));
                   }
                 });
-                if (V.length) {
-                  S(i, "Văng ra giữa trận boss: " + V.join(" · ") + ".");
+                if (q.length) {
+                  S(i, "Văng ra giữa trận boss: " + q.join(" · ") + ".");
                 }
               }
             }
-            var q = n.YenLang;
-            if (q) {
-              if ((q.DO_RUONG || []).indexOf(t) >= 0) {
+            var Q = n.YenLang;
+            if (Q) {
+              if ((Q.DO_RUONG || []).indexOf(t) >= 0) {
                 S(i, "Rương Tế Đàn Yên Lãng Sơn (mỗi người một rương) · " + ("linh_thach" === t ? "chắc chắn." : "tỉ lệ thấp."));
               }
-              if ((q.DO_THAO || []).indexOf(t) >= 0) {
+              if ((Q.DO_THAO || []).indexOf(t) >= 0) {
                 S(i, "Hái bụi linh thảo ở Sơn Đạo Yên Lãng Sơn · tỉ lệ thấp.");
               }
             }
-            var Q = n.LuyenQuy;
-            var X = n.ChinhDao;
-            if (Q && t === Q.PHIEN) {
-              S(i, "Thỉnh ở Sứ Giả Ma Đạo (Ma Động) · " + g(Q.GIA_PHIEN) + " Linh Thạch · cần Trúc Cơ, xong mạch chính khúc ba.");
+            var X = n.LuyenQuy;
+            var W = n.ChinhDao;
+            if (X && t === X.PHIEN) {
+              S(i, "Thỉnh ở Sứ Giả Ma Đạo (Ma Động) · " + g(X.GIA_PHIEN) + " Linh Thạch · cần Trúc Cơ, xong mạch chính khúc ba.");
             }
-            if (X && t === X.HAP) {
-              S(i, "Thỉnh ở Chưởng Sự Chính Đạo (Chính Đảo) · " + g(X.GIA_HAP) + " Linh Thạch · cần Trúc Cơ, xong mạch chính khúc ba.");
+            if (W && t === W.HAP) {
+              S(i, "Thỉnh ở Chưởng Sự Chính Đạo (Chính Đảo) · " + g(W.GIA_HAP) + " Linh Thạch · cần Trúc Cơ, xong mạch chính khúc ba.");
             }
-            if (Q && t === Q.AM_HON) {
+            if (X && t === X.AM_HON) {
               S(i, "Luyện trong Hồn Phiên từ các loại hồn thu được.");
             }
-            if (X && t === X.KIEM_LINH) {
+            if (W && t === W.KIEM_LINH) {
               S(i, "Luyện trong Kiếm Hạp từ Chính Khí, Hiệp Nghĩa Lệnh, Trừ Ma Lệnh.");
             }
-            if (Q && t === Q.TU_SI_HON) {
+            if (X && t === X.TU_SI_HON) {
               S(i, "Mang Hồn Phiên hạ tu sĩ khác (đồ sát hoặc hạ Chính tu) — có tỉ lệ thu được.");
             }
-            if (X && t === X.TRU_MA) {
+            if (W && t === W.TRU_MA) {
               S(i, "Mang Kiếm Hạp hạ Ma tu, hoặc hạ kẻ đang đồ sát.");
             }
-            var W = n.Formations;
-            if (W && W.DAO_GIA_GIA && W.DEFS.dao_gia && t === W.DEFS.dao_gia.item) {
-              S(i, "Đổi ở Chưởng Sự Chính Đạo (Chính Đảo) · " + W.daoGiaGiaLine(n) + " · phải mang Kiếm Hạp.");
+            var z = n.Formations;
+            if (z && z.DAO_GIA_GIA && z.DEFS.dao_gia && t === z.DEFS.dao_gia.item) {
+              S(i, "Đổi ở Chưởng Sự Chính Đạo (Chính Đảo) · " + z.daoGiaGiaLine(n) + " · phải mang Kiếm Hạp.");
             }
-            var z = [];
+            var J = [];
             if (p(n.ENEMY_DEFS).forEach(function (i) {
               var e = n.ENEMY_DEFS[i];
               if (e && e.hon === t) {
-                m(z, N(i));
+                m(J, A(i));
               }
-            }), z.length) {
-              var J = X && X.VAT_LIEU && X.VAT_LIEU.indexOf(t) >= 0 ? "Kiếm Hạp" : /^thu_hon_/.test(t) ? "Hồn Phiên hoặc Kiếm Hạp" : "Hồn Phiên";
-              S(i, "Thu khi hạ " + z.join(" · ") + " — phải mang " + J + ".");
+            }), J.length) {
+              var Z = W && W.VAT_LIEU && W.VAT_LIEU.indexOf(t) >= 0 ? "Kiếm Hạp" : /^thu_hon_/.test(t) ? "Hồn Phiên hoặc Kiếm Hạp" : "Hồn Phiên";
+              S(i, "Thu khi hạ " + J.join(" · ") + " — phải mang " + Z + ".");
             }
-            var Z = n.LamLang;
-            if (Z && Array.isArray(Z.TIEM)) {
-              Z.TIEM.forEach(function (n) {
+            var $;
+            var nn = n.LamLang;
+            if (nn && Array.isArray(nn.TIEM)) {
+              nn.TIEM.forEach(function (n) {
                 if (n && n.id === t) {
                   S(i, "Đổi ở Tiệm Chiến Huân (Tông Môn Quản Sự) · " + g(n.gia) + " Chiến Huân" + (n.n > 1 ? " / " + n.n + " món" : "") + ".");
                 }
               });
             }
-            if (Z && t === Z.CHIEN_HUAN) {
-              S(i, "Bí Cảnh Lãm Làng · thắng " + Z.THUONG.thang.chienHuan + ", thua " + Z.THUONG.thua.chienHuan + ".");
+            if (nn && t === nn.CHIEN_HUAN) {
+              S(i, "Bí Cảnh Lãm Làng · thắng " + nn.THUONG.thang.chienHuan + ", thua " + nn.THUONG.thua.chienHuan + ".");
               S(i, "Nhiệm vụ tông môn và Tông Môn Chiến.");
             }
-            var $ = n.HacThi;
-            if ($) {
+            if (($ = n.HacThi)) {
               if (t === $.QUY_DIEN) {
                 S(i, "Lão Ăn Mày Gù (Ma Động) trao khi đủ 3 Mảnh Giấy Ám Hiệu — giai đoạn " + $.GD.AM_HIEU + ".");
               }
@@ -811,14 +823,14 @@
                 S(i, "Rơi từ " + c(h.name, e) + " khi đang làm giai đoạn " + ($ ? $.GD.AM_HIEU : 27) + ".");
               }
             });
-            var nn = n.OPTIONS && n.OPTIONS.OUTFITS;
-            if (Array.isArray(nn) && nn.indexOf(t) >= 0) {
+            var tn = n.OPTIONS && n.OPTIONS.OUTFITS;
+            if (Array.isArray(tn) && tn.indexOf(t) >= 0) {
               S(i, "Chọn khi tạo nhân vật, hoặc đổi ở Tủ Ngoại Hình · " + g(n.AppearanceShop && n.AppearanceShop.COST || 1) + " Linh Thạch.");
             }
             U().forEach(function (n) {
               for (var e = [].concat(Array.isArray(n.props) ? n.props : []).concat(Array.isArray(n.interactables) ? n.interactables : []), h = 0; h < e.length; h += 1) {
                 var a = e[h];
-                if (a && ((a.itemId || a.rewardItem || a.item) === t || a.id === t || a.type === t || A[a.type] === t || a.name === f(t))) {
+                if (a && ((a.itemId || a.rewardItem || a.item) === t || a.id === t || a.type === t || N[a.type] === t || a.name === f(t))) {
                   S(i, "Thu thập hoặc tương tác tại " + c(n.name, n.id) + ".");
                   break;
                 }
@@ -956,6 +968,12 @@
                 if (h.MA_BAO_MA_HON_PHE) {
                   m(e, h.MA_BAO_MA_HON_PHE.ITEM);
                 }
+                if (h.MA_BAO_CUU_U_MA_TRAO) {
+                  m(e, h.MA_BAO_CUU_U_MA_TRAO.ITEM);
+                }
+                if (h.MA_BAO_PHI_LONG) {
+                  m(e, h.MA_BAO_PHI_LONG.ITEM);
+                }
                 (h.MA_BAO_BI_TICH_KET_DAN || []).forEach(function (n) {
                   m(e, n.ITEM);
                 });
@@ -1024,10 +1042,10 @@
           O(r, "Tốc độ", e.speed);
           O(r, "Rơi ra", a.join(" · "));
           O(r, "Hồi sinh", o(e.respawnSec) ? g(e.respawnSec) + " giây" : "");
-          var l = /Yêu Thú Cấp\s*(\d+)/.exec(e.name || "");
-          var _ = !!e.isBoss || !!l;
+          var _ = /Yêu Thú Cấp\s*(\d+)/.exec(e.name || "");
+          var l = !!e.isBoss || !!_;
           var s = n.Enemy && n.Enemy.bossLabel ? n.Enemy.bossLabel(e) : null;
-          t.push(v("enemy:" + i, "enemies", e.name, e.isBoss ? "BOSS · CẤP " + c(e.level, "?") : "QUÁI · CẤP " + c(e.level, "?"), e.desc || "Sinh vật hostile được ghi nhận trong bản đồ.", { glyph: e.isBoss ? "☠" : "♞", categories: [_ ? "bosses" : "monsters"], group: _ ? l ? l[1] : null : e.level, shortName: l && s ? s.ten : "", stats: r, use: "Đánh bại để nhận kinh nghiệm, Linh Thạch và vật phẩm rơi ra.", obtain: a.length ? "Vật phẩm rơi: " + a.join(" · ") + "." : "Chưa ghi nhận vật phẩm rơi cố định.", tags: [i, e.name, e.isBoss ? "boss" : "quái"] }));
+          t.push(v("enemy:" + i, "enemies", e.name, e.isBoss ? "BOSS · CẤP " + c(e.level, "?") : "QUÁI · CẤP " + c(e.level, "?"), e.desc || "Sinh vật hostile được ghi nhận trong bản đồ.", { glyph: e.isBoss ? "☠" : "♞", categories: [l ? "bosses" : "monsters"], group: l ? _ ? _[1] : null : e.level, shortName: _ && s ? s.ten : "", stats: r, use: "Đánh bại để nhận kinh nghiệm, Linh Thạch và vật phẩm rơi ra.", obtain: a.length ? "Vật phẩm rơi: " + a.join(" · ") + "." : "Chưa ghi nhận vật phẩm rơi cố định.", tags: [i, e.name, e.isBoss ? "boss" : "quái"] }));
         }
       });
       return t;
@@ -1046,7 +1064,7 @@
       var r = t.partyDungeon;
       if (r) {
         O(h, "Số người", c(r.minMembers, "1") + "–" + c(r.maxMembers, "6"));
-        O(h, "Thời lượng", l(1e3 * (0 | r.durationSec)));
+        O(h, "Thời lượng", _(1e3 * (0 | r.durationSec)));
       }
       var o = [];
       (Array.isArray(t.enemies) ? t.enemies : []).forEach(function (t) {
@@ -1075,7 +1093,7 @@
       var a = n.Fishing;
       var r = n.Tournament;
       var u = n.Forge;
-      var _ = n.Gacha;
+      var l = n.Gacha;
       var p = n.HuyetSac;
       var m = n.DoSat;
       e.push(B("linh-dien", "Linh Điền", "HOẠT ĐỘNG · TRỒNG TRỌT", "Gieo linh dược ở Vườn Cá Nhân, tưới đủ nước rồi thu hoạch.", [["Giống đang có", g(h.length)], ["Chu kỳ", d(function () {
@@ -1104,22 +1122,22 @@
         y.push("Yêu Đan Cấp 3 (ghép 3 Mảnh Yêu Đan)");
         e.push(B("dan-lo", "Đan Lô", "HOẠT ĐỘNG · LUYỆN ĐAN", "Luyện đan dược từ linh thảo và yêu đan.", [["Đan luyện được", y.join(" · ")]], "Đứng cạnh Đan Lô, chọn đan đủ nguyên liệu rồi luyện. Một số đan mở theo cảnh giới.", "Đan Lô trong làng (Chân Núi Tản Viên) hoặc trong Vườn Cá Nhân.", ["dan lo", "luyện đan"]));
       }
-      if (_) {
-        var N = _.POOLS ? Object.keys(_.POOLS).map(function (n) {
-          return _.POOLS[n];
-        }) : [{ pool: _.POOL, cost: _.COST }];
-        e.push(B("tang-kinh-cac", "Tàng Kinh Các", "HOẠT ĐỘNG · CƠ DUYÊN", "Rút bí tịch; trùng quyển được hoàn một phần Linh Thạch.", N.map(function (n) {
+      if (l) {
+        var A = l.POOLS ? Object.keys(l.POOLS).map(function (n) {
+          return l.POOLS[n];
+        }) : [{ pool: l.POOL, cost: l.COST }];
+        e.push(B("tang-kinh-cac", "Tàng Kinh Các", "HOẠT ĐỘNG · CƠ DUYÊN", "Rút bí tịch; trùng quyển được hoàn một phần Linh Thạch.", A.map(function (n) {
           return [c(n.label, "Tủ sách"), g(n.cost) + " Linh Thạch/lượt · " + g(Array.isArray(n.pool) ? n.pool.length : 0) + " quyển" + (n.free ? " · 1 lượt miễn phí/ngày" : "")];
         }), "Chọn tủ, rút 1 hoặc 10 lượt.", "Tàng Kinh Lão Nhân ở Chân Núi Tản Viên.", ["gacha", "rút thưởng", "bi tich"]));
       }
       if (r) {
-        var A = function (n) {
+        var N = function (n) {
           return (n || []).map(function (n) {
             return n + ":" + ((t = 0 | r.PHUT_KHAI_HOI) < 10 ? "0" : "") + t;
             var t;
           }).join(" · ");
         };
-        e.push(B("dai-hoi", "Đại Hội Tu Tiên", "SỰ KIỆN · ĐÀI LUẬN VÕ", "Đấu loại trực tiếp, thắng lên vòng, vô địch nhận thưởng lớn.", [["Giờ khai hội", A(r.GIO_KHAI)], ["Bảng Trúc Cơ", A(r.GIO_KHAI_TRUC_CO)], ["Điều kiện", "Luyện Khí tầng " + c(r.TANG_TOI_THIEU, "7") + " trở lên"], ["Ghi danh", "Mở " + Math.round((r.MO_DANG_KY_TRUOC || 0) / 6e4) + " phút trước giờ khai hội"], ["Mỗi trận", Math.round((r.TRAN_KEO_DAI || 9e4) / 1e3) + " giây"], ["Số người", c(r.TOI_THIEU, "?") + "–" + c(r.TOI_DA, "?") + " mỗi bảng"]], "Ghi danh ở Chấp Sự Đại Hội, vào Phòng Chờ trước giờ khai hội.", "Chấp Sự Đại Hội.", ["dai hoi", "su kien", "pvp"]));
+        e.push(B("dai-hoi", "Đại Hội Tu Tiên", "SỰ KIỆN · ĐÀI LUẬN VÕ", "Đấu loại trực tiếp, thắng lên vòng, vô địch nhận thưởng lớn.", [["Giờ khai hội", N(r.GIO_KHAI)], ["Bảng Trúc Cơ", N(r.GIO_KHAI_TRUC_CO)], ["Điều kiện", "Luyện Khí tầng " + c(r.TANG_TOI_THIEU, "7") + " trở lên"], ["Ghi danh", "Mở " + Math.round((r.MO_DANG_KY_TRUOC || 0) / 6e4) + " phút trước giờ khai hội"], ["Mỗi trận", Math.round((r.TRAN_KEO_DAI || 9e4) / 1e3) + " giây"], ["Số người", c(r.TOI_THIEU, "?") + "–" + c(r.TOI_DA, "?") + " mỗi bảng"]], "Ghi danh ở Chấp Sự Đại Hội, vào Phòng Chờ trước giờ khai hội.", "Chấp Sự Đại Hội.", ["dai hoi", "su kien", "pvp"]));
       }
       var E = n.ChienBang;
       if (E) {
@@ -1132,17 +1150,17 @@
       }
       var v = n.LamLang;
       if (v) {
-        e.push(B("lam-lang", "Bí Cảnh Lãm Làng", "BÍ CẢNH · TÔNG MÔN", "Cả tông cùng giữ Linh Mạch Lãm Làng, hạ Tà Soái.", [["Mở", "Tự do trong ngày · mỗi tông 1 lần/ngày"], ["Người mở", "Tông Chủ / Trưởng Lão"], ["Số người", c(v.TOI_THIEU, "?") + "–" + c(v.TOI_DA, "?") + (o(v.NGUOI_SAN) ? " (nên " + v.NGUOI_SAN + "–" + v.CHUAN_NGUOI + ")" : "")], ["Thời lượng", o(v.TONG_MS) ? l(v.TONG_MS) : ""], ["Thưởng thắng", v.THUONG ? g(v.THUONG.thang.linhThach) + " Linh Thạch · " + v.THUONG.thang.chienHuan + " Chiến Huân" : ""]], "Tông Chủ hoặc Trưởng Lão mở, đồng môn bấm thẻ mời để vào.", "Mở tại Tông Môn Quản Sự (Thành Thăng Long).", ["lam lang", "bi canh", "tong mon"]));
+        e.push(B("lam-lang", "Bí Cảnh Lãm Làng", "BÍ CẢNH · TÔNG MÔN", "Cả tông cùng giữ Linh Mạch Lãm Làng, hạ Tà Soái.", [["Mở", "Tự do trong ngày · mỗi tông 1 lần/ngày"], ["Người mở", "Tông Chủ / Trưởng Lão"], ["Số người", c(v.TOI_THIEU, "?") + "–" + c(v.TOI_DA, "?") + (o(v.NGUOI_SAN) ? " (nên " + v.NGUOI_SAN + "–" + v.CHUAN_NGUOI + ")" : "")], ["Thời lượng", o(v.TONG_MS) ? _(v.TONG_MS) : ""], ["Thưởng thắng", v.THUONG ? g(v.THUONG.thang.linhThach) + " Linh Thạch · " + v.THUONG.thang.chienHuan + " Chiến Huân" : ""]], "Tông Chủ hoặc Trưởng Lão mở, đồng môn bấm thẻ mời để vào.", "Mở tại Tông Môn Quản Sự (Thành Thăng Long).", ["lam lang", "bi canh", "tong mon"]));
       }
       if (p) {
-        e.push(B("huyet-sac", "Huyết Xích Cấm Địa", "BÍ CẢNH · TỔ ĐỘI", "Ba tầng Rừng Mãng Xà, Lòng Đất, Đầm Lầy — mỗi tầng một boss Yêu Thú Cấp 2.", [["Số người", "1–6"], ["Thời lượng", "15 phút"], ["Lượt", "5 lượt/ngày (Trúc Cơ: 4)"], ["Phí", "100 Linh Thạch/người"], ["Cảnh giới", "Luyện Khí tầng 7 – Trúc Cơ Sơ Kỳ"]], "Đội trưởng đăng ký, cả đội có mặt ở Miếu Hoang. Hái Trúc Cơ Thảo, Cổ Bích Mộc trong bí cảnh.", "Nữ tu ở Miếu Hoang.", ["huyet sac", "bi canh", "to doi"]));
+        e.push(B("huyet-sac", "Huyết Xích Cấm Địa", "BÍ CẢNH · TỔ ĐỘI", "Ba tầng Rừng Mãng Xà, Lòng Đất, Đầm Lầy — mỗi tầng một boss Yêu Thú Cấp 2.", [["Số người", "1–6"], ["Thời lượng", "15 phút"], ["Lượt", "5 lượt/ngày (Trúc Cơ: 4)"], ["Phí", "100 Linh Thạch/người"], ["Cảnh giới", "Luyện Khí tầng 7 trở lên"]], "Đội trưởng đăng ký, cả đội có mặt ở Miếu Hoang. Hái Trúc Cơ Thảo, Cổ Bích Mộc trong bí cảnh.", "Nữ tu ở Miếu Hoang.", ["huyet sac", "bi canh", "to doi"]));
       }
       var O = n.YenLang;
       if (O) {
         var S = (O.DO_RUONG || []).map(function (n) {
           return f(n);
         });
-        e.push(B("yen-lang-son", "Yên Lãng Sơn", "BÍ CẢNH · TỔ ĐỘI", "Ba Trấn Sơn Bia và một Tộc Trưởng. Chuông ngân thì đứng yên, núi gào thì chạy.", [["Số người", O.TOI_THIEU + "–" + O.TOI_DA], ["Thời lượng", "Nhắm 8–10 phút · trần " + l(O.TONG_MS)], ["Lượt", O.LUOT_NGAY + " lượt/ngày (Trúc Cơ: " + O.LUOT_NGAY_TRUC_CO + ")"], ["Phí", "Miễn phí"], ["Cảnh giới", "Luyện Khí tầng 7–13"]], "Đội trưởng đăng ký, cả đội có mặt ở Miếu Hoang. Núi phát lệnh: vòng xám thì đứng yên, ngừng đánh; vòng đỏ thì chạy. Sai lệnh bị Thạch Hóa — choáng và mất máu.", "Nữ tu ở Miếu Hoang. Rương Tế Đàn (tỉ lệ thấp): " + S.join(", ") + ".", ["yen lang son", "bi canh", "to doi"]));
+        e.push(B("yen-lang-son", "Yên Lãng Sơn", "BÍ CẢNH · TỔ ĐỘI", "Ba Trấn Sơn Bia và một Tộc Trưởng. Chuông ngân thì đứng yên, núi gào thì chạy.", [["Số người", O.TOI_THIEU + "–" + O.TOI_DA], ["Thời lượng", "Nhắm 8–10 phút · trần " + _(O.TONG_MS)], ["Lượt", O.LUOT_NGAY + " lượt/ngày (Trúc Cơ: " + O.LUOT_NGAY_TRUC_CO + ")"], ["Phí", "Miễn phí"], ["Cảnh giới", "Luyện Khí tầng 7–13"]], "Đội trưởng đăng ký, cả đội có mặt ở Miếu Hoang. Núi phát lệnh: vòng xám thì đứng yên, ngừng đánh; vòng đỏ thì chạy. Sai lệnh bị Thạch Hóa — choáng và mất máu.", "Nữ tu ở Miếu Hoang. Rương Tế Đàn (tỉ lệ thấp): " + S.join(", ") + ".", ["yen lang son", "bi canh", "to doi"]));
       }
       var I = n.HacThi;
       if (I) {
@@ -1266,10 +1284,10 @@
         var t = null == n.group ? "?" : n.group;
         c[t] = (c[t] || 0) + 1;
       });
-      var l = i.filter(function (n) {
+      var _ = i.filter(function (n) {
         return n.id === h.state.selectedId;
       })[0] || i[0];
-      h.state.selectedId = l.id;
+      h.state.selectedId = _.id;
       i.forEach(function (n) {
         if (e) {
           var t = null == n.group ? "?" : n.group;
@@ -1283,18 +1301,18 @@
             a.list.appendChild(i);
           }
         }
-        var u = R("button", "encyclopedia-tile" + (n.id === l.id ? " is-selected" : ""));
+        var u = R("button", "encyclopedia-tile" + (n.id === _.id ? " is-selected" : ""));
         u.type = "button";
         u.dataset.entryId = n.id;
         u.dataset.kind = n.kind;
         u.title = n.name + " · " + n.eyebrow;
         u.setAttribute("aria-label", n.name + ", " + n.eyebrow + ". Mở chi tiết.");
-        u.setAttribute("aria-pressed", n.id === l.id ? "true" : "false");
+        u.setAttribute("aria-pressed", n.id === _.id ? "true" : "false");
         u.appendChild(K(n, !1));
-        var _ = R("span", "encyclopedia-row-copy");
-        _.appendChild(R("strong", "encyclopedia-row-name", e && n.shortName ? n.shortName : n.name));
-        _.appendChild(R("small", "encyclopedia-row-meta", n.eyebrow));
-        u.appendChild(_);
+        var l = R("span", "encyclopedia-row-copy");
+        l.appendChild(R("strong", "encyclopedia-row-name", e && n.shortName ? n.shortName : n.name));
+        l.appendChild(R("small", "encyclopedia-row-meta", n.eyebrow));
+        u.appendChild(l);
         u.addEventListener("click", function () {
           h.state.selectedId = n.id;
           w();
@@ -1305,7 +1323,7 @@
         });
         a.list.appendChild(u);
       });
-      V(l);
+      V(_);
     }
   }
   function j(n, t, i) {

@@ -2,7 +2,7 @@
  *  manifest.js — BẢNG KÊ TÀI NGUYÊN (SINH TỰ ĐỘNG — ĐỪNG SỬA TAY)
  * ----------------------------------------------------------------------------
  *  Sinh bởi: node tools/gen_asset_manifest.js
- *  Gồm 1136 file, tổng 53.06 MB.
+ *  Gồm 1140 file, tổng 53.44 MB.
  *
  *  Đường dẫn nào KHÔNG có trong bảng này thì bộ nạp coi như không tồn tại và
  *  bỏ qua ngay, không gọi mạng. Thêm ảnh mới vào assets/ mà quên chạy lại lệnh
@@ -85,6 +85,7 @@ window.PNTT.ASSET_MANIFEST = {
   "assets/items/icon_huyet_anh_y.png": 449,
   "assets/items/icon_huyet_kiem.png": 3321,
   "assets/items/icon_huyet_ma_liem.png": 3518,
+  "assets/items/icon_huyet_ma_phu.png": 4346,
   "assets/items/icon_huyet_ngoc_chi.png": 659,
   "assets/items/icon_iron_saber.png": 770,
   "assets/items/icon_iron_spear.png": 612,
@@ -428,11 +429,13 @@ window.PNTT.ASSET_MANIFEST = {
   "assets/sprites/fx/ma_hon_phe/gt_07.png": 5275,
   "assets/sprites/fx/ma_hon_phe/gt_09.png": 5435,
   "assets/sprites/fx/ma_hon_phe/gt_11.png": 5795,
+  "assets/sprites/fx/ma_trao.png": 319194,
   "assets/sprites/fx/ngu_loi_thuong_vu_no_add.png": 82009,
   "assets/sprites/fx/ngu_loi_thuong_vu_nut_add.png": 38585,
   "assets/sprites/fx/nguyet_quang.png": 102853,
   "assets/sprites/fx/no_lua.png": 14066,
   "assets/sprites/fx/phi_dao_xuyen.png": 90147,
+  "assets/sprites/fx/phi_long.png": 71885,
   "assets/sprites/fx/phong_doc/frame_4136.png": 70538,
   "assets/sprites/fx/phong_doc/frame_4137.png": 71532,
   "assets/sprites/fx/phong_doc/frame_4138.png": 79183,
@@ -1137,6 +1140,7 @@ window.PNTT.ASSET_MANIFEST = {
   "assets/weapons/hoang-loi-thuong.png": 7901,
   "assets/weapons/huyet-kiem.png": 226790,
   "assets/weapons/huyet-ma-liem.png": 2191,
+  "assets/weapons/huyet-ma-phu.png": 10455,
   "assets/weapons/luc-doc-cham.png": 3649,
   "assets/weapons/luc-tinh-kiem.png": 116868,
   "assets/weapons/phi-dao.png": 3898,
@@ -1223,6 +1227,7 @@ window.PNTT.ASSET_VERSIONS = {
   "assets/items/icon_huyet_anh_y.png": "285530c6a859",
   "assets/items/icon_huyet_kiem.png": "a89917046ed5",
   "assets/items/icon_huyet_ma_liem.png": "6443d81b614f",
+  "assets/items/icon_huyet_ma_phu.png": "0a668fd91573",
   "assets/items/icon_huyet_ngoc_chi.png": "922ad35c633f",
   "assets/items/icon_iron_saber.png": "a5314191ab8f",
   "assets/items/icon_iron_spear.png": "005927ea3c39",
@@ -1566,11 +1571,13 @@ window.PNTT.ASSET_VERSIONS = {
   "assets/sprites/fx/ma_hon_phe/gt_07.png": "75be88747e32",
   "assets/sprites/fx/ma_hon_phe/gt_09.png": "d0e769d5533f",
   "assets/sprites/fx/ma_hon_phe/gt_11.png": "0542002a4ab4",
+  "assets/sprites/fx/ma_trao.png": "e10adf5a3d44",
   "assets/sprites/fx/ngu_loi_thuong_vu_no_add.png": "add44cd5e84e",
   "assets/sprites/fx/ngu_loi_thuong_vu_nut_add.png": "08190133d31d",
   "assets/sprites/fx/nguyet_quang.png": "be6d1b285409",
   "assets/sprites/fx/no_lua.png": "f5aa7924920a",
   "assets/sprites/fx/phi_dao_xuyen.png": "94183b5e9e26",
+  "assets/sprites/fx/phi_long.png": "822a5de388b6",
   "assets/sprites/fx/phong_doc/frame_4136.png": "ecf427a4676f",
   "assets/sprites/fx/phong_doc/frame_4137.png": "814a3687d806",
   "assets/sprites/fx/phong_doc/frame_4138.png": "6e6487d67b82",
@@ -2275,6 +2282,7 @@ window.PNTT.ASSET_VERSIONS = {
   "assets/weapons/hoang-loi-thuong.png": "53743a898373",
   "assets/weapons/huyet-kiem.png": "6678f66f9b51",
   "assets/weapons/huyet-ma-liem.png": "11361d6542b4",
+  "assets/weapons/huyet-ma-phu.png": "3d87260fb30d",
   "assets/weapons/luc-doc-cham.png": "ae8beaafc530",
   "assets/weapons/luc-tinh-kiem.png": "55dcb7fc52a4",
   "assets/weapons/phi-dao.png": "83503027fd3d",

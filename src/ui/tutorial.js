@@ -102,7 +102,8 @@
     return t.left < n.right && t.right > n.left && t.top < n.bottom && t.bottom > n.top;
   }
   var C = ["#dpad", "#touch-buttons"];
-  function k(t, n, e, r, a) {
+  var k = ["#hud-left", "#hud-btns", "#hud-journal", "#hud-right", "#hud-target"];
+  function _(t, n, e, r, a) {
     r = r || i.card;
     a = a || i.ring;
     var o = g(t);
@@ -127,25 +128,31 @@
       f = p(o, 6);
       var v = g(n);
       if (v) {
-        var k = v.getBoundingClientRect();
-        f = { left: Math.min(f.left, k.left), top: Math.min(f.top, k.top), right: Math.max(f.right, k.right), bottom: Math.max(f.bottom, k.bottom) };
+        var _ = v.getBoundingClientRect();
+        f = { left: Math.min(f.left, _.left), top: Math.min(f.top, _.top), right: Math.max(f.right, _.right), bottom: Math.max(f.bottom, _.bottom) };
       }
     }
     else {
       a.hidden = !0;
     }
-    for (var _ = 0; _ < C.length; _++) {
-      var H = g(C[_]);
-      if (H) {
-        for (var T = "touch-buttons" === H.id ? H.children : [H], A = 0; A < T.length; A++) {
-          var M = T[A].getBoundingClientRect();
-          if (M.width > 4 && M.height > 4) {
-            m.push(p(T[A], 2));
+    for (var H = 0; H < C.length; H++) {
+      var T = g(C[H]);
+      if (T) {
+        for (var A = "touch-buttons" === T.id ? T.children : [T], M = 0; M < A.length; M++) {
+          var w = A[M].getBoundingClientRect();
+          if (w.width > 4 && w.height > 4) {
+            m.push(p(A[M], 2));
           }
         }
       }
     }
-    function w(t, n, e) {
+    for (var L = 0; L < k.length; L++) {
+      var x = g(k[L]);
+      if (x) {
+        m.push(p(x, 4));
+      }
+    }
+    function E(t, n, e) {
       if (n < 8 || n + d > l - 8 || t < 8 || t + u > c - 8) {
         return !1;
       }
@@ -164,44 +171,47 @@
       }
       return !0;
     }
-    var L = [];
+    var S = [];
     if (f) {
-      var x = (f.left + f.right) / 2;
-      var E = (f.top + f.bottom) / 2;
-      var S = [x - u / 2, f.top - 14 - d, 0];
-      var D = [x - u / 2, f.bottom + 14, 0];
-      var B = [f.right + 14, E - d / 2, 1];
-      var I = [f.left - 14 - u, E - d / 2, 1];
-      L = x < c / 3 ? [B, S, D, I] : x > 2 * c / 3 ? [I, S, D, B] : [S, D, B, I];
+      var B = (f.left + f.right) / 2;
+      var D = (f.top + f.bottom) / 2;
+      var I = [B - u / 2, f.top - 14 - d, 0];
+      var N = [B - u / 2, f.bottom + 14, 0];
+      var U = [f.right + 14, D - d / 2, 1];
+      var q = [f.left - 14 - u, D - d / 2, 1];
+      S = B < c / 3 ? [U, I, N, q] : B > 2 * c / 3 ? [q, I, N, U] : [I, N, U, q];
     }
     if (!("top" !== e && f)) {
-      L.unshift(s().concat(0));
+      S.unshift(s().concat(0));
     }
-    for (var N = null, U = null, O = 0; O < 2 && null == N; O++)
-      for (var q = 0; q < L.length && null == N; q++) {
-        var G = Math.max(8, Math.min(c - u - 8, L[q][0]));
-        var R = [L[q][1]];
-        if (L[q][2]) {
-          R.push(h.bottom, h.top - d);
+    for (var O = 0; O < 2 && ("top" === e || !f); O++)
+      for (var G = O ? l - d - 8 : 12, R = 0; R <= c / 2; R += 24)
+        S.push([c / 2 - u / 2 + R, G, 0], [c / 2 - u / 2 - R, G, 0]);
+    for (var W = null, F = null, K = 0; K < 2 && null == W; K++)
+      for (var Q = 0; Q < S.length && null == W; Q++) {
+        var Y = Math.max(8, Math.min(c - u - 8, S[Q][0]));
+        var X = [S[Q][1]];
+        if (S[Q][2]) {
+          X.push(h.bottom, h.top - d);
         }
-        for (var W = 0; W < R.length; W++)
-          if (!(W > 0 && Math.abs(R[W] - R[0]) > 40) && w(G, R[W], 0 === O)) {
-            N = G;
-            U = R[W];
+        for (var j = 0; j < X.length; j++)
+          if (!(j > 0 && Math.abs(X[j] - X[0]) > 40) && E(Y, X[j], 0 === K)) {
+            W = Y;
+            F = X[j];
             break;
           }
       }
-    if (null == N) {
-      var F = s();
-      N = F[0];
-      U = F[1];
+    if (null == W) {
+      var P = s();
+      W = P[0];
+      F = P[1];
     }
-    N = Math.max(8, Math.min(c - u - 8, N));
-    U = Math.max(8, Math.min(l - d - 8, U));
-    r.style.left = Math.round(N) + "px";
-    r.style.top = Math.round(U) + "px";
+    W = Math.max(8, Math.min(c - u - 8, W));
+    F = Math.max(8, Math.min(l - d - 8, F));
+    r.style.left = Math.round(W) + "px";
+    r.style.top = Math.round(F) + "px";
   }
-  function _() {
+  function H() {
     if (i.card) {
       i.card.hidden = !0;
     }
@@ -251,13 +261,13 @@
     o = !1;
     e.active = !1;
     e.step = -1;
-    _();
+    H();
   };
   e.reset = function (t) {
     var i = d();
     n.store.set(m(t || i && i.cfg && i.cfg.name), !1);
     e.active = !1;
-    _();
+    H();
   };
   e.debugStep = function (t) {
     if (e.active) {
@@ -275,25 +285,25 @@
       t.click();
     }
   };
-  var H = {};
-  function T() {
-    if (H.ring) {
-      H.ring.hidden = H.arrow.hidden = H.chip.hidden = !0;
+  var T = {};
+  function A() {
+    if (T.ring) {
+      T.ring.hidden = T.arrow.hidden = T.chip.hidden = !0;
     }
   }
-  var A = { el: null, id: null, doneAt: 0 };
-  function M() {
+  var M = { el: null, id: null, doneAt: 0 };
+  function w() {
     return t.Quest;
   }
-  function w() {
+  function L() {
     var n = t.TileMap && t.TileMap.data;
     return n && n.id;
   }
-  function L() {
+  function x() {
     return !(!t.HUD || !t.HUD.bagOpen);
   }
-  function x(t, n) {
-    if (!L()) {
+  function E(t, n) {
+    if (!x()) {
       return "#hud-left";
     }
     if (g('.bag-slot.selected[data-item="' + t + '"]')) {
@@ -306,22 +316,22 @@
     var i = '.bag-filter[data-filter="' + n + '"]';
     return g(i) ? i : g('.ht-muc[data-tab="trang-bi"]') ? '.ht-muc[data-tab="trang-bi"]' : null;
   }
-  function E(t, n, e, i) {
-    return L() ? g('.bag-slot.selected[data-item="' + t + '"]') ? "Bấm <b>" + e + "</b>." : "Chọn <b>" + n + "</b>" + ("vat-pham" === i ? " (mục Vật Phẩm)" : "") + " rồi bấm <b>" + e + "</b>." : (c() ? "Chạm vào <b>bảng nhân vật</b>" : "Bấm " + s("B") + " hoặc bấm vào <b>bảng nhân vật</b>") + " để mở Hành Trang.";
+  function S(t, n, e, i) {
+    return x() ? g('.bag-slot.selected[data-item="' + t + '"]') ? "Bấm <b>" + e + "</b>." : "Chọn <b>" + n + "</b>" + ("vat-pham" === i ? " (mục Vật Phẩm)" : "") + " rồi bấm <b>" + e + "</b>." : (c() ? "Chạm vào <b>bảng nhân vật</b>" : "Bấm " + s("B") + " hoặc bấm vào <b>bảng nhân vật</b>") + " để mở Hành Trang.";
   }
-  var S = [{ id: "cam_kiem", title: "Cầm Trúc Kiếm lên", bag: !0, when: function () {
-        var t = M();
+  var B = [{ id: "cam_kiem", title: "Cầm Trúc Kiếm lên", bag: !0, when: function () {
+        var t = w();
         return 5 === t.stage && !!t.flags.nhan_viec_ly_thanh && !t.daCamTrucKiem();
       }, done: function () {
-        return M().daCamTrucKiem();
+        return w().daCamTrucKiem();
       }, body: function () {
-        return E("truc_kiem", "Trúc Kiếm", "Trang Bị", "trang-bi");
+        return S("truc_kiem", "Trúc Kiếm", "Trang Bị", "trang-bi");
       }, target: function () {
-        return x("truc_kiem", "trang-bi");
+        return E("truc_kiem", "trang-bi");
       } }, { id: "auto", title: "Tự động đánh", when: function () {
-        var t = M();
+        var t = w();
         var n = u();
-        return 5 === t.stage && !!t.flags.nhan_viec_ly_thanh && t.daCamTrucKiem() && "thanh_truc_lam" === w() && !(n && n.autoOn) && t.kills < t.NEED_KILLS;
+        return 5 === t.stage && !!t.flags.nhan_viec_ly_thanh && t.daCamTrucKiem() && "thanh_truc_lam" === L() && !(n && n.autoOn) && t.kills < t.NEED_KILLS;
       }, done: function () {
         var t = u();
         return !(!t || !t.autoOn);
@@ -331,17 +341,17 @@
         return g("#btn-auto-touch") ? "#btn-auto-touch" : "#btn-auto";
       } }, { id: "an_com", title: "Ăn cơm để hồi sức", bag: !0, when: function () {
         var n = d();
-        var e = M();
+        var e = w();
         return !!n && n.hpMax > 0 && n.hp / n.hpMax < .5 && !n.downed && t.Inventory.has(e.COM_LINH_ME) && !e.flags.da_an_com_linh_me;
       }, done: function () {
-        var n = M();
+        var n = w();
         return !!n.flags.da_an_com_linh_me || !t.Inventory.has(n.COM_LINH_ME);
       }, body: function () {
-        return E(M().COM_LINH_ME, "Bát Cơm Linh Mễ", "Ăn", "vat-pham") + (L() ? "" : " Cơm hồi máu dần theo thời gian.");
+        return S(w().COM_LINH_ME, "Bát Cơm Linh Mễ", "Ăn", "vat-pham") + (x() ? "" : " Cơm hồi máu dần theo thời gian.");
       }, target: function () {
-        return x(M().COM_LINH_ME, "vat-pham");
+        return E(w().COM_LINH_ME, "vat-pham");
       } }, { id: "tuong_tac", title: "Nói chuyện · hái · xem", when: function () {
-        return (0 | M().stage) <= 2 && !!(t.Targeting && t.Targeting.mucTieuTuongTac && t.Targeting.mucTieuTuongTac());
+        return (0 | w().stage) <= 2 && !!(t.Targeting && t.Targeting.mucTieuTuongTac && t.Targeting.mucTieuTuongTac());
       }, done: function () {
         return !(!t.HUD || !t.HUD.dialogOpen);
       }, body: function () {
@@ -349,26 +359,26 @@
       }, target: function () {
         return c() && g("#btn-attack") ? "#btn-attack" : null;
       } }, { id: "vuon", title: "Trồng linh thảo", at: "top", when: function () {
-        return 8 === M().stage && "vuon_ca_nhan" === w();
+        return 8 === w().stage && "vuon_ca_nhan" === L();
       }, done: function () {
-        return M().stage >= 9;
+        return w().stage >= 9;
       }, body: function () {
         var n = t.Farm;
         return n ? n.hasAnySeed() && n.count("empty") > 0 ? "Chạm một <b>luống trống</b> (dấu ?) để gieo — gieo kín cả mười luống." : n.count("dry") > 0 && n.hasWaterAccess && !n.hasWaterAccess() ? "Chạm <b>Ao Bích Thuỷ</b> (góc trên bên phải) để mở nguồn nước tưới." : n.count("dry") > 0 ? "Chạm từng <b>luống đang lớn</b> để tưới — tưới rồi một phút là chín." : n.count("ready") > 0 ? "Luống chín có dấu <b>!</b> — chạm để hái." : "Cây đang lớn — chờ một chút rồi hái. Mũi tên vàng chỉ luống cần làm." : "Làm theo mũi tên vàng.";
       }, target: function () {
         return null;
       } }, { id: "dao_hanh", title: "Đạo Hạnh viên mãn", ack: "Đã hiểu", when: function () {
-        var t = M();
+        var t = w();
         var n = d();
         return t.stage >= 10 && t.stage <= 14 && !!n && n.canMeditate && t.daoHanhFull();
       }, done: function () {
-        return !M().daoHanhFull();
+        return !w().daoHanhFull();
       }, body: function () {
         return "Thanh <b>Đạo Hạnh</b> đầy là đủ để phá quan. Tới <b>đài đá</b>, " + (c() ? "chạm vào đài đá" : "bấm " + s("E")) + " để phá quan.";
       }, target: function () {
         return g("#row-xp") ? "#row-xp" : null;
       } }, { id: "da_toa", title: "Đả tọa tích Đạo Hạnh", when: function () {
-        var t = M();
+        var t = w();
         var n = d();
         return (13 === t.stage || t.stage === t.BI_TICH_STAGE && !t.biTichUnlocked()) && !!n && n.canMeditate && "sit" !== n.state && !t.daoHanhFull();
       }, done: function () {
@@ -379,20 +389,20 @@
       }, target: function () {
         return c() && g("#btn-meditate-touch") ? "#btn-meditate-touch" : null;
       } }, { id: "phap_thuat", title: "Dùng pháp quyết", ack: "Đã hiểu", when: function () {
-        var n = M();
+        var n = w();
         var e = t.Skills;
-        return n.stage === n.YEU_COT_STAGE && "mieu_hoang" === w() && !!(e && e.barSlots && e.barSlots().length);
+        return n.stage === n.YEU_COT_STAGE && "mieu_hoang" === L() && !!(e && e.barSlots && e.barSlots().length);
       }, done: function () {
-        var t = M();
+        var t = w();
         return t.stage !== t.YEU_COT_STAGE;
       }, body: function () {
         return "Chiêu vừa học nằm trên <b>thanh chiêu</b> dưới màn hình. " + (c() ? "Chạm ô chiêu" : "Bấm phím số ghi trên ô chiêu") + " để đánh vào con quái đang nhắm. Bật <b>Auto</b> thì nhân vật tự dùng.";
       }, target: function () {
         return g("#hotbar") ? "#hotbar" : null;
       } }, { id: "tu_dong_cau", title: "Câu Linh Ngư", when: function () {
-        var n = M();
+        var n = w();
         var e = u();
-        return n.stage === n.LINH_NGU_STAGE && "duoc_vien" === w() && t.Inventory.count(n.DOC_DANG_ITEM) >= n.NEED_DOC_DANG && (Number(n.flags[n.LINH_NGU_CATCH_FLAG]) || 0) < n.NEED_LINH_NGU && !(e && (e.fishing || e.fishingAuto));
+        return n.stage === n.LINH_NGU_STAGE && "duoc_vien" === L() && t.Inventory.count(n.DOC_DANG_ITEM) >= n.NEED_DOC_DANG && (Number(n.flags[n.LINH_NGU_CATCH_FLAG]) || 0) < n.NEED_LINH_NGU && !(e && (e.fishing || e.fishingAuto));
       }, done: function () {
         var t = u();
         return !(!t || !t.fishingAuto);
@@ -406,19 +416,19 @@
     var n = t && t.cfg && t.cfg.name;
     return n ? "pntt_hint_v1_" + String(n).toLowerCase() : null;
   }
-  function B(t) {
+  function I(t) {
     var e = D();
     var i = e ? n.store.get(e, {}) : {};
     return !(!i || !i[t]);
   }
-  function I() {
-    if (A.el) {
-      A.el.card.hidden = !0;
-      A.el.ring.hidden = !0;
+  function N() {
+    if (M.el) {
+      M.el.card.hidden = !0;
+      M.el.ring.hidden = !0;
     }
   }
-  function N() {
-    if (A.id) {
+  function U() {
+    if (M.id) {
       (function (t) {
         var e = D();
         if (e) {
@@ -426,19 +436,19 @@
           i[t] = !0;
           n.store.set(e, i);
         }
-      })(A.id);
+      })(M.id);
     }
-    A.id = null;
-    A.doneAt = 0;
-    I();
+    M.id = null;
+    M.doneAt = 0;
+    N();
   }
   e.resetHints = function () {
     var t = D();
     if (t) {
       n.store.set(t, {});
     }
-    A.id = null;
-    I();
+    M.id = null;
+    N();
   };
   e.init = function () {
     if (!r) {
@@ -467,9 +477,9 @@
                   }
                   var o = document.getElementById("hud");
                   return !(!o || !o.classList.contains("hidden"));
-                }(c) ? _() : i.card.hidden = !1, c >= f.length) {
+                }(c) ? H() : i.card.hidden = !1, c >= f.length) {
                   if (!(i.card.hidden)) {
-                    k(null);
+                    _(null);
                   }
                   if (!(a.endAt)) {
                     a.endAt = Date.now();
@@ -498,11 +508,11 @@
                       i.body.innerHTML = p;
                     }
                   }
-                  k(g.target(), g.avoid, g.at);
+                  _(g.target(), g.avoid, g.at);
                 }
               }
               else {
-                _();
+                H();
               }
             }
             else {
@@ -529,83 +539,83 @@
               var r = d();
               var a = document.getElementById("hud");
               if (!(n && n.phiHanhHintActive && n.phiHanhHintActive() && !e.active && r && !r.flying && t.Game && t.Game.scene === i) || t.HUD && (t.HUD.dialogOpen || t.HUD.bagOpen) || i && i.menuOpen || a && a.classList.contains("hidden")) {
-                T();
+                A();
               }
               else {
-                if (!(H.ring)) {
-                  H.ring = document.createElement("div");
-                  H.ring.id = "fly-hint-ring";
-                  H.ring.hidden = !0;
-                  H.arrow = document.createElement("div");
-                  H.arrow.id = "fly-hint-arrow";
-                  H.arrow.hidden = !0;
-                  H.arrow.innerHTML = "<span>Bấm để bay</span><b>▼</b>";
-                  H.chip = document.createElement("div");
-                  H.chip.id = "fly-hint-chip";
-                  H.chip.hidden = !0;
-                  H.chip.innerHTML = "Nhấn " + s("F") + " để Phi Hành";
-                  document.body.appendChild(H.ring);
-                  document.body.appendChild(H.arrow);
-                  document.body.appendChild(H.chip);
+                if (!(T.ring)) {
+                  T.ring = document.createElement("div");
+                  T.ring.id = "fly-hint-ring";
+                  T.ring.hidden = !0;
+                  T.arrow = document.createElement("div");
+                  T.arrow.id = "fly-hint-arrow";
+                  T.arrow.hidden = !0;
+                  T.arrow.innerHTML = "<span>Bấm để bay</span><b>▼</b>";
+                  T.chip = document.createElement("div");
+                  T.chip.id = "fly-hint-chip";
+                  T.chip.hidden = !0;
+                  T.chip.innerHTML = "Nhấn " + s("F") + " để Phi Hành";
+                  document.body.appendChild(T.ring);
+                  document.body.appendChild(T.arrow);
+                  document.body.appendChild(T.chip);
                 }
                 var o = l() ? g("#btn-fly") : null;
                 if (!o) {
-                  H.ring.hidden = H.arrow.hidden = !0;
-                  return void (H.chip.hidden = !1);
+                  T.ring.hidden = T.arrow.hidden = !0;
+                  return void (T.chip.hidden = !1);
                 }
                 var c = o.getBoundingClientRect();
-                H.chip.hidden = !0;
-                H.ring.hidden = H.arrow.hidden = !1;
-                H.ring.style.left = c.left - 6 + "px";
-                H.ring.style.top = c.top - 6 + "px";
-                H.ring.style.width = c.width + 12 + "px";
-                H.ring.style.height = c.height + 12 + "px";
-                H.ring.style.borderRadius = "50%" === getComputedStyle(o).borderRadius ? "50%" : "12px";
-                var h = H.arrow.offsetWidth || 90;
-                var f = H.arrow.offsetHeight || 40;
+                T.chip.hidden = !0;
+                T.ring.hidden = T.arrow.hidden = !1;
+                T.ring.style.left = c.left - 6 + "px";
+                T.ring.style.top = c.top - 6 + "px";
+                T.ring.style.width = c.width + 12 + "px";
+                T.ring.style.height = c.height + 12 + "px";
+                T.ring.style.borderRadius = "50%" === getComputedStyle(o).borderRadius ? "50%" : "12px";
+                var h = T.arrow.offsetWidth || 90;
+                var f = T.arrow.offsetHeight || 40;
                 var m = Math.max(6, Math.min(innerWidth - h - 6, c.left + c.width / 2 - h / 2));
                 var b = Math.max(6, c.top - 6 - f - 2);
-                H.arrow.style.left = m + "px";
-                H.arrow.style.top = b + "px";
+                T.arrow.style.left = m + "px";
+                T.arrow.style.top = b + "px";
               }
             }();
           }
           catch (t) {
-            T();
+            A();
           }
           try {
             !function () {
               var n = d();
               if (!e.active && n && t.Quest && t.Game && t.Game.scene === u()) {
-                var i = A.id ? function (t) {
-                  for (var n = 0; n < S.length; n++)
-                    if (S[n].id === t) {
-                      return S[n];
+                var i = M.id ? function (t) {
+                  for (var n = 0; n < B.length; n++)
+                    if (B[n].id === t) {
+                      return B[n];
                     }
                   return null;
-                }(A.id) : null;
+                }(M.id) : null;
                 if (i) {
-                  if (!A.doneAt && i.done() && (A.doneAt = Date.now(), A.el.card.classList.add("tut-ok"), A.el.title.textContent = "✓ " + i.title, t.Audio && t.Audio.play && t.Audio.play("ui")), A.doneAt && Date.now() - A.doneAt > 900) {
-                    return void N();
+                  if (!M.doneAt && i.done() && (M.doneAt = Date.now(), M.el.card.classList.add("tut-ok"), M.el.title.textContent = "✓ " + i.title, t.Audio && t.Audio.play && t.Audio.play("ui")), M.doneAt && Date.now() - M.doneAt > 900) {
+                    return void U();
                   }
-                  if (!A.doneAt && !i.when()) {
-                    A.id = null;
-                    return void I();
+                  if (!M.doneAt && !i.when()) {
+                    M.id = null;
+                    return void N();
                   }
                 }
                 else {
-                  for (var r = 0; r < S.length; r++) {
-                    var a = S[r];
-                    if (!B(a.id) && !a.done() && a.when()) {
+                  for (var r = 0; r < B.length; r++) {
+                    var a = B[r];
+                    if (!I(a.id) && !a.done() && a.when()) {
                       i = a;
                       break;
                     }
                   }
                   if (!i) {
-                    return void I();
+                    return void N();
                   }
                   !function () {
-                    if (!A.el) {
+                    if (!M.el) {
                       var t = document.createElement("div");
                       t.id = "hint-ring";
                       t.hidden = !0;
@@ -616,30 +626,30 @@
                       n.setAttribute("aria-live", "polite");
                       n.hidden = !0;
                       n.innerHTML = '<div class="tut-head"><span class="tut-count">Gợi ý</span><button type="button" class="tut-skip">Ẩn</button></div><div class="tut-title"></div><div class="tut-body"></div><div class="tut-foot"><span></span><button type="button" class="tut-ack btn-sub" hidden></button></div>';
-                      A.el = { ring: t, card: n, title: n.querySelector(".tut-title"), body: n.querySelector(".tut-body"), ack: n.querySelector(".tut-ack") };
+                      M.el = { ring: t, card: n, title: n.querySelector(".tut-title"), body: n.querySelector(".tut-body"), ack: n.querySelector(".tut-ack") };
                       n.querySelector(".tut-skip").addEventListener("click", function () {
-                        N();
+                        U();
                       });
-                      A.el.ack.addEventListener("click", function () {
-                        N();
+                      M.el.ack.addEventListener("click", function () {
+                        U();
                       });
                       document.body.appendChild(t);
                       document.body.appendChild(n);
                     }
                   }();
-                  A.id = i.id;
-                  A.doneAt = 0;
-                  A.el.card.classList.remove("tut-ok");
-                  A.el.title.textContent = i.title;
-                  A.el.ack.textContent = i.ack || "";
-                  A.el.ack.hidden = !i.ack;
+                  M.id = i.id;
+                  M.doneAt = 0;
+                  M.el.card.classList.remove("tut-ok");
+                  M.el.title.textContent = i.title;
+                  M.el.ack.textContent = i.ack || "";
+                  M.el.ack.hidden = !i.ack;
                 }
                 if (function (n) {
                   var e = u();
                   if (t.HUD && t.HUD.dialogOpen) {
                     return !0;
                   }
-                  if (L() && !n.bag) {
+                  if (x() && !n.bag) {
                     return !0;
                   }
                   if (t.SkillBook && t.SkillBook.open) {
@@ -651,25 +661,29 @@
                   var i = document.getElementById("hud");
                   return !(!i || !i.classList.contains("hidden"));
                 }(i)) {
-                  I();
+                  N();
                 }
                 else {
-                  if (A.el.card.hidden = !1, !A.doneAt) {
-                    var o = i.body();
-                    if (A.el.body.innerHTML !== o) {
-                      A.el.body.innerHTML = o;
+                  var o;
+                  var c;
+                  var l;
+                  var h;
+                  if (o = x() && i.bag, c = M.el.card, (h = (l = o && document.querySelector("#bag .hanh-trang-panel")) && l.querySelector(".ht-than")) ? c.parentNode === l && c.nextSibling === h || l.insertBefore(c, h) : c.parentNode !== document.body && document.body.appendChild(c), c.classList.toggle("in-bag", !!h), M.el.card.hidden = !1, !M.doneAt) {
+                    var s = i.body();
+                    if (M.el.body.innerHTML !== s) {
+                      M.el.body.innerHTML = s;
                     }
                   }
-                  k(i.target(), i.avoid, i.at, A.el.card, A.el.ring);
+                  _(i.target(), i.avoid, i.at, M.el.card, M.el.ring);
                 }
               }
               else {
-                I();
+                N();
               }
             }();
           }
           catch (t) {
-            I();
+            N();
           }
         }
       }, 120);

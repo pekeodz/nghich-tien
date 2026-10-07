@@ -39,20 +39,20 @@
   function l(e) {
     return t.ITEMS && t.ITEMS[e] || { name: e };
   }
-  function u(t) {
+  function p(t) {
     return n().fmt(t);
   }
-  function c() {
+  function u() {
     return 0 | (t.Progress && t.Progress.stones);
   }
-  var p = 0;
+  var c = 0;
   function s() {
-    return "cho" + ++p + "-" + (1e9 * Math.random() | 0).toString(36);
+    return "cho" + ++c + "-" + (1e9 * Math.random() | 0).toString(36);
   }
   function h(t) {
     t.head.innerHTML = "";
-    var e = r("span", "market-purse", u(c()) + " LT");
-    e.title = "Hầu bao: " + u(c()) + " Linh Thạch";
+    var e = r("span", "market-purse", p(u()) + " LT");
+    e.title = "Hầu bao: " + p(u()) + " Linh Thạch";
     e.setAttribute("aria-label", e.title);
     t.head.appendChild(e);
     var a = t.tabs.querySelector('[data-tab="dang"]');
@@ -67,9 +67,9 @@
       }
     }, 250);
   }
-  function b(a) {
+  function v(a) {
     a.token++;
-    T(a.root);
+    E(a.root);
     Array.prototype.forEach.call(a.tabs.children, function (t) {
       var n = t.dataset.tab === e._tab;
       t.classList.toggle("on", n);
@@ -80,28 +80,80 @@
       t.classList.toggle("on", n);
       t.setAttribute("aria-selected", n ? "true" : "false");
     });
-    var c = "dang" === e._tab || !!a.chan;
-    a.groups.classList.toggle("an", c);
-    a.body.classList.toggle("tab-dang", c);
-    f(a, "mua" === e._tab ? a.dem : null);
+    var u = "dang" === e._tab || !!a.chan;
+    a.groups.classList.toggle("an", u);
+    a.body.classList.toggle("tab-dang", u);
+    g(a, "mua" === e._tab ? a.dem : null);
     if (a.chan) {
       a.subs.classList.add("an");
     }
     h(a);
     a.body.innerHTML = "";
     if (a.chan) {
-      (function (t) {
-        var e = r("div", "market-empty");
-        e.appendChild(r("div", null, t.chan));
-        var n = E("Kiểm tra lại", "secondary", function () {
-          t.chan = null;
-          t.daDo = !1;
-          t.dem = null;
-          b(t);
+      (function (e) {
+        var n = r("div", "market-empty");
+        n.appendChild(r("div", null, e.chan));
+        var a = I("Kiểm tra lại", "secondary", function () {
+          e.chan = null;
+          e.daDo = !1;
+          e.dem = null;
+          v(e);
         });
-        n.classList.add("market-empty-nut");
-        e.appendChild(n);
-        t.body.appendChild(e);
+        a.classList.add("market-empty-nut");
+        n.appendChild(a);
+        e.body.appendChild(n);
+        if (t.realmReached && t.Progress && t.realmReached(t.Progress.realmId, "luyen_khi_10")) {
+          e.body.appendChild(function () {
+            var e = r("div", "market-qua");
+            e.setAttribute("role", "group");
+            e.setAttribute("aria-label", "Quà khi mở chợ");
+            e.appendChild(r("div", "market-qua-tit", "Quà mở chợ"));
+            var n = r("div", "market-qua-luoi");
+            b.forEach(function (t) {
+              n.appendChild(function (t) {
+                var e = l(t.id);
+                var n = r("div", "market-qua-o" + (t.hop ? " hop" : ""));
+                n.title = e.name + (t.khoa ? " (khoá)" : "");
+                var a = d(e.icon, 32);
+                a.className = "market-qua-ic";
+                n.appendChild(a);
+                n.appendChild(r("span", "market-qua-n", "×" + p(t.n)));
+                n.appendChild(r("span", "market-qua-ten", e.name));
+                if (t.khoa) {
+                  n.appendChild(r("span", "market-qua-khoa", "khoá"));
+                }
+                return n;
+              }(t));
+            });
+            e.appendChild(n);
+            (function (e) {
+              var n = t.Inventory && t.Inventory.HOP && t.Inventory.HOP[f];
+              if (n) {
+                var a = r("div", "market-qua-hop");
+                a.appendChild(r("div", "market-qua-hop-tit", l(f).name + " mở ra ngẫu nhiên"));
+                n.forEach(function (e, n) {
+                  var i = t.Inventory.hopPool ? t.Inventory.hopPool(f, n) : e.pool;
+                  if (i.length) {
+                    var o = r("div", "market-qua-phan" + (e.pool.length > 8 ? " rong" : ""));
+                    o.appendChild(r("div", "market-qua-phan-ten", "1 " + e.ten));
+                    var p = r("div", "market-qua-dai");
+                    i.forEach(function (t) {
+                      var e = l(t);
+                      var n = d(e.icon, 32);
+                      n.className = "market-qua-mini";
+                      n.title = e.name;
+                      p.appendChild(n);
+                    });
+                    o.appendChild(p);
+                    a.appendChild(o);
+                  }
+                });
+                e.appendChild(a);
+              }
+            })(e);
+            return e;
+          }());
+        }
       })(a);
     }
     else {
@@ -118,23 +170,23 @@
           o.enterKeyHint = "search";
           o.value = e._tim;
           o.setAttribute("aria-label", "Tìm theo tên vật phẩm (gõ không dấu cũng được)");
-          var u = r("button", "market-q-x", "✕");
-          u.type = "button";
-          u.hidden = !e._tim;
-          u.setAttribute("aria-label", "Xoá từ khoá");
+          var p = r("button", "market-q-x", "✕");
+          p.type = "button";
+          p.hidden = !e._tim;
+          p.setAttribute("aria-label", "Xoá từ khoá");
           d.appendChild(o);
-          d.appendChild(u);
+          d.appendChild(p);
           a.appendChild(d);
-          var c = r("div", "market-sorts");
-          function p() {
-            Array.prototype.forEach.call(c.children, function (t) {
+          var u = r("div", "market-sorts");
+          function c() {
+            Array.prototype.forEach.call(u.children, function (t) {
               var n = t.dataset.sap === e._sap;
               t.classList.toggle("on", n);
               t.setAttribute("aria-pressed", n ? "true" : "false");
             });
           }
-          c.setAttribute("role", "group");
-          c.setAttribute("aria-label", "Xếp theo");
+          u.setAttribute("role", "group");
+          u.setAttribute("aria-label", "Xếp theo");
           i.forEach(function (t) {
             var n = r("button", "market-sortbtn", t.ten);
             n.type = "button";
@@ -145,52 +197,52 @@
               if (e._sap !== t.id) {
                 e._sap = t.id;
                 e._trang = 0;
-                p();
-                y();
+                c();
+                C();
               }
             });
-            c.appendChild(n);
+            u.appendChild(n);
           });
-          a.appendChild(c);
-          p();
+          a.appendChild(u);
+          c();
           var s = r("button", "market-reload", "⟳");
           s.type = "button";
           s.title = "Làm mới";
           s.setAttribute("aria-label", "Làm mới");
           s.addEventListener("click", function () {
-            y();
+            C();
           });
           a.appendChild(s);
           t.body.appendChild(a);
           var m = r("div", "market-list");
           m.setAttribute("role", "list");
           t.body.appendChild(m);
-          var b = null;
-          var v = 0;
-          var g = null;
+          var v = null;
+          var b = 0;
+          var f = null;
           function k(t) {
             var n = o.value.trim();
             function a() {
               if (m.isConnected && n !== e._tim) {
                 e._tim = n;
                 e._trang = 0;
-                y();
+                C();
               }
             }
-            u.hidden = !o.value;
-            clearTimeout(g);
+            p.hidden = !o.value;
+            clearTimeout(f);
             if (t) {
               a();
             }
             else {
-              g = setTimeout(a, 280);
+              f = setTimeout(a, 280);
             }
           }
-          function y() {
-            var i = ++v;
-            if (b) {
-              b.remove();
-              b = null;
+          function C() {
+            var i = ++b;
+            if (v) {
+              v.remove();
+              v = null;
             }
             m.innerHTML = "";
             m.appendChild(r("div", "market-empty", "Đang tải…"));
@@ -201,28 +253,28 @@
             if (e._tim) {
               d.tim = e._tim;
             }
-            C(t, "market.xem", d, function (d) {
-              if (i === v)
+            y(t, "market.xem", d, function (d) {
+              if (i === b)
                 if (m.innerHTML = "", d.ok) {
                   t.dangTreo = d.dangTreo;
                   t.dem = d.dem || null;
                   h(t);
-                  f(t, t.dem);
+                  g(t, t.dem);
                   if (d.cho) {
-                    m.appendChild(_(t, d.cho));
+                    m.appendChild(A(t, d.cho));
                   }
-                  var u = d.hang;
+                  var p = d.hang;
                   if (!d.dem && e._phu) {
-                    u = u.filter(function (t) {
+                    p = p.filter(function (t) {
                       return n().sub(l(t.itemId)) === e._phu;
                     });
                   }
-                  if (u.length) {
-                    u.forEach(function (e) {
-                      m.appendChild(L(t, e, d.bayGio));
+                  if (p.length) {
+                    p.forEach(function (e) {
+                      m.appendChild(T(t, e, d.bayGio));
                     });
                     if (d.soTrang > 1) {
-                      b = function (t, e, n) {
+                      v = function (t, e, n) {
                         var a = r("div", "market-pager");
                         var i = r("button", "equip-action secondary", "‹");
                         i.type = "button";
@@ -246,9 +298,9 @@
                         return a;
                       }(d.trang, d.soTrang, function (t) {
                         e._trang = t;
-                        y();
+                        C();
                       });
-                      (window.matchMedia && window.matchMedia("(min-width: 560px)").matches ? a : t.body).appendChild(b);
+                      (window.matchMedia && window.matchMedia("(min-width: 560px)").matches ? a : t.body).appendChild(v);
                     }
                   }
                   else {
@@ -256,7 +308,7 @@
                       var a = r("div", "market-empty");
                       if (e._tim) {
                         a.appendChild(r("div", null, 'Không có "' + e._tim + '".'));
-                        var i = E("Xoá từ khoá", "secondary", function () {
+                        var i = I("Xoá từ khoá", "secondary", function () {
                           t.value = "";
                           n(!0);
                         });
@@ -299,12 +351,12 @@
               }
             }
           });
-          u.addEventListener("click", function () {
+          p.addEventListener("click", function () {
             o.value = "";
             k(!0);
             o.focus({ preventScroll: !0 });
           });
-          y();
+          C();
         })(a);
       }
       else {
@@ -315,36 +367,36 @@
               var l = i.list().filter(function (t) {
                 return n().group(t.def) === e._nhom;
               });
-              var c = { tatca: l.length };
+              var u = { tatca: l.length };
               l.forEach(function (t) {
                 var e = n().sub(t.def);
-                c[e] = 1 + (0 | c[e]);
+                u[e] = 1 + (0 | u[e]);
               });
-              f(a, c);
-              var p = e._phu ? l.filter(function (t) {
+              g(a, u);
+              var c = e._phu ? l.filter(function (t) {
                 return n().sub(t.def) === e._phu;
               }) : l;
-              if (p.length) {
+              if (c.length) {
                 a.body.appendChild(r("div", "market-hint", "Chọn món để treo · phí " + Math.round(100 * n().FEE_RATE) + "% khi bán được · " + Math.round(n().TTL_MS / 36e5) + " giờ · tối đa " + n().MAX_LISTINGS + " món"));
                 var m = r("div", "bag-list forge-grid market-grid");
                 m.setAttribute("role", "list");
-                p.forEach(function (l) {
-                  var c = l.def.id;
-                  var p = n().tradable(c, t) ? i.tradableCount(c) : 0;
-                  var h = r("button", "bag-slot forge-slot " + o(l.def) + (p ? "" : " empty"));
+                c.forEach(function (l) {
+                  var u = l.def.id;
+                  var c = n().tradable(u, t) ? i.tradableCount(u) : 0;
+                  var h = r("button", "bag-slot forge-slot " + o(l.def) + (c ? "" : " empty"));
                   h.type = "button";
                   h.setAttribute("role", "listitem");
                   h.title = l.def.name;
                   h.appendChild(d(l.def.icon, 32));
-                  h.appendChild(r("span", "bag-qty", p ? String(p) : "✕"));
-                  h.setAttribute("aria-label", l.def.name + (p ? ", bán được " + p : ", không bán được"));
+                  h.appendChild(r("span", "bag-qty", c ? String(c) : "✕"));
+                  h.setAttribute("aria-label", l.def.name + (c ? ", bán được " + c : ", không bán được"));
                   h.addEventListener("click", function () {
-                    if (p) {
+                    if (c) {
                       !function (a, i, d, o) {
-                        var l = A(a, i, o, [i.grade, "có " + d].filter(Boolean).join(" · "));
-                        var c = r("div", "market-form");
-                        var p = r("label", "market-field");
-                        p.appendChild(r("span", null, "Số lượng"));
+                        var l = q(a, i, o, [i.grade, "có " + d].filter(Boolean).join(" · "));
+                        var u = r("div", "market-form");
+                        var c = r("label", "market-field");
+                        c.appendChild(r("span", null, "Số lượng"));
                         var h = r("input");
                         h.type = "number";
                         h.min = "1";
@@ -352,86 +404,86 @@
                         h.step = "1";
                         h.value = "1";
                         h.inputMode = "numeric";
-                        p.appendChild(h);
-                        var m = E("Tối đa", "secondary market-max", function () {
+                        c.appendChild(h);
+                        var m = I("Tối đa", "secondary market-max", function () {
                           h.value = String(d);
-                          q();
+                          A();
                         });
-                        p.appendChild(m);
+                        c.appendChild(m);
                         if (d <= 1) {
-                          p.classList.add("hidden");
+                          c.classList.add("hidden");
                         }
-                        c.appendChild(p);
-                        var f = r("label", "market-field");
-                        f.appendChild(r("span", null, "Giá cả lô"));
-                        var v = r("input");
-                        v.type = "text";
-                        v.inputMode = "numeric";
-                        v.autocomplete = "off";
-                        v.placeholder = "Từ " + u(n().MIN_PRICE) + " LT";
-                        f.appendChild(v);
-                        c.appendChild(f);
+                        u.appendChild(c);
+                        var b = r("label", "market-field");
+                        b.appendChild(r("span", null, "Giá cả lô"));
+                        var f = r("input");
+                        f.type = "text";
+                        f.inputMode = "numeric";
+                        f.autocomplete = "off";
+                        f.placeholder = "Từ " + p(n().MIN_PRICE) + " LT";
+                        b.appendChild(f);
+                        u.appendChild(b);
                         var g = r("div", "market-calc");
                         var k = r("div", "bag-detail-note market-warn");
-                        var y = r("div", "bag-detail-note");
-                        c.appendChild(g);
-                        c.appendChild(k);
-                        l.card.appendChild(c);
-                        var L = r("div", "bag-detail-actions");
-                        var _ = E("Đăng Bán");
-                        function I() {
-                          return { qty: d <= 1 ? 1 : x(h.value), price: x(v.value) };
+                        var C = r("div", "bag-detail-note");
+                        u.appendChild(g);
+                        u.appendChild(k);
+                        l.card.appendChild(u);
+                        var _ = r("div", "bag-detail-actions");
+                        var L = I("Đăng Bán");
+                        function T() {
+                          return { qty: d <= 1 ? 1 : x(h.value), price: x(f.value) };
                         }
-                        function q() {
-                          var e = I();
+                        function A() {
+                          var e = T();
                           var r = n().checkPost(t, i.id, e.qty, e.price, a.dangTreo || 0);
                           if (n().priceOk(e.price)) {
-                            g.textContent = "Phí " + u(n().fee(e.price)) + " · Nhận " + u(n().payout(e.price)) + " LT";
+                            g.textContent = "Phí " + p(n().fee(e.price)) + " · Nhận " + p(n().payout(e.price)) + " LT";
                           }
                           else {
-                            g.textContent = "Giá " + u(n().MIN_PRICE) + " – " + u(n().MAX_PRICE) + " LT";
+                            g.textContent = "Giá " + p(n().MIN_PRICE) + " – " + p(n().MAX_PRICE) + " LT";
                           }
                           k.textContent = n().qtyOk(e.qty) && n().lastSkillBook(t, i.id, e.qty) ? "Quyển cuối: treo là quên chiêu tới khi rút về." : "";
-                          _.disabled = !r.ok;
-                          y.textContent = r.ok || !v.value ? "" : r.why;
+                          L.disabled = !r.ok;
+                          C.textContent = r.ok || !f.value ? "" : r.why;
                         }
-                        L.appendChild(_);
-                        L.appendChild(E("Đóng", "secondary", function () {
-                          T(a.root, o);
+                        _.appendChild(L);
+                        _.appendChild(I("Đóng", "secondary", function () {
+                          E(a.root, o);
                         }));
-                        l.card.appendChild(L);
-                        l.card.appendChild(y);
-                        h.addEventListener("input", q);
-                        v.addEventListener("input", q);
-                        q();
-                        _.addEventListener("click", function () {
-                          var r = I();
+                        l.card.appendChild(_);
+                        l.card.appendChild(C);
+                        h.addEventListener("input", A);
+                        f.addEventListener("input", A);
+                        A();
+                        L.addEventListener("click", function () {
+                          var r = T();
                           if (n().checkPost(t, i.id, r.qty, r.price, a.dangTreo || 0).ok) {
-                            if (n().lastSkillBook(t, i.id, r.qty) && "1" !== _.dataset.xacNhan) {
-                              _.dataset.xacNhan = "1";
-                              return void (_.textContent = "Vẫn treo — quên chiêu");
+                            if (n().lastSkillBook(t, i.id, r.qty) && "1" !== L.dataset.xacNhan) {
+                              L.dataset.xacNhan = "1";
+                              return void (L.textContent = "Vẫn treo — quên chiêu");
                             }
-                            _.disabled = !0;
-                            C(a, "market.dang", { itemId: i.id, qty: r.qty, price: r.price, requestId: s() }, function (n) {
+                            L.disabled = !0;
+                            y(a, "market.dang", { itemId: i.id, qty: r.qty, price: r.price, requestId: s() }, function (n) {
                               if (!n.ok) {
-                                y.textContent = n.why;
-                                _.disabled = !1;
+                                C.textContent = n.why;
+                                L.disabled = !1;
                                 return void (t.Audio && t.Audio.play("deny"));
                               }
                               if (t.Audio) {
                                 t.Audio.play("coin");
                               }
-                              T(a.root);
+                              E(a.root);
                               e._tab = "dang";
-                              b(a);
+                              v(a);
                             });
                           }
                         });
-                        v.focus({ preventScroll: !0 });
-                      }(a, l.def, p, h);
+                        f.focus({ preventScroll: !0 });
+                      }(a, l.def, c, h);
                     }
                     else {
-                      var i = n().whyNot(c, t) || "đã Khóa Thần Niệm";
+                      var i = n().whyNot(u, t) || "đã Khóa Thần Niệm";
                       if (t.HUD.setCaption) {
                         t.HUD.setCaption(l.def.name + ": " + i);
                       }
@@ -441,7 +493,7 @@
                 });
                 a.body.appendChild(m);
                 if (null == a.dangTreo) {
-                  C(a, "market.cuatoi", {}, function (t) {
+                  y(a, "market.cuatoi", {}, function (t) {
                     if (t.ok) {
                       a.dangTreo = t.hang.length;
                       h(a);
@@ -456,12 +508,12 @@
           }
           else {
             a.body.appendChild(r("div", "market-empty", "Đang tải…"));
-            C(a, "market.cuatoi", {}, function (t) {
+            y(a, "market.cuatoi", {}, function (t) {
               a.daDo = !0;
               if (t.ok) {
                 a.dangTreo = t.hang.length;
               }
-              b(a);
+              v(a);
             });
           }
         }
@@ -471,17 +523,17 @@
             e.setAttribute("role", "list");
             t.body.appendChild(e);
             e.appendChild(r("div", "market-empty", "Đang tải…"));
-            C(t, "market.cuatoi", {}, function (n) {
+            y(t, "market.cuatoi", {}, function (n) {
               e.innerHTML = "";
               if (n.ok) {
                 t.dangTreo = n.hang.length;
                 h(t);
                 if (n.cho) {
-                  e.appendChild(_(t, n.cho));
+                  e.appendChild(A(t, n.cho));
                 }
                 if (n.hang.length) {
                   n.hang.forEach(function (a) {
-                    e.appendChild(L(t, a, n.bayGio));
+                    e.appendChild(T(t, a, n.bayGio));
                   });
                 }
                 else {
@@ -496,269 +548,6 @@
         }
       }
     }
-  }
-  function f(t, a) {
-    if (t.subsNhom !== e._nhom) {
-      t.subsNhom = e._nhom;
-      t.subs.innerHTML = "";
-      t.subs.scrollLeft = 0;
-      [{ id: "", ten: "Tất cả" }].concat(n().SUBS[e._nhom] || []).forEach(function (n) {
-        var a = r("button", "market-sub");
-        a.type = "button";
-        a.dataset.phu = n.id;
-        a.appendChild(r("span", "market-sub-ten", n.ten));
-        a.appendChild(r("span", "market-sub-n"));
-        a.addEventListener("click", function () {
-          if (e._phu !== n.id) {
-            e._phu = n.id;
-            e._trang = 0;
-            b(t);
-          }
-        });
-        t.subs.appendChild(a);
-      });
-    }
-    Array.prototype.forEach.call(t.subs.children, function (t) {
-      var n = t.dataset.phu;
-      var i = n === e._phu;
-      var r = a ? 0 | ("" === n ? a.tatca : a[n]) : null;
-      t.classList.toggle("on", i);
-      t.classList.toggle("trong", 0 === r);
-      t.setAttribute("aria-pressed", i ? "true" : "false");
-      var d = t.lastChild;
-      d.textContent = null == r ? "" : r > 999 ? "999+" : String(r);
-      d.hidden = null == r;
-    });
-    t.subs.classList.toggle("an", "dang" === e._tab);
-    v(t);
-    setTimeout(function () {
-      if (e._ctx === t) {
-        v(t);
-      }
-    }, 0);
-  }
-  function v(t) {
-    var e = t.subs;
-    var n = e.querySelector(".on");
-    if (n && e.scrollWidth > e.clientWidth) {
-      e.scrollLeft = Math.max(0, n.offsetLeft - (e.clientWidth - n.offsetWidth) / 2);
-    }
-    g(t);
-  }
-  function g(t) {
-    var e = t.subs;
-    e.classList.toggle("m-trai", e.scrollLeft > 2);
-    e.classList.toggle("m-phai", e.scrollLeft + e.clientWidth < e.scrollWidth - 2);
-  }
-  function C(t, n, a, i) {
-    var r = t.token;
-    t.cmd(n, a, function (n) {
-      if (r === t.token && e._ctx === t) {
-        if ((n = n || { ok: !1, why: "máy chủ không trả lời" }).chan && !t.chan) {
-          t.chan = n.why || "Vạn Bảo Phường chưa mở.";
-          return void b(t);
-        }
-        i(n);
-      }
-    });
-  }
-  function k(t, e) {
-    return n().conLai(t.expiresAt, e).replace(/^còn /, "");
-  }
-  function y(t) {
-    var e = t.price / t.qty;
-    return u(e >= 100 ? Math.round(e) : Math.round(10 * e) / 10);
-  }
-  function L(e, a, i) {
-    var p = l(a.itemId);
-    var h = t.Inventory;
-    var f = r("button", "market-row" + (a.mine ? " mine" : ""));
-    f.type = "button";
-    f.setAttribute("role", "listitem");
-    var v = r("span", "market-icon bag-slot " + o(p));
-    v.appendChild(d(p.icon, 32));
-    if (a.qty > 1) {
-      v.appendChild(r("span", "bag-qty", "x" + a.qty));
-    }
-    f.appendChild(v);
-    var g = r("span", "market-mid");
-    g.appendChild(r("span", "market-name", p.name));
-    var L = r("span", "market-meta");
-    L.appendChild(r("span", "market-meta-t", (a.mine ? "Của ngươi" : a.sellerName) + " · " + k(a, i)));
-    var _ = !a.mine && p.requireRealm && h && h.realmOk && !h.realmOk(p);
-    if (_) {
-      var x = r("span", "market-need", "≥ " + h.realmNeedName(p));
-      x.title = "Cần " + h.realmNeedName(p);
-      L.appendChild(x);
-    }
-    g.appendChild(L);
-    f.appendChild(g);
-    var I = r("span", "market-cost");
-    I.appendChild(r("span", "market-price", u(a.price)));
-    if (a.qty > 1) {
-      I.appendChild(r("span", "market-unit", y(a) + "/món"));
-    }
-    f.appendChild(I);
-    f.setAttribute("aria-label", p.name + ", số lượng " + a.qty + ", giá " + u(a.price) + " Linh Thạch" + (a.qty > 1 ? " (khoảng " + y(a) + " một món)" : "") + (_ ? ", cần " + h.realmNeedName(p) : "") + ", người bán " + (a.mine ? "chính ngươi" : a.sellerName));
-    f.addEventListener("click", function () {
-      !function (e, a, i, d) {
-        var o = l(a.itemId);
-        var p = A(e, o, d, [o.grade, "x" + a.qty].filter(Boolean).join(" · "));
-        var h = r("ul", "market-facts");
-        h.appendChild(r("li", null, "Giá cả lô: " + u(a.price) + " LT" + (a.qty > 1 ? " · " + y(a) + "/món" : "")));
-        h.appendChild(r("li", null, (a.mine ? "Của ngươi" : a.sellerName) + " · " + k(a, i)));
-        if (a.mine) {
-          h.appendChild(r("li", null, "Nhận " + u(n().payout(a.price)) + " (phí " + u(n().fee(a.price)) + ")"));
-        }
-        p.card.appendChild(h);
-        var f = r("div", "bag-detail-actions");
-        var v = r("div", "bag-detail-note");
-        if (a.mine) {
-          f.appendChild(E("Rút về", "danger", function (t) {
-            !function (t, e, n, a) {
-              n.disabled = !0;
-              C(t, "market.rut", { listingId: e.id, requestId: s() }, function (e) {
-                if (!e.ok) {
-                  if (a) {
-                    a.textContent = e.why;
-                  }
-                  return void (n.disabled = !1);
-                }
-                T(t.root);
-                b(t);
-              });
-            }(e, a, t.currentTarget, v);
-          }));
-        }
-        else {
-          var g = c() >= a.price;
-          var L = E(g ? "Mua · " + u(a.price) : "Thiếu LT (" + u(c()) + "/" + u(a.price) + ")");
-          L.disabled = !g;
-          L.addEventListener("click", function () {
-            if (!(L.disabled)) {
-              L.disabled = !0;
-              C(e, "market.mua", { listingId: a.id, requestId: s() }, function (n) {
-                if (!n.ok) {
-                  v.textContent = n.why;
-                  L.disabled = !1;
-                  return void (t.Audio && t.Audio.play("deny"));
-                }
-                if (t.Audio) {
-                  t.Audio.play("coin");
-                }
-                T(e.root);
-                m(e);
-                b(e);
-              });
-            }
-          });
-          f.appendChild(L);
-        }
-        f.appendChild(E("Đóng", "secondary", function () {
-          T(e.root, d);
-        }));
-        p.card.appendChild(f);
-        p.card.appendChild(v);
-        p.x.focus({ preventScroll: !0 });
-      }(e, a, i, f);
-    });
-    return f;
-  }
-  function _(n, a) {
-    var i = r("div", "market-cho");
-    var d = [];
-    if (a.stones) {
-      d.push(u(a.stones) + " Linh Thạch");
-    }
-    (a.items || []).forEach(function (t) {
-      d.push(l(t[0]).name + (t[1] > 1 ? " x" + t[1] : ""));
-    });
-    i.appendChild(r("span", null, (a.stones ? "Bán được: " : "Chờ nhận: ") + d.join(", ")));
-    var o = r("button", "equip-action", a.stones ? "Nhận tiền" : "Nhận");
-    o.type = "button";
-    o.addEventListener("click", function () {
-      o.disabled = !0;
-      C(n, "market.nhan", {}, function (a) {
-        if (a.ok) {
-          if (t.Audio) {
-            t.Audio.play("coin");
-          }
-          m(n);
-          setTimeout(function () {
-            if (e._ctx === n) {
-              b(n);
-            }
-          }, 250);
-        }
-        else {
-          o.disabled = !1;
-        }
-      });
-    });
-    i.appendChild(o);
-    return i;
-  }
-  function T(t, e) {
-    var n = t && t.querySelector(".market-detail");
-    if (n) {
-      n.remove();
-    }
-    if (e && document.contains(e)) {
-      e.focus({ preventScroll: !0 });
-    }
-  }
-  function A(e, n, a, i) {
-    T(e.root);
-    var l = r("div", "bag-detail forge-detail market-detail");
-    l.setAttribute("role", "dialog");
-    l.setAttribute("aria-label", "Chi tiết " + n.name);
-    l.addEventListener("click", function (t) {
-      if (t.target === l) {
-        T(e.root, a);
-      }
-    });
-    var u = r("div", "bag-detail-card");
-    var c = r("button", "panel-x", "✕");
-    c.type = "button";
-    c.setAttribute("aria-label", "Đóng chi tiết");
-    c.addEventListener("click", function () {
-      T(e.root, a);
-    });
-    u.appendChild(c);
-    var p = r("div", "bag-detail-head");
-    var s = r("div", "bag-detail-icon " + o(n));
-    s.appendChild(d(n.icon, 32));
-    p.appendChild(s);
-    var h = r("div");
-    h.appendChild(r("h3", null, n.name));
-    h.appendChild(r("div", "bag-detail-meta", i || n.grade || ""));
-    p.appendChild(h);
-    u.appendChild(p);
-    var m = t.HUD.itemStatLabels ? t.HUD.itemStatLabels(n) : [];
-    if (m.length && u.appendChild(r("div", "item-bonuses", m.join(" · "))), (t.Inventory && t.Inventory.effectLines ? t.Inventory.effectLines(n) : []).forEach(function (t) {
-      u.appendChild(r("div", "item-effect", t));
-    }), n.requireRealm && t.Inventory && t.Inventory.realmOk) {
-      var b = t.Inventory.realmOk(n);
-      u.appendChild(r("div", "item-require" + (b ? " met" : ""), (b ? "✓ " : "✕ ") + "Cần " + t.Inventory.realmNeedName(n)));
-    }
-    if (n.desc) {
-      u.appendChild(r("p", null, n.desc));
-    }
-    l.appendChild(u);
-    e.root.appendChild(l);
-    return { wrap: l, card: u, x: c };
-  }
-  function E(t, e, n) {
-    var a = r("button", "equip-action" + (e ? " " + e : ""), t);
-    a.type = "button";
-    if (n) {
-      a.addEventListener("click", n);
-    }
-    return a;
-  }
-  function x(t) {
-    var e = String(t || "").replace(/[.,\s]/g, "");
-    return /^\d{1,12}$/.test(e) ? Number(e) : NaN;
   }
   e.open = function (i, d) {
     var o = (d = d || {}).cmd;
@@ -779,7 +568,7 @@
         d.subs.setAttribute("role", "group");
         d.subs.setAttribute("aria-label", "Phân loại chi tiết");
         d.subs.addEventListener("scroll", function () {
-          g(d);
+          C(d);
         });
         d.subs.addEventListener("wheel", function (t) {
           if (!(!t.deltaY || t.deltaX || d.subs.scrollWidth <= d.subs.clientWidth)) {
@@ -797,7 +586,7 @@
             if (e._tab !== t.id) {
               e._tab = t.id;
               e._trang = 0;
-              b(d);
+              v(d);
             }
           });
           d.tabs.appendChild(n);
@@ -813,7 +602,7 @@
               e._phu = "";
               e._trang = 0;
               d.dem = null;
-              b(d);
+              v(d);
             }
           });
           d.groups.appendChild(n);
@@ -823,18 +612,284 @@
         t.appendChild(d.groups);
         t.appendChild(d.subs);
         t.appendChild(d.body);
-        b(d);
+        v(d);
       } });
   };
+  var b = [{ id: "linh_thach", n: 1e3 }, { id: "manh_yeu_dan_cap_3", n: 2, khoa: !0 }, { id: "nguu_sung", n: 1, khoa: !0 }, { id: "nanh_ho", n: 1, khoa: !0 }, { id: "hop_van_bao", n: 1, khoa: !0, hop: !0 }];
+  var f = "hop_van_bao";
+  function g(t, a) {
+    if (t.subsNhom !== e._nhom) {
+      t.subsNhom = e._nhom;
+      t.subs.innerHTML = "";
+      t.subs.scrollLeft = 0;
+      [{ id: "", ten: "Tất cả" }].concat(n().SUBS[e._nhom] || []).forEach(function (n) {
+        var a = r("button", "market-sub");
+        a.type = "button";
+        a.dataset.phu = n.id;
+        a.appendChild(r("span", "market-sub-ten", n.ten));
+        a.appendChild(r("span", "market-sub-n"));
+        a.addEventListener("click", function () {
+          if (e._phu !== n.id) {
+            e._phu = n.id;
+            e._trang = 0;
+            v(t);
+          }
+        });
+        t.subs.appendChild(a);
+      });
+    }
+    Array.prototype.forEach.call(t.subs.children, function (t) {
+      var n = t.dataset.phu;
+      var i = n === e._phu;
+      var r = a ? 0 | ("" === n ? a.tatca : a[n]) : null;
+      t.classList.toggle("on", i);
+      t.classList.toggle("trong", 0 === r);
+      t.setAttribute("aria-pressed", i ? "true" : "false");
+      var d = t.lastChild;
+      d.textContent = null == r ? "" : r > 999 ? "999+" : String(r);
+      d.hidden = null == r;
+    });
+    t.subs.classList.toggle("an", "dang" === e._tab);
+    k(t);
+    setTimeout(function () {
+      if (e._ctx === t) {
+        k(t);
+      }
+    }, 0);
+  }
+  function k(t) {
+    var e = t.subs;
+    var n = e.querySelector(".on");
+    if (n && e.scrollWidth > e.clientWidth) {
+      e.scrollLeft = Math.max(0, n.offsetLeft - (e.clientWidth - n.offsetWidth) / 2);
+    }
+    C(t);
+  }
+  function C(t) {
+    var e = t.subs;
+    e.classList.toggle("m-trai", e.scrollLeft > 2);
+    e.classList.toggle("m-phai", e.scrollLeft + e.clientWidth < e.scrollWidth - 2);
+  }
+  function y(t, n, a, i) {
+    var r = t.token;
+    t.cmd(n, a, function (n) {
+      if (r === t.token && e._ctx === t) {
+        if ((n = n || { ok: !1, why: "máy chủ không trả lời" }).chan && !t.chan) {
+          t.chan = n.why || "Vạn Bảo Phường chưa mở.";
+          return void v(t);
+        }
+        i(n);
+      }
+    });
+  }
+  function _(t, e) {
+    return n().conLai(t.expiresAt, e).replace(/^còn /, "");
+  }
+  function L(t) {
+    var e = t.price / t.qty;
+    return p(e >= 100 ? Math.round(e) : Math.round(10 * e) / 10);
+  }
+  function T(e, a, i) {
+    var c = l(a.itemId);
+    var h = t.Inventory;
+    var b = r("button", "market-row" + (a.mine ? " mine" : ""));
+    b.type = "button";
+    b.setAttribute("role", "listitem");
+    var f = r("span", "market-icon bag-slot " + o(c));
+    f.appendChild(d(c.icon, 32));
+    if (a.qty > 1) {
+      f.appendChild(r("span", "bag-qty", "x" + a.qty));
+    }
+    b.appendChild(f);
+    var g = r("span", "market-mid");
+    g.appendChild(r("span", "market-name", c.name));
+    var k = r("span", "market-meta");
+    k.appendChild(r("span", "market-meta-t", (a.mine ? "Của ngươi" : a.sellerName) + " · " + _(a, i)));
+    var C = !a.mine && c.requireRealm && h && h.realmOk && !h.realmOk(c);
+    if (C) {
+      var T = r("span", "market-need", "≥ " + h.realmNeedName(c));
+      T.title = "Cần " + h.realmNeedName(c);
+      k.appendChild(T);
+    }
+    g.appendChild(k);
+    b.appendChild(g);
+    var A = r("span", "market-cost");
+    A.appendChild(r("span", "market-price", p(a.price)));
+    if (a.qty > 1) {
+      A.appendChild(r("span", "market-unit", L(a) + "/món"));
+    }
+    b.appendChild(A);
+    b.setAttribute("aria-label", c.name + ", số lượng " + a.qty + ", giá " + p(a.price) + " Linh Thạch" + (a.qty > 1 ? " (khoảng " + L(a) + " một món)" : "") + (C ? ", cần " + h.realmNeedName(c) : "") + ", người bán " + (a.mine ? "chính ngươi" : a.sellerName));
+    b.addEventListener("click", function () {
+      !function (e, a, i, d) {
+        var o = l(a.itemId);
+        var c = q(e, o, d, [o.grade, "x" + a.qty].filter(Boolean).join(" · "));
+        var h = r("ul", "market-facts");
+        h.appendChild(r("li", null, "Giá cả lô: " + p(a.price) + " LT" + (a.qty > 1 ? " · " + L(a) + "/món" : "")));
+        h.appendChild(r("li", null, (a.mine ? "Của ngươi" : a.sellerName) + " · " + _(a, i)));
+        if (a.mine) {
+          h.appendChild(r("li", null, "Nhận " + p(n().payout(a.price)) + " (phí " + p(n().fee(a.price)) + ")"));
+        }
+        c.card.appendChild(h);
+        var b = r("div", "bag-detail-actions");
+        var f = r("div", "bag-detail-note");
+        if (a.mine) {
+          b.appendChild(I("Rút về", "danger", function (t) {
+            !function (t, e, n, a) {
+              n.disabled = !0;
+              y(t, "market.rut", { listingId: e.id, requestId: s() }, function (e) {
+                if (!e.ok) {
+                  if (a) {
+                    a.textContent = e.why;
+                  }
+                  return void (n.disabled = !1);
+                }
+                E(t.root);
+                v(t);
+              });
+            }(e, a, t.currentTarget, f);
+          }));
+        }
+        else {
+          var g = u() >= a.price;
+          var k = I(g ? "Mua · " + p(a.price) : "Thiếu LT (" + p(u()) + "/" + p(a.price) + ")");
+          k.disabled = !g;
+          k.addEventListener("click", function () {
+            if (!(k.disabled)) {
+              k.disabled = !0;
+              y(e, "market.mua", { listingId: a.id, requestId: s() }, function (n) {
+                if (!n.ok) {
+                  f.textContent = n.why;
+                  k.disabled = !1;
+                  return void (t.Audio && t.Audio.play("deny"));
+                }
+                if (t.Audio) {
+                  t.Audio.play("coin");
+                }
+                E(e.root);
+                m(e);
+                v(e);
+              });
+            }
+          });
+          b.appendChild(k);
+        }
+        b.appendChild(I("Đóng", "secondary", function () {
+          E(e.root, d);
+        }));
+        c.card.appendChild(b);
+        c.card.appendChild(f);
+        c.x.focus({ preventScroll: !0 });
+      }(e, a, i, b);
+    });
+    return b;
+  }
+  function A(n, a) {
+    var i = r("div", "market-cho");
+    var d = [];
+    if (a.stones) {
+      d.push(p(a.stones) + " Linh Thạch");
+    }
+    (a.items || []).forEach(function (t) {
+      d.push(l(t[0]).name + (t[1] > 1 ? " x" + t[1] : ""));
+    });
+    i.appendChild(r("span", null, (a.stones ? "Bán được: " : "Chờ nhận: ") + d.join(", ")));
+    var o = r("button", "equip-action", a.stones ? "Nhận tiền" : "Nhận");
+    o.type = "button";
+    o.addEventListener("click", function () {
+      o.disabled = !0;
+      y(n, "market.nhan", {}, function (a) {
+        if (a.ok) {
+          if (t.Audio) {
+            t.Audio.play("coin");
+          }
+          m(n);
+          setTimeout(function () {
+            if (e._ctx === n) {
+              v(n);
+            }
+          }, 250);
+        }
+        else {
+          o.disabled = !1;
+        }
+      });
+    });
+    i.appendChild(o);
+    return i;
+  }
+  function E(t, e) {
+    var n = t && t.querySelector(".market-detail");
+    if (n) {
+      n.remove();
+    }
+    if (e && document.contains(e)) {
+      e.focus({ preventScroll: !0 });
+    }
+  }
+  function q(e, n, a, i) {
+    E(e.root);
+    var l = r("div", "bag-detail forge-detail market-detail");
+    l.setAttribute("role", "dialog");
+    l.setAttribute("aria-label", "Chi tiết " + n.name);
+    l.addEventListener("click", function (t) {
+      if (t.target === l) {
+        E(e.root, a);
+      }
+    });
+    var p = r("div", "bag-detail-card");
+    var u = r("button", "panel-x", "✕");
+    u.type = "button";
+    u.setAttribute("aria-label", "Đóng chi tiết");
+    u.addEventListener("click", function () {
+      E(e.root, a);
+    });
+    p.appendChild(u);
+    var c = r("div", "bag-detail-head");
+    var s = r("div", "bag-detail-icon " + o(n));
+    s.appendChild(d(n.icon, 32));
+    c.appendChild(s);
+    var h = r("div");
+    h.appendChild(r("h3", null, n.name));
+    h.appendChild(r("div", "bag-detail-meta", i || n.grade || ""));
+    c.appendChild(h);
+    p.appendChild(c);
+    var m = t.HUD.itemStatLabels ? t.HUD.itemStatLabels(n) : [];
+    if (m.length && p.appendChild(r("div", "item-bonuses", m.join(" · "))), (t.Inventory && t.Inventory.effectLines ? t.Inventory.effectLines(n) : []).forEach(function (t) {
+      p.appendChild(r("div", "item-effect", t));
+    }), n.requireRealm && t.Inventory && t.Inventory.realmOk) {
+      var v = t.Inventory.realmOk(n);
+      p.appendChild(r("div", "item-require" + (v ? " met" : ""), (v ? "✓ " : "✕ ") + "Cần " + t.Inventory.realmNeedName(n)));
+    }
+    if (n.desc) {
+      p.appendChild(r("p", null, n.desc));
+    }
+    l.appendChild(p);
+    e.root.appendChild(l);
+    return { wrap: l, card: p, x: u };
+  }
+  function I(t, e, n) {
+    var a = r("button", "equip-action" + (e ? " " + e : ""), t);
+    a.type = "button";
+    if (n) {
+      a.addEventListener("click", n);
+    }
+    return a;
+  }
+  function x(t) {
+    var e = String(t || "").replace(/[.,\s]/g, "");
+    return /^\d{1,12}$/.test(e) ? Number(e) : NaN;
+  }
+  e.QUA_MO_CHO = b;
   e.refresh = function () {
     if (e._ctx && document.contains(e._ctx.box)) {
-      b(e._ctx);
+      v(e._ctx);
     }
   };
   e.closeDetail = function () {
     var t = document.getElementById("dialog");
     if (t) {
-      T(t);
+      E(t);
     }
   };
 }(window.PNTT);

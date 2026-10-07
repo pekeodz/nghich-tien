@@ -272,7 +272,7 @@
     }, g = [[21, 14], [20, 14], [22, 14], [21, 13], [20, 13], [22, 13]], d = null, s = 0; s < g.length && !d; s++)
       f(g[s][0], g[s][1]) && f(g[s][0], g[s][1] + 1) && (d = { tx: g[s][0], ty: g[s][1] });
     if (d) {
-      _.props.push({ id: n.NPC, type: "npc", tx: d.tx, ty: d.ty, block: !0, r: 48, name: "Thủ Điện Sỹ Sách", face: 0, text: "Tối Thứ Năm: 21:30 chốt bảng chia tông, 22:00 tông môn vào Sỹ Sách Điện.", cfg: { gender: "male", hair: "bui_dao_si", hairColor: "ngan", beard: "rau_de", outfit: "npc_long_bao", skin: "light", aura: "none" } });
+      _.props.push({ id: n.NPC, type: "npc", tx: d.tx, ty: d.ty, block: !0, r: 48, name: "Thủ Điện Sỹ Sách", face: 0, text: "Tối Thứ Năm: 20:00 chốt bảng chia tông, 20:16 tông môn vào Sỹ Sách Điện.", cfg: { gender: "male", hair: "bui_dao_si", hairColor: "ngan", beard: "rau_de", outfit: "npc_long_bao", skin: "light", aura: "none" } });
       n.VE_O = { tx: d.tx, ty: d.ty + 1 };
     }
   }

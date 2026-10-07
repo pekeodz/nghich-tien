@@ -43,9 +43,9 @@
   }
   t.testActive = o ? decodeURIComponent(o[1]) : "hoa_cau";
   t.testPassive = null;
-  t.DEFS = { hoa_cau: { id: "hoa_cau", short: "Hỏa Cầu", name: "Hỏa Cầu Thuật", book: "bi_tich_hoa_cau", element: "Hỏa", glyph: "✹", shape: "bolt", cooldown: 6, cast: .4, mp: 14, sp: 4, range: 124, speed: 138, shots: 1, spread: 0, coef: 1.8, hitR: 13, blastR: 22, effect: { kind: "burn", time: 3, dpsCoef: .15 }, colors: { core: "#fff3c4", mid: "#ff9a3c", edge: "#d63b1f", glow: "#ffd27a" }, tip: "Đạn lửa nổ diện rộng, thiêu đốt 3 giây sau khi trúng." }, phong_nhan: { id: "phong_nhan", short: "Phong Nhẫn", name: "Phong Nhẫn Thuật", book: "bi_tich_phong_nhan", element: "Phong", glyph: "⟩", shape: "bolt", cooldown: 3.4, cast: .22, mp: 9, sp: 3, range: 112, speed: 246, shots: 3, spread: 26, coef: 1.7, hitR: 9, blastR: 0, effect: null, colors: { core: "#f2fff6", mid: "#9ff0c8", edge: "#3d9e77", glow: "#cdf5e0" }, tip: "Ba lưỡi gió toả nan quạt, thi triển nhanh, khó né." }, bang_thau: { id: "bang_thau", short: "Băng Châm", name: "Băng Thấu Châm", book: "bi_tich_bang_thau", element: "Băng", glyph: "❊", shape: "bolt", cooldown: 5, cast: .3, mp: 13, sp: 5, range: 104, speed: 208, shots: 5, spread: 18, coef: 1.7, hitR: 8, blastR: 0, effect: { kind: "slow", time: 3.2, mult: .5 }, colors: { core: "#f4fdff", mid: "#a9e4ff", edge: "#2f7fb8", glow: "#cdf1ff" }, tip: "Năm đinh băng găm liên tiếp, mục tiêu chậm còn một nửa trong 3 giây." }, dia_thich: { id: "dia_thich", short: "Địa Thích", name: "Địa Thích Thuật", book: "bi_tich_dia_thich", element: "Thổ", glyph: "⩕", shape: "ground", cooldown: 7.5, cast: .42, mp: 16, sp: 6, range: 92, speed: 0, shots: 1, spread: 0, coef: 1.8, hitR: 0, blastR: 28, delay: .35, instantOnPress: !0, effect: { kind: "stun", time: 1.3 }, colors: { core: "#e0cba0", mid: "#a97b4a", edge: "#5b3d22", glow: "#c9a45c" }, tip: "Cọc đá trồi lên từ góc khuất, gây choáng 1.3 giây." }, xich_chan: { id: "xich_chan", short: "Xích Chân", name: "Sơ Xích Chân", book: "bi_tich_so_xich_chan", element: "Thổ", glyph: "✣", shape: "ground", cooldown: 12, cast: .42, mp: 12, sp: 4, range: 132, speed: 0, shots: 1, spread: 0, coef: .7, hitR: 0, blastR: 54, delay: .18, primaryTarget: !0, maxTargets: 1, playerTargetOnly: !0, effect: { kind: "root", time: 2 }, colors: { core: "#fff0dc", mid: "#d84b3f", edge: "#541326", glow: "#ff7267" }, tip: "Kết ấn dưới chân một người chơi trong tầm, trói tối đa 2 người suốt 2 giây. Người bị xích vẫn đánh và thi triển chiêu được; sát thương nhẹ." }, ngu_kiem_sat: { id: "ngu_kiem_sat", short: "Ngũ Kiếm Sát", name: "Ngũ Kiếm Sát", book: "bi_tich_ngu_kiem_sat", element: "Kim", glyph: "✦", shape: "ground", medium: !0, boostWeapon: "huyet_kiem", maxTargets: 4, cooldown: 8.5, cast: .48, mp: 20, sp: 8, range: 118, speed: 0, shots: 1, spread: 0, coef: 5.2, hitR: 0, blastR: 38, delay: .12, vfx: "skill1", effect: null, colors: { core: "#fff2ff", mid: "#bca8ff", edge: "#5c3f9b", glow: "#d8c8ff" }, tip: "Năm kiếm ảnh đồng loạt khóa tâm trận, chém quét tối đa 4 mục tiêu. Có Huyết Kiếm trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, huyet_kiem_tran: { id: "huyet_kiem_tran", short: "Huyết Kiếm Trận", name: "Huyết Kiếm Trận", book: "bi_tich_huyet_kiem_tran", element: "Huyết", glyph: "✣", shape: "ground", medium: !0, boostWeapon: "huyet_kiem", maxTargets: 4, cooldown: 10, cast: .52, mp: 24, sp: 10, range: 126, speed: 0, shots: 1, spread: 0, coef: 5.6, hitR: 0, blastR: 46, delay: .16, vfx: "luojian", effect: null, colors: { core: "#fff0ef", mid: "#ff5361", edge: "#8d1528", glow: "#ff8190" }, tip: "Huyết kiếm liên tiếp cắm xuống đất, chấn động và gây sát thương lên tối đa 4 mục tiêu. Có Huyết Kiếm trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, van_kiem_quy_tong: { id: "van_kiem_quy_tong", short: "Vạn Kiếm Quy Tông", name: "Vạn Kiếm Quy Tông", book: "bi_tich_van_kiem_quy_tong", element: "Kiếm", glyph: "✺", medium: !0, dao: "chinh", requireRealm: "truc_co_2", thuongPham: !0, shape: "ground", cooldown: 12, cast: .65, mp: 35, sp: 15, range: 220, speed: 0, shots: 1, spread: 0, coef: 9, hitR: 0, blastR: 0, delay: 2.6, hitDelay: 2.6, waitForTarget: 60, releaseDelay: 1.15, vfx: "van_kiem_quy_tong", effect: null, colors: { core: "#edffff", mid: "#88dbde", edge: "#316979", glow: "#a8f5ee" }, tip: "Triệu hồi 24 binh khí chân khí xoay quanh người tối đa 60 giây để chờ mục tiêu hợp lệ, rồi cùng lao đúng vào mục tiêu. Hình và màu theo kiếm, đao hoặc thương tương thích đang trang bị; trang bị khác dùng hình Thiết Kiếm. Hào quang là hiệu ứng thị giác, không cấp miễn thương." }, cuu_huyet_kiem_tran: { id: "cuu_huyet_kiem_tran", short: "Cửu Huyết Kiếm Trận", name: "Cửu Huyết Kiếm Trận", book: "bi_tich_cuu_huyet_tran", element: "Huyết", glyph: "✥", shape: "aura", medium: !0, boostWeapon: "huyet_kiem", cooldown: 12, cast: .6, mp: 28, sp: 12, range: 96, speed: 0, shots: 1, spread: 0, coef: 6.5, hitR: 0, blastR: 96, maxTargets: 5, delay: .18, lifesteal: { pct: .01, max: .05, pvp: .5 }, vfx: "cuu_huyet_tran", effect: null, colors: { core: "#fff0fb", mid: "#e98cff", edge: "#711a70", glow: "#ff6fbd" }, tip: "Chín kiếm huyết ảnh xoay quanh bản thân, gây sát thương lên tối đa 5 đối phương gần nhất, mỗi kẻ trúng hồi 1% Khí Huyết tối đa (tối đa 5%). Có Huyết Kiếm trong hành trang: sát thương đầy đủ và hút huyết; thiếu pháp khí: còn 50%, không hút huyết." }, kim_thuong_giang_the: { id: "kim_thuong_giang_the", short: "Kim Thương", name: "Kim Thương Giáng Thế", book: "bi_tich_kim_thuong_giang_the", legacyBook: "hoa_kim_thuong", element: "Hỏa", glyph: "⇓", icon: "bi_tich_kim_thuong_giang_the", shape: "ground", medium: !0, boostWeapon: "hoa_kim_thuong", maxTargets: 4, cooldown: 12, cast: .5, mp: 30, sp: 12, range: 132, speed: 0, shots: 1, spread: 0, coef: 5.6, hitR: 0, blastR: 130, delay: .2, hitDelay: 1.15, vfx: "kim_thuong_giang_the", effect: [{ kind: "burn", time: 4, dpsCoef: .45 }, { kind: "stun", time: .8 }], colors: { core: "#fff8d8", mid: "#ff9a3a", edge: "#8a2a12", glow: "#ffb45c" }, tip: "Hoả Kim Thương từ trời giáng xuống điểm ngắm: nổ lửa diện rộng, thiêu đốt 4 giây và choáng 0,8 giây. Có Hoả Kim Thương trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, loi_thuong_quan_dia: { id: "loi_thuong_quan_dia", short: "Quán Địa", name: "Lôi Thương Quán Địa", book: "bi_tich_loi_thuong_quan_dia", element: "Lôi", glyph: "⇓", icon: "bi_tich_loi_thuong_quan_dia", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", boostWeapon: "hoang_loi_thuong", maxTargets: 3, cooldown: 9, cast: .5, mp: 30, sp: 12, range: 150, speed: 0, shots: 1, spread: 0, coef: 6.3, hitR: 0, blastR: 56, delay: .3, hitDelay: .3, vfx: "loi_thuong_quan_dia", effect: { kind: "stun", time: 1 }, colors: { core: "#fffbe0", mid: "#ffd92e", edge: "#9a5a08", glow: "#ffe680" }, tip: "Thương sét từ trời cắm xuống điểm ngắm, nổ lôi quang trúng tối đa 3 kẻ và làm choáng 1 giây. Cần Trúc Cơ Trung Kỳ. Có Hoàng Lôi Thương trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, ngu_loi_thuong_vu: { id: "ngu_loi_thuong_vu", short: "Thương Vũ", name: "Ngũ Lôi Thương Vũ", book: "bi_tich_ngu_loi_thuong_vu", element: "Lôi", glyph: "⇊", icon: "bi_tich_ngu_loi_thuong_vu", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", boostWeapon: "hoang_loi_thuong", maxTargets: 5, cooldown: 14, cast: .6, mp: 36, sp: 14, range: 170, speed: 0, shots: 1, spread: 0, coef: 9.8, hitR: 0, blastR: 84, delay: 1, hitDelay: 1, vfx: "ngu_loi_thuong_vu", effect: { kind: "slow", time: 3.5, mult: .45 }, colors: { core: "#fffbe0", mid: "#ffd92e", edge: "#7a4ad8", glow: "#ffe680" }, tip: "Năm thương sét lần lượt giáng quanh điểm ngắm, cây cuối cắm đúng tâm: trúng tối đa 5 kẻ và làm chậm còn 45% trong 3,5 giây. Cần Trúc Cơ Trung Kỳ. Có Hoàng Lôi Thương trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, thanh_lam_kiem_tru: { id: "thanh_lam_kiem_tru", short: "Thanh Băng Kiếm Trụ", name: "Thanh Băng Kiếm Trụ", book: "bi_tich_thanh_lam_kiem_tru", element: "Kim", glyph: "⚔", shape: "bolt", vfx: "thanh_bang_kiem_tru", medium: !0, boostWeapon: "bang_linh_kiem", cooldown: 8, cast: .38, mp: 15, sp: 6, range: 128, speed: 270, shots: 1, spread: 0, coef: 5.2, hitR: 12, blastR: 36, maxTargets: 2, primaryTarget: !0, effect: null, colors: { core: "#efffff", mid: "#67d9ee", edge: "#1764b1", glow: "#8defff" }, tip: "Triệu hồi mưa kiếm băng, gây sát thương lên mục tiêu chính rồi lan thêm tối đa 2 đối thủ. Có Băng Linh Kiếm trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, anh_ky_phu: { id: "anh_ky_phu", short: "Ảnh Kỵ", name: "Ảnh Kỵ", book: "bi_tich_anh_ky_phu", element: "Phù", glyph: "♞", icon: "bi_tich_anh_ky_phu", shape: "bolt", medium: !0, cooldown: 9, cast: .44, mp: 18, sp: 7, range: 192, speed: 250, shots: 1, spread: 0, coef: 6, hitR: 13, blastR: 0, mpDrain: 4, vfx: "anh_ky_phu", vfxLayers: 3, effect: { kind: "stun", time: 1.3, chance: .5 }, colors: { core: "#f2ffff", mid: "#55cfff", edge: "#2457a4", glow: "#9cecff" }, tip: "Kỵ ảnh xanh lao tới mục tiêu, gây sát thương, rút 4 Linh Lực và có 50% cơ hội làm choáng 1,3 giây." }, bang_kiem_tran: { id: "bang_kiem_tran", short: "Băng Kiếm Trận", name: "Băng Kiếm Trận", book: "bi_tich_bang_kiem_tran", element: "Băng", glyph: "❄", icon: "bi_tich_bang_kiem_tran", shape: "ground", medium: !0, boostWeapon: "bang_linh_kiem", cooldown: 11, cast: .54, mp: 26, sp: 11, range: 136, speed: 0, shots: 1, spread: 0, coef: 5, hitR: 0, blastR: 66, shatterBonus: .2, maxTargets: 4, delay: .22, vfx: "bang_kiem_tran", effect: [{ kind: "freeze", time: 1.2 }, { kind: "slow", time: 3.6, mult: .45 }], colors: { core: "#f4ffff", mid: "#55cfff", edge: "#1764b1", glow: "#a9efff" }, tip: "Dựng trận kiếm băng tại điểm ngắm, gây sát thương lên tối đa 4 mục tiêu, đóng băng 1,2 giây rồi làm chậm còn 45% trong 3,6 giây. Mục tiêu đã Chậm hoặc Đóng Băng chịu thêm 20% sát thương Băng Vỡ. Có Băng Linh Kiếm trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, bang_kiem_luan: { id: "bang_kiem_luan", short: "Băng Kiếm Luân", name: "Băng Kiếm Luân", book: "bi_tich_bang_kiem_luan", element: "Băng", glyph: "✥", icon: "bi_tich_bang_kiem_luan", shape: "aura", medium: !0, boostWeapon: "bang_linh_kiem", cooldown: 10, cast: .72, mp: 22, sp: 9, range: 246, speed: 0, shots: 1, spread: 0, coef: 4.9, hitR: 0, blastR: 246, maxTargets: 5, delay: .16, vfx: "bang_kiem_luan", effect: { kind: "slow", time: 4, mult: .55 }, colors: { core: "#f5ffff", mid: "#46c9ff", edge: "#1453ae", glow: "#8deaff" }, tip: "Kiếm luân băng xoay quanh thân, gây sát thương và làm chậm tối đa 5 mục tiêu gần nhất còn 55% trong 4 giây. Có Băng Linh Kiếm trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, tien_vu: { id: "tien_vu", short: "Tiễn Vũ", name: "Tiễn Vũ", book: "bi_tich_tien_vu", element: "Kim", glyph: "➹", icon: "bi_tich_tien_vu", shape: "ground", medium: !0, boostWeapon: "cung_linh", maxTargets: 4, cooldown: 11, cast: .46, mp: 24, sp: 10, range: 176, speed: 0, shots: 1, spread: 0, coef: 5.25, hitR: 0, blastR: 80, delay: .2, hitDelay: .4, vfx: "tien_vu", effect: { kind: "wound", chance: .3, time: 5, dpsCoef: .25, heal: .5 }, colors: { core: "#fff6c8", mid: "#f0c040", edge: "#8a5a12", glow: "#ffd76a" }, tip: "Trút mưa tên vàng xuống điểm ngắm, trúng tối đa 4 mục tiêu. Mỗi mục tiêu có 30% dính Thâm Thương: rỉ máu 5 giây và chỉ hồi được 50% Khí Huyết. Có Linh Cung trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, tram_ma: { id: "tram_ma", short: "Trầm Ma", name: "Trầm Ma", book: "bi_tich_tram_ma", element: "Ma", glyph: "⊛", icon: "bi_tich_tram_ma", shape: "aura", medium: !0, maxTargets: 3, cooldown: 9, cast: .42, mp: 18, sp: 7, range: 176, speed: 0, shots: 1, spread: 0, coef: 5.25, hitR: 0, blastR: 176, delay: .35, vfx: "tram_ma", linhAn: { time: 4, bonus: .15 }, effect: { kind: "burn", chance: .5, time: 4, dpsCoef: .3, ma: !0 }, colors: { core: "#f1e2ff", mid: "#9a5cff", edge: "#2a0b3d", glow: "#b77dff" }, tip: "Ma khí lan ra rất xa quanh thân, tự tìm 3 kẻ địch gần nhất và mở xoáy ma khí dưới chân từng kẻ. Mỗi mục tiêu trúng mang Linh Ấn 4 giây: đòn trực tiếp kế tiếp của bạn gây thêm 15% sát thương rồi tiêu hao ấn. Mục tiêu cũng có 50% cơ hội dính Ma Hỏa, thiêu đốt 4 giây." }, ma_bao_an: { id: "ma_bao_an", short: "Ma Bạo Ấn", name: "Ma Bạo Ấn", book: "bi_tich_ma_bao_an", element: "Ma", glyph: "卍", icon: "bi_tich_ma_bao_an", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", dao: "ma", maxTargets: 4, cooldown: 13, cast: .45, mp: 34, sp: 14, range: 150, speed: 0, shots: 1, spread: 0, coef: 6.6, hitR: 0, blastR: 72, delay: .7, hitDelay: .7, vfx: "ma_bao_an", effect: { kind: "burn", time: 5, dpsCoef: .4, ma: !0 }, colors: { core: "#fbe8ff", mid: "#b04cff", edge: "#2a0638", glow: "#d27bff" }, tip: "Kết ma ấn tại điểm ngắm: ma khí tụ lại rồi ba ấn nổ liền nhau, trúng tối đa 4 kẻ. Kẻ trúng chắc chắn dính Ma Hỏa 5 giây. Cần Trúc Cơ Trung Kỳ và mang Hồn Phiên." }, ma_hon_phe: { id: "ma_hon_phe", short: "Ma Hồn Phệ", name: "Ma Hồn Phệ", book: "bi_tich_ma_hon_phe", element: "Ma", glyph: "☠", icon: "bi_tich_ma_hon_phe", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_1", dao: "ma", maxTargets: 4, cooldown: 11.5, cast: .5, mp: 26, sp: 12, range: 180, speed: 0, shots: 1, spread: 0, coef: 8.5, hitR: 0, blastR: 42, delay: 2.2, hitDelay: 2.2, vfx: "ma_hon_phe", effect: { kind: "burn", time: 4, dpsCoef: .45, ma: !0 }, colors: { core: "#fff0ff", mid: "#ef315f", edge: "#2b073f", glow: "#8f4dff" }, tip: "Gọi 5–7 đầu lâu ma lần lượt xoáy vòng quanh chủ rồi lao cong vào mục tiêu. Ma Hỏa 4 giây; cần Trúc Cơ Sơ Kỳ và Hồn Phiên." }, nguyet_quang: { id: "nguyet_quang", short: "Nguyệt Quang", name: "Thái Âm Nguyệt Quang", book: "bi_tich_nguyet_quang", element: "Quang", glyph: "☾", icon: "bi_tich_nguyet_quang", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", maxTargets: 3, cooldown: 14, cast: .55, mp: 34, sp: 14, range: 190, speed: 0, shots: 1, spread: 0, coef: 10.5, hitR: 0, blastR: 34, delay: 1.3, hitDelay: 1.3, vfx: "nguyet_quang", effect: { kind: "stun", time: .8 }, colors: { core: "#ffffff", mid: "#9fdcff", edge: "#243f9a", glow: "#e6f4ff" }, tip: "Triệu trăng lên cao rồi giáng luồng nguyệt quang xuống điểm ngắm: sát thương rất lớn, trúng tối đa 3 kẻ, choáng 0,8 giây. Cần Trúc Cơ Trung Kỳ." }, kim_quang_cu_kiem: { id: "kim_quang_cu_kiem", short: "Cự Kiếm", name: "Kim Quang Cự Kiếm", book: "bi_tich_kim_quang_cu_kiem", element: "Kim", glyph: "⚔", icon: "bi_tich_kim_quang_cu_kiem", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", dao: "chinh", autoFoe: !0, maxTargets: 1, cooldown: 10, cast: .5, mp: 26, sp: 11, range: 210, speed: 0, shots: 1, spread: 0, coef: 7.2, hitR: 0, blastR: 0, delay: 2.2, hitDelay: 2.2, vfx: "kim_quang_cu_kiem", effect: null, colors: { core: "#fffbe0", mid: "#ffd24a", edge: "#a8601a", glow: "#ffe28a" }, tip: "Triệu một cây kim kiếm khổng lồ từ vòng năng lượng, bay chậm theo vòng cung rồi cắm vào mục tiêu. Cần Trúc Cơ Trung Kỳ và Kiếm Hạp." }, ngu_sac_than_chuong: { id: "ngu_sac_than_chuong", short: "Thần Chưởng", name: "Ngũ Sắc Thần Chưởng", book: "bi_tich_ngu_sac_than_chuong", element: "Ngũ Hành", glyph: "掌", icon: "bi_tich_ngu_sac_than_chuong", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", maxTargets: 5, cooldown: 30, cast: .6, mp: 36, sp: 14, range: 200, speed: 0, shots: 1, spread: 0, coef: 22.5, hitR: 0, blastR: 56, delay: 1.8, hitDelay: 1.8, vfx: "ngu_sac_than_chuong", effect: { kind: "stun", time: 2 }, colors: { core: "#ffffff", mid: "#b98cff", edge: "#3d2a8a", glow: "#ffe2a0" }, tip: "Bàn tay ngũ sắc khổng lồ thò ra từ mây sương rồi bổ xuống điểm ngắm: sát thương cực lớn, trúng tối đa 5 kẻ, choáng 2 giây. Hồi chiêu rất lâu. Cần Trúc Cơ Trung Kỳ." }, huyet_buc_chuong: { id: "huyet_buc_chuong", short: "Huyết Bức", name: "Huyết Bức Chưởng", book: "bi_tich_huyet_buc_chuong", element: "Huyết", glyph: "蝠", icon: "bi_tich_huyet_buc_chuong", shape: "ground", medium: !0, autoFoe: !0, maxTargets: 3, cooldown: 5.5, cast: .4, mp: 14, sp: 6, range: 130, speed: 0, shots: 1, spread: 0, coef: 5, hitR: 0, blastR: 44, delay: .34, hitDelay: .34, vfx: "huyet_buc_chuong", effect: { kind: "wound", chance: .35, time: 4, dpsCoef: .2, heal: .5 }, colors: { core: "#ffe9d8", mid: "#e0283a", edge: "#4a0612", glow: "#ff5a4a" }, tip: "Bầy dơi huyết bắn vào mục tiêu, trúng tối đa 3 kẻ; 35% dính Thâm Thương (rỉ máu 4 giây, hồi máu còn 50%)." }, huyet_liem_tram: { id: "huyet_liem_tram", short: "Liêm Trảm", name: "Huyết Liêm Trảm", book: "bi_tich_huyet_liem_tram", element: "Huyết", glyph: "镰", icon: "bi_tich_huyet_liem_tram", shape: "ground", medium: !0, autoFoe: !0, requireRealm: "luyen_khi_10", boostWeapon: "huyet_ma_liem", maxTargets: 4, cooldown: 7, cast: .45, mp: 24, sp: 10, range: 150, speed: 0, shots: 1, spread: 0, coef: 5.8, hitR: 0, blastR: 52, delay: .17, hitDelay: .17, vfx: "huyet_liem_tram", effect: null, lifesteal: { pct: .05, max: .15, pvp: .5 }, colors: { core: "#ffe6e0", mid: "#e0283a", edge: "#4a0612", glow: "#ff3b52" }, tip: "Làn sóng liêm máu nổ thành mây huyết, trúng tối đa 4 kẻ. Cần Luyện Khí Tầng 10. Có Huyết Ma Liêm trong hành trang: sát thương gấp đôi và hút 5% Khí Huyết mỗi kẻ trúng (tối đa 15%); thiếu pháp khí: còn 50%, không hút." }, tu_anh_phuoc_tien: { id: "tu_anh_phuoc_tien", short: "Tứ Ảnh", name: "Tứ Ảnh Phược Tiên", book: "bi_tich_tu_anh_phuoc_tien", element: "Ảnh", glyph: "影", icon: "bi_tich_tu_anh_phuoc_tien", shape: "ground", medium: !0, requireRealm: "truc_co_1", kieuRoi: ["bach_loi_tien", "nhuyen_tien"], autoFoe: !0, needTarget: !0, maxTargets: 1, cooldown: 10, cast: .5, mp: 26, sp: 10, range: 170, speed: 0, shots: 1, spread: 0, coef: 6, hitR: 0, blastR: 0, delay: .8, hitDelay: .8, vfx: "tu_anh_phuoc_tien", effect: { kind: "root", time: 2.5 }, colors: { core: "#f2fbff", mid: "#6fc7ff", edge: "#2553b8", glow: "#a8e4ff" }, tip: "Thân hoá bốn bóng mờ, mỗi bóng quất một roi trói chân đối phương 2,5 giây. Cần Trúc Cơ Sơ Kỳ. Có Nhuyễn Tiên thì roi đỏ, không thì roi sét Bạch Lôi Tiên." }, xich_ma_hoa_than: { id: "xich_ma_hoa_than", short: "Xích Ma", name: "Xích Ma Hóa Thân", book: "bi_tich_xich_ma_hoa_than", element: "Ma", glyph: "魔", icon: "bi_tich_xich_ma_hoa_than", shape: "self", medium: !0, requireRealm: "truc_co_1", dao: "ma", cooldown: 25, cast: .6, mp: 30, sp: 12, range: 140, speed: 0, shots: 1, spread: 0, hitR: 0, blastR: 0, vfx: "xich_ma", effect: null, bienHinh: { hinh: "xich_ma", time: 12, dang: { gender: "male", skin: "xich_ma", outfit: "xich_ma_y", hair: "xich_ma_toc", hairColor: "hac", eyeColor: "xich_ma", shoes: "ink" }, speed: 1.8, minAttack: .5, giap: .6, lifesteal: { pct: .015, pvp: .5 } }, colors: { core: "#ffe2c8", mid: "#e0283a", edge: "#2a0710", glow: "#ff6a3c" }, tip: "Cường hoá thân thể 12 giây: đánh nhanh gấp 1,8, hút huyết, có Ma Giáp đỡ đòn, ma khí bao quanh người. Vẫn bay, dùng vũ khí và chiêu như thường. Cần Trúc Cơ Sơ Kỳ và Hồn Phiên." } };
+  t.DEFS = { hoa_cau: { id: "hoa_cau", short: "Hỏa Cầu", name: "Hỏa Cầu Thuật", book: "bi_tich_hoa_cau", element: "Hỏa", glyph: "✹", shape: "bolt", cooldown: 6, cast: .4, mp: 14, sp: 4, range: 124, speed: 138, shots: 1, spread: 0, coef: 1.8, hitR: 13, blastR: 22, effect: { kind: "burn", time: 3, dpsCoef: .15 }, colors: { core: "#fff3c4", mid: "#ff9a3c", edge: "#d63b1f", glow: "#ffd27a" }, tip: "Đạn lửa nổ diện rộng, thiêu đốt 3 giây sau khi trúng." }, phong_nhan: { id: "phong_nhan", short: "Phong Nhẫn", name: "Phong Nhẫn Thuật", book: "bi_tich_phong_nhan", element: "Phong", glyph: "⟩", shape: "bolt", cooldown: 3.4, cast: .22, mp: 9, sp: 3, range: 112, speed: 246, shots: 3, spread: 26, coef: 1.7, hitR: 9, blastR: 0, effect: null, colors: { core: "#f2fff6", mid: "#9ff0c8", edge: "#3d9e77", glow: "#cdf5e0" }, tip: "Ba lưỡi gió toả nan quạt, thi triển nhanh, khó né." }, bang_thau: { id: "bang_thau", short: "Băng Châm", name: "Băng Thấu Châm", book: "bi_tich_bang_thau", element: "Băng", glyph: "❊", shape: "bolt", cooldown: 5, cast: .3, mp: 13, sp: 5, range: 104, speed: 208, shots: 5, spread: 18, coef: 1.7, hitR: 8, blastR: 0, effect: { kind: "slow", time: 3.2, mult: .5 }, colors: { core: "#f4fdff", mid: "#a9e4ff", edge: "#2f7fb8", glow: "#cdf1ff" }, tip: "Năm đinh băng găm liên tiếp, mục tiêu chậm còn một nửa trong 3 giây." }, dia_thich: { id: "dia_thich", short: "Địa Thích", name: "Địa Thích Thuật", book: "bi_tich_dia_thich", element: "Thổ", glyph: "⩕", shape: "ground", cooldown: 7.5, cast: .42, mp: 16, sp: 6, range: 92, speed: 0, shots: 1, spread: 0, coef: 1.8, hitR: 0, blastR: 28, delay: .35, instantOnPress: !0, effect: { kind: "stun", time: 1.3 }, colors: { core: "#e0cba0", mid: "#a97b4a", edge: "#5b3d22", glow: "#c9a45c" }, tip: "Cọc đá trồi lên từ góc khuất, gây choáng 1.3 giây." }, xich_chan: { id: "xich_chan", short: "Xích Chân", name: "Sơ Xích Chân", book: "bi_tich_so_xich_chan", element: "Thổ", glyph: "✣", shape: "ground", cooldown: 12, cast: .42, mp: 12, sp: 4, range: 132, speed: 0, shots: 1, spread: 0, coef: .7, hitR: 0, blastR: 54, delay: .18, primaryTarget: !0, maxTargets: 1, playerTargetOnly: !0, effect: { kind: "root", time: 2 }, colors: { core: "#fff0dc", mid: "#d84b3f", edge: "#541326", glow: "#ff7267" }, tip: "Kết ấn dưới chân một người chơi trong tầm, trói tối đa 2 người suốt 2 giây. Người bị xích vẫn đánh và thi triển chiêu được; sát thương nhẹ." }, ngu_kiem_sat: { id: "ngu_kiem_sat", short: "Ngũ Kiếm Sát", name: "Ngũ Kiếm Sát", book: "bi_tich_ngu_kiem_sat", element: "Kim", glyph: "✦", shape: "ground", medium: !0, boostWeapon: "huyet_kiem", maxTargets: 4, cooldown: 8.5, cast: .48, mp: 20, sp: 8, range: 118, speed: 0, shots: 1, spread: 0, coef: 5.2, hitR: 0, blastR: 38, delay: .12, vfx: "skill1", effect: null, colors: { core: "#fff2ff", mid: "#bca8ff", edge: "#5c3f9b", glow: "#d8c8ff" }, tip: "Năm kiếm ảnh đồng loạt khóa tâm trận, chém quét tối đa 4 mục tiêu. Có Huyết Kiếm trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, huyet_kiem_tran: { id: "huyet_kiem_tran", short: "Huyết Kiếm Trận", name: "Huyết Kiếm Trận", book: "bi_tich_huyet_kiem_tran", element: "Huyết", glyph: "✣", shape: "ground", medium: !0, boostWeapon: "huyet_kiem", maxTargets: 4, cooldown: 10, cast: .52, mp: 24, sp: 10, range: 126, speed: 0, shots: 1, spread: 0, coef: 5.6, hitR: 0, blastR: 46, delay: .16, vfx: "luojian", effect: null, colors: { core: "#fff0ef", mid: "#ff5361", edge: "#8d1528", glow: "#ff8190" }, tip: "Huyết kiếm liên tiếp cắm xuống đất, chấn động và gây sát thương lên tối đa 4 mục tiêu. Có Huyết Kiếm trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, van_kiem_quy_tong: { id: "van_kiem_quy_tong", short: "Vạn Kiếm Quy Tông", name: "Vạn Kiếm Quy Tông", book: "bi_tich_van_kiem_quy_tong", element: "Kiếm", glyph: "✺", medium: !0, dao: "chinh", requireRealm: "truc_co_2", thuongPham: !0, shape: "ground", cooldown: 12, cast: .65, mp: 35, sp: 15, range: 220, speed: 0, shots: 1, spread: 0, coef: 9, hitR: 0, blastR: 0, delay: 2.6, hitDelay: 2.6, waitForTarget: 60, releaseDelay: 1.15, vfx: "van_kiem_quy_tong", effect: null, colors: { core: "#edffff", mid: "#88dbde", edge: "#316979", glow: "#a8f5ee" }, tip: "Triệu hồi 24 binh khí chân khí xoay quanh người tối đa 60 giây để chờ mục tiêu hợp lệ, rồi cùng lao đúng vào mục tiêu. Hình và màu theo kiếm, đao hoặc thương tương thích đang trang bị; trang bị khác dùng hình Thiết Kiếm. Hào quang là hiệu ứng thị giác, không cấp miễn thương." }, cuu_huyet_kiem_tran: { id: "cuu_huyet_kiem_tran", short: "Cửu Huyết Kiếm Trận", name: "Cửu Huyết Kiếm Trận", book: "bi_tich_cuu_huyet_tran", element: "Huyết", glyph: "✥", shape: "aura", medium: !0, boostWeapon: "huyet_kiem", cooldown: 12, cast: .6, mp: 28, sp: 12, range: 96, speed: 0, shots: 1, spread: 0, coef: 6.5, hitR: 0, blastR: 96, maxTargets: 5, delay: .18, lifesteal: { pct: .01, max: .05, pvp: .5 }, vfx: "cuu_huyet_tran", effect: null, colors: { core: "#fff0fb", mid: "#e98cff", edge: "#711a70", glow: "#ff6fbd" }, tip: "Chín kiếm huyết ảnh xoay quanh bản thân, gây sát thương lên tối đa 5 đối phương gần nhất, mỗi kẻ trúng hồi 1% Khí Huyết tối đa (tối đa 5%). Có Huyết Kiếm trong hành trang: sát thương đầy đủ và hút huyết; thiếu pháp khí: còn 50%, không hút huyết." }, kim_thuong_giang_the: { id: "kim_thuong_giang_the", short: "Kim Thương", name: "Kim Thương Giáng Thế", book: "bi_tich_kim_thuong_giang_the", legacyBook: "hoa_kim_thuong", element: "Hỏa", glyph: "⇓", icon: "bi_tich_kim_thuong_giang_the", shape: "ground", medium: !0, boostWeapon: "hoa_kim_thuong", maxTargets: 4, cooldown: 12, cast: .5, mp: 30, sp: 12, range: 132, speed: 0, shots: 1, spread: 0, coef: 5.6, hitR: 0, blastR: 130, delay: .2, hitDelay: 1.15, vfx: "kim_thuong_giang_the", effect: [{ kind: "burn", time: 4, dpsCoef: .45 }, { kind: "stun", time: .8 }], colors: { core: "#fff8d8", mid: "#ff9a3a", edge: "#8a2a12", glow: "#ffb45c" }, tip: "Hoả Kim Thương từ trời giáng xuống điểm ngắm: nổ lửa diện rộng, thiêu đốt 4 giây và choáng 0,8 giây. Có Hoả Kim Thương trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, loi_thuong_quan_dia: { id: "loi_thuong_quan_dia", short: "Quán Địa", name: "Lôi Thương Quán Địa", book: "bi_tich_loi_thuong_quan_dia", element: "Lôi", glyph: "⇓", icon: "bi_tich_loi_thuong_quan_dia", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", boostWeapon: "hoang_loi_thuong", maxTargets: 3, cooldown: 9, cast: .5, mp: 30, sp: 12, range: 150, speed: 0, shots: 1, spread: 0, coef: 6.3, hitR: 0, blastR: 56, delay: .3, hitDelay: .3, vfx: "loi_thuong_quan_dia", effect: { kind: "stun", time: 1 }, colors: { core: "#fffbe0", mid: "#ffd92e", edge: "#9a5a08", glow: "#ffe680" }, tip: "Thương sét từ trời cắm xuống điểm ngắm, nổ lôi quang trúng tối đa 3 kẻ và làm choáng 1 giây. Cần Trúc Cơ Trung Kỳ. Có Hoàng Lôi Thương trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, ngu_loi_thuong_vu: { id: "ngu_loi_thuong_vu", short: "Thương Vũ", name: "Ngũ Lôi Thương Vũ", book: "bi_tich_ngu_loi_thuong_vu", element: "Lôi", glyph: "⇊", icon: "bi_tich_ngu_loi_thuong_vu", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", boostWeapon: "hoang_loi_thuong", maxTargets: 5, cooldown: 14, cast: .6, mp: 36, sp: 14, range: 170, speed: 0, shots: 1, spread: 0, coef: 9.8, hitR: 0, blastR: 84, delay: 1, hitDelay: 1, vfx: "ngu_loi_thuong_vu", effect: { kind: "slow", time: 3.5, mult: .45 }, colors: { core: "#fffbe0", mid: "#ffd92e", edge: "#7a4ad8", glow: "#ffe680" }, tip: "Năm thương sét lần lượt giáng quanh điểm ngắm, cây cuối cắm đúng tâm: trúng tối đa 5 kẻ và làm chậm còn 45% trong 3,5 giây. Cần Trúc Cơ Trung Kỳ. Có Hoàng Lôi Thương trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, thanh_lam_kiem_tru: { id: "thanh_lam_kiem_tru", short: "Thanh Băng Kiếm Trụ", name: "Thanh Băng Kiếm Trụ", book: "bi_tich_thanh_lam_kiem_tru", element: "Kim", glyph: "⚔", shape: "bolt", vfx: "thanh_bang_kiem_tru", medium: !0, boostWeapon: "bang_linh_kiem", cooldown: 8, cast: .38, mp: 15, sp: 6, range: 128, speed: 270, shots: 1, spread: 0, coef: 5.2, hitR: 12, blastR: 36, maxTargets: 2, primaryTarget: !0, effect: null, colors: { core: "#efffff", mid: "#67d9ee", edge: "#1764b1", glow: "#8defff" }, tip: "Triệu hồi mưa kiếm băng, gây sát thương lên mục tiêu chính rồi lan thêm tối đa 2 đối thủ. Có Băng Linh Kiếm trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, anh_ky_phu: { id: "anh_ky_phu", short: "Ảnh Kỵ", name: "Ảnh Kỵ", book: "bi_tich_anh_ky_phu", element: "Phù", glyph: "♞", icon: "bi_tich_anh_ky_phu", shape: "bolt", medium: !0, cooldown: 9, cast: .44, mp: 18, sp: 7, range: 192, speed: 250, shots: 1, spread: 0, coef: 6, hitR: 13, blastR: 0, mpDrain: 4, vfx: "anh_ky_phu", vfxLayers: 3, effect: { kind: "stun", time: 1.3, chance: .5 }, colors: { core: "#f2ffff", mid: "#55cfff", edge: "#2457a4", glow: "#9cecff" }, tip: "Kỵ ảnh xanh lao tới mục tiêu, gây sát thương, rút 4 Linh Lực và có 50% cơ hội làm choáng 1,3 giây." }, bang_kiem_tran: { id: "bang_kiem_tran", short: "Băng Kiếm Trận", name: "Băng Kiếm Trận", book: "bi_tich_bang_kiem_tran", element: "Băng", glyph: "❄", icon: "bi_tich_bang_kiem_tran", shape: "ground", medium: !0, boostWeapon: "bang_linh_kiem", cooldown: 11, cast: .54, mp: 26, sp: 11, range: 136, speed: 0, shots: 1, spread: 0, coef: 5, hitR: 0, blastR: 66, shatterBonus: .2, maxTargets: 4, delay: .22, vfx: "bang_kiem_tran", effect: [{ kind: "freeze", time: 1.2 }, { kind: "slow", time: 3.6, mult: .45 }], colors: { core: "#f4ffff", mid: "#55cfff", edge: "#1764b1", glow: "#a9efff" }, tip: "Dựng trận kiếm băng tại điểm ngắm, gây sát thương lên tối đa 4 mục tiêu, đóng băng 1,2 giây rồi làm chậm còn 45% trong 3,6 giây. Mục tiêu đã Chậm hoặc Đóng Băng chịu thêm 20% sát thương Băng Vỡ. Có Băng Linh Kiếm trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, bang_kiem_luan: { id: "bang_kiem_luan", short: "Băng Kiếm Luân", name: "Băng Kiếm Luân", book: "bi_tich_bang_kiem_luan", element: "Băng", glyph: "✥", icon: "bi_tich_bang_kiem_luan", shape: "aura", medium: !0, boostWeapon: "bang_linh_kiem", cooldown: 10, cast: .72, mp: 22, sp: 9, range: 246, speed: 0, shots: 1, spread: 0, coef: 4.9, hitR: 0, blastR: 246, maxTargets: 5, delay: .16, vfx: "bang_kiem_luan", effect: { kind: "slow", time: 4, mult: .55 }, colors: { core: "#f5ffff", mid: "#46c9ff", edge: "#1453ae", glow: "#8deaff" }, tip: "Kiếm luân băng xoay quanh thân, gây sát thương và làm chậm tối đa 5 mục tiêu gần nhất còn 55% trong 4 giây. Có Băng Linh Kiếm trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, tien_vu: { id: "tien_vu", short: "Tiễn Vũ", name: "Tiễn Vũ", book: "bi_tich_tien_vu", element: "Kim", glyph: "➹", icon: "bi_tich_tien_vu", shape: "ground", medium: !0, boostWeapon: "cung_linh", maxTargets: 4, cooldown: 11, cast: .46, mp: 24, sp: 10, range: 176, speed: 0, shots: 1, spread: 0, coef: 5.25, hitR: 0, blastR: 80, delay: .2, hitDelay: .4, vfx: "tien_vu", effect: { kind: "wound", chance: .3, time: 5, dpsCoef: .25, heal: .5 }, colors: { core: "#fff6c8", mid: "#f0c040", edge: "#8a5a12", glow: "#ffd76a" }, tip: "Trút mưa tên vàng xuống điểm ngắm, trúng tối đa 4 mục tiêu. Mỗi mục tiêu có 30% dính Thâm Thương: rỉ máu 5 giây và chỉ hồi được 50% Khí Huyết. Có Linh Cung trong hành trang: sát thương đầy đủ; thiếu pháp khí: còn 50%." }, tram_ma: { id: "tram_ma", short: "Trầm Ma", name: "Trầm Ma", book: "bi_tich_tram_ma", element: "Ma", glyph: "⊛", icon: "bi_tich_tram_ma", shape: "aura", medium: !0, maxTargets: 3, cooldown: 9, cast: .42, mp: 18, sp: 7, range: 176, speed: 0, shots: 1, spread: 0, coef: 5.25, hitR: 0, blastR: 176, delay: .35, vfx: "tram_ma", linhAn: { time: 4, bonus: .15 }, effect: { kind: "burn", chance: .5, time: 4, dpsCoef: .3, ma: !0 }, colors: { core: "#f1e2ff", mid: "#9a5cff", edge: "#2a0b3d", glow: "#b77dff" }, tip: "Ma khí lan ra rất xa quanh thân, tự tìm 3 kẻ địch gần nhất và mở xoáy ma khí dưới chân từng kẻ. Mỗi mục tiêu trúng mang Linh Ấn 4 giây: đòn trực tiếp kế tiếp của bạn gây thêm 15% sát thương rồi tiêu hao ấn. Mục tiêu cũng có 50% cơ hội dính Ma Hỏa, thiêu đốt 4 giây." }, ma_bao_an: { id: "ma_bao_an", short: "Ma Bạo Ấn", name: "Ma Bạo Ấn", book: "bi_tich_ma_bao_an", element: "Ma", glyph: "卍", icon: "bi_tich_ma_bao_an", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", dao: "ma", maxTargets: 4, cooldown: 13, cast: .45, mp: 34, sp: 14, range: 150, speed: 0, shots: 1, spread: 0, coef: 6.6, hitR: 0, blastR: 72, delay: .7, hitDelay: .7, vfx: "ma_bao_an", effect: { kind: "burn", time: 5, dpsCoef: .4, ma: !0 }, colors: { core: "#fbe8ff", mid: "#b04cff", edge: "#2a0638", glow: "#d27bff" }, tip: "Kết ma ấn tại điểm ngắm: ma khí tụ lại rồi ba ấn nổ liền nhau, trúng tối đa 4 kẻ. Kẻ trúng chắc chắn dính Ma Hỏa 5 giây. Cần Trúc Cơ Trung Kỳ và mang Hồn Phiên." }, ma_hon_phe: { id: "ma_hon_phe", short: "Ma Hồn Phệ", name: "Ma Hồn Phệ", book: "bi_tich_ma_hon_phe", element: "Ma", glyph: "☠", icon: "bi_tich_ma_hon_phe", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_1", dao: "ma", maxTargets: 4, cooldown: 11.5, cast: .5, mp: 26, sp: 12, range: 180, speed: 0, shots: 1, spread: 0, coef: 8.5, hitR: 0, blastR: 42, delay: 2.2, hitDelay: 2.2, vfx: "ma_hon_phe", effect: { kind: "burn", time: 4, dpsCoef: .45, ma: !0 }, colors: { core: "#fff0ff", mid: "#ef315f", edge: "#2b073f", glow: "#8f4dff" }, tip: "Gọi 5–7 đầu lâu ma lần lượt xoáy vòng quanh chủ rồi lao cong vào mục tiêu. Ma Hỏa 4 giây; cần Trúc Cơ Sơ Kỳ và Hồn Phiên." }, cuu_u_ma_trao: { id: "cuu_u_ma_trao", short: "Ma Trảo", name: "Cửu U Ma Trảo", book: "bi_tich_cuu_u_ma_trao", element: "Ma", glyph: "爪", icon: "bi_tich_cuu_u_ma_trao", shape: "aura", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", dao: "ma", maxTargets: 5, cooldown: 15, cast: .55, mp: 36, sp: 15, range: 180, speed: 0, shots: 1, spread: 0, coef: 10.5, hitR: 0, blastR: 180, delay: .95, hitDelay: .95, vfx: "cuu_u_ma_trao", effect: null, colors: { core: "#f3dcff", mid: "#9b4dff", edge: "#2a0b4d", glow: "#c58cff" }, tip: "Năm bàn tay ma trồi lên dưới chân năm kẻ gần nhất rồi vồ xé, sát thương ngang Thái Âm Nguyệt Quang. Cần Trúc Cơ Trung Kỳ và Hồn Phiên." }, phi_long_tai_thien: { id: "phi_long_tai_thien", short: "Phi Long", name: "Phi Long Tại Thiên", book: "bi_tich_phi_long_tai_thien", element: "Kim", glyph: "龍", icon: "bi_tich_phi_long_tai_thien", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", dao: "chinh", autoFoe: !0, primaryTarget: !0, maxTargets: 2, cooldown: 15, cast: .55, mp: 36, sp: 15, range: 200, speed: 0, shots: 1, spread: 0, coef: 11, hitR: 0, blastR: 84, delay: 1.15, hitDelay: 1.15, vfx: "phi_long_tai_thien", effect: null, colors: { core: "#fff8d8", mid: "#ffd45a", edge: "#7a4a08", glow: "#ffe28a" }, tip: "Ba rồng ảo ảnh bay quanh người rồi lao vào mục tiêu chính cùng hai kẻ gần nó nhất, sát thương nặng hơn Cửu U Ma Trảo. Cần Trúc Cơ Trung Kỳ và Kiếm Hạp." }, nguyet_quang: { id: "nguyet_quang", short: "Nguyệt Quang", name: "Thái Âm Nguyệt Quang", book: "bi_tich_nguyet_quang", element: "Quang", glyph: "☾", icon: "bi_tich_nguyet_quang", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", maxTargets: 3, cooldown: 14, cast: .55, mp: 34, sp: 14, range: 190, speed: 0, shots: 1, spread: 0, coef: 10.5, hitR: 0, blastR: 34, delay: 1.3, hitDelay: 1.3, vfx: "nguyet_quang", effect: { kind: "stun", time: .8 }, colors: { core: "#ffffff", mid: "#9fdcff", edge: "#243f9a", glow: "#e6f4ff" }, tip: "Triệu trăng lên cao rồi giáng luồng nguyệt quang xuống điểm ngắm: sát thương rất lớn, trúng tối đa 3 kẻ, choáng 0,8 giây. Cần Trúc Cơ Trung Kỳ." }, kim_quang_cu_kiem: { id: "kim_quang_cu_kiem", short: "Cự Kiếm", name: "Kim Quang Cự Kiếm", book: "bi_tich_kim_quang_cu_kiem", element: "Kim", glyph: "⚔", icon: "bi_tich_kim_quang_cu_kiem", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", dao: "chinh", autoFoe: !0, maxTargets: 1, cooldown: 10, cast: .5, mp: 26, sp: 11, range: 210, speed: 0, shots: 1, spread: 0, coef: 7.2, hitR: 0, blastR: 0, delay: 2.2, hitDelay: 2.2, vfx: "kim_quang_cu_kiem", effect: null, colors: { core: "#fffbe0", mid: "#ffd24a", edge: "#a8601a", glow: "#ffe28a" }, tip: "Triệu một cây kim kiếm khổng lồ từ vòng năng lượng, bay chậm theo vòng cung rồi cắm vào mục tiêu. Cần Trúc Cơ Trung Kỳ và Kiếm Hạp." }, ngu_sac_than_chuong: { id: "ngu_sac_than_chuong", short: "Thần Chưởng", name: "Ngũ Sắc Thần Chưởng", book: "bi_tich_ngu_sac_than_chuong", element: "Ngũ Hành", glyph: "掌", icon: "bi_tich_ngu_sac_than_chuong", shape: "ground", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", maxTargets: 5, cooldown: 30, cast: .6, mp: 36, sp: 14, range: 200, speed: 0, shots: 1, spread: 0, coef: 22.5, hitR: 0, blastR: 56, delay: 1.8, hitDelay: 1.8, vfx: "ngu_sac_than_chuong", effect: { kind: "stun", time: 2 }, colors: { core: "#ffffff", mid: "#b98cff", edge: "#3d2a8a", glow: "#ffe2a0" }, tip: "Bàn tay ngũ sắc khổng lồ thò ra từ mây sương rồi bổ xuống điểm ngắm: sát thương cực lớn, trúng tối đa 5 kẻ, choáng 2 giây. Hồi chiêu rất lâu. Cần Trúc Cơ Trung Kỳ." }, huyet_buc_chuong: { id: "huyet_buc_chuong", short: "Huyết Bức", name: "Huyết Bức Chưởng", book: "bi_tich_huyet_buc_chuong", element: "Huyết", glyph: "蝠", icon: "bi_tich_huyet_buc_chuong", shape: "ground", medium: !0, autoFoe: !0, maxTargets: 3, cooldown: 5.5, cast: .4, mp: 14, sp: 6, range: 130, speed: 0, shots: 1, spread: 0, coef: 5, hitR: 0, blastR: 44, delay: .34, hitDelay: .34, vfx: "huyet_buc_chuong", effect: { kind: "wound", chance: .35, time: 4, dpsCoef: .2, heal: .5 }, colors: { core: "#ffe9d8", mid: "#e0283a", edge: "#4a0612", glow: "#ff5a4a" }, tip: "Bầy dơi huyết bắn vào mục tiêu, trúng tối đa 3 kẻ; 35% dính Thâm Thương (rỉ máu 4 giây, hồi máu còn 50%)." }, huyet_liem_tram: { id: "huyet_liem_tram", short: "Liêm Trảm", name: "Huyết Liêm Trảm", book: "bi_tich_huyet_liem_tram", element: "Huyết", glyph: "镰", icon: "bi_tich_huyet_liem_tram", shape: "ground", medium: !0, autoFoe: !0, requireRealm: "luyen_khi_10", boostWeapon: "huyet_ma_liem", maxTargets: 4, cooldown: 7, cast: .45, mp: 24, sp: 10, range: 150, speed: 0, shots: 1, spread: 0, coef: 5.8, hitR: 0, blastR: 52, delay: .17, hitDelay: .17, vfx: "huyet_liem_tram", effect: null, lifesteal: { pct: .05, max: .15, pvp: .5 }, colors: { core: "#ffe6e0", mid: "#e0283a", edge: "#4a0612", glow: "#ff3b52" }, tip: "Làn sóng liêm máu nổ thành mây huyết, trúng tối đa 4 kẻ. Cần Luyện Khí Tầng 10. Có Huyết Ma Liêm trong hành trang: sát thương gấp đôi và hút 5% Khí Huyết mỗi kẻ trúng (tối đa 15%); thiếu pháp khí: còn 50%, không hút." }, tu_anh_phuoc_tien: { id: "tu_anh_phuoc_tien", short: "Tứ Ảnh", name: "Tứ Ảnh Phược Tiên", book: "bi_tich_tu_anh_phuoc_tien", element: "Ảnh", glyph: "影", icon: "bi_tich_tu_anh_phuoc_tien", shape: "ground", medium: !0, requireRealm: "truc_co_1", kieuRoi: ["bach_loi_tien", "nhuyen_tien"], autoFoe: !0, needTarget: !0, maxTargets: 1, cooldown: 10, cast: .5, mp: 26, sp: 10, range: 170, speed: 0, shots: 1, spread: 0, coef: 6, hitR: 0, blastR: 0, delay: .8, hitDelay: .8, vfx: "tu_anh_phuoc_tien", effect: { kind: "root", time: 2.5 }, colors: { core: "#f2fbff", mid: "#6fc7ff", edge: "#2553b8", glow: "#a8e4ff" }, tip: "Thân hoá bốn bóng mờ, mỗi bóng quất một roi trói chân đối phương 2,5 giây. Cần Trúc Cơ Sơ Kỳ. Có Nhuyễn Tiên thì roi đỏ, không thì roi sét Bạch Lôi Tiên." }, xich_ma_hoa_than: { id: "xich_ma_hoa_than", short: "Xích Ma", name: "Xích Ma Hóa Thân", book: "bi_tich_xich_ma_hoa_than", element: "Ma", glyph: "魔", icon: "bi_tich_xich_ma_hoa_than", shape: "self", medium: !0, requireRealm: "truc_co_1", dao: "ma", cooldown: 25, cast: .6, mp: 30, sp: 12, range: 140, speed: 0, shots: 1, spread: 0, hitR: 0, blastR: 0, vfx: "xich_ma", effect: null, bienHinh: { hinh: "xich_ma", fx: "XichMaFX", time: 12, dang: { gender: "male", skin: "xich_ma", outfit: "xich_ma_y", hair: "xich_ma_toc", hairColor: "hac", eyeColor: "xich_ma", shoes: "ink" }, speed: 1.8, minAttack: .5, giap: .6, giapTen: "Ma Giáp", giapMau: "#ff6a4a", lifesteal: { pct: .015, pvp: .5 } }, colors: { core: "#ffe2c8", mid: "#e0283a", edge: "#2a0710", glow: "#ff6a3c" }, tip: "Cường hoá thân thể 12 giây: đánh nhanh gấp 1,8, hút huyết, có Ma Giáp đỡ đòn, ma khí bao quanh người. Vẫn bay, dùng vũ khí và chiêu như thường. Cần Trúc Cơ Sơ Kỳ và Hồn Phiên." }, kim_cuong_hoa_than: { id: "kim_cuong_hoa_than", short: "Kim Cương", name: "Kim Cương Hóa Thân", book: "bi_tich_kim_cuong_hoa_than", element: "Kim", glyph: "金", icon: "bi_tich_kim_cuong_hoa_than", shape: "self", medium: !0, requireRealm: "truc_co_1", dao: "chinh", cooldown: 25, cast: .6, mp: 30, sp: 12, range: 140, speed: 0, shots: 1, spread: 0, hitR: 0, blastR: 0, vfx: "kim_cuong", effect: null, bienHinh: { hinh: "kim_cuong", fx: "KimCuongFX", time: 14, dang: { eyeColor: "kim_cuong" }, kimHoa: !0, giu: ["beard", "accessory", "aura"], speed: 1.6, minAttack: .5, giap: 1, giapTen: "Cương Khí", giapMau: "#ffd86b", lifesteal: { pct: .01, pvp: .5 } }, colors: { core: "#fff6c8", mid: "#ffc83a", edge: "#7a4a08", glow: "#ffe27a" }, tip: "Cường hoá thân thể 14 giây: đánh nhanh gấp 1,6, hút huyết, có Cương Khí đỡ đòn, thân mạ vàng kim, mắt phát sáng, kim quang bao quanh người. Vẫn bay, dùng vũ khí và chiêu như thường. Cần Trúc Cơ Sơ Kỳ và Kiếm Hạp." } };
   t.ORDER = ["hoa_cau", "phong_nhan", "bang_thau", "dia_thich", "xich_chan"];
-  t.MEDIUM_ORDER = ["ngu_kiem_sat", "huyet_kiem_tran", "cuu_huyet_kiem_tran", "thanh_lam_kiem_tru", "kim_thuong_giang_the", "anh_ky_phu", "bang_kiem_tran", "bang_kiem_luan", "van_kiem_quy_tong", "tien_vu", "tram_ma", "ma_bao_an", "ma_hon_phe", "nguyet_quang", "kim_quang_cu_kiem", "ngu_sac_than_chuong", "huyet_buc_chuong", "loi_thuong_quan_dia", "ngu_loi_thuong_vu", "huyet_liem_tram", "tu_anh_phuoc_tien", "xich_ma_hoa_than"];
+  t.MEDIUM_ORDER = ["ngu_kiem_sat", "huyet_kiem_tran", "cuu_huyet_kiem_tran", "thanh_lam_kiem_tru", "kim_thuong_giang_the", "anh_ky_phu", "bang_kiem_tran", "bang_kiem_luan", "van_kiem_quy_tong", "tien_vu", "tram_ma", "ma_bao_an", "ma_hon_phe", "nguyet_quang", "kim_quang_cu_kiem", "ngu_sac_than_chuong", "huyet_buc_chuong", "loi_thuong_quan_dia", "ngu_loi_thuong_vu", "huyet_liem_tram", "tu_anh_phuoc_tien", "xich_ma_hoa_than", "kim_cuong_hoa_than", "cuu_u_ma_trao", "phi_long_tai_thien"];
   t.activeOrder = function () {
     return t.ORDER.concat(t.MEDIUM_ORDER);
   };
@@ -89,6 +89,20 @@
     e = e || n;
     var a = t.canBuyXichMa(e);
     return a.ok ? e.Progress.spendStones(t.XICH_MA_COST) ? (e.Inventory.add(t.XICH_MA_BOOK, 1), e.Quest && e.Quest.save && e.Quest.save(), { ok: !0, itemId: t.XICH_MA_BOOK, cost: t.XICH_MA_COST }) : { ok: !1, why: "thiếu Linh Thạch" } : a;
+  };
+  t.KIM_CUONG_COST = 12e3;
+  t.KIM_CUONG_BOOK = "bi_tich_kim_cuong_hoa_than";
+  t.canBuyKimCuong = function (e) {
+    if ((e = e || n).Inventory.owns(t.KIM_CUONG_BOOK)) {
+      return { ok: !1, why: "đã có bí tịch" };
+    }
+    var a = t.lockReason("kim_cuong_hoa_than", e);
+    return a ? { ok: !1, why: a } : (0 | e.Progress.stones) < t.KIM_CUONG_COST ? { ok: !1, why: "cần " + t.KIM_CUONG_COST + " Linh Thạch" } : { ok: !0 };
+  };
+  t.buyKimCuong = function (e) {
+    e = e || n;
+    var a = t.canBuyKimCuong(e);
+    return a.ok ? e.Progress.spendStones(t.KIM_CUONG_COST) ? (e.Inventory.add(t.KIM_CUONG_BOOK, 1), e.Quest && e.Quest.save && e.Quest.save(), { ok: !0, itemId: t.KIM_CUONG_BOOK, cost: t.KIM_CUONG_COST }) : { ok: !1, why: "thiếu Linh Thạch" } : a;
   };
   t.KIM_QUANG_COST = 12e3;
   t.KIM_QUANG_BOOK = "bi_tich_kim_quang_cu_kiem";
@@ -644,7 +658,7 @@
     return !!t.known(e) && (t.testMode ? (t.testActive = e, S(), !0) : (n.Quest && n.Quest.flags && (n.Quest.flags.phap_thuat_dung = e, n.Quest.save()), !0));
   };
   t.THUNDER_DEF = { id: "loi_chuong", short: "Lôi Chưởng", name: "Bí Tịch Lôi Chưởng", element: "Lôi", glyph: "ϟ", thunder: !0, colors: { core: "#f2ffff", mid: "#9df2dd", edge: "#3d8fa0", glow: "#9df2dd" }, tip: "Vỗ chưởng gọi sét giáng xuống mục tiêu, quét cả cụm quái đứng gần." };
-  t.SLOTS = ["loi_chuong", "hoa_cau", "phong_nhan", "bang_thau", "dia_thich", "xich_chan", "ngu_kiem_sat", "huyet_kiem_tran", "cuu_huyet_kiem_tran", "thanh_lam_kiem_tru", "kim_thuong_giang_the", "anh_ky_phu", "bang_kiem_tran", "bang_kiem_luan", "van_kiem_quy_tong", "tien_vu", "tram_ma", "ma_bao_an", "ma_hon_phe", "nguyet_quang", "kim_quang_cu_kiem", "ngu_sac_than_chuong", "huyet_buc_chuong", "loi_thuong_quan_dia", "ngu_loi_thuong_vu", "huyet_liem_tram", "tu_anh_phuoc_tien", "xich_ma_hoa_than"];
+  t.SLOTS = ["loi_chuong", "hoa_cau", "phong_nhan", "bang_thau", "dia_thich", "xich_chan", "ngu_kiem_sat", "huyet_kiem_tran", "cuu_huyet_kiem_tran", "thanh_lam_kiem_tru", "kim_thuong_giang_the", "anh_ky_phu", "bang_kiem_tran", "bang_kiem_luan", "van_kiem_quy_tong", "tien_vu", "tram_ma", "ma_bao_an", "ma_hon_phe", "nguyet_quang", "kim_quang_cu_kiem", "ngu_sac_than_chuong", "huyet_buc_chuong", "loi_thuong_quan_dia", "ngu_loi_thuong_vu", "huyet_liem_tram", "tu_anh_phuoc_tien", "xich_ma_hoa_than", "kim_cuong_hoa_than", "cuu_u_ma_trao", "phi_long_tai_thien"];
   t.slotDef = function (n) {
     var e = t.SLOTS[n];
     return e ? "loi_chuong" === e ? t.THUNDER_DEF : t.DEFS[e] || null : null;
@@ -655,7 +669,7 @@
   };
   var c = "pntt.thanhChieu.v1";
   var g = null;
-  function f(n) {
+  function _(n) {
     var t = {};
     if (n && "object" == typeof n) {
       for (var e in n)
@@ -666,12 +680,12 @@
   function m(n) {
     return Array.isArray(n) ? n.slice() : null;
   }
-  function d(n) {
+  function f(n) {
     return n < 32 || n >= 127 && n <= 159 || n >= 8203 && n <= 8207 || n >= 8232 && n <= 8238 || n >= 8288 && n <= 8292 || 65279 === n;
   }
-  function _(n, e) {
+  function d(n, e) {
     for (var a = "string" == typeof n ? n : "", o = 0, i = ""; o < a.length; o++)
-      i += d(a.charCodeAt(o)) ? " " : a.charAt(o);
+      i += f(a.charCodeAt(o)) ? " " : a.charAt(o);
     a = i.replace(/\s+/g, " ").replace(/^ | $/g, "");
     return (a = (Array.from ? Array.from(a).slice(0, t.TEN_BO_TOI_DA).join("") : a.slice(0, t.TEN_BO_TOI_DA)).replace(/^ | $/g, "")) || e;
   }
@@ -682,7 +696,7 @@
       for (a = 0; a < e.bo.length && o.length < t.BO_TOI_DA; a++) {
         var i = e.bo[a];
         if (i && "object" == typeof i) {
-          o.push({ ten: _(i.ten, "Combo " + (o.length + 1)), tat: f(i.tat), an: f(i.an), thuTu: m(i.thuTu) });
+          o.push({ ten: d(i.ten, "Combo " + (o.length + 1)), tat: _(i.tat), an: _(i.an), thuTu: m(i.thuTu) });
         }
       }
     }
@@ -706,15 +720,15 @@
   function y(n) {
     var t = n.bo[n.dung];
     if (t) {
-      t.tat = f(n.tat);
-      t.an = f(n.an);
+      t.tat = _(n.tat);
+      t.an = _(n.an);
       t.thuTu = m(n.thuTu);
     }
   }
   function v(n, t) {
     var e = n.bo[t];
-    n.tat = f(e.tat);
-    n.an = f(e.an);
+    n.tat = _(e.tat);
+    n.an = _(e.an);
     n.thuTu = m(e.thuTu);
     n.dung = t;
   }
@@ -812,7 +826,7 @@
       }
     }
   }
-  function A(e) {
+  function C(e) {
     if (t.setActive(e)) {
       t.testPassive = null;
       S();
@@ -840,34 +854,51 @@
           n.ThanChuongFX.spawn(o.player, { x: o.player.x + c * (.7 * a.range), y: o.player.y + g * (.7 * a.range) }, { colors: a.colors, radius: a.blastR, hitDelay: a.hitDelay });
         }
         if ("huyet_buc_chuong" === e && n.VFX.spawnHuyetBuc) {
-          var f = 1 === o.player.dir ? -1 : 2 === o.player.dir ? 1 : 0;
+          var _ = 1 === o.player.dir ? -1 : 2 === o.player.dir ? 1 : 0;
           var m = 0 === o.player.dir ? 1 : 3 === o.player.dir ? -1 : 0;
-          n.VFX.spawnHuyetBuc(o.player, { x: o.player.x + f * (.9 * a.range), y: o.player.y + m * (.9 * a.range) }, { hitDelay: a.hitDelay });
+          n.VFX.spawnHuyetBuc(o.player, { x: o.player.x + _ * (.9 * a.range), y: o.player.y + m * (.9 * a.range) }, { hitDelay: a.hitDelay });
         }
         if ("huyet_liem_tram" === e && n.VFX.spawnHuyetLiem) {
-          var d = 1 === o.player.dir ? -1 : 2 === o.player.dir ? 1 : 0;
-          var _ = 0 === o.player.dir ? 1 : 3 === o.player.dir ? -1 : 0;
-          var p = { x: o.player.x + d * (.8 * a.range), y: o.player.y + _ * (.8 * a.range) };
+          var f = 1 === o.player.dir ? -1 : 2 === o.player.dir ? 1 : 0;
+          var d = 0 === o.player.dir ? 1 : 3 === o.player.dir ? -1 : 0;
+          var p = { x: o.player.x + f * (.8 * a.range), y: o.player.y + d * (.8 * a.range) };
           n.VFX.spawnHuyetLiem(o.player, p, { hitDelay: a.hitDelay });
           if (n.VFX.spawnHutHuyet) {
             n.VFX.spawnHutHuyet(o.player, [[p.x, p.y], [p.x + 14, p.y + 10], [p.x - 12, p.y - 8]], 0, a.hitDelay);
           }
         }
-        if ("tu_anh_phuoc_tien" === e && n.VFX.spawnTuAnhPhuoc) {
-          var y = 1 === o.player.dir ? -1 : 2 === o.player.dir ? 1 : 0;
-          var v = 0 === o.player.dir ? 1 : 3 === o.player.dir ? -1 : 0;
-          n.VFX.spawnTuAnhPhuoc(o.player, { x: o.player.x + y * (.65 * a.range), y: o.player.y + v * (.65 * a.range) }, { variant: t.vuKhiHopLe(a, n) || "bach_loi_tien", hitDelay: a.hitDelay, bindTime: a.effect.time });
+        if ("cuu_u_ma_trao" === e && n.VFX.spawnMaTrao) {
+          for (var y = 1 === o.player.dir ? -1 : 2 === o.player.dir ? 1 : 0, v = 0 === o.player.dir ? 1 : 3 === o.player.dir ? -1 : 0, b = Math.atan2(v, y), k = [], T = 0; T < 5; T++) {
+            var w = b + .5 * (T - 2);
+            var x = 70 + T % 2 * 38;
+            k.push({ x: o.player.x + Math.cos(w) * x, y: o.player.y + Math.sin(w) * x });
+          }
+          n.VFX.spawnMaTrao(o.player, k, { colors: a.colors, radius: a.blastR, hitDelay: a.hitDelay });
         }
-        if ("xich_ma_hoa_than" === e && n.Player && n.Player.giveForm) {
+        if ("phi_long_tai_thien" === e && n.VFX.spawnPhiLong) {
+          for (var M = 1 === o.player.dir ? -1 : 2 === o.player.dir ? 1 : 0, C = 0 === o.player.dir ? 1 : 3 === o.player.dir ? -1 : 0, O = Math.atan2(C, M), P = [], A = 0; A < 3; A++) {
+            var K = O + .55 * (A - 1);
+            var R = 100 + A % 2 * 26;
+            P.push({ x: o.player.x + Math.cos(K) * R, y: o.player.y + Math.sin(K) * R * .8 });
+          }
+          n.VFX.spawnPhiLong(o.player, P, { hitDelay: a.hitDelay });
+        }
+        if ("tu_anh_phuoc_tien" === e && n.VFX.spawnTuAnhPhuoc) {
+          var H = 1 === o.player.dir ? -1 : 2 === o.player.dir ? 1 : 0;
+          var I = 0 === o.player.dir ? 1 : 3 === o.player.dir ? -1 : 0;
+          n.VFX.spawnTuAnhPhuoc(o.player, { x: o.player.x + H * (.65 * a.range), y: o.player.y + I * (.65 * a.range) }, { variant: t.vuKhiHopLe(a, n) || "bach_loi_tien", hitDelay: a.hitDelay, bindTime: a.effect.time });
+        }
+        if (a.bienHinh && n.Player && n.Player.giveForm) {
           n.Player.giveForm(o.player, a);
-          if (n.XichMaFX && n.XichMaFX.spawnHoaThan) {
-            n.XichMaFX.spawnHoaThan(o.player, { colors: a.colors });
+          var V = n.Player.hinhFX ? n.Player.hinhFX(a.id) : null;
+          if (V && V.spawnHoaThan) {
+            V.spawnHoaThan(o.player, { colors: a.colors });
           }
         }
       }
     }
   }
-  function P(e) {
+  function O(e) {
     var a = t.PASSIVES[e];
     if (t.testMode && a) {
       var o = t.testPassive !== e;
@@ -925,7 +956,7 @@
   };
   t.comboThem = function (n) {
     var e = k();
-    return e.bo.length >= t.BO_TOI_DA ? -1 : (y(e), e.bo.push({ ten: _(n, t.comboTenGoiY()), tat: f(e.tat), an: f(e.an), thuTu: m(e.thuTu) }), e.dung = e.bo.length - 1, w(), e.dung);
+    return e.bo.length >= t.BO_TOI_DA ? -1 : (y(e), e.bo.push({ ten: d(n, t.comboTenGoiY()), tat: _(e.tat), an: _(e.an), thuTu: m(e.thuTu) }), e.dung = e.bo.length - 1, w(), e.dung);
   };
   t.comboChuyen = function (n) {
     var t = k();
@@ -936,7 +967,7 @@
     if (!e) {
       return !1;
     }
-    var a = _(t, e.ten);
+    var a = d(t, e.ten);
     return a !== e.ten && (e.ten = a, w(), !0);
   };
   t.comboXoa = function (n) {
@@ -1240,10 +1271,10 @@
           var t = n.target.closest("[data-test-skill], [data-test-passive]");
           if (t) {
             if (t.dataset.testPassive) {
-              P(t.dataset.testPassive);
+              O(t.dataset.testPassive);
             }
             else {
-              A(t.dataset.testSkill);
+              C(t.dataset.testSkill);
             }
           }
         });
@@ -1251,15 +1282,15 @@
           if (!n.repeat) {
             var t = n.target && n.target.tagName;
             if ("INPUT" !== t && "TEXTAREA" !== t && "SELECT" !== t) {
-              var e = { Digit3: "hoa_cau", Digit4: "phong_nhan", Digit5: "bang_thau", Digit6: "dia_thich", Digit0: "ma_hon_phe", Minus: "nguyet_quang", Equal: "kim_quang_cu_kiem", Digit9: "ngu_sac_than_chuong", BracketLeft: "huyet_buc_chuong", BracketRight: "huyet_liem_tram", Backslash: "tu_anh_phuoc_tien", Quote: "xich_ma_hoa_than" };
+              var e = { Digit3: "hoa_cau", Digit4: "phong_nhan", Digit5: "bang_thau", Digit6: "dia_thich", Digit0: "ma_hon_phe", Minus: "nguyet_quang", Equal: "kim_quang_cu_kiem", Digit9: "ngu_sac_than_chuong", BracketLeft: "huyet_buc_chuong", BracketRight: "huyet_liem_tram", Backslash: "tu_anh_phuoc_tien", Quote: "xich_ma_hoa_than", Semicolon: "kim_cuong_hoa_than", Comma: "cuu_u_ma_trao", Period: "phi_long_tai_thien" };
               var a = { Digit7: "kim_quang_chao", Digit8: "moc_xuan" };
               if ((e[n.code] || a[n.code])) {
                 n.preventDefault();
                 if (a[n.code]) {
-                  P(a[n.code]);
+                  O(a[n.code]);
                 }
                 else {
-                  A(e[n.code]);
+                  C(e[n.code]);
                 }
               }
             }
@@ -1279,108 +1310,104 @@
   };
   t.cast = function (e, a, o, i) {
     if (a.bienHinh) {
-      if (n.XichMaFX && n.XichMaFX.spawnHoaThan) {
-        n.XichMaFX.spawnHoaThan(e.vfxOwner || e, { colors: a.colors, ghost: !!i });
+      var r = a.bienHinh.fx ? n[a.bienHinh.fx] : null;
+      if (r && r.spawnHoaThan) {
+        r.spawnHoaThan(e.vfxOwner || e, { colors: a.colors, ghost: !!i });
       }
     }
     else {
-      var r = function (t) {
+      var h = function (t) {
         return n.CONFIG.FLY.HOVER * (t.flyRise || 0);
       }(e);
-      var h = o.x - e.x;
-      var u = o.y - 10 - (e.y - 18 - r);
-      var s = Math.sqrt(h * h + u * u) || 1;
-      var l = Math.atan2(u, h);
-      var c = o.target && !o.target.dead ? o.target : null;
+      var u = o.x - e.x;
+      var s = o.y - 10 - (e.y - 18 - h);
+      var l = Math.sqrt(u * u + s * s) || 1;
+      var c = Math.atan2(s, u);
+      var g = o.target && !o.target.dead ? o.target : null;
       if ("aura" !== a.shape) {
         if ("ground" === a.shape) {
-          var g = Math.min(s, a.range);
-          var f = c ? 0 : a.delay;
-          var m = c ? c.x : e.x + Math.cos(l) * g;
-          var d = c ? c.y : e.y + Math.sin(l) * g;
-          if (a.hitDelay > 0 && (f = a.hitDelay), "kim_thuong_giang_the" === a.vfx && n.VFX.spawnKimThuongGiangThe && n.VFX.spawnKimThuongGiangThe(m, d), "tien_vu" === a.vfx && n.VFX.spawnTienVu && n.VFX.spawnTienVu(m, d, { colors: a.colors, radius: a.blastR }), "ma_bao_an" === a.vfx && n.VFX.spawnMaBaoAn && n.VFX.spawnMaBaoAn(m, d, { colors: a.colors, radius: a.blastR }), "ma_bao_an" === a.vfx && n.VFX.spawnTalismanPaper) {
-            var _ = e.x + 10 * Math.cos(l);
-            var p = e.y - 18 - r + 6 * Math.sin(l);
-            var y = m - _;
-            var v = d - 22 - p;
-            var b = Math.sqrt(y * y + v * v);
-            var k = Math.max(.18, Math.min(.34, b / 560));
-            var T = { paper: "#eedcff", edge: "#a74bd2", ink: "#541a70", glow: a.colors.glow || "#d27bff" };
-            n.VFX.spawnRing(_, p, T.glow, 13, .2);
-            n.VFX.spawnTalismanPaper(_, p, m, d, "ma_bao_an", { colors: T, fromLift: 0, toLift: 22, lift: 14, life: k });
+          var _ = Math.min(l, a.range);
+          var m = g ? 0 : a.delay;
+          var f = g ? g.x : e.x + Math.cos(c) * _;
+          var d = g ? g.y : e.y + Math.sin(c) * _;
+          if (a.hitDelay > 0 && (m = a.hitDelay), "kim_thuong_giang_the" === a.vfx && n.VFX.spawnKimThuongGiangThe && n.VFX.spawnKimThuongGiangThe(f, d), "tien_vu" === a.vfx && n.VFX.spawnTienVu && n.VFX.spawnTienVu(f, d, { colors: a.colors, radius: a.blastR }), "ma_bao_an" === a.vfx && n.VFX.spawnMaBaoAn && n.VFX.spawnMaBaoAn(f, d, { colors: a.colors, radius: a.blastR }), "ma_bao_an" === a.vfx && n.VFX.spawnTalismanPaper) {
+            var p = e.x + 10 * Math.cos(c);
+            var y = e.y - 18 - h + 6 * Math.sin(c);
+            var v = f - p;
+            var b = d - 22 - y;
+            var k = Math.sqrt(v * v + b * b);
+            var T = Math.max(.18, Math.min(.34, k / 560));
+            var w = { paper: "#eedcff", edge: "#a74bd2", ink: "#541a70", glow: a.colors.glow || "#d27bff" };
+            n.VFX.spawnRing(p, y, w.glow, 13, .2);
+            n.VFX.spawnTalismanPaper(p, y, f, d, "ma_bao_an", { colors: w, fromLift: 0, toLift: 22, lift: 14, life: T });
           }
-          if ("ma_hon_phe" === a.vfx && n.VFX.spawnMaHonPhe) {
-            n.VFX.spawnMaHonPhe(e, c || { x: m, y: d }, { colors: a.colors, range: a.range, hitDelay: a.hitDelay, ghost: !!i });
-          }
-          if ("nguyet_quang" === a.vfx && n.NguyetQuangFX) {
-            n.NguyetQuangFX.spawn(e, c || { x: m, y: d }, { colors: a.colors, radius: a.blastR, hitDelay: a.hitDelay, ghost: !!i });
-          }
-          if ("kim_quang_cu_kiem" === a.vfx && n.KimKiemFX) {
-            n.KimKiemFX.spawn(e.vfxOwner || e, c || { x: m, y: d }, { hitDelay: a.hitDelay, ghost: !!i });
-          }
-          if ("ngu_sac_than_chuong" === a.vfx && n.ThanChuongFX) {
-            n.ThanChuongFX.spawn(e, c || { x: m, y: d }, { colors: a.colors, radius: a.blastR, hitDelay: a.hitDelay, ghost: !!i });
-          }
-          if ("huyet_buc_chuong" === a.vfx && n.VFX.spawnHuyetBuc) {
-            n.VFX.spawnHuyetBuc(e.vfxOwner || e, c || { x: m, y: d }, { hitDelay: a.hitDelay, ghost: !!i });
-          }
-          if ("huyet_liem_tram" === a.vfx && n.VFX.spawnHuyetLiem) {
-            n.VFX.spawnHuyetLiem(e.vfxOwner || e, c || { x: m, y: d }, { hitDelay: a.hitDelay, ghost: !!i });
+          if ("ma_hon_phe" === a.vfx && n.VFX.spawnMaHonPhe && n.VFX.spawnMaHonPhe(e, g || { x: f, y: d }, { colors: a.colors, range: a.range, hitDelay: a.hitDelay, ghost: !!i }), "nguyet_quang" === a.vfx && n.NguyetQuangFX && n.NguyetQuangFX.spawn(e, g || { x: f, y: d }, { colors: a.colors, radius: a.blastR, hitDelay: a.hitDelay, ghost: !!i }), "kim_quang_cu_kiem" === a.vfx && n.KimKiemFX && n.KimKiemFX.spawn(e.vfxOwner || e, g || { x: f, y: d }, { hitDelay: a.hitDelay, ghost: !!i }), "ngu_sac_than_chuong" === a.vfx && n.ThanChuongFX && n.ThanChuongFX.spawn(e, g || { x: f, y: d }, { colors: a.colors, radius: a.blastR, hitDelay: a.hitDelay, ghost: !!i }), "huyet_buc_chuong" === a.vfx && n.VFX.spawnHuyetBuc && n.VFX.spawnHuyetBuc(e.vfxOwner || e, g || { x: f, y: d }, { hitDelay: a.hitDelay, ghost: !!i }), "huyet_liem_tram" === a.vfx && n.VFX.spawnHuyetLiem && n.VFX.spawnHuyetLiem(e.vfxOwner || e, g || { x: f, y: d }, { hitDelay: a.hitDelay, ghost: !!i }), "phi_long_tai_thien" === a.vfx && n.VFX.spawnPhiLong) {
+            var x = g ? [g] : [];
+            if (t.enemiesNow) {
+              x = x.concat(t.blastTargets(a, f, d, t.enemiesNow(), g));
+            }
+            n.VFX.spawnPhiLong(e.vfxOwner || e, x, { hitDelay: a.hitDelay, point: { x: f, y: d }, ghost: !!i });
           }
           if ("tu_anh_phuoc_tien" === a.vfx && n.VFX.spawnTuAnhPhuoc) {
-            n.VFX.spawnTuAnhPhuoc(e.vfxOwner || e, c || { x: m, y: d }, { variant: e.variant || (i ? void 0 : t.vuKhiHopLe(a, n)), hitDelay: a.hitDelay, bindTime: a.effect && a.effect.time, ghost: !!i });
+            n.VFX.spawnTuAnhPhuoc(e.vfxOwner || e, g || { x: f, y: d }, { variant: e.variant || (i ? void 0 : t.vuKhiHopLe(a, n)), hitDelay: a.hitDelay, bindTime: a.effect && a.effect.time, ghost: !!i });
           }
           if ("loi_thuong_quan_dia" === a.vfx && n.HoangLoiFX) {
-            n.HoangLoiFX.spawnQuanDia(e.vfxOwner || e, c || { x: m, y: d }, { hitDelay: a.hitDelay, ghost: !!i });
+            n.HoangLoiFX.spawnQuanDia(e.vfxOwner || e, g || { x: f, y: d }, { hitDelay: a.hitDelay, ghost: !!i });
           }
           if ("ngu_loi_thuong_vu" === a.vfx && n.HoangLoiFX) {
-            n.HoangLoiFX.spawnThuongVu(e.vfxOwner || e, c || { x: m, y: d }, { hitDelay: a.hitDelay, radius: a.blastR, ghost: !!i });
+            n.HoangLoiFX.spawnThuongVu(e.vfxOwner || e, g || { x: f, y: d }, { hitDelay: a.hitDelay, radius: a.blastR, ghost: !!i });
           }
-          var w = "van_kiem_quy_tong" === a.id && !c && a.waitForTarget > 0;
-          var x = null;
+          var M = "van_kiem_quy_tong" === a.id && !g && a.waitForTarget > 0;
+          var S = null;
           if ("van_kiem_quy_tong" === a.vfx && n.VanKiemFX) {
-            x = n.VanKiemFX.spawn(e, { x: m, y: d, target: c }, a.hitDelay, a.waitForTarget, a.releaseDelay);
+            S = n.VanKiemFX.spawn(e, { x: f, y: d, target: g }, a.hitDelay, a.waitForTarget, a.releaseDelay);
           }
-          t.grounds.push({ def: a, owner: e.vfxOwner || e, x: m, y: d, target: c, delay: w ? a.waitForTarget + 1 : f, t: 0, fired: !1, waiting: w, vfx: x, ghost: !!i, life: w ? a.waitForTarget : f + .5 });
-          return void n.VFX.spawnRing(e.x, e.y - 6 - r, a.colors.glow, 26, .45);
+          t.grounds.push({ def: a, owner: e.vfxOwner || e, x: f, y: d, target: g, delay: M ? a.waitForTarget + 1 : m, t: 0, fired: !1, waiting: M, vfx: S, ghost: !!i, life: M ? a.waitForTarget : m + .5 });
+          return void n.VFX.spawnRing(e.x, e.y - 6 - h, a.colors.glow, 26, .45);
         }
-        var M = e.x + 10 * Math.cos(l);
-        var S = e.y - 18 - r + 6 * Math.sin(l);
-        var A = (a.spread || 0) * Math.PI / 180;
-        var P = !(!c || a.straight);
+        var C = e.x + 10 * Math.cos(c);
+        var O = e.y - 18 - h + 6 * Math.sin(c);
+        var P = (a.spread || 0) * Math.PI / 180;
+        var A = !(!g || a.straight);
         if ("thanh_lam_kiem_tru" === a.id && n.VFX.spawnThanhLamKiemTru) {
-          var O = Math.min(s, a.range);
-          var C = c ? c.x : e.x + Math.cos(l) * O;
-          var R = c ? c.y : e.y + Math.sin(l) * O;
-          n.VFX.spawnThanhLamKiemTru(C, R, { target: c, angle: Math.atan2(R - e.y, C - e.x), colors: a.colors });
+          var K = Math.min(l, a.range);
+          var R = g ? g.x : e.x + Math.cos(c) * K;
+          var H = g ? g.y : e.y + Math.sin(c) * K;
+          n.VFX.spawnThanhLamKiemTru(R, H, { target: g, angle: Math.atan2(H - e.y, R - e.x), colors: a.colors });
         }
         if ("anh_ky_phu" === a.vfx && n.VFX.spawnAnhKyPhu) {
-          n.VFX.spawnAnhKyPhu(M, S, c || { x: o.x, y: o.y }, { duration: Math.max(.34, Math.min(.68, s / a.speed)), hitU: .9, range: a.range, layers: a.vfxLayers });
+          n.VFX.spawnAnhKyPhu(C, O, g || { x: o.x, y: o.y }, { duration: Math.max(.34, Math.min(.68, l / a.speed)), hitU: .9, range: a.range, layers: a.vfxLayers });
         }
-        for (var K = i ? 0 : t.dmgOf(a), H = 0; H < a.shots; H++) {
-          var I = l + A * (a.shots > 1 ? H / (a.shots - 1) - .5 : 0);
-          var V = Math.random() < .5 ? -1 : 1;
-          I += P ? V * (.3 + .32 * Math.random()) : 0;
-          var D = P ? .62 * a.speed : a.speed;
-          t.bolts.push({ def: a, x: M, y: S, vx: Math.cos(I) * D, vy: Math.sin(I) * D, angle: I, target: c, guided: P, speedNow: D, accel: P ? 2.5 * a.speed : 0, turnRate: P ? 4.8 + 2.2 * Math.random() : 0, spin: Math.random() * Math.PI * 2, elapsed: 0, ghost: !!i, dmg: t.shotShare(K, a.shots, H), wait: "bang_thau" === a.id ? .055 * H : 0, travel: 0, maxTravel: P ? 1.55 * a.range : a.range, trail: 0, life: P ? a.range / D + .65 : a.range / a.speed + .25 });
+        for (var I = i ? 0 : t.dmgOf(a), V = 0; V < a.shots; V++) {
+          var D = c + P * (a.shots > 1 ? V / (a.shots - 1) - .5 : 0);
+          var F = Math.random() < .5 ? -1 : 1;
+          D += A ? F * (.3 + .32 * Math.random()) : 0;
+          var B = A ? .62 * a.speed : a.speed;
+          t.bolts.push({ def: a, x: C, y: O, vx: Math.cos(D) * B, vy: Math.sin(D) * B, angle: D, target: g, guided: A, speedNow: B, accel: A ? 2.5 * a.speed : 0, turnRate: A ? 4.8 + 2.2 * Math.random() : 0, spin: Math.random() * Math.PI * 2, elapsed: 0, ghost: !!i, dmg: t.shotShare(I, a.shots, V), wait: "bang_thau" === a.id ? .055 * V : 0, travel: 0, maxTravel: A ? 1.55 * a.range : a.range, trail: 0, life: A ? a.range / B + .65 : a.range / a.speed + .25 });
         }
       }
       else {
-        if (t.auras.push({ def: a, owner: e, x: e.x, y: e.y, delay: a.delay || 0, t: 0, fired: !1, ghost: !!i, aim: l, target: c, life: (a.delay || 0) + 1.05 }), n.VFX.spawnRing(e.x, e.y - 6 - r, a.colors.glow, .62 * a.blastR, .55), "tram_ma" === a.vfx && n.VFX.spawnTramMa && t.enemiesNow) {
-          for (var F = t.blastTargets(a, e.x, e.y, t.enemiesNow(), null), B = 0; B < F.length; B++)
-            n.VFX.spawnTramMa(F[B].x, F[B].y);
+        if (t.auras.push({ def: a, owner: e, x: e.x, y: e.y, delay: a.delay || 0, t: 0, fired: !1, ghost: !!i, aim: c, target: g, life: (a.delay || 0) + 1.05 }), n.VFX.spawnRing(e.x, e.y - 6 - h, a.colors.glow, .62 * a.blastR, .55), "tram_ma" === a.vfx && n.VFX.spawnTramMa && t.enemiesNow) {
+          for (var X = t.blastTargets(a, e.x, e.y, t.enemiesNow(), null), q = 0; q < X.length; q++)
+            n.VFX.spawnTramMa(X[q].x, X[q].y);
+        }
+        if ("cuu_u_ma_trao" === a.vfx && n.VFX.spawnMaTrao && t.enemiesNow) {
+          var L = t.blastTargets(a, e.x, e.y, t.enemiesNow(), null);
+          if (L.length) {
+            n.VFX.spawnMaTrao(e.vfxOwner || e, L, { colors: a.colors, radius: a.blastR, hitDelay: a.hitDelay, ghost: !!i });
+          }
         }
         if ("bang_kiem_luan" === a.vfx && n.VFX.list) {
-          var X = n.VFX.list[n.VFX.list.length - 1];
-          if (X && "lightring" === X.type) {
-            X.renderLayer = 3 === e.dir ? "front" : "back";
+          var E = n.VFX.list[n.VFX.list.length - 1];
+          if (E && "lightring" === E.type) {
+            E.renderLayer = 3 === e.dir ? "front" : "back";
           }
         }
       }
     }
   };
-  var O = [];
-  function C(n, t) {
+  var P = [];
+  function A(n, t) {
     var e = (t - n) % (2 * Math.PI);
     if (e > Math.PI) {
       e -= 2 * Math.PI;
@@ -1390,16 +1417,16 @@
     }
     return e;
   }
-  function R(n, t, e, a, o, i, r, h) {
+  function K(n, t, e, a, o, i, r, h) {
     V(n, t, e);
     if (n.blastR > 0) {
-      K(n, a.x, a.y, o, i, n.primaryTarget ? a : null);
+      R(n, a.x, a.y, o, i, n.primaryTarget ? a : null);
     }
     else {
       H(n, a, i, h);
     }
   }
-  function K(e, a, o, i, r, h) {
+  function R(e, a, o, i, r, h) {
     var u = !1;
     var s = [];
     if (h && !h.dead) {
@@ -1429,7 +1456,7 @@
       })(e, s);
     }
     if (!u && ("aura" === e.shape || "ground" === e.shape && e.vfx)) {
-      n.VFX.spawnText(a, o - 26, "aura" === e.shape ? "bang_kiem_luan" === e.vfx ? "Băng Kiếm Luân không chạm mục tiêu" : "Cửu Huyết Kiếm Trận không chạm mục tiêu" : "kim_thuong_giang_the" === e.vfx ? "Kim Thương giáng hụt" : "tien_vu" === e.vfx ? "Mưa tên trượt mục tiêu" : "ma_bao_an" === e.vfx ? "Ma ấn nổ hụt" : "ma_hon_phe" === e.vfx ? "Ma Hồn Phệ trượt mục tiêu" : "nguyet_quang" === e.vfx ? "Nguyệt Quang trượt mục tiêu" : "kim_quang_cu_kiem" === e.vfx ? "Kim Quang Cự Kiếm trượt mục tiêu" : "ngu_sac_than_chuong" === e.vfx ? "Thần Chưởng đập hụt" : "huyet_buc_chuong" === e.vfx ? "Huyết Bức Chưởng trượt mục tiêu" : "huyet_liem_tram" === e.vfx ? "Huyết Liêm Trảm trượt mục tiêu" : "tu_anh_phuoc_tien" === e.vfx ? "Tứ Ảnh Phược Tiên trượt mục tiêu" : "loi_thuong_quan_dia" === e.vfx ? "Lôi Thương cắm hụt" : "ngu_loi_thuong_vu" === e.vfx ? "Mưa thương trượt mục tiêu" : "bang_kiem_tran" === e.vfx ? "Băng Kiếm Trận trượt mục tiêu" : "Kiếm trận trượt mục tiêu", e.colors.glow);
+      n.VFX.spawnText(a, o - 26, "aura" === e.shape ? "bang_kiem_luan" === e.vfx ? "Băng Kiếm Luân không chạm mục tiêu" : "cuu_u_ma_trao" === e.vfx ? "Ma Trảo không chạm mục tiêu" : "Cửu Huyết Kiếm Trận không chạm mục tiêu" : "kim_thuong_giang_the" === e.vfx ? "Kim Thương giáng hụt" : "tien_vu" === e.vfx ? "Mưa tên trượt mục tiêu" : "ma_bao_an" === e.vfx ? "Ma ấn nổ hụt" : "ma_hon_phe" === e.vfx ? "Ma Hồn Phệ trượt mục tiêu" : "nguyet_quang" === e.vfx ? "Nguyệt Quang trượt mục tiêu" : "kim_quang_cu_kiem" === e.vfx ? "Kim Quang Cự Kiếm trượt mục tiêu" : "ngu_sac_than_chuong" === e.vfx ? "Thần Chưởng đập hụt" : "huyet_buc_chuong" === e.vfx ? "Huyết Bức Chưởng trượt mục tiêu" : "huyet_liem_tram" === e.vfx ? "Huyết Liêm Trảm trượt mục tiêu" : "tu_anh_phuoc_tien" === e.vfx ? "Tứ Ảnh Phược Tiên trượt mục tiêu" : "phi_long_tai_thien" === e.vfx ? "Phi Long trượt mục tiêu" : "loi_thuong_quan_dia" === e.vfx ? "Lôi Thương cắm hụt" : "ngu_loi_thuong_vu" === e.vfx ? "Mưa thương trượt mục tiêu" : "bang_kiem_tran" === e.vfx ? "Băng Kiếm Trận trượt mục tiêu" : "Kiếm trận trượt mục tiêu", e.colors.glow);
     }
   }
   function H(e, a, o, i) {
@@ -1550,10 +1577,10 @@
       n.VFX.spawnEmber(e + (6 * Math.random() - 3), a + (6 * Math.random() - 3), t.colors.mid, t.colors.core);
   }
   t.enemiesNow = function () {
-    return O;
+    return P;
   };
   t.update = function (e, a, o) {
-    O = a = a || [];
+    P = a = a || [];
     (function (e, a, o) {
       for (var i = t.bolts.length - 1; i >= 0; i--) {
         var r = t.bolts[i];
@@ -1563,7 +1590,7 @@
         else {
           if (r.life -= e, r.spin += 14 * e, r.elapsed += e, r.target && r.target.dead && (r.target = null), r.target && r.guided) {
             var h = Math.atan2(r.target.y - 10 - r.y, r.target.x - r.x);
-            var u = C(r.angle, h);
+            var u = A(r.angle, h);
             var s = r.turnRate * e;
             if (Math.abs(u) <= s) {
               r.angle = h;
@@ -1592,12 +1619,12 @@
             }
           }
           else {
-            for (var f = 0; f < a.length; f++) {
-              var m = a[f];
+            for (var _ = 0; _ < a.length; _++) {
+              var m = a[_];
               if (!m.dead) {
-                var d = m.x - r.x;
-                var _ = m.y - 10 - r.y;
-                if (Math.sqrt(d * d + _ * _) <= r.def.hitR + 6) {
+                var f = m.x - r.x;
+                var d = m.y - 10 - r.y;
+                if (Math.sqrt(f * f + d * d) <= r.def.hitR + 6) {
                   l = m;
                   break;
                 }
@@ -1609,7 +1636,7 @@
               V(r.def, r.x, r.y, r.target, r.angle);
             }
             else {
-              R(r.def, r.x, r.y, l, a, o, r.angle, r.dmg);
+              K(r.def, r.x, r.y, l, a, o, r.angle, r.dmg);
             }
             t.bolts.splice(i, 1);
           }
@@ -1632,10 +1659,10 @@
               if (l && !l.dead) {
                 var c = l.x - r.owner.x;
                 var g = l.y - r.owner.y;
-                var f = c * c + g * g;
-                if (f <= r.def.range * r.def.range && f < u) {
+                var _ = c * c + g * g;
+                if (_ <= r.def.range * r.def.range && _ < u) {
                   h = l;
-                  u = f;
+                  u = _;
                 }
               }
             }
@@ -1656,7 +1683,7 @@
             n.VFX.spawnXichChan(r.x, r.y, { colors: r.def.colors, radius: r.def.blastR });
           }
           else {
-            if ("kim_thuong_giang_the" === r.def.vfx || "van_kiem_quy_tong" === r.def.vfx || "tien_vu" === r.def.vfx || "ma_bao_an" === r.def.vfx || "ma_hon_phe" === r.def.vfx || "nguyet_quang" === r.def.vfx || "kim_quang_cu_kiem" === r.def.vfx || "ngu_sac_than_chuong" === r.def.vfx || "huyet_buc_chuong" === r.def.vfx || "loi_thuong_quan_dia" === r.def.vfx || "ngu_loi_thuong_vu" === r.def.vfx || "huyet_liem_tram" === r.def.vfx || "tu_anh_phuoc_tien" === r.def.vfx) {
+            if ("kim_thuong_giang_the" === r.def.vfx || "van_kiem_quy_tong" === r.def.vfx || "tien_vu" === r.def.vfx || "ma_bao_an" === r.def.vfx || "ma_hon_phe" === r.def.vfx || "nguyet_quang" === r.def.vfx || "kim_quang_cu_kiem" === r.def.vfx || "ngu_sac_than_chuong" === r.def.vfx || "huyet_buc_chuong" === r.def.vfx || "loi_thuong_quan_dia" === r.def.vfx || "ngu_loi_thuong_vu" === r.def.vfx || "huyet_liem_tram" === r.def.vfx || "tu_anh_phuoc_tien" === r.def.vfx || "phi_long_tai_thien" === r.def.vfx) {
               if ("ma_bao_an" === r.def.vfx && n.VFX.spawnMaBaoAnImpact) {
                 n.VFX.spawnMaBaoAnImpact(r.x, r.y, { colors: r.def.colors, radius: r.def.blastR });
               }
@@ -1676,18 +1703,19 @@
             }
           }
           var m = "nguyet_quang" === r.def.vfx || "ngu_sac_than_chuong" === r.def.vfx;
-          var d = "kim_quang_cu_kiem" === r.def.vfx;
-          if (d && n.Audio && n.Audio.atPoint) {
+          var f = "kim_quang_cu_kiem" === r.def.vfx;
+          var d = "phi_long_tai_thien" === r.def.vfx;
+          if (f && n.Audio && n.Audio.atPoint) {
             n.Audio.atPoint("skill_goldsword_hit", r.x, r.y, { gain: 1, rate: .96 + .08 * Math.random() });
           }
           if (r.ghost) {
             if (!(m)) {
-              n.Camera.shakeAt(r.x, r.y, d ? 7 : 4, d ? .34 : .22);
+              n.Camera.shakeAt(r.x, r.y, f ? 7 : d ? 6 : 4, f ? .34 : d ? .3 : .22);
             }
           }
           else {
             if (!(m)) {
-              n.Camera.shake(d ? 7 : 4, d ? .34 : .22);
+              n.Camera.shake(f ? 7 : d ? 6 : 4, f ? .34 : d ? .3 : .22);
             }
             if ("van_kiem_quy_tong" === r.def.id) {
               if (r.target && !r.target.dead) {
@@ -1695,7 +1723,7 @@
               }
             }
             else {
-              K(r.def, r.x, r.y, a, o, r.target);
+              R(r.def, r.x, r.y, a, o, r.target);
             }
           }
         }
@@ -1720,7 +1748,7 @@
           }
           else {
             n.Camera.shake(5, .24);
-            K(r.def, r.x, r.y, a, o);
+            R(r.def, r.x, r.y, a, o);
           }
         }
         if (r.t >= r.life) {
@@ -1886,17 +1914,17 @@
         if ("anh_ky_phu" !== u.def.id && "thanh_lam_kiem_tru" !== u.def.id)
           if ("hoa_cau" === u.def.id) {
             var g = 1 + .14 * Math.sin(u.spin);
-            var f = 1 + .1 * Math.sin(.72 * u.spin + .8);
+            var _ = 1 + .1 * Math.sin(.72 * u.spin + .8);
             i.ellipse(e, s, l, 10 * g, 8 * g, r.alpha(c.edge, .32), null);
             i.ellipse(e, s, l, 8 * g, 7 * g, r.alpha(c.glow, .48), null);
-            i.ellipse(e, s, l, 5 * f, 5 * f, c.mid, c.edge);
+            i.ellipse(e, s, l, 5 * _, 5 * _, c.mid, c.edge);
             i.ellipse(e, s - 1, l - 1, 3, 3, c.core, null);
             i.dot(e, s - 2, l - 2, "#ffffff");
-            for (var m = u.angle + Math.PI, d = 0; d < 5; d++) {
-              var _ = m + .3 * (d - 2) + .16 * Math.sin(u.spin + d);
-              var p = 7 + (2 === d ? 5 : d % 2 ? 2 : 0);
-              i.dot(e, s + Math.cos(_) * p, l + Math.sin(_) * p, r.alpha(c.glow, .85));
-              i.dot(e, s + Math.cos(_) * (p - 3), l + Math.sin(_) * (p - 3), c.mid);
+            for (var m = u.angle + Math.PI, f = 0; f < 5; f++) {
+              var d = m + .3 * (f - 2) + .16 * Math.sin(u.spin + f);
+              var p = 7 + (2 === f ? 5 : f % 2 ? 2 : 0);
+              i.dot(e, s + Math.cos(d) * p, l + Math.sin(d) * p, r.alpha(c.glow, .85));
+              i.dot(e, s + Math.cos(d) * (p - 3), l + Math.sin(d) * (p - 3), c.mid);
             }
             for (var y = 0; y < 4; y++) {
               var v = .28 * u.spin + y * Math.PI / 2;
@@ -1912,15 +1940,15 @@
             var M = 1 + .08 * Math.sin(1.35 * u.spin);
             i.ellipse(e, s - 1.5 * k, l - 1.5 * T, 8 * M, 9 * M, r.alpha(c.glow, .12), null);
             for (var S = 0; S < 5; S++) {
-              var A = 2.2 * (S - 2);
-              var P = Math.sin(1.1 * u.spin + 2.2 * S) * (1.2 + .22 * S);
-              var O = s - k * (5 + S) + w * A;
-              var C = l - T * (5 + S) + x * A;
-              var R = s - k * (15 + 3 * S) + w * (A + P);
-              var K = l - T * (15 + 3 * S) + x * (A + P);
-              i.line(e, O, C, R, K, r.alpha(2 === S ? c.mid : c.glow, 2 === S ? .72 : .42));
+              var C = 2.2 * (S - 2);
+              var O = Math.sin(1.1 * u.spin + 2.2 * S) * (1.2 + .22 * S);
+              var P = s - k * (5 + S) + w * C;
+              var A = l - T * (5 + S) + x * C;
+              var K = s - k * (15 + 3 * S) + w * (C + O);
+              var R = l - T * (15 + 3 * S) + x * (C + O);
+              i.line(e, P, A, K, R, r.alpha(2 === S ? c.mid : c.glow, 2 === S ? .72 : .42));
               if (2 === S) {
-                i.dot(e, R, K, r.alpha(c.core, .55));
+                i.dot(e, K, R, r.alpha(c.core, .55));
               }
             }
             for (var H = 0; H < 2; H++) {
@@ -1933,37 +1961,37 @@
               var B = F / 5;
               var X = 6 * (1 - B * B);
               var q = s + w * F * 1.75 + k * X;
-              var E = l + x * F * 1.75 + T * X;
-              i.dot(e, q - 2 * k, E - 2 * T, r.alpha(c.edge, .86 - .28 * Math.abs(B)));
-              i.dot(e, q, E, Math.abs(F) < 4 ? c.core : c.mid);
+              var L = l + x * F * 1.75 + T * X;
+              i.dot(e, q - 2 * k, L - 2 * T, r.alpha(c.edge, .86 - .28 * Math.abs(B)));
+              i.dot(e, q, L, Math.abs(F) < 4 ? c.core : c.mid);
               if (Math.abs(F) < 3) {
-                i.dot(e, q + k, E + T, r.alpha("#ffffff", .92));
+                i.dot(e, q + k, L + T, r.alpha("#ffffff", .92));
               }
             }
             i.dot(e, s + 7 * k, l + 7 * T, "#ffffff");
           }
           else {
-            var L = Math.cos(u.angle);
+            var E = Math.cos(u.angle);
             var N = Math.sin(u.angle);
-            var Q = (w = -N, x = L, M = 1 + .1 * Math.sin(1.45 * u.spin), s + 6 * L);
+            var Q = (w = -N, x = E, M = 1 + .1 * Math.sin(1.45 * u.spin), s + 6 * E);
             var G = l + 6 * N;
-            var U = s - 6 * L;
+            var U = s - 6 * E;
             var W = l - 6 * N;
-            i.ellipse(e, s - 2 * L, l - 2 * N, 8 * M, 3 * M, r.alpha(c.glow, .2), null);
-            i.line(e, U - 5 * L, W - 5 * N, U + 1 * L, W + 1 * N, r.alpha(c.edge, .52));
+            i.ellipse(e, s - 2 * E, l - 2 * N, 8 * M, 3 * M, r.alpha(c.glow, .2), null);
+            i.line(e, U - 5 * E, W - 5 * N, U + 1 * E, W + 1 * N, r.alpha(c.edge, .52));
             i.fatLine(e, U, W, Q, G, 3, r.alpha(c.edge, .9));
             i.fatLine(e, U, W, Q, G, 1, c.mid);
-            i.line(e, U + 1.5 * w, W + 1.5 * x, Q - 1.2 * L + 1.5 * w, G - 1.2 * N + 1.5 * x, r.alpha(c.core, .8));
+            i.line(e, U + 1.5 * w, W + 1.5 * x, Q - 1.2 * E + 1.5 * w, G - 1.2 * N + 1.5 * x, r.alpha(c.core, .8));
             i.dot(e, Q, G, c.core);
-            i.dot(e, Q - L, G - N, "#ffffff");
+            i.dot(e, Q - E, G - N, "#ffffff");
             for (var j = 0; j < 3; j++)
-              _ = .55 * u.spin + j * Math.PI * 2 / 3, i.dot(e, s + 6 * Math.cos(_), l + 3 * Math.sin(_), r.alpha(c.core, .58));
+              d = .55 * u.spin + j * Math.PI * 2 / 3, i.dot(e, s + 6 * Math.cos(d), l + 3 * Math.sin(d), r.alpha(c.core, .58));
           }
       }
     }
     for (var z = 0; z < t.grounds.length; z++) {
       var Y = t.grounds[z];
-      if (!Y.fired && "nguyet_quang" !== Y.def.vfx && "kim_quang_cu_kiem" !== Y.def.vfx && "ngu_sac_than_chuong" !== Y.def.vfx && "huyet_buc_chuong" !== Y.def.vfx && "huyet_liem_tram" !== Y.def.vfx && "tu_anh_phuoc_tien" !== Y.def.vfx) {
+      if (!Y.fired && "nguyet_quang" !== Y.def.vfx && "kim_quang_cu_kiem" !== Y.def.vfx && "ngu_sac_than_chuong" !== Y.def.vfx && "huyet_buc_chuong" !== Y.def.vfx && "huyet_liem_tram" !== Y.def.vfx && "tu_anh_phuoc_tien" !== Y.def.vfx && "phi_long_tai_thien" !== Y.def.vfx) {
         var $ = Math.round(Y.x - a);
         var J = Math.round(Y.y - o);
         var Z = Y.delay > 0 ? Math.min(1, Y.t / Y.delay) : 1;

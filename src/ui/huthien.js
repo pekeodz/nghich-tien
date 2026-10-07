@@ -383,7 +383,7 @@
                   }
                 }
                 else {
-                  s.appendChild(v("p", "htd-trong", "Chốt lúc " + (a.ky ? t.gioDoc(a.ky.baoLuc) : "21:30") + ", trước giờ mở 30 phút."));
+                  s.appendChild(v("p", "htd-trong", "Chốt lúc " + (a.ky ? t.gioDoc(a.ky.baoLuc) : "20:00") + ", trước giờ mở 16 phút."));
                 }
                 e.appendChild(s);
                 var f = v("details", "htd-luat");

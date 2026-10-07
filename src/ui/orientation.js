@@ -10,7 +10,7 @@
   }
   function o() {
     if (i()) {
-      var n = (t || !document.body || ((t = document.createElement("div")).id = "orientation-lock", t.hidden = !0, t.setAttribute("role", "alert"), t.setAttribute("aria-live", "assertive"), t.innerHTML = '<div class="orientation-lock-card"><span class="orientation-lock-icon" aria-hidden="true">↻</span><h1 class="orientation-lock-title">Xoay ngang để vào game</h1><p class="orientation-lock-copy">Nghịch Tiên chỉ chơi ở màn hình ngang trên điện thoại.</p></div>', document.body.appendChild(t)), t);
+      var n = (t || !document.body || ((t = document.createElement("div")).id = "orientation-lock", t.hidden = !0, t.setAttribute("role", "alert"), t.setAttribute("aria-live", "assertive"), t.innerHTML = '<div class="orientation-lock-card"><span class="orientation-lock-icon" aria-hidden="true">↻</span><h1 class="orientation-lock-title">Xoay ngang để vào game</h1><p class="orientation-lock-copy">Tu Tiên 2D chỉ chơi ở màn hình ngang trên điện thoại.</p></div>', document.body.appendChild(t)), t);
       var o = !!e.matches;
       n.hidden = !o;
       document.body.classList.toggle("orientation-blocked", o);

@@ -49,11 +49,11 @@
       g.className = "hb-ten";
       g.textContent = d ? d.short : "";
       u.appendChild(g);
-      var v = document.createElement("strong");
-      v.className = "hb-hoi hidden";
-      u.appendChild(v);
+      var p = document.createElement("strong");
+      p.className = "hb-hoi hidden";
+      u.appendChild(p);
       n.appendChild(u);
-      o.push({ root: u, glyph: h, num: c, ten: g, cd: v, trangThai: "" });
+      o.push({ root: u, glyph: h, num: c, ten: g, cd: p, trangThai: "" });
     }
     n.addEventListener("pointerdown", function (t) {
       var e = t.target && t.target.closest && t.target.closest("[data-o]");
@@ -161,11 +161,17 @@
           if (u && "huyet_buc_chuong" === u.vfx && t.HuyetBucFX) {
             t.HuyetBucFX.prime();
           }
+          if (u && "cuu_u_ma_trao" === u.vfx && t.MaTraoFX) {
+            t.MaTraoFX.prime();
+          }
+          if (u && "phi_long_tai_thien" === u.vfx && t.PhiLongFX) {
+            t.PhiLongFX.prime();
+          }
           if (u && "huyet_liem_tram" === u.vfx && t.HuyetLiemFX) {
             t.HuyetLiemFX.prime();
           }
-          if (u && "xich_ma" === u.vfx && t.XichMaFX) {
-            t.XichMaFX.prime(e);
+          if (u && u.bienHinh && u.bienHinh.fx && t[u.bienHinh.fx] && t[u.bienHinh.fx].prime) {
+            t[u.bienHinh.fx].prime(e);
           }
           if (u && "tu_anh_phuoc_tien" === u.vfx && t.TuAnhPhuocFX && e && e.cfg) {
             t.TuAnhPhuocFX.prime(e.cfg, n.vuKhiHopLe ? n.vuKhiHopLe(u, t) : null);
@@ -253,8 +259,8 @@
   var c = { boss: "Boss", quai: "Quái", nguoi: "Nhân vật" };
   var h = "";
   var g = -1;
-  var v = 0;
-  var p = null;
+  var p = 0;
+  var v = null;
   var m = "";
   function b() {
     return t.SceneWorld && t.SceneWorld.player;
@@ -342,12 +348,12 @@
           });
           e.$("#td-bo-xoa").addEventListener("click", function () {
             var t = n.comboDung();
-            if (clearTimeout(v), g === t) {
+            if (clearTimeout(p), g === t) {
               g = -1;
               return void a.xoaBo(t);
             }
             g = t;
-            v = setTimeout(function () {
+            p = setTimeout(function () {
               g = -1;
               x();
             }, 5e3);
@@ -357,7 +363,7 @@
             var t = n.LOAI_MUC_TIEU.some(function (t) {
               return n.comboDuocGan(t) >= 0;
             });
-            p = !(null === p ? t : p);
+            v = !(null === v ? t : v);
             x();
           });
           r.addEventListener("change", function (t) {
@@ -415,10 +421,10 @@
             l.appendChild(d);
             e.appendChild(l);
           }
-          var v = document.createElement("div");
-          v.className = "td-bo-ghi";
-          v.textContent = "Cách nhau ít nhất 6 giây. Đánh Boss lẫn quái con mà không muốn đổi qua lại thì chọn “Ưu tiên mục tiêu” bên dưới.";
-          e.appendChild(v);
+          var p = document.createElement("div");
+          p.className = "td-bo-ghi";
+          p.textContent = "Cách nhau ít nhất 6 giây. Đánh Boss lẫn quái con mà không muốn đổi qua lại thì chọn “Ưu tiên mục tiêu” bên dưới.";
+          e.appendChild(p);
         }(s, r);
       }
       for (var f = l.querySelectorAll("[data-bo]"), T = 0; T < f.length; T++) {
@@ -434,21 +440,21 @@
         L[A].value = String(D);
       }
       var E = e.$("#td-bo-moi");
-      var X = e.$("#td-bo-xoa");
-      var _ = e.$("#td-bo-loai-nut");
+      var _ = e.$("#td-bo-xoa");
+      var H = e.$("#td-bo-loai-nut");
       E.disabled = o.comboDay();
       E.title = o.comboDay() ? "Tối đa " + o.BO_TOI_DA + " bộ — xoá bớt một bộ trước" : "Tạo bộ mới từ cách xếp hiện tại và đặt tên";
       e.$("#td-bo-ten").title = "Đổi tên bộ “" + r[i] + "”";
-      var H = g === i && r.length > 1;
-      X.disabled = r.length <= 1;
-      X.textContent = H ? "Xoá thật?" : "Xoá";
-      X.classList.toggle("cho", H);
-      X.title = r.length <= 1 ? "Phải còn ít nhất một bộ" : "Xoá bộ “" + r[i] + "” (bấm hai lần)";
-      var F = null === p ? k : p;
+      var X = g === i && r.length > 1;
+      _.disabled = r.length <= 1;
+      _.textContent = X ? "Xoá thật?" : "Xoá";
+      _.classList.toggle("cho", X);
+      _.title = r.length <= 1 ? "Phải còn ít nhất một bộ" : "Xoá bộ “" + r[i] + "” (bấm hai lần)";
+      var F = null === v ? k : v;
       s.classList.toggle("hidden", !F);
-      _.setAttribute("aria-expanded", F ? "true" : "false");
-      _.classList.toggle("co-gan", k);
-      _.textContent = "Tự đổi theo mục tiêu" + (k ? " · bật" : "") + (F ? " ▴" : " ▾");
+      H.setAttribute("aria-expanded", F ? "true" : "false");
+      H.classList.toggle("co-gan", k);
+      H.textContent = "Tự đổi theo mục tiêu" + (k ? " · bật" : "") + (F ? " ▴" : " ▾");
       e.$("#td-bo-form").classList.toggle("hidden", !h);
       var B = e.$("#td-bo-form-nhan");
       if (B) {
@@ -538,18 +544,18 @@
             g.className = "td-ten";
             g.textContent = s ? s.short : "Ô trống";
             d.appendChild(g);
-            var v = document.createElement("small");
-            v.className = "td-nhan";
-            d.appendChild(v);
-            var p = document.createElement("span");
-            p.className = "td-doi";
+            var p = document.createElement("small");
+            p.className = "td-nhan";
+            d.appendChild(p);
+            var v = document.createElement("span");
+            v.className = "td-doi";
             var m = T(-1, "Dời lên trước");
             var b = T(1, "Dời ra sau");
-            p.appendChild(m);
-            p.appendChild(b);
-            d.appendChild(p);
+            v.appendChild(m);
+            v.appendChild(b);
+            d.appendChild(v);
             e.appendChild(d);
-            l.push({ root: d, num: u, glyph: h, ten: g, nhan: v, trai: m, phai: b, thanhChieuBtn: c, trangThai: "" });
+            l.push({ root: d, num: u, glyph: h, ten: g, nhan: p, trai: m, phai: b, thanhChieuBtn: c, trangThai: "" });
           }
           e.addEventListener("click", function (t) {
             var e = t.target;
@@ -672,10 +678,10 @@
         var c = l[u];
         var h = u < s.length ? o.slotDef(s[u]) : null;
         var g = h && o.autoUses(h.id);
-        var v = h && o.onBar(h.id);
-        var p = 0 === u;
+        var p = h && o.onBar(h.id);
+        var v = 0 === u;
         var m = u >= s.length - 1;
-        var b = (h ? h.id : "-") + "|" + (g ? 1 : 0) + "|" + (v ? 1 : 0) + "|" + (h && v ? o.hotbarIndex(h.id) : -1) + "|" + (o.barFull() ? 1 : 0) + "|" + (p ? 1 : 0) + "|" + (m ? 1 : 0);
+        var b = (h ? h.id : "-") + "|" + (g ? 1 : 0) + "|" + (p ? 1 : 0) + "|" + (h && p ? o.hotbarIndex(h.id) : -1) + "|" + (o.barFull() ? 1 : 0) + "|" + (v ? 1 : 0) + "|" + (m ? 1 : 0);
         if (b !== c.trangThai) {
           c.trangThai = b;
           c.root.classList.toggle("hidden", !h);
@@ -683,14 +689,14 @@
           c.root.classList.remove("khoa");
           c.root.classList.toggle("dung", g);
           c.root.classList.toggle("bo", !!h && !g);
-          c.root.classList.toggle("an-thanh", !!h && !v);
-          c.num.textContent = h ? v ? r(o.hotbarIndex(h.id)) : "—" : String(u + 1);
-          c.nhan.textContent = h ? v ? g ? "Tự Động dùng" : "Bỏ qua" : "Bỏ qua · đang ẩn" : "";
-          c.trai.disabled = !h || p;
+          c.root.classList.toggle("an-thanh", !!h && !p);
+          c.num.textContent = h ? p ? r(o.hotbarIndex(h.id)) : "—" : String(u + 1);
+          c.nhan.textContent = h ? p ? g ? "Tự Động dùng" : "Bỏ qua" : "Bỏ qua · đang ẩn" : "";
+          c.trai.disabled = !h || v;
           c.phai.disabled = !h || m;
           c.thanhChieuBtn.disabled = !h;
-          c.thanhChieuBtn.textContent = h ? v ? "Ẩn" : "Hiện" : "";
-          c.thanhChieuBtn.title = h ? v ? "Ẩn riêng chiêu này khỏi thanh chiêu" : o.barFull() ? "Thanh chiêu đã đủ " + o.HOTBAR_MAX + " ô — ẩn bớt một chiêu trước" : "Hiện riêng chiêu này trên thanh chiêu" : "";
+          c.thanhChieuBtn.textContent = h ? p ? "Ẩn" : "Hiện" : "";
+          c.thanhChieuBtn.title = h ? p ? "Ẩn riêng chiêu này khỏi thanh chiêu" : o.barFull() ? "Thanh chiêu đã đủ " + o.HOTBAR_MAX + " ô — ẩn bớt một chiêu trước" : "Hiện riêng chiêu này trên thanh chiêu" : "";
           c.thanhChieuBtn.setAttribute("aria-label", c.thanhChieuBtn.title);
           c.root.draggable = !!h && s.length > 1;
           if (h) {
@@ -699,7 +705,7 @@
             c.ten.textContent = h.short;
           }
           c.root.setAttribute("aria-pressed", g ? "true" : "false");
-          c.root.setAttribute("aria-label", h ? "Ô " + (u + 1) + ", " + h.name + ": " + c.nhan.textContent + (v ? " · Đang hiện trên thanh chiêu" : " · Đang ẩn khỏi thanh chiêu") : "Ô " + (u + 1) + " còn trống");
+          c.root.setAttribute("aria-label", h ? "Ô " + (u + 1) + ", " + h.name + ": " + c.nhan.textContent + (p ? " · Đang hiện trên thanh chiêu" : " · Đang ẩn khỏi thanh chiêu") : "Ô " + (u + 1) + " còn trống");
         }
       }
     }

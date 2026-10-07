@@ -3409,6 +3409,24 @@
             a.XuyenKichFX.update(i, e);
           }
         }
+        else if ("philong" === i.type) {
+          if (a.PhiLongFX) {
+            try {
+              a.PhiLongFX.update(i, e);
+            }
+            catch (a) {
+            }
+          }
+        }
+        else if ("matrao" === i.type) {
+          if (a.MaTraoFX) {
+            try {
+              a.MaTraoFX.update(i, e);
+            }
+            catch (a) {
+            }
+          }
+        }
         else if ("huyetbuc" === i.type) {
           if (a.HuyetBucFX) {
             a.HuyetBucFX.update(i, e);
@@ -3571,6 +3589,24 @@
             }
           }
         }
+        else if ("philong" === i.type && a.PhiLongFX) {
+          if ("back" === r || "front" === r) {
+            try {
+              a.PhiLongFX.draw(e, i, t, s, r);
+            }
+            catch (a) {
+            }
+          }
+        }
+        else if ("matrao" === i.type && a.MaTraoFX) {
+          if ("back" === r || "front" === r) {
+            try {
+              a.MaTraoFX.draw(e, i, t, s, r);
+            }
+            catch (a) {
+            }
+          }
+        }
         else if ("xuyenkich" === i.type && a.XuyenKichFX) {
           if (!("back" !== r && "front" !== r)) {
             a.XuyenKichFX.draw(e, i, t, s, r);
@@ -3640,6 +3676,11 @@
             case "hutmau":
               if (a.HuyetLiemFX) {
                 a.HuyetLiemFX.drawHut(e, i, t, s);
+              }
+              break;
+            case "huyetphu":
+              if (a.HuyetMaPhuFX) {
+                a.HuyetMaPhuFX.draw(e, i, t, s);
               }
               break;
             case "huyetkiem":

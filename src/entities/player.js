@@ -268,14 +268,15 @@
         var c = Math.round(s - r);
         var p = !t.downed && !!i.formDef(t);
         var m = p ? i.sheetHinh(t, t.hinhId) : null;
-        var g = (8 - ("walk" !== t.state || t.flying || 1 !== T(t) && 3 !== T(t) ? 0 : 1)) * (1 - .35 * t.flyRise);
-        e.Pixel.ellipse(n, d, c - 1, g, 3 * (1 - .3 * t.flyRise), e.Palette.WORLD.shadow, null);
-        if (p && e.XichMaFX) {
-          e.XichMaFX.aura(n, d, c - o, t, t.animTime, "back");
+        var g = p ? i.hinhFX(t.hinhId) : null;
+        var y = (8 - ("walk" !== t.state || t.flying || 1 !== T(t) && 3 !== T(t) ? 0 : 1)) * (1 - .35 * t.flyRise);
+        e.Pixel.ellipse(n, d, c - 1, y, 3 * (1 - .3 * t.flyRise), e.Palette.WORLD.shadow, null);
+        if (g) {
+          g.aura(n, d, c - o, t, t.animTime, "back", T(t));
         }
-        var y = 3 === t.dir;
-        if (!(y)) {
-          ue(n, d, c - o, t);
+        var v = 3 === t.dir;
+        if (!(v)) {
+          pe(n, d, c - o, t);
         }
         if (e.VFX && e.VFX.drawPlayerStatus) {
           e.VFX.drawPlayerStatus(n, d, c - o, t, t.animTime, "back");
@@ -283,35 +284,35 @@
         if (e.VFX && e.VFX.watchStatus) {
           e.VFX.watchStatus(t, t.x, t.y - 50 - o);
         }
-        var v = i.flyArt(t.cfg);
-        var M = "canh" === v ? Ne(t) : null;
-        if (t.flyRise > 0 && "canh" === v) {
-          Ha(n, d, c - o, t);
+        var M = i.flyArt(t.cfg);
+        var x = "canh" === M ? Ke(t) : null;
+        if (t.flyRise > 0 && "canh" === M) {
+          Va(n, d, c - o, t);
         }
-        if (t.flyRise > 0 && ("canh" !== v || "back" === M)) {
-          Wa(n, d, c - o, t);
+        if (t.flyRise > 0 && ("canh" !== M || "back" === x)) {
+          Xa(n, d, c - o, t);
         }
-        var x = e.LucTinhTrucKiem && e.LucTinhTrucKiem.enabled(t);
-        if (x && (e.Player.drawLucTinhKiemAura && e.Player.drawLucTinhKiemAura(n, d, c - o, t, "back"), e.LucTinhTrucKiem.drawLayer(n, t, l, r, "back", i.drawPhiKiem, f, s - o - 28)), m) {
+        var b = e.LucTinhTrucKiem && e.LucTinhTrucKiem.enabled(t);
+        if (b && (e.Player.drawLucTinhKiemAura && e.Player.drawLucTinhKiemAura(n, d, c - o, t, "back"), e.LucTinhTrucKiem.drawLayer(n, t, l, r, "back", i.drawPhiKiem, f, s - o - 28)), m) {
           e.SpriteFactory.drawBody(n, m, t.dir, T(t), h, u, i.cfgHinh(t, t.hinhId));
         }
         else {
-          var b = t.downed ? e.SpriteFactory.getPale(t.cfg) : t.sheet;
-          e.SpriteFactory.drawBody(n, b, t.dir, T(t), h, u, t.cfg);
+          var S = t.downed ? e.SpriteFactory.getPale(t.cfg) : t.sheet;
+          e.SpriteFactory.drawBody(n, S, t.dir, T(t), h, u, t.cfg);
         }
         if (t.flyRise > 0 && e.ThuCuoi && e.ThuCuoi.drawFront) {
-          e.ThuCuoi.drawFront(n, d, c - o, t);   // Nghịch Tiên: lớp trước của thú cưỡi (thu_cuoi.js)
+          e.ThuCuoi.drawFront(n, d, c - o, t);
         }
-        if (p && e.XichMaFX && e.XichMaFX.aura(n, d, c - o, t, t.animTime, "front"), t.flyRise > 0 && "canh" === v && "front" === M && Ke(n, d, c - o, t), t.flyRise > 0 && "canh" === v && Oa(n, d, c - o, t), y && ue(n, d, c - o, t), e.VFX && e.VFX.drawPlayerStatus && e.VFX.drawPlayerStatus(n, d, c - o, t, t.animTime, "front"), t.reviveShield > 0 && i.drawReviveShield(n, d, c - o, t.reviveShield, t.animTime), x) {
+        if (g && g.aura(n, d, c - o, t, t.animTime, "front", T(t)), t.flyRise > 0 && "canh" === M && "front" === x && Ue(n, d, c - o, t), t.flyRise > 0 && "canh" === M && Na(n, d, c - o, t), v && pe(n, d, c - o, t), e.VFX && e.VFX.drawPlayerStatus && e.VFX.drawPlayerStatus(n, d, c - o, t, t.animTime, "front"), t.reviveShield > 0 && i.drawReviveShield(n, d, c - o, t.reviveShield, t.animTime), b) {
           if (e.Player.drawLucTinhKiemAura) {
             e.Player.drawLucTinhKiemAura(n, d, c - o, t, "front");
           }
           e.LucTinhTrucKiem.drawLayer(n, t, l, r, "front", i.drawPhiKiem, f, s - o - 28);
         }
         else {
-          var S = i.phiKiemPose(t);
-          if (S) {
-            i.drawPhiKiem(n, S, l, r);
+          var w = i.phiKiemPose(t);
+          if (w) {
+            i.drawPhiKiem(n, w, l, r);
           }
         }
         if (t.freezeT > 0 && e.VFX && e.VFX.drawPlayerFrozen && e.VFX.drawPlayerFrozen(n, d, c - o, t, t.animTime), function (t, i, n, l) {
@@ -346,11 +347,11 @@
             e.Pixel.text(i, n, r, t.realm, "#cfe0b8", "#000000", f, "center");
           }
         }(t, n, d, c - o), a.DEBUG) {
-          var w = a.PLAYER.HITBOX_W / 2;
-          var k = a.PLAYER.HITBOX_H;
+          var k = a.PLAYER.HITBOX_W / 2;
+          var R = a.PLAYER.HITBOX_H;
           n.strokeStyle = "#ff3b3b";
           n.lineWidth = 1;
-          n.strokeRect(Math.round(t.x - w - l) + .5, Math.round(t.y - k - r) + .5, a.PLAYER.HITBOX_W, k);
+          n.strokeRect(Math.round(t.x - k - l) + .5, Math.round(t.y - R - r) + .5, a.PLAYER.HITBOX_W, R);
         }
       }(d, t, n, l);
     };
@@ -857,7 +858,7 @@
     return e + (a - e) * t;
   }
   function k(e) {
-    return "thuong" === e ? -.22 : 0;
+    return "phu" === e ? F.REST_A : "thuong" === e ? -.22 : 0;
   }
   i.giveForm = function (e, a) {
     var t = a && a.bienHinh;
@@ -872,30 +873,46 @@
       e.hinhGiapMax = 0;
     }
   };
+  i.hinhFX = function (a) {
+    var t = e.Skills && e.Skills.DEFS ? e.Skills.DEFS[a] : null;
+    var i = t && t.bienHinh && t.bienHinh.fx;
+    return i && e[i] ? e[i] : null;
+  };
+  i.heCuaNguoi = function (a) {
+    var t = e.BACKGROUND_AURAS && e.BACKGROUND_AURAS.qi_ring;
+    return t && t.variants && t.variants.length && t.variants[ce(a || {}, t)] || null;
+  };
   i.cfgHinh = function (a, t) {
     var i = e.Skills && e.Skills.DEFS ? e.Skills.DEFS[t] : null;
-    var n = i && i.bienHinh && i.bienHinh.dang;
-    if (!n || !a || !a.cfg) {
+    var n = i && i.bienHinh;
+    var l = n && n.dang;
+    if (!l || !a || !a.cfg) {
       return null;
     }
-    var l = a.cfg;
-    var r = (l.weapon || "none") + "|" + l.bag + "|" + t;
-    var o = a._cfgHinh;
-    if (o && o.sig === r) {
-      return o.cfg;
+    var r = a.cfg;
+    var o = function (e, a) {
+      return [e.gender, e.skin, e.outfit, e.hair, e.hairColor, e.aura, e.weapon || "none", e.bag, e.eyeColor, e.shoes, e.accessory, e.beard || "none", a].join("|");
+    }(r, t);
+    var f = a._cfgHinh;
+    if (f && f.sig === o) {
+      return f.cfg;
     }
-    var f;
-    var s = {};
-    for (f in l)
-      s[f] = l[f];
-    for (f in n)
-      s[f] = n[f];
-    s.hat = "none";
-    s.beard = "none";
-    s.aura = "none";
-    s.accessory = "none";
-    a._cfgHinh = { sig: r, cfg: s, key: null };
-    return s;
+    var s;
+    var h;
+    var u = {};
+    for (s in r)
+      u[s] = r[s];
+    for (s in l)
+      u[s] = l[s];
+    if (u.hat = "none", u.beard = "none", u.aura = "none", u.accessory = "none", n.giu) {
+      for (h = 0; h < n.giu.length; h++)
+        u[n.giu[h]] = r[n.giu[h]];
+    }
+    if (n.kimHoa && e.Palette && e.Palette.kimHoa) {
+      e.Palette.kimHoa(u);
+    }
+    a._cfgHinh = { sig: o, cfg: u, key: null };
+    return u;
   };
   i.sheetHinh = function (a, t) {
     var n = e.SpriteFactory;
@@ -971,6 +988,14 @@
     }
     var l = Math.round(e.hpMax * (n.pct || 0) * (a ? null == n.pvp ? 1 : n.pvp : 1) * i.healMult(e));
     return (l = Math.min(Math.max(0, l), Math.ceil(e.hpMax - e.hp))) > 0 ? (e.hp = Math.min(e.hpMax, e.hp + l), l) : 0;
+  };
+  i.giayTangToc = function (a) {
+    if (!a || a.downed || a.flying || a.hasteT > 0) {
+      return !1;
+    }
+    var t = e.Inventory && e.Inventory.equipped ? e.Inventory.equipped("giay") : null;
+    var n = t && t.hasteProc;
+    return !(!(n && n.chance > 0) || Math.random() >= n.chance) && i.giveHaste(a, n.mult, n.time);
   };
   i.castThunder = function (t) {
     if ("attack" === t.state || "pose" === t.state) {
@@ -1086,16 +1111,20 @@
       n = e.Skills.giamSatThuong(t, n, l);
     }
     var f = 0;
+    var s = !1;
+    var h = null;
     if (t.hinhGiap > 0 && n > 0) {
+      h = i.formDef(t);
       f = Math.min(t.hinhGiap, n);
       t.hinhGiap -= f;
       n -= f;
+      s = t.hinhGiap <= 0;
     }
-    var s = 0;
+    var u = 0;
     if (t.shieldT > 0 && t.shieldHp > 0 && n > 0) {
-      s = Math.min(t.shieldHp, n);
-      t.shieldHp -= s;
-      n -= s;
+      u = Math.min(t.shieldHp, n);
+      t.shieldHp -= u;
+      n -= u;
       if (t.shieldHp <= 0) {
         t.shieldHp = 0;
         t.shieldT = 0;
@@ -1104,26 +1133,32 @@
         t.shieldBell = !1;
       }
     }
-    var h = Math.min(Math.floor(t.bp || 0), n);
-    var u = n - h;
-    var d = e.Skills ? e.Skills.triggerHealthDefense(t, u) : null;
-    if (d) {
-      u = d.damage;
+    var d = Math.min(Math.floor(t.bp || 0), n);
+    var c = n - d;
+    var p = e.Skills ? e.Skills.triggerHealthDefense(t, c) : null;
+    if (p) {
+      c = p.damage;
     }
-    if (d && e.Audio && e.Audio.playSkill) {
-      e.Audio.playSkill(d.def);
+    if (p && e.Audio && e.Audio.playSkill) {
+      e.Audio.playSkill(p.def);
     }
-    t.bp = Math.max(0, (t.bp || 0) - h);
-    if (u > 0) {
-      t.hp = Math.max(0, t.hp - u);
+    t.bp = Math.max(0, (t.bp || 0) - d);
+    if (c > 0) {
+      t.hp = Math.max(0, t.hp - c);
     }
-    var c = 0;
-    if (d && d.heal > 0 && (c = Math.min(Math.round(d.heal * i.healMult(t)), t.hpMax - t.hp), t.hp += c), d && (d.blocked > 0 || c > 0) && e.Skills.passiveFx && e.Skills.passiveFx(t, d.def.id, { w: 0 | d.blocked, g: 0 | c }), e.Skills && e.Skills.sauKhiTrungDon && e.Skills.sauKhiTrungDon(t), i.chuongKich(t), t.bpRegenDelay = a.RESOURCES.BP_REGEN_DELAY, r || (t.hurtTimer = a.ENEMY.HURT_TIME), f > 0 && e.VFX.spawnText(t.x, t.y - (s > 0 ? 40 : 34), "Ma Giáp đỡ " + Math.round(f), "#ff6a4a"), s > 0 && e.VFX.spawnText(t.x, t.y - 34, "Kim Giáp đỡ " + Math.round(s), "#ffd978"), h > 0 && e.VFX.spawnText(t.x, t.y - 46, "-" + h + " Giáp", "#f59e42"), u > 0 && e.VFX.spawnText(t.x, t.y - (h > 0 ? 58 : 46), "-" + u + " Khí Huyết", "#ef4444"), e.Audio.play("hurt"), e.Camera.shake(1.8, .1), e.VFX.spawnVignette) {
-      var p = (h + u) / Math.max(1, t.hpMax || 1);
-      var m = Math.max(0, Math.min(1, t.hp / Math.max(1, t.hpMax || 1)));
-      e.VFX.spawnVignette("#8e1c14", .3, Math.min(.72, .24 + 1.6 * p + .3 * (1 - m)));
+    var m = 0;
+    if (p && p.heal > 0 && (m = Math.min(Math.round(p.heal * i.healMult(t)), t.hpMax - t.hp), t.hp += m), p && (p.blocked > 0 || m > 0) && e.Skills.passiveFx && e.Skills.passiveFx(t, p.def.id, { w: 0 | p.blocked, g: 0 | m }), e.Skills && e.Skills.sauKhiTrungDon && e.Skills.sauKhiTrungDon(t), i.chuongKich(t), t.bpRegenDelay = a.RESOURCES.BP_REGEN_DELAY, r || (t.hurtTimer = a.ENEMY.HURT_TIME), f > 0 && (e.VFX.spawnText(t.x, t.y - (u > 0 ? 40 : 34), (h && h.giapTen || "Ma Giáp") + " đỡ " + Math.round(f), h && h.giapMau || "#ff6a4a"), s)) {
+      var g = i.hinhFX(t.hinhId);
+      if (g && g.spawnVoGiap) {
+        g.spawnVoGiap(t);
+      }
     }
-    y("hurt", (Math.round(t.x), Math.round(t.y), u > 0 && Math.round(u), h > 0 && Math.round(h), d && Math.round(d.blocked), s > 0 && Math.round(s), Math.round(c), d && d.def.id));
+    if (u > 0 && e.VFX.spawnText(t.x, t.y - 34, "Kim Giáp đỡ " + Math.round(u), "#ffd978"), d > 0 && e.VFX.spawnText(t.x, t.y - 46, "-" + d + " Giáp", "#f59e42"), c > 0 && e.VFX.spawnText(t.x, t.y - (d > 0 ? 58 : 46), "-" + c + " Khí Huyết", "#ef4444"), e.Audio.play("hurt"), e.Camera.shake(1.8, .1), e.VFX.spawnVignette) {
+      var v = (d + c) / Math.max(1, t.hpMax || 1);
+      var M = Math.max(0, Math.min(1, t.hp / Math.max(1, t.hpMax || 1)));
+      e.VFX.spawnVignette("#8e1c14", .3, Math.min(.72, .24 + 1.6 * v + .3 * (1 - M)));
+    }
+    y("hurt", (Math.round(t.x), Math.round(t.y), c > 0 && Math.round(c), d > 0 && Math.round(d), p && Math.round(p.blocked), u > 0 && Math.round(u), Math.round(m), p && p.def.id));
     if (t.hp <= 0) {
       i.knockDown(t);
       if (t.downed && "function" == typeof t.formationDowned) {
@@ -1341,7 +1376,7 @@
   };
   i.frameCol = T;
   i.walkActCol = x;
-  var R = { kiem: { slot: "hitA", ring: "#d8f2ff", radius: 16, chips: 0, mag: 1.5, dur: .08 }, dao: { slot: "hitA", ring: "#ffd9a0", radius: 18, chips: 2, mag: 1.8, dur: .1 }, dam: { slot: "hitA", ring: "#cfe6ff", radius: 14, chips: 0, mag: 1.6, dur: .08 }, dap: { slot: "hitB", ring: "#ffe2b4", radius: 24, chips: 3, mag: 3, dur: .14 }, doc: { slot: "hitA", ring: "#70f779", radius: 14, chips: 0, mag: 1.4, dur: .08 }, phi_dao: { slot: "hitA", ring: "#c83d55", radius: 18, chips: 2, mag: 1.7, dur: .1 } };
+  var R = { kiem: { slot: "hitA", ring: "#d8f2ff", radius: 16, chips: 0, mag: 1.5, dur: .08 }, dao: { slot: "hitA", ring: "#ffd9a0", radius: 18, chips: 2, mag: 1.8, dur: .1 }, dam: { slot: "hitA", ring: "#cfe6ff", radius: 14, chips: 0, mag: 1.6, dur: .08 }, dap: { slot: "hitB", ring: "#ffe2b4", radius: 24, chips: 3, mag: 3, dur: .14 }, doc: { slot: "hitA", ring: "#70f779", radius: 14, chips: 0, mag: 1.4, dur: .08 }, phi_dao: { slot: "hitA", ring: "#c83d55", radius: 18, chips: 2, mag: 1.7, dur: .1 }, phu: { slot: "hitA", ring: "#ff4a5e", radius: 22, chips: 0, mag: 2.4, dur: .12 } };
   function A(a, t, i, n) {
     var l = R[n];
     if (l && !a[l.slot]) {
@@ -1366,6 +1401,11 @@
                 if ("hoang_loi_thuong" === a.weapon && e.HoangLoiFX) {
                   e.HoangLoiFX.spawnAttack(t, i, a.aim, n);
                 }
+                else {
+                  if ("huyet_ma_phu" === a.weapon && e.HuyetMaPhuFX) {
+                    e.HuyetMaPhuFX.spawnChop(t, i, a.aim, a.phu);
+                  }
+                }
               }
             }
           }
@@ -1388,13 +1428,63 @@
       }
     }
   }
-  var I = { kiem: 23, dao: 38, thuong: 48, no: 7, luc_doc_cham: 7, cung: 8, phi_dao: 20, huyet_kiem: 64 };
+  var I = { kiem: 23, dao: 38, thuong: 48, no: 7, luc_doc_cham: 7, cung: 8, phi_dao: 20, huyet_kiem: 64, phu: 40 };
   function _(e, a) {
     return { x: e.x - 22 * Math.sin(a), y: e.y + 22 * Math.cos(a) };
   }
   var P = { start: 2.35, hit: .72, arc: 10, recoil: .24 };
-  var F = [{ launch: 0, arrive: -.1, start: -6, approach: -30, bend: -58 }, { launch: .07, arrive: -.05, start: 0, approach: 0, bend: -14 }, { launch: .14, arrive: 0, start: 6, approach: 30, bend: 58 }];
-  function E(e, a, t, i) {
+  var F = { R: 40, REST_A: Math.PI + .28, WIND_PHI: -.62, HIT_PHI: Math.PI - .1, WIND_DX: 7, WIND_DY: 11 };
+  var E = 2 * Math.PI;
+  function C(e, a, t, i, n, l) {
+    var r;
+    var o;
+    var f = F.R;
+    var s = ((Math.PI + l * F.WIND_PHI - F.REST_A) % E + E) % E;
+    var h = F.REST_A + (l > 0 ? s : s - E);
+    var u = h + l * (F.HIT_PHI - F.WIND_PHI);
+    var d = { x: t.x + Math.sin(u) * f, y: t.y - Math.cos(u) * f };
+    var c = { x: d.x - l * F.WIND_DX, y: d.y - F.WIND_DY };
+    var p = n - .17;
+    var m = n - .12;
+    var g = n + .09;
+    var y = { x: 0, y: 0, angle: 0, smear: !1, hit: d };
+    if (i < p) {
+      var v = 1 - (1 - (r = i / p)) * (1 - r) * (1 - r);
+      y.angle = F.REST_A + (h - F.REST_A) * v;
+      y.x = w(e.start.x, c.x, S(r));
+      y.y = w(e.start.y, c.y, S(r)) - 12 * Math.sin(r * Math.PI);
+      y.smear = r > .04 && r < .94;
+    }
+    else if (i < m) {
+      r = (i - p) / (m - p);
+      y.angle = h - .12 * l * Math.sin(r * Math.PI);
+      y.x = c.x;
+      y.y = c.y;
+    }
+    else if (i < n) {
+      var M = (r = (i - m) / (n - m)) * r;
+      y.angle = w(h, u, M);
+      y.x = w(c.x, d.x, M);
+      y.y = w(c.y, d.y, M);
+      y.smear = !0;
+    }
+    else if (i < g) {
+      r = (i - n) / (g - n);
+      y.angle = u - .14 * l * Math.sin(r * Math.PI);
+      y.x = d.x;
+      y.y = d.y;
+    }
+    else {
+      var T = S(r = (i - g) / (1 - g));
+      y.angle = u + ((o = ((o = F.REST_A - u) + Math.PI) % E) < 0 && (o += E), (o - Math.PI) * T);
+      y.x = w(d.x, a.x, T);
+      y.y = w(d.y, a.y, T) - 14 * Math.sin(r * Math.PI);
+      y.smear = r < .5;
+    }
+    return y;
+  }
+  var L = [{ launch: 0, arrive: -.1, start: -6, approach: -30, bend: -58 }, { launch: .07, arrive: -.05, start: 0, approach: 0, bend: -14 }, { launch: .14, arrive: 0, start: 6, approach: 30, bend: 58 }];
+  function D(e, a, t, i) {
     i = Math.max(0, Math.min(1, i));
     var n = a.x - e.start.x;
     var l = a.y - e.start.y;
@@ -1416,32 +1506,32 @@
     var v = S((i - .72) / .28);
     return { x: w(p.x, a.x, v), y: w(p.y, a.y, v) };
   }
-  function C(e, a, t, i, n) {
+  function H(e, a, t, i, n) {
     var l = n + t.arrive;
     if (i < t.launch || i > l + .07) {
       return { hidden: !0 };
     }
     var r = Math.min(1, (i - t.launch) / (l - t.launch));
-    var o = E(e, a, t, r);
-    var f = E(e, a, t, Math.max(0, r - .018));
+    var o = D(e, a, t, r);
+    var f = D(e, a, t, Math.max(0, r - .018));
     var s = o.x - f.x;
     var h = o.y - f.y;
     if (r < .018) {
-      s = (f = E(e, a, t, Math.min(1, r + .018))).x - o.x;
+      s = (f = D(e, a, t, Math.min(1, r + .018))).x - o.x;
       h = f.y - o.y;
     }
     for (var u = Math.sqrt(s * s + h * h) || 1, d = s / u, c = h / u, p = [], m = 3; m >= 1; m--) {
       var g = Math.max(0, r - .055 * m);
       if (g !== r) {
-        var y = E(e, a, t, g);
+        var y = D(e, a, t, g);
         p.push({ x: y.x - d * I.luc_doc_cham, y: y.y - c * I.luc_doc_cham });
       }
     }
     return { hidden: !1, x: o.x - d * I.luc_doc_cham, y: o.y - c * I.luc_doc_cham, angle: Math.atan2(c, d), trail: p, arrived: r >= 1 };
   }
-  var L = 2 / 15;
-  var D = [{ f: 10, l: -28, h: -8 }, { f: 16, l: 20, h: -2 }, { f: 4, l: -8, h: -24 }, { f: 12, l: 32, h: -12 }, { f: 20, l: -18, h: 2 }, { f: 6, l: 10, h: -28 }, { f: 14, l: -36, h: -2 }];
-  function H(a, t, i, n, l) {
+  var W = 2 / 15;
+  var O = [{ f: 10, l: -28, h: -8 }, { f: 16, l: 20, h: -2 }, { f: 4, l: -8, h: -24 }, { f: 12, l: 32, h: -12 }, { f: 20, l: -18, h: 2 }, { f: 6, l: 10, h: -28 }, { f: 14, l: -36, h: -2 }];
+  function V(a, t, i, n, l) {
     if (n < 0 || n > l.life) {
       return null;
     }
@@ -1453,7 +1543,7 @@
         return i;
       }
       var n = e.enemy && !e.enemy.dead ? { x: e.enemy.x, y: e.enemy.y - 14 } : e.end;
-      var l = D[(3 * (e.seq || 0) + t) % D.length];
+      var l = O[(3 * (e.seq || 0) + t) % O.length];
       var r = e.aim.x;
       var o = e.aim.y;
       var f = a.x + r * l.f - o * l.l;
@@ -1463,7 +1553,7 @@
       var d = Math.sqrt(h * h + u * u) || 1;
       var c = h / d;
       var p = u / d;
-      var m = Math.min(.5 * oe, .5 * d);
+      var m = Math.min(.5 * he, .5 * d);
       f += c * m;
       s += p * m;
       d -= m;
@@ -1516,16 +1606,16 @@
     }
     return { x: r, y: o, angle: Math.atan2(f.uy, f.ux), alpha: s, scale: h, glow: u, trail: d, sx: f.sx, sy: f.sy, hidden: !1 };
   }
-  function O(a, t, i, n) {
+  function N(a, t, i, n) {
     if (a && null != a.t0) {
       for (var l = function (a) {
         var t = e.ITEMS && e.ITEMS.phi_dao;
         var i = a.dur || t && t.attackTime || .667;
         var n = (t && t.hitAt || .32) * i;
-        var l = Math.max(.3 * n, n - L);
+        var l = Math.max(.3 * n, n - W);
         return { gap: i / 3, arrive: n, life: n + .2, dam: l, hien: .75 * l };
       }(a), r = i - a.t0, o = 0; o < 3; o++) {
-        var f = H(a, t, o, r - o * l.gap, l);
+        var f = V(a, t, o, r - o * l.gap, l);
         if (f) {
           n.push(f);
         }
@@ -1562,8 +1652,8 @@
         return function (a) {
           var t = e.Game ? e.Game.time : 0;
           var i = [];
-          O(a.phiDaoCu, a, t, i);
-          O(a.phiKiem, a, t, i);
+          N(a.phiDaoCu, a, t, i);
+          N(a.phiKiem, a, t, i);
           return i.length ? { kind: "phi_dao", blades: i, hidden: !1 } : null;
         }(a);
       }
@@ -1601,8 +1691,8 @@
         }
         return { kind: "cung", x: f, y: s, angle: h, slash: !1, hidden: i > l + .08 };
       }(o, u, h) : "luc_doc_cham" === n ? function (a, t, i) {
-        for (var n = e.ITEMS && e.ITEMS.luc_doc_cham, l = n && n.hitAt || .62, r = [], o = !1, f = 0; f < F.length; f++) {
-          var s = C(a, t, F[f], i, l);
+        for (var n = e.ITEMS && e.ITEMS.luc_doc_cham, l = n && n.hitAt || .62, r = [], o = !1, f = 0; f < L.length; f++) {
+          var s = H(a, t, L[f], i, l);
           r.push(s);
           if (!(s.hidden)) {
             o = !0;
@@ -1683,6 +1773,30 @@
         }
         var T = S((i - .62) / .38);
         return { kind: "thuong", x: w(t.x, a.x, T), y: w(t.y - o, a.y, T) - 8 * Math.sin(T * Math.PI), angle: w(.1, k("thuong"), T), slash: !1 };
+      }(o, r, u, h) : "phu" === n ? function (a, t, i, n) {
+        var l = e.ITEMS && e.ITEMS.huyet_ma_phu;
+        var r = l && l.hitAt || .46;
+        var o = l && l.attackTime || 1.25;
+        var f = a.aim.x >= 0 ? 1 : -1;
+        var s = C(a, t, i, n, r, f);
+        if (n >= r) {
+          if (!(a.phu)) {
+            a.phu = { sgn: f, x: s.hit.x, y: s.hit.y };
+          }
+          A(a, i.x, i.y, "phu");
+        }
+        var h = 0;
+        if (s.smear) {
+          if ((h = s.angle - C(a, t, i, Math.max(0, n - .03 / o), r, f).angle) > 1.5) {
+            h = 1.5;
+          }
+          else {
+            if (h < -1.5) {
+              h = -1.5;
+            }
+          }
+        }
+        return { kind: "phu", x: s.x, y: s.y, angle: s.angle, slash: !1, smear: s.smear, blur: h };
       }(o, r, u, h) : "bang_linh_kiem" === o.weapon ? function (a, t, i, n) {
         var l = e.ITEMS && e.ITEMS.bang_linh_kiem;
         var r = l && l.hitAt || .35;
@@ -1744,7 +1858,7 @@
         var g = a.phiKiem;
         g.t0 = e.Game ? e.Game.time : 0;
         g.dur = i.phiKiemDuration(a.cfg);
-        g.seq = a.phiDaoSeq = ((a.phiDaoSeq || 0) + 1) % D.length;
+        g.seq = a.phiDaoSeq = ((a.phiDaoSeq || 0) + 1) % O.length;
         g.luoi = [];
         a.phiDaoCu = m && null != m.t0 ? m : null;
       }
@@ -1756,32 +1870,32 @@
       a.phiKiem = null;
     }
   };
-  var W = "assets/weapons/luc-tinh-kiem.png";
-  var V = !1;
-  var X = "assets/weapons/bang-linh-kiem.png";
-  var N = !1;
-  var G = "assets/weapons/huyet-kiem.png";
-  var B = !1;
-  var K = { path: "assets/weapons/bich-nguc-ta-dao.png", auraPath: "assets/weapons/bich-nguc-linh-khi.png", tex: 2, fw: 104, fh: 208, tipX: 56, tipY: 184, drawScale: .8, frames: 8, fps: 10, behind: 1, front: .28 };
-  i.BICH_NGUC_ART = K;
-  var q = !1;
-  var Y = "assets/weapons/thiet-dao.png";
-  var U = { x: 432, y: 16, w: 145, h: 1501 };
+  var X = "assets/weapons/luc-tinh-kiem.png";
+  var G = !1;
+  var B = "assets/weapons/bang-linh-kiem.png";
+  var K = !1;
+  var q = "assets/weapons/huyet-kiem.png";
+  var Y = !1;
+  var U = { path: "assets/weapons/bich-nguc-ta-dao.png", auraPath: "assets/weapons/bich-nguc-linh-khi.png", tex: 2, fw: 104, fh: 208, tipX: 56, tipY: 184, drawScale: .8, frames: 8, fps: 10, behind: 1, front: .28 };
+  i.BICH_NGUC_ART = U;
   var Q = !1;
-  var z = "assets/weapons/thiet-thuong.png";
-  var J = { x: 400, y: 64, w: 225, h: 1411 };
+  var z = "assets/weapons/thiet-dao.png";
+  var J = { x: 432, y: 16, w: 145, h: 1501 };
   var j = !1;
-  var Z = "assets/weapons/hoa-kim-thuong.png";
-  var $ = !1;
-  var ee = { dao: "rgba(255,214,160,.30)", thuong: "rgba(199,226,245,.28)", kiem: "rgba(199,226,245,.28)", huyet_kiem: "rgba(255,55,77,.42)" };
-  var ae = "assets/weapons/danhthuongga.png";
-  var te = { x: 46, y: 297, w: 623, h: 126 };
-  var ie = !1;
-  var ne = "assets/weapons/phi-dao.png";
-  var le = !1;
-  var re = Math.atan2(68, 62);
-  var oe = 46;
-  function fe(a, t, i, n) {
+  var Z = "assets/weapons/thiet-thuong.png";
+  var $ = { x: 400, y: 64, w: 225, h: 1411 };
+  var ee = !1;
+  var ae = "assets/weapons/hoa-kim-thuong.png";
+  var te = !1;
+  var ie = { dao: "rgba(255,214,160,.30)", thuong: "rgba(199,226,245,.28)", kiem: "rgba(199,226,245,.28)", huyet_kiem: "rgba(255,55,77,.42)" };
+  var ne = "assets/weapons/danhthuongga.png";
+  var le = { x: 46, y: 297, w: 623, h: 126 };
+  var re = !1;
+  var oe = "assets/weapons/phi-dao.png";
+  var fe = !1;
+  var se = Math.atan2(68, 62);
+  var he = 46;
+  function ue(a, t, i, n) {
     if (t && !t.hidden) {
       var l = t.x - i;
       var r = t.y - n;
@@ -1790,16 +1904,16 @@
       var s = null == t.alpha ? 1 : Math.max(0, Math.min(1, t.alpha));
       if (!(s <= 0)) {
         if (t.trail > 0 && !(e.VFX && e.VFX.phiDaoXuyenSan && e.VFX.phiDaoXuyenSan())) {
-          var h = l - o * oe;
-          var u = r - f * oe;
+          var h = l - o * he;
+          var u = r - f * he;
           var d = h - o * t.trail;
           var c = u - f * t.trail;
           e.Pixel.line(a, Math.round(l - 20 * o), Math.round(r - 20 * f), Math.round(d), Math.round(c), "rgba(160,240,255,.62)");
           e.Pixel.line(a, Math.round(h - f), Math.round(u + o), Math.round(d - f), Math.round(c + o), "rgba(44,154,202,.28)");
         }
         if (t.glow > 0) {
-          var p = l - o * oe * .5;
-          var m = r - f * oe * .5;
+          var p = l - o * he * .5;
+          var m = r - f * he * .5;
           var g = a.createRadialGradient(p, m, 0, p, m, 20);
           g.addColorStop(0, "rgba(190,248,255," + (.55 * t.glow).toFixed(3) + ")");
           g.addColorStop(1, "rgba(56,191,232,0)");
@@ -1812,24 +1926,24 @@
         a.rotate(t.angle);
         var y = t.scale || 1;
         if (1 !== y) {
-          a.translate(.5 * -oe, 0);
+          a.translate(.5 * -he, 0);
           a.scale(y, y);
-          a.translate(.5 * oe, 0);
+          a.translate(.5 * he, 0);
         }
         var v = function () {
           if (!e.Assets) {
             return null;
           }
-          var a = e.Assets.get(ne);
-          if (!(a || le || !e.Assets.loadImage)) {
-            le = !0;
-            e.Assets.loadImage(ne, e.Assets.PRIO.NORMAL);
+          var a = e.Assets.get(oe);
+          if (!(a || fe || !e.Assets.loadImage)) {
+            fe = !0;
+            e.Assets.loadImage(oe, e.Assets.PRIO.NORMAL);
           }
           return a;
         }();
         if (v && v.width) {
           a.imageSmoothingEnabled = !0;
-          a.rotate(re);
+          a.rotate(se);
           var M = .5 * v.width;
           var T = .5 * v.height;
           a.drawImage(v, 63 / 64 * -M, 1 / 69 * -T, M, T);
@@ -1848,7 +1962,7 @@
       }
     }
   }
-  function se(a, t, i, n) {
+  function de(a, t, i, n) {
     if (!t.hidden) {
       var l = t.trail || [];
       if (l.length) {
@@ -1904,7 +2018,7 @@
       a.restore();
     }
   }
-  function he(e, a) {
+  function ce(e, a) {
     if (e && e.linhCan) {
       for (var t = 0; t < a.variants.length; t++)
         if (a.variants[t].he === e.linhCan) {
@@ -1928,7 +2042,7 @@
       return (n >>> 0) % a;
     }(e, i.length)] || 0;
   }
-  function ue(a, t, i, n) {
+  function pe(a, t, i, n) {
     if (n && n.cfg && e.BACKGROUND_AURAS && !(e.Quality && 0 === e.Quality.tier || e.realmIndexById && e.realmIndexById(n.cfg.realmId) < e.realmIndexById("truc_co_1"))) {
       var l = n.cfg.aura;
       if (!l && e.realmById) {
@@ -1937,7 +2051,7 @@
       }
       var o = e.BACKGROUND_AURAS[l];
       if (o && o.variants && o.variants.length && e.Assets && e.Assets.get) {
-        var f = he(n.cfg, o);
+        var f = ce(n.cfg, o);
         var s = o.variants[f];
         var h = e.Assets.get(s.path);
         if (h) {
@@ -1972,14 +2086,14 @@
               var h = e.Game && e.Game.time || n.animTime || 0;
               var u = i - 1;
               for (a.save(), a.globalAlpha = .28, e.Pixel.ellipse(a, t, u, 21, 7, "#eef2fb"), a.globalAlpha = .22, e.Pixel.ellipse(a, t, u, 14, 4, "#ffffff"), l = 0; l < 12; l++)
-                r = 1.1 * h + l * Math.PI / 6, o = t + 20 * Math.cos(r), f = u + 6.5 * Math.sin(r), s = Math.sin(r) < 0, a.globalAlpha = s ? .45 : 1, a.fillStyle = de[l % 5], a.fillRect(Math.round(o) - 1, Math.round(f) - 1, 3, 2), s || (a.fillStyle = "#ffffff", a.fillRect(Math.round(o), Math.round(f) - 1, 1, 1));
+                r = 1.1 * h + l * Math.PI / 6, o = t + 20 * Math.cos(r), f = u + 6.5 * Math.sin(r), s = Math.sin(r) < 0, a.globalAlpha = s ? .45 : 1, a.fillStyle = me[l % 5], a.fillRect(Math.round(o) - 1, Math.round(f) - 1, 3, 2), s || (a.fillStyle = "#ffffff", a.fillRect(Math.round(o), Math.round(f) - 1, 1, 1));
               for (l = 0; l < 10; l++) {
                 var d = (.45 * h + l / 10) % 1;
                 var c = Math.sin(d * Math.PI);
                 o = t + Math.sin(1.7 * h + 2.3 * l) * (8 + l % 3 * 3);
                 f = u - 4 - 44 * d;
                 a.globalAlpha = .95 * c;
-                a.fillStyle = de[(l + 2) % 5];
+                a.fillStyle = me[(l + 2) % 5];
                 a.fillRect(Math.round(o), Math.round(f), 2, 2);
                 if ((l + Math.floor(4 * h)) % 3 == 0) {
                   a.fillStyle = "#ffffff";
@@ -2106,15 +2220,15 @@
                 if (!e.Assets) {
                   return null;
                 }
-                var a = e.Assets.get(ae);
-                if (!(a || ie || !e.Assets.loadImage)) {
-                  ie = !0;
-                  e.Assets.loadImage(ae, e.Assets.PRIO.NORMAL);
+                var a = e.Assets.get(ne);
+                if (!(a || re || !e.Assets.loadImage)) {
+                  re = !0;
+                  e.Assets.loadImage(ne, e.Assets.PRIO.NORMAL);
                 }
                 return a;
               }();
               if (t && t.width) {
-                var i = te;
+                var i = le;
                 a.save();
                 a.imageSmoothingEnabled = !1;
                 a.drawImage(t, i.x, i.y, i.w, i.h, -18, -4, 36, 8);
@@ -2165,8 +2279,10 @@
               })(a, t);
             }
             else {
-              a.fillStyle = t.smearColor || ee[t.kind] || ee.kiem;
-              a.fillRect(-2, -26, 4, 24);
+              if (!("phu" === t.kind && e.HuyetMaPhuFX)) {
+                a.fillStyle = t.smearColor || ie[t.kind] || ie.kiem;
+                a.fillRect(-2, -26, 4, 24);
+              }
             }
           }
           a.scale(1, -1);
@@ -2216,7 +2332,7 @@
                 e.VFX.primeHoaKimThuongAttack();
               }
               var t = null;
-              if (e.Assets && ((t = e.Assets.get(Z)) || $ || ($ = !0, e.Assets.loadImage(Z, e.Assets.PRIO.NORMAL))), t && t.width) {
+              if (e.Assets && ((t = e.Assets.get(ae)) || te || (te = !0, e.Assets.loadImage(ae, e.Assets.PRIO.NORMAL))), t && t.width) {
                 var i = Math.max(6, Math.round(76 * t.height / t.width));
                 a.save();
                 a.rotate(Math.PI / 2);
@@ -2262,16 +2378,16 @@
             else {
               if ("bich_nguc_ta_dao" === t.art) {
                 (function (a) {
-                  var t = K;
+                  var t = U;
                   var i = function () {
                     if (!e.Assets) {
                       return null;
                     }
-                    var a = e.Assets.get(K.path);
-                    if (!(a || q)) {
-                      q = !0;
-                      e.Assets.loadImage(K.path, e.Assets.PRIO.NORMAL);
-                      e.Assets.loadImage(K.auraPath, e.Assets.PRIO.NORMAL);
+                    var a = e.Assets.get(U.path);
+                    if (!(a || Q)) {
+                      Q = !0;
+                      e.Assets.loadImage(U.path, e.Assets.PRIO.NORMAL);
+                      e.Assets.loadImage(U.auraPath, e.Assets.PRIO.NORMAL);
                     }
                     return a;
                   }();
@@ -2344,10 +2460,10 @@
                       if (!e.Assets) {
                         return null;
                       }
-                      var a = e.Assets.get(X);
-                      if (!(a || N)) {
-                        N = !0;
-                        e.Assets.loadImage(X, e.Assets.PRIO.NORMAL);
+                      var a = e.Assets.get(B);
+                      if (!(a || K)) {
+                        K = !0;
+                        e.Assets.loadImage(B, e.Assets.PRIO.NORMAL);
                       }
                       return a;
                     }();
@@ -2385,10 +2501,10 @@
                         if (!e.Assets) {
                           return null;
                         }
-                        var a = e.Assets.get(W);
-                        if (!(a || V || !e.Assets.loadImage)) {
-                          V = !0;
-                          e.Assets.loadImage(W, e.Assets.PRIO && e.Assets.PRIO.NORMAL);
+                        var a = e.Assets.get(X);
+                        if (!(a || G || !e.Assets.loadImage)) {
+                          G = !0;
+                          e.Assets.loadImage(X, e.Assets.PRIO && e.Assets.PRIO.NORMAL);
                         }
                         return a;
                       }();
@@ -2435,142 +2551,98 @@
                     })(a);
                   }
                   else {
-                    if ("huyet_kiem" === t.kind) {
-                      (function (a) {
-                        var t = function () {
-                          if (!e.Assets) {
-                            return null;
-                          }
-                          var a = e.Assets.get(G);
-                          if (!(a || B)) {
-                            B = !0;
-                            e.Assets.loadImage(G, e.Assets.PRIO.NORMAL);
-                          }
-                          return a;
-                        }();
-                        if (a.save(), a.scale(1, -1), function (a) {
-                          var t = Number(e.Game && e.Game.time) || 0;
-                          var i = .82 + .18 * Math.sin(7.2 * t);
-                          var n = 2 * Math.sin(5.8 * t);
-                          a.save();
-                          a.globalCompositeOperation = "lighter";
-                          a.lineCap = "round";
-                          a.lineJoin = "round";
-                          a.imageSmoothingEnabled = !1;
-                          a.fillStyle = "rgba(198,21,40,0.14)";
-                          a.beginPath();
-                          a.arc(0, -39, 10 + 2 * i, 0, 2 * Math.PI);
-                          a.fill();
-                          a.strokeStyle = "rgba(255,71,104," + .68 * i + ")";
-                          a.lineWidth = 1.2;
-                          a.beginPath();
-                          a.arc(0, -39, 8 + 1.5 * i, -2.55, 1.2);
-                          a.stroke();
-                          a.strokeStyle = "rgba(255,218,224," + .46 * i + ")";
-                          a.lineWidth = .8;
-                          a.beginPath();
-                          a.arc(0, -39, 5 + i, -2.2, .65);
-                          a.stroke();
-                          for (var l = 0; l < 3; l++) {
-                            var r = 3.2 * (l - 1);
-                            var o = Math.sin(6.5 * t + 1.8 * l) * (1.5 + .4 * l);
-                            a.beginPath();
-                            a.strokeStyle = 1 === l ? "rgba(255,194,210," + .7 * i + ")" : "rgba(226,25,66," + (.48 - .06 * l) * i + ")";
-                            a.lineWidth = 1 === l ? 1.4 : 1;
-                            a.moveTo(r + o, -3);
-                            a.quadraticCurveTo(r - o, -20, r + .45 * n, -37);
-                            a.quadraticCurveTo(r + .8 * o, -50, .45 * r - n, -61);
-                            a.stroke();
-                          }
-                          for (var f = 0; f < 8; f++) {
-                            var s = -7 - (.61803398875 * f + .16 * t) % 1 * 55;
-                            var h = Math.sin(4.7 * t + 2.13 * f) * (2.2 + f % 3);
-                            var u = f % 4 == 0 ? 2 : 1;
-                            a.fillStyle = f % 3 == 0 ? "rgba(255,224,232," + .86 * i + ")" : "rgba(255,52,86," + .68 * i + ")";
-                            a.fillRect(Math.round(h), Math.round(s), u, u);
-                          }
-                          a.strokeStyle = "rgba(255,73,103," + .52 * i + ")";
-                          a.lineWidth = 1;
-                          a.beginPath();
-                          a.moveTo(-2, -4);
-                          a.lineTo(-8 - n, 2);
-                          a.moveTo(2, -6);
-                          a.lineTo(8 + n, 0);
-                          a.stroke();
-                          a.restore();
-                        }(a), a.imageSmoothingEnabled = !1, t) {
-                          a.drawImage(t, 0, 0, t.width, t.height, -10, -65, 20, 65);
-                          return void a.restore();
-                        }
-                        a.fillStyle = "#170b12";
-                        a.fillRect(-3, -60, 6, 53);
-                        a.fillStyle = "#8d1f2c";
-                        a.fillRect(-2, -58, 4, 50);
-                        a.fillStyle = "#ff3854";
-                        a.fillRect(-1, -55, 2, 47);
-                        a.fillStyle = "#e9dce0";
-                        a.fillRect(2, -58, 1, 55);
-                        a.fillStyle = "#33101a";
-                        a.fillRect(-9, -7, 18, 4);
-                        a.fillStyle = "#d62f48";
-                        a.fillRect(-7, -6, 14, 2);
-                        a.fillStyle = "#1b0b12";
-                        a.fillRect(-2, -3, 4, 7);
-                        a.fillStyle = "#9d2437";
-                        a.fillRect(-1, -3, 2, 8);
-                        a.restore();
-                      })(a);
+                    if ("phu" === t.kind && e.HuyetMaPhuFX) {
+                      e.HuyetMaPhuFX.drawBody(a, t);
                     }
                     else {
-                      if ("dao" === t.kind) {
+                      if ("huyet_kiem" === t.kind) {
                         (function (a) {
                           var t = function () {
                             if (!e.Assets) {
                               return null;
                             }
-                            var a = e.Assets.get(Y);
-                            if (!(a || Q)) {
-                              Q = !0;
-                              e.Assets.loadImage(Y, e.Assets.PRIO.NORMAL);
+                            var a = e.Assets.get(q);
+                            if (!(a || Y)) {
+                              Y = !0;
+                              e.Assets.loadImage(q, e.Assets.PRIO.NORMAL);
                             }
                             return a;
                           }();
-                          if (t) {
-                            var i = U;
+                          if (a.save(), a.scale(1, -1), function (a) {
+                            var t = Number(e.Game && e.Game.time) || 0;
+                            var i = .82 + .18 * Math.sin(7.2 * t);
+                            var n = 2 * Math.sin(5.8 * t);
                             a.save();
-                            a.scale(1, -1);
+                            a.globalCompositeOperation = "lighter";
+                            a.lineCap = "round";
+                            a.lineJoin = "round";
                             a.imageSmoothingEnabled = !1;
-                            a.drawImage(t, i.x, i.y, i.w, i.h, -3, -22, 6, 60);
+                            a.fillStyle = "rgba(198,21,40,0.14)";
+                            a.beginPath();
+                            a.arc(0, -39, 10 + 2 * i, 0, 2 * Math.PI);
+                            a.fill();
+                            a.strokeStyle = "rgba(255,71,104," + .68 * i + ")";
+                            a.lineWidth = 1.2;
+                            a.beginPath();
+                            a.arc(0, -39, 8 + 1.5 * i, -2.55, 1.2);
+                            a.stroke();
+                            a.strokeStyle = "rgba(255,218,224," + .46 * i + ")";
+                            a.lineWidth = .8;
+                            a.beginPath();
+                            a.arc(0, -39, 5 + i, -2.2, .65);
+                            a.stroke();
+                            for (var l = 0; l < 3; l++) {
+                              var r = 3.2 * (l - 1);
+                              var o = Math.sin(6.5 * t + 1.8 * l) * (1.5 + .4 * l);
+                              a.beginPath();
+                              a.strokeStyle = 1 === l ? "rgba(255,194,210," + .7 * i + ")" : "rgba(226,25,66," + (.48 - .06 * l) * i + ")";
+                              a.lineWidth = 1 === l ? 1.4 : 1;
+                              a.moveTo(r + o, -3);
+                              a.quadraticCurveTo(r - o, -20, r + .45 * n, -37);
+                              a.quadraticCurveTo(r + .8 * o, -50, .45 * r - n, -61);
+                              a.stroke();
+                            }
+                            for (var f = 0; f < 8; f++) {
+                              var s = -7 - (.61803398875 * f + .16 * t) % 1 * 55;
+                              var h = Math.sin(4.7 * t + 2.13 * f) * (2.2 + f % 3);
+                              var u = f % 4 == 0 ? 2 : 1;
+                              a.fillStyle = f % 3 == 0 ? "rgba(255,224,232," + .86 * i + ")" : "rgba(255,52,86," + .68 * i + ")";
+                              a.fillRect(Math.round(h), Math.round(s), u, u);
+                            }
+                            a.strokeStyle = "rgba(255,73,103," + .52 * i + ")";
+                            a.lineWidth = 1;
+                            a.beginPath();
+                            a.moveTo(-2, -4);
+                            a.lineTo(-8 - n, 2);
+                            a.moveTo(2, -6);
+                            a.lineTo(8 + n, 0);
+                            a.stroke();
+                            a.restore();
+                          }(a), a.imageSmoothingEnabled = !1, t) {
+                            a.drawImage(t, 0, 0, t.width, t.height, -10, -65, 20, 65);
                             return void a.restore();
                           }
-                          a.fillStyle = "#141a1f";
-                          a.fillRect(-3, -14, 7, 18);
-                          a.fillRect(-2, -19, 6, 5);
-                          a.fillRect(-1, -23, 4, 4);
-                          a.fillStyle = "#5b7481";
-                          a.fillRect(-2, -14, 5, 17);
-                          a.fillRect(-1, -19, 4, 5);
-                          a.fillStyle = "#3a4b55";
-                          a.fillRect(-2, -14, 2, 17);
-                          a.fillStyle = "#e6f2f7";
-                          a.fillRect(2, -14, 1, 16);
-                          a.fillRect(2, -19, 1, 5);
-                          a.fillRect(1, -22, 1, 3);
-                          a.fillStyle = "#c8922f";
-                          a.fillRect(-4, 2, 9, 3);
-                          a.fillStyle = "#141a1f";
-                          a.fillRect(-2, 5, 5, 9);
-                          a.fillStyle = "#43301d";
-                          a.fillRect(-1, 5, 3, 8);
-                          a.fillStyle = "#a47749";
-                          a.fillRect(-1, 7, 3, 1);
-                          a.fillRect(-1, 10, 3, 1);
-                          a.fillStyle = "#c8922f";
-                          a.fillRect(-2, 13, 5, 2);
+                          a.fillStyle = "#170b12";
+                          a.fillRect(-3, -60, 6, 53);
+                          a.fillStyle = "#8d1f2c";
+                          a.fillRect(-2, -58, 4, 50);
+                          a.fillStyle = "#ff3854";
+                          a.fillRect(-1, -55, 2, 47);
+                          a.fillStyle = "#e9dce0";
+                          a.fillRect(2, -58, 1, 55);
+                          a.fillStyle = "#33101a";
+                          a.fillRect(-9, -7, 18, 4);
+                          a.fillStyle = "#d62f48";
+                          a.fillRect(-7, -6, 14, 2);
+                          a.fillStyle = "#1b0b12";
+                          a.fillRect(-2, -3, 4, 7);
+                          a.fillStyle = "#9d2437";
+                          a.fillRect(-1, -3, 2, 8);
+                          a.restore();
                         })(a);
                       }
                       else {
-                        if ("thuong" === t.kind) {
+                        if ("dao" === t.kind) {
                           (function (a) {
                             var t = function () {
                               if (!e.Assets) {
@@ -2585,69 +2657,118 @@
                             }();
                             if (t) {
                               var i = J;
+                              a.save();
+                              a.scale(1, -1);
                               a.imageSmoothingEnabled = !1;
-                              return void a.drawImage(t, i.x, i.y, i.w, i.h, -6, -48, 12, 76);
+                              a.drawImage(t, i.x, i.y, i.w, i.h, -3, -22, 6, 60);
+                              return void a.restore();
                             }
-                            a.fillStyle = "#2a1d11";
-                            a.fillRect(-2, -14, 4, 31);
-                            a.fillStyle = "#8a6740";
-                            a.fillRect(-1, -14, 3, 31);
-                            a.fillStyle = "#c19a63";
-                            a.fillRect(-1, -14, 1, 31);
                             a.fillStyle = "#141a1f";
-                            a.fillRect(-3, -22, 6, 8);
-                            a.fillRect(-2, -27, 4, 5);
-                            a.fillRect(-1, -30, 2, 3);
+                            a.fillRect(-3, -14, 7, 18);
+                            a.fillRect(-2, -19, 6, 5);
+                            a.fillRect(-1, -23, 4, 4);
                             a.fillStyle = "#5b7481";
-                            a.fillRect(-2, -22, 4, 8);
-                            a.fillRect(-1, -27, 2, 5);
-                            a.fillStyle = "#d7e6ec";
-                            a.fillRect(-1, -22, 1, 7);
-                            a.fillRect(-1, -27, 1, 4);
+                            a.fillRect(-2, -14, 5, 17);
+                            a.fillRect(-1, -19, 4, 5);
+                            a.fillStyle = "#3a4b55";
+                            a.fillRect(-2, -14, 2, 17);
+                            a.fillStyle = "#e6f2f7";
+                            a.fillRect(2, -14, 1, 16);
+                            a.fillRect(2, -19, 1, 5);
+                            a.fillRect(1, -22, 1, 3);
                             a.fillStyle = "#c8922f";
-                            a.fillRect(-3, -15, 6, 2);
-                            a.fillStyle = "#8c1f1f";
-                            a.fillRect(-2, -13, 4, 3);
+                            a.fillRect(-4, 2, 9, 3);
+                            a.fillStyle = "#141a1f";
+                            a.fillRect(-2, 5, 5, 9);
+                            a.fillStyle = "#43301d";
+                            a.fillRect(-1, 5, 3, 8);
+                            a.fillStyle = "#a47749";
+                            a.fillRect(-1, 7, 3, 1);
+                            a.fillRect(-1, 10, 3, 1);
                             a.fillStyle = "#c8922f";
-                            a.fillRect(-2, 15, 4, 2);
+                            a.fillRect(-2, 13, 5, 2);
                           })(a);
                         }
                         else {
-                          (function (e) {
-                            e.fillStyle = "#141a1f";
-                            e.fillRect(-2, -17, 5, 21);
-                            e.fillRect(-1, -21, 3, 4);
-                            e.fillRect(0, -23, 1, 2);
-                            e.fillStyle = "#7d919c";
-                            e.fillRect(-1, -17, 3, 20);
-                            e.fillStyle = "#eef6fa";
-                            e.fillRect(-1, -17, 1, 20);
-                            e.fillStyle = "#a9bcc6";
-                            e.fillRect(1, -20, 1, 22);
-                            e.fillStyle = "#7a5a16";
-                            e.fillRect(-5, 2, 11, 3);
-                            e.fillStyle = "#e8c04a";
-                            e.fillRect(-5, 2, 11, 2);
-                            e.fillStyle = "#ffe89a";
-                            e.fillRect(-4, 2, 9, 1);
-                            e.fillStyle = "#39434a";
-                            e.fillRect(-1, 3, 3, 2);
-                            e.fillStyle = "#2a1013";
-                            e.fillRect(-2, 5, 5, 8);
-                            e.fillStyle = "#8f2b26";
-                            e.fillRect(-1, 5, 3, 8);
-                            e.fillStyle = "#c0433a";
-                            e.fillRect(-1, 6, 3, 1);
-                            e.fillRect(-1, 9, 3, 1);
-                            e.fillStyle = "#e8c04a";
-                            e.fillRect(-2, 12, 5, 1);
-                            e.fillStyle = "#141a1f";
-                            e.fillRect(-2, 13, 5, 3);
-                            e.fillStyle = "#8fa3ad";
-                            e.fillRect(-1, 13, 3, 2);
-                            e.fillStyle = "#dfeaef";
-                            e.fillRect(-1, 13, 1, 1);
-                          })(a);
+                          if ("thuong" === t.kind) {
+                            (function (a) {
+                              var t = function () {
+                                if (!e.Assets) {
+                                  return null;
+                                }
+                                var a = e.Assets.get(Z);
+                                if (!(a || ee)) {
+                                  ee = !0;
+                                  e.Assets.loadImage(Z, e.Assets.PRIO.NORMAL);
+                                }
+                                return a;
+                              }();
+                              if (t) {
+                                var i = $;
+                                a.imageSmoothingEnabled = !1;
+                                return void a.drawImage(t, i.x, i.y, i.w, i.h, -6, -48, 12, 76);
+                              }
+                              a.fillStyle = "#2a1d11";
+                              a.fillRect(-2, -14, 4, 31);
+                              a.fillStyle = "#8a6740";
+                              a.fillRect(-1, -14, 3, 31);
+                              a.fillStyle = "#c19a63";
+                              a.fillRect(-1, -14, 1, 31);
+                              a.fillStyle = "#141a1f";
+                              a.fillRect(-3, -22, 6, 8);
+                              a.fillRect(-2, -27, 4, 5);
+                              a.fillRect(-1, -30, 2, 3);
+                              a.fillStyle = "#5b7481";
+                              a.fillRect(-2, -22, 4, 8);
+                              a.fillRect(-1, -27, 2, 5);
+                              a.fillStyle = "#d7e6ec";
+                              a.fillRect(-1, -22, 1, 7);
+                              a.fillRect(-1, -27, 1, 4);
+                              a.fillStyle = "#c8922f";
+                              a.fillRect(-3, -15, 6, 2);
+                              a.fillStyle = "#8c1f1f";
+                              a.fillRect(-2, -13, 4, 3);
+                              a.fillStyle = "#c8922f";
+                              a.fillRect(-2, 15, 4, 2);
+                            })(a);
+                          }
+                          else {
+                            (function (e) {
+                              e.fillStyle = "#141a1f";
+                              e.fillRect(-2, -17, 5, 21);
+                              e.fillRect(-1, -21, 3, 4);
+                              e.fillRect(0, -23, 1, 2);
+                              e.fillStyle = "#7d919c";
+                              e.fillRect(-1, -17, 3, 20);
+                              e.fillStyle = "#eef6fa";
+                              e.fillRect(-1, -17, 1, 20);
+                              e.fillStyle = "#a9bcc6";
+                              e.fillRect(1, -20, 1, 22);
+                              e.fillStyle = "#7a5a16";
+                              e.fillRect(-5, 2, 11, 3);
+                              e.fillStyle = "#e8c04a";
+                              e.fillRect(-5, 2, 11, 2);
+                              e.fillStyle = "#ffe89a";
+                              e.fillRect(-4, 2, 9, 1);
+                              e.fillStyle = "#39434a";
+                              e.fillRect(-1, 3, 3, 2);
+                              e.fillStyle = "#2a1013";
+                              e.fillRect(-2, 5, 5, 8);
+                              e.fillStyle = "#8f2b26";
+                              e.fillRect(-1, 5, 3, 8);
+                              e.fillStyle = "#c0433a";
+                              e.fillRect(-1, 6, 3, 1);
+                              e.fillRect(-1, 9, 3, 1);
+                              e.fillStyle = "#e8c04a";
+                              e.fillRect(-2, 12, 5, 1);
+                              e.fillStyle = "#141a1f";
+                              e.fillRect(-2, 13, 5, 3);
+                              e.fillStyle = "#8fa3ad";
+                              e.fillRect(-1, 13, 3, 2);
+                              e.fillStyle = "#dfeaef";
+                              e.fillRect(-1, 13, 1, 1);
+                            })(a);
+                          }
                         }
                       }
                     }
@@ -2660,11 +2781,11 @@
         }
         else {
           for (var l = 0; l < t.needles.length; l++)
-            se(a, t.needles[l], i, n);
+            de(a, t.needles[l], i, n);
         }
       else {
         for (var r = 0; r < t.blades.length; r++)
-          fe(a, t.blades[r], i, n);
+          ue(a, t.blades[r], i, n);
       }
   };
   i.drawReviveShield = function (e, t, i, n, l) {
@@ -2699,11 +2820,11 @@
       e.restore();
     }
   };
-  i.drawBackgroundAura = ue;
-  var de = ["#ffb3d9", "#b3d4ff", "#b8f5c8", "#fff1a8", "#d9b8ff"];
+  i.drawBackgroundAura = pe;
+  var me = ["#ffb3d9", "#b3d4ff", "#b8f5c8", "#fff1a8", "#d9b8ff"];
   i.heCua = function (a) {
     var t = e.BACKGROUND_AURAS && e.BACKGROUND_AURAS.qi_ring;
-    return a && t && t.variants ? e.realmIndexById && e.realmIndexById(a.realmId) < e.realmIndexById("truc_co_1") ? null : t.variants[he(a, t)] || null : null;
+    return a && t && t.variants ? e.realmIndexById && e.realmIndexById(a.realmId) < e.realmIndexById("truc_co_1") ? null : t.variants[ce(a, t)] || null : null;
   };
   i.heSoKhac = function (a, t) {
     var n = e.LINH_CAN_KHAC;
@@ -2728,25 +2849,25 @@
     }
     return f;
   };
-  var ce = { kim: ["....5.....", "...453....", "...452....", "...452....", "...452....", "...452....", ".2344432..", "....2.....", "....1.....", "...343...."], moc: ["........55", "......4543", ".....44532", "....445322", "...445332.", "..445332..", "..45332...", ".4532.....", ".52.......", "5........."], thuy: ["....44....", "....43....", "...4432...", "...4332...", "..443322..", ".45433322.", ".44333322.", ".43333222.", "..332221..", "...2211..."], hoa: [".....3....", "....32....", "....332..3", "...3432..2", "..34432.32", "..3454332.", ".345543322", ".345554332", ".334554321", "..2333321."], tho: ["..........", "...4......", "..443.....", "..4432..4.", ".443322443", ".443322432", "4443322332", "4433222232", "3332222221", "2222111111"], loi: [".....4444.", "....4443..", "...4443...", "..44444443", ".....4432.", "....4432..", "...4432...", "..432.....", ".42.......", "4........."], bang: ["....4.....", ".3.444.3..", "..3.4.3...", ".4.343.4..", "444454444.", ".2.343.2..", "..2.3.2...", ".2.323.2..", "....2.....", ".........."], phong: ["......44..", ".....4..3.", "........3.", "544444443.", "..........", "..........", "3333333...", ".......2..", "...2..2...", "....22...."], am: ["...4443...", ".44000033.", ".40444003.", "4040000002", "4040330302", "4040030302", "3030000302", ".30222222.", ".22000022.", "...2222..."], quang: ["....4.....", ".3..4..3..", "...545....", "..45554...", "445555544.", "..45553...", "...353....", ".3..3..3..", "....3.....", ".........."], hon: ["....5.....", "...454....", "..43332...", ".4333332..", "543333325.", ".3333322..", "..33322...", "...322....", "....2.....", ".........."] };
-  var pe = {};
-  function me(e, a, t) {
+  var ge = { kim: ["....5.....", "...453....", "...452....", "...452....", "...452....", "...452....", ".2344432..", "....2.....", "....1.....", "...343...."], moc: ["........55", "......4543", ".....44532", "....445322", "...445332.", "..445332..", "..45332...", ".4532.....", ".52.......", "5........."], thuy: ["....44....", "....43....", "...4432...", "...4332...", "..443322..", ".45433322.", ".44333322.", ".43333222.", "..332221..", "...2211..."], hoa: [".....3....", "....32....", "....332..3", "...3432..2", "..34432.32", "..3454332.", ".345543322", ".345554332", ".334554321", "..2333321."], tho: ["..........", "...4......", "..443.....", "..4432..4.", ".443322443", ".443322432", "4443322332", "4433222232", "3332222221", "2222111111"], loi: [".....4444.", "....4443..", "...4443...", "..44444443", ".....4432.", "....4432..", "...4432...", "..432.....", ".42.......", "4........."], bang: ["....4.....", ".3.444.3..", "..3.4.3...", ".4.343.4..", "444454444.", ".2.343.2..", "..2.3.2...", ".2.323.2..", "....2.....", ".........."], phong: ["......44..", ".....4..3.", "........3.", "544444443.", "..........", "..........", "3333333...", ".......2..", "...2..2...", "....22...."], am: ["...4443...", ".44000033.", ".40444003.", "4040000002", "4040330302", "4040030302", "3030000302", ".30222222.", ".22000022.", "...2222..."], quang: ["....4.....", ".3..4..3..", "...545....", "..45554...", "445555544.", "..45553...", "...353....", ".3..3..3..", "....3.....", ".........."], hon: ["....5.....", "...454....", "..43332...", ".4333332..", "543333325.", ".3333322..", "..33322...", "...322....", "....2.....", ".........."] };
+  var ye = {};
+  function ve(e, a, t) {
     a = Math.max(0, Math.min(1, a));
     t = Math.max(0, Math.min(1, t));
     return "hsl(" + ((e % 360 + 360) % 360).toFixed(1) + "," + (100 * a).toFixed(1) + "%," + (100 * t).toFixed(1) + "%)";
   }
-  function ge(e, a, t) {
+  function Me(e, a, t) {
     var i = (a - e + 540) % 360 - 180;
     return e + Math.max(-t, Math.min(t, i));
   }
   i.iconHe = function (e) {
-    if (!e || !e.mau || !ce[e.he] || "undefined" == typeof document) {
+    if (!e || !e.mau || !ge[e.he] || "undefined" == typeof document) {
       return null;
     }
-    if (pe[e.he]) {
-      return pe[e.he];
+    if (ye[e.he]) {
+      return ye[e.he];
     }
-    var a = ce[e.he];
+    var a = ge[e.he];
     var t = function (e) {
       var a = function (e) {
         var a = parseInt(e.slice(1), 16);
@@ -2769,7 +2890,7 @@
       var t = a[0];
       var i = a[1];
       var n = a[2];
-      return { vien: me(ge(t, 245, 25), .8 * i + .2, .1), 0: me(ge(t, 245, 15), .6 * i + .2, .13), 1: me(ge(t, 245, 18), i + .1, .45 * n), 2: me(ge(t, 245, 9), i + .05, .72 * n), 3: me(t, i, n), 4: me(ge(t, 55, 8), i, n + .38 * (1 - n)), 5: me(ge(t, 55, 14), .9 * i, n + .75 * (1 - n)) };
+      return { vien: ve(Me(t, 245, 25), .8 * i + .2, .1), 0: ve(Me(t, 245, 15), .6 * i + .2, .13), 1: ve(Me(t, 245, 18), i + .1, .45 * n), 2: ve(Me(t, 245, 9), i + .05, .72 * n), 3: ve(t, i, n), 4: ve(Me(t, 55, 8), i, n + .38 * (1 - n)), 5: ve(Me(t, 55, 14), .9 * i, n + .75 * (1 - n)) };
     }(e.mau);
     var i = document.createElement("canvas");
     i.width = 12;
@@ -2796,11 +2917,11 @@
       for (l = 0; l < a[n].length; l++) {
         var h = a[n][l];
         if ("." !== h && t[h]) {
-          o.fillStyle = e.cauVong ? "1" !== h && "2" !== h && (7 * l + 3 * n) % 3 == 0 ? me(47 * (l + n), .8, .76) : me(222, { 1: .22, 2: .28, 3: .35, 4: .3, 5: 0 }[h] || .3, { 1: .45, 2: .66, 3: .86, 4: .95, 5: 1 }[h] || .86) : t[h];
+          o.fillStyle = e.cauVong ? "1" !== h && "2" !== h && (7 * l + 3 * n) % 3 == 0 ? ve(47 * (l + n), .8, .76) : ve(222, { 1: .22, 2: .28, 3: .35, 4: .3, 5: 0 }[h] || .3, { 1: .45, 2: .66, 3: .86, 4: .95, 5: 1 }[h] || .86) : t[h];
           o.fillRect(l + 1, n + 1, 1, 1);
         }
       }
-    return pe[e.he] = i;
+    return ye[e.he] = i;
   };
   i.drawLucTinhKiemAura = function (a, t, i, n, l) {
     if (a && a.save && a.restore && n && n.cfg && "luc_tinh_kiem" === n.cfg.weapon && (!e.Quality || 0 !== e.Quality.tier)) {
@@ -2857,25 +2978,25 @@
       a.restore();
     }
   };
-  var ye = 48;
-  var ve = 48;
-  function Me(e, a, t, i, n) {
+  var Te = 48;
+  var xe = 48;
+  function be(e, a, t, i, n) {
     var l = e._vetBay || (e._vetBay = []);
     var r = l[l.length - 1];
-    for (r && (Math.abs(r.x - a) > ye || Math.abs(r.y - t) > ye || i < r.t) && (l.length = 0, r = null), (!r || Math.abs(r.x - a) + Math.abs(r.y - t) >= 1.5) && l.push({ x: a, y: t, t: i }); l.length && (i - l[0].t > n || l.length > ve);)
+    for (r && (Math.abs(r.x - a) > Te || Math.abs(r.y - t) > Te || i < r.t) && (l.length = 0, r = null), (!r || Math.abs(r.x - a) + Math.abs(r.y - t) >= 1.5) && l.push({ x: a, y: t, t: i }); l.length && (i - l[0].t > n || l.length > xe);)
       l.shift();
     return l;
   }
-  var Te = { tuoi: .65, lop: [{ w: 7, col: "#2f9bff", a: .22 }, { w: 4, col: "#7fd6ff", a: .5 }, { w: 2, col: "#f0fdff", a: .95 }] };
-  var xe = { tuoi: .5, lop: [{ w: 5, col: "#16bca8", a: .2 }, { w: 3, col: "#8affde", a: .45 }, { w: 1, col: "#e0fff6", a: .9 }] };
-  var be = { tuoi: .65, lop: [{ w: 7, col: "#ff2f3f", a: .22 }, { w: 4, col: "#ff8a7f", a: .5 }, { w: 2, col: "#fff1ee", a: .95 }] };
-  var Se = { tuoi: .65, lop: [{ w: 7, col: "#22c55e", a: .22 }, { w: 4, col: "#8affa8", a: .5 }, { w: 2, col: "#effff2", a: .95 }] };
-  var we = [{ o: -24, t: .55, a: .45 }, { o: -15, t: .8, a: .6 }, { o: -6, t: .65, a: .5 }, { o: 6, t: .7, a: .5 }, { o: 15, t: .85, a: .6 }, { o: 24, t: .5, a: .45 }];
-  var ke = .85;
-  function Re(a, t, n, l) {
+  var Se = { tuoi: .65, lop: [{ w: 7, col: "#2f9bff", a: .22 }, { w: 4, col: "#7fd6ff", a: .5 }, { w: 2, col: "#f0fdff", a: .95 }] };
+  var we = { tuoi: .5, lop: [{ w: 5, col: "#16bca8", a: .2 }, { w: 3, col: "#8affde", a: .45 }, { w: 1, col: "#e0fff6", a: .9 }] };
+  var ke = { tuoi: .65, lop: [{ w: 7, col: "#ff2f3f", a: .22 }, { w: 4, col: "#ff8a7f", a: .5 }, { w: 2, col: "#fff1ee", a: .95 }] };
+  var Re = { tuoi: .65, lop: [{ w: 7, col: "#22c55e", a: .22 }, { w: 4, col: "#8affa8", a: .5 }, { w: 2, col: "#effff2", a: .95 }] };
+  var Ae = [{ o: -24, t: .55, a: .45 }, { o: -15, t: .8, a: .6 }, { o: -6, t: .65, a: .5 }, { o: 6, t: .7, a: .5 }, { o: 15, t: .85, a: .6 }, { o: 24, t: .5, a: .45 }];
+  var Ie = .85;
+  function _e(a, t, n, l) {
     var r = i.flyArt(l.cfg);
     if ("hac" !== r) {
-      var o = l.cfg && "lam_phi_kiem" === l.cfg.fly ? Te : l.cfg && "xich_phi_kiem" === l.cfg.fly ? be : l.cfg && "luc_phi_kiem" === l.cfg.fly ? Se : "la" === r ? xe : null;
+      var o = l.cfg && "lam_phi_kiem" === l.cfg.fly ? Se : l.cfg && "xich_phi_kiem" === l.cfg.fly ? ke : l.cfg && "luc_phi_kiem" === l.cfg.fly ? Re : "la" === r ? we : null;
       if (o) {
         var f = e.Camera || { x: 0, y: 0 };
         var s = e.Game ? e.Game.time : l.animTime || 0;
@@ -2906,7 +3027,7 @@
             }
             e.restore();
           }
-        }(a, Me(l, t + f.x, n + f.y, s, o.tuoi), s, o.tuoi, f.x, f.y, o.lop, t, n);
+        }(a, be(l, t + f.x, n + f.y, s, o.tuoi), s, o.tuoi, f.x, f.y, o.lop, t, n);
       }
     }
     else {
@@ -2919,8 +3040,8 @@
           e.lineCap = "round";
           e.strokeStyle = "#ffffff";
           e.lineWidth = 1;
-          for (var s = 0; s < we.length; s++)
-            for (var h = we[s], u = f ? h.o : 0, d = f ? 0 : .5 * h.o, c = r + u, p = o + d, m = a.length - 1; m >= 0; m--) {
+          for (var s = 0; s < Ae.length; s++)
+            for (var h = Ae[s], u = f ? h.o : 0, d = f ? 0 : .5 * h.o, c = r + u, p = o + d, m = a.length - 1; m >= 0; m--) {
               var g = a[m];
               var y = 1 - (t - g.t) / h.t;
               if (y <= 0) {
@@ -2938,15 +3059,15 @@
             }
           e.restore();
         }
-      }(a, Me(l, t + h.x, n + h.y, u, ke), u, h.x, h.y, l, t, n);
+      }(a, be(l, t + h.x, n + h.y, u, Ie), u, h.x, h.y, l, t, n);
     }
   }
-  i.vetBayTheoMon = Re;
-  var Ae = { lam_phi_kiem: { q1: "#1f8fff", q2: "#8fe3ff", tia: "#e6fbff", hat: "#bff2ff", chop: "#9fe6ff" }, xich_phi_kiem: { q1: "#ff2f3f", q2: "#ff9a8f", tia: "#fff0ec", hat: "#ffc4bb", chop: "#ff9f93" }, luc_phi_kiem: { q1: "#22c55e", q2: "#9affb0", tia: "#effff2", hat: "#c4ffd0", chop: "#9fffb3" } };
-  function Ie(a, t, i, n, l, r) {
+  i.vetBayTheoMon = _e;
+  var Pe = { lam_phi_kiem: { q1: "#1f8fff", q2: "#8fe3ff", tia: "#e6fbff", hat: "#bff2ff", chop: "#9fe6ff" }, xich_phi_kiem: { q1: "#ff2f3f", q2: "#ff9a8f", tia: "#fff0ec", hat: "#ffc4bb", chop: "#ff9f93" }, luc_phi_kiem: { q1: "#22c55e", q2: "#9affb0", tia: "#effff2", hat: "#c4ffd0", chop: "#9fffb3" } };
+  function Fe(a, t, i, n, l, r) {
     var o = e.Pixel;
     var f = e.Utils;
-    var s = Ae[n.cfg && n.cfg.fly] || Ae.lam_phi_kiem;
+    var s = Pe[n.cfg && n.cfg.fly] || Pe.lam_phi_kiem;
     var h = e.Game ? e.Game.time : n.animTime || 0;
     var u = 1 === n.dir ? Math.PI : 3 === n.dir ? -Math.PI / 2 : 0 === n.dir ? Math.PI / 2 : 0;
     var d = "walk" === n.state || n.stepHold > 0 || void 0 !== n.tx && (Math.abs(n.tx - n.x) > .6 || Math.abs(n.ty - n.y) > .6);
@@ -2975,15 +3096,15 @@
     o.r(a, M - 3, -1, 3, 1, f.alpha(s.chop, .5 * Math.sin(v * Math.PI)));
     a.restore();
   }
-  function _e(a, t, i, n) {
+  function Ee(a, t, i, n) {
     var l = e.Pixel;
     var r = e.Utils;
     var o = n.flyRise;
     var f = Math.round(i) - 1;
-    if (n.cfg && Ae[n.cfg.fly]) {
+    if (n.cfg && Pe[n.cfg.fly]) {
       var s = e.Assets && e.Assets.get && e.Assets.get("assets/items/icon_" + n.cfg.fly + ".png");
       if (s && a.drawImage) {
-        return void Ie(a, t, f, n, s, o);
+        return void Fe(a, t, f, n, s, o);
       }
     }
     var h = 1 === n.dir || 2 === n.dir;
@@ -3023,7 +3144,7 @@
     g(m, -2, r.alpha("#e6f7ff", o));
     g((m + .5) % 1, 2, r.alpha("#8fd8ff", .8 * o));
   }
-  function Pe(a, t, i, n) {
+  function Ce(a, t, i, n) {
     var l = e.Pixel;
     var r = e.Utils;
     var o = Math.max(0, Math.min(1, n.flyRise || 0));
@@ -3075,14 +3196,14 @@
       }
     }
   }
-  i.drawFlyLamKiem = Ie;
-  i.drawFlySword = _e;
-  i.drawFlyLeaf = Pe;
-  var Fe = { path: "assets/sprites/mount/ngua_hac_tho.png", frameW: 128, frameH: 88, frames: 6, idleFrames: 2, rows: 4, fps: 11, idleFps: 2.5, drawW: 64, drawH: 44, anchorX: 32, anchorY: 23 };
-  function Ee(a, t, i, n) {
+  i.drawFlyLamKiem = Fe;
+  i.drawFlySword = Ee;
+  i.drawFlyLeaf = Ce;
+  var Le = { path: "assets/sprites/mount/ngua_hac_tho.png", frameW: 128, frameH: 88, frames: 6, idleFrames: 2, rows: 4, fps: 11, idleFps: 2.5, drawW: 64, drawH: 44, anchorX: 32, anchorY: 23 };
+  function De(a, t, i, n) {
     var l;
     var r;
-    var o = (r = (l = n && n.cfg) && l.fly && e.ITEMS ? e.ITEMS[l.fly] : null) && r.fly && "ngua" === r.fly.art && r.mount || Fe;
+    var o = (r = (l = n && n.cfg) && l.fly && e.ITEMS ? e.ITEMS[l.fly] : null) && r.fly && "ngua" === r.fly.art && r.mount || Le;
     var f = e.Assets && e.Assets.get ? e.Assets.get(o.path) : null;
     if (f) {
       var s;
@@ -3118,12 +3239,12 @@
       a.restore();
     }
   }
-  i.drawFlyHorse = Ee;
-  var Ce = { path: "assets/sprites/mount/hac_tien.png", frameW: 154, frameH: 120, frames: 2, fps: 3, fpsMove: 4.5, drawW: 77, drawH: 60, anchorX: 38, anchorY: 33 };
-  function Le(a, t, i, n) {
+  i.drawFlyHorse = De;
+  var He = { path: "assets/sprites/mount/hac_tien.png", frameW: 154, frameH: 120, frames: 2, fps: 3, fpsMove: 4.5, drawW: 77, drawH: 60, anchorX: 38, anchorY: 33 };
+  function We(a, t, i, n) {
     var l;
     var r;
-    var o = (r = (l = n && n.cfg) && l.fly && e.ITEMS ? e.ITEMS[l.fly] : null) && r.fly && "hac" === r.fly.art && r.mount || Ce;
+    var o = (r = (l = n && n.cfg) && l.fly && e.ITEMS ? e.ITEMS[l.fly] : null) && r.fly && "hac" === r.fly.art && r.mount || He;
     var f = e.Assets && e.Assets.get ? e.Assets.get(o.path) : null;
     if (f) {
       var s = "walk" === n.state && o.fpsMove ? o.fpsMove : o.fps;
@@ -3142,30 +3263,30 @@
       a.restore();
     }
   }
-  i.drawFlyCrane = Le;
-  var De = i.FLY_WING_ART = { path: "assets/sprites/fx/loi_si_dieu_wings.png", assets: { front: "assets/sprites/fx/loi_si_dieu_wings.png", back: "assets/sprites/fx/loi_si_dieu_wings.png", left: "assets/sprites/fx/loi_si_dieu_side_wing.png", right: "assets/sprites/fx/loi_si_dieu_side_wing.png" }, baseY: -54, x: 0, y: -11, scale: 100, scales: { front: 100, back: 100, left: 67, right: 67 }, positions: { front: { x: 0, y: -11 }, back: { x: 0, y: -11 }, left: { x: 40, y: -30 }, right: { x: -40, y: -30 } }, w: 86, h: 43, sideBaseY: -50, sideW: 72, sideH: 58, opacity: 1, layer: "back", layers: { front: "back", back: "front", left: "back", right: "back" } };
-  var He = "assets/sprites/fx/phong_song_si_tiem_than_128x64.png";
-  var Oe = i.PHONG_SONG_SI_WING_ART = { path: He, assets: { front: He, back: He, left: He, right: He }, baseY: -54, x: 40, y: -30, scale: 70, scales: { front: 100, back: 100, left: 70, right: 70 }, positions: { front: { x: 0, y: -11 }, back: { x: 0, y: -11 }, left: { x: 40, y: -30 }, right: { x: -40, y: -30 } }, w: 86, h: 43, sideBaseY: -50, sideW: 64, sideH: 64, sideCrop: { x: 64, y: 0, w: 64, h: 64 }, opacity: 1, layer: "back", layers: { front: "back", back: "front", left: "back", right: "back" } };
-  var We = !1;
-  function Ve(e) {
-    return e && e.cfg && "phong_song_si" === e.cfg.fly ? Oe : De;
+  i.drawFlyCrane = We;
+  var Oe = i.FLY_WING_ART = { path: "assets/sprites/fx/loi_si_dieu_wings.png", assets: { front: "assets/sprites/fx/loi_si_dieu_wings.png", back: "assets/sprites/fx/loi_si_dieu_wings.png", left: "assets/sprites/fx/loi_si_dieu_side_wing.png", right: "assets/sprites/fx/loi_si_dieu_side_wing.png" }, baseY: -54, x: 0, y: -11, scale: 100, scales: { front: 100, back: 100, left: 67, right: 67 }, positions: { front: { x: 0, y: -11 }, back: { x: 0, y: -11 }, left: { x: 40, y: -30 }, right: { x: -40, y: -30 } }, w: 86, h: 43, sideBaseY: -50, sideW: 72, sideH: 58, opacity: 1, layer: "back", layers: { front: "back", back: "front", left: "back", right: "back" } };
+  var Ve = "assets/sprites/fx/phong_song_si_tiem_than_128x64.png";
+  var Ne = i.PHONG_SONG_SI_WING_ART = { path: Ve, assets: { front: Ve, back: Ve, left: Ve, right: Ve }, baseY: -54, x: 40, y: -30, scale: 70, scales: { front: 100, back: 100, left: 70, right: 70 }, positions: { front: { x: 0, y: -11 }, back: { x: 0, y: -11 }, left: { x: 40, y: -30 }, right: { x: -40, y: -30 } }, w: 86, h: 43, sideBaseY: -50, sideW: 64, sideH: 64, sideCrop: { x: 64, y: 0, w: 64, h: 64 }, opacity: 1, layer: "back", layers: { front: "back", back: "front", left: "back", right: "back" } };
+  var Xe = !1;
+  function Ge(e) {
+    return e && e.cfg && "phong_song_si" === e.cfg.fly ? Ne : Oe;
   }
-  function Xe(e) {
+  function Be(e) {
     return { 0: "front", 1: "left", 2: "right", 3: "back" }[e && e.dir] || "front";
   }
-  function Ne(e) {
-    var a = Xe(e);
-    var t = Ve(e);
+  function Ke(e) {
+    var a = Be(e);
+    var t = Ge(e);
     return (t.layers || {})[a] || t.layer || "back";
   }
-  function Ge(e, a, t, i) {
+  function qe(e, a, t, i) {
     var n = "left" === e || "right" === e;
-    var l = ((i = i || De).positions || {})[e] || { x: i.x || 0, y: i.y || 0 };
+    var l = ((i = i || Oe).positions || {})[e] || { x: i.x || 0, y: i.y || 0 };
     var r = i.scales || {};
     var o = (null == r[e] ? null == i.scale ? 100 : i.scale : r[e]) / 100;
     return { cx: a + (n ? "left" === e ? -21 : 21 : 0) + (l.x || 0), top: t + (n ? i.sideBaseY : i.baseY) * o + (l.y || 0), w: (n ? i.sideW : i.w) * o, h: (n ? i.sideH : i.h) * o, source: n && i.sideCrop || null, mirror: "right" === e };
   }
-  function Be(e, a, t) {
+  function Ye(e, a, t) {
     e.save();
     e.imageSmoothingEnabled = !1;
     if (t.mirror && e.scale) {
@@ -3180,18 +3301,18 @@
     }
     e.restore();
   }
-  function Ke(a, t, i, n) {
+  function Ue(a, t, i, n) {
     var l = Math.max(0, Math.min(1, n.flyRise || 0));
     if (l && a) {
-      var r = Xe(n);
-      var o = Ve(n);
+      var r = Be(n);
+      var o = Ge(n);
       var f = (o.assets || {})[r] || o.path;
       var s = e.Assets && e.Assets.get ? e.Assets.get(f) : null;
-      if (!s && o === Oe && !We && e.Assets && e.Assets.loadImage && (We = !0, e.Assets.loadImage(f, e.Assets.PRIO && e.Assets.PRIO.CRITICAL)), s && a.drawImage) {
+      if (!s && o === Ne && !Xe && e.Assets && e.Assets.loadImage && (Xe = !0, e.Assets.loadImage(f, e.Assets.PRIO && e.Assets.PRIO.CRITICAL)), s && a.drawImage) {
         a.save();
         a.globalCompositeOperation = "source-over";
         a.globalAlpha = Math.max(0, Math.min(1, o.opacity * l));
-        Be(a, s, Ge(r, t, i, o));
+        Ye(a, s, qe(r, t, i, o));
         return void a.restore();
       }
       if (a.beginPath && a.moveTo && a.lineTo && a.quadraticCurveTo && a.fill && a.stroke && a.arc && a.fillRect) {
@@ -3265,29 +3386,26 @@
       }
     }
   }
-  i.flyWingArt = Ve;
-  i.flyWingView = Xe;
-  i.flyWingLayer = Ne;
-  i.drawFlyWings = Ke;
-  var qe = i.PHONG_LOI_EMITTERS = { front: [{ u: .09, v: .07, ox: -1, oy: 0 }, { u: .91, v: .07, ox: 1, oy: 0 }], back: [{ u: .18, v: .8, ox: -1, oy: 0 }, { u: .82, v: .8, ox: 1, oy: 0 }], side: [{ u: .84, v: .07, ox: 0, oy: -1 }, { u: .76, v: .63, ox: 0, oy: 1 }] };
-  var Ye = { doi: [{ a: [.09, .07], c: [-.25, .42], b: [.18, .8] }, { a: [.09, .07], c: [-.1, -.2], b: [-.02, -.55] }], side: [{ a: [.3, .56], c: [.42, .02], b: [.84, .07] }, { a: [.92, .22], c: [1.15, .52], b: [.76, .63] }] };
-  var Ue = .6;
-  var Qe = 74;
-  var ze = 108;
-  var Je = 34;
-  var je = 54;
-  var Ze = 40;
-  var $e = 5;
-  var ea = 20;
-  var aa = 30;
-  var ta = [{ w: 8, col: "#2fb4ff", a: .08 }, { w: 3, col: "#aeeeff", a: .16 }];
-  var ia = [{ w: 9, col: "#1f6fff", a: .14 }, { w: 5, col: "#3fa8ff", a: .28 }, { w: 2.5, col: "#a8ecff", a: .6 }, { w: 1, col: "#ffffff", a: .95 }];
-  var na = [{ w: 7, col: "#ff7a00", a: .16 }, { w: 2.5, col: "#ffc233", a: .55 }, { w: 1, col: "#fff6c8", a: .95 }];
-  var la = [ia[1], ia[2], ia[3]];
-  var ra = [na[1], na[2]];
-  var oa = [];
-  var fa = [];
-  var sa = [];
+  i.flyWingArt = Ge;
+  i.flyWingView = Be;
+  i.flyWingLayer = Ke;
+  i.drawFlyWings = Ue;
+  var Qe = i.PHONG_LOI_EMITTERS = { front: [{ u: .09, v: .07, ox: -1, oy: 0 }, { u: .91, v: .07, ox: 1, oy: 0 }], back: [{ u: .18, v: .8, ox: -1, oy: 0 }, { u: .82, v: .8, ox: 1, oy: 0 }], side: [{ u: .84, v: .07, ox: 0, oy: -1 }, { u: .76, v: .63, ox: 0, oy: 1 }] };
+  var ze = { doi: [{ a: [.09, .07], c: [-.25, .42], b: [.18, .8] }, { a: [.09, .07], c: [-.1, -.2], b: [-.02, -.55] }], side: [{ a: [.3, .56], c: [.42, .02], b: [.84, .07] }, { a: [.92, .22], c: [1.15, .52], b: [.76, .63] }] };
+  var Je = .6;
+  var je = 74;
+  var Ze = 108;
+  var $e = 34;
+  var ea = 54;
+  var aa = 40;
+  var ta = 5;
+  var ia = 20;
+  var na = 30;
+  var la = [{ w: 8, col: "#2fb4ff", a: .08 }, { w: 3, col: "#aeeeff", a: .16 }];
+  var ra = [{ w: 9, col: "#1f6fff", a: .14 }, { w: 5, col: "#3fa8ff", a: .28 }, { w: 2.5, col: "#a8ecff", a: .6 }, { w: 1, col: "#ffffff", a: .95 }];
+  var oa = [{ w: 7, col: "#ff7a00", a: .16 }, { w: 2.5, col: "#ffc233", a: .55 }, { w: 1, col: "#fff6c8", a: .95 }];
+  var fa = [ra[1], ra[2], ra[3]];
+  var sa = [oa[1], oa[2]];
   var ha = [];
   var ua = [];
   var da = [];
@@ -3296,13 +3414,16 @@
   var ma = [];
   var ga = [];
   var ya = [];
-  var va = 5;
-  var Ma = 12;
-  function Ta(e, a) {
+  var va = [];
+  var Ma = [];
+  var Ta = [];
+  var xa = 5;
+  var ba = 12;
+  function Sa(e, a) {
     var t = 43758.5453 * Math.sin(127.1 * e + 311.7 * a);
     return t - Math.floor(t);
   }
-  function xa(t, i, n) {
+  function wa(t, i, n) {
     var l;
     var r = t._plRunT;
     var o = null == r || i < r ? 0 : Math.min(.25, i - r);
@@ -3333,37 +3454,37 @@
     t._plRun = Math.max(0, Math.min(1, g));
     return t._plRun;
   }
-  function ba(e, a, t, i, n, l, r, o) {
+  function ka(e, a, t, i, n, l, r, o) {
     var f = e._phongLoiWingTrails || (e._phongLoiWingTrails = [[], []]);
     var s = f[a] || (f[a] = []);
     var h = s[s.length - 1];
-    for (h && (Math.abs(h.x - t) > je || Math.abs(h.y - i) > je || n < h.t) && (s.length = 0); s.length && n - s[0].t > Ue;)
+    for (h && (Math.abs(h.x - t) > ea || Math.abs(h.y - i) > ea || n < h.t) && (s.length = 0); s.length && n - s[0].t > Je;)
       s.shift();
-    return o ? (s.length || s.push({ x: t + l * Je, y: i + r * Je, t: n - .45 * Ue }), h = s[s.length - 1], Math.abs(h.x - t) + Math.abs(h.y - i) >= 1.5 && s.push({ x: t, y: i, t: n }), s.length > Ze && s.splice(0, s.length - Ze), s) : s;
+    return o ? (s.length || s.push({ x: t + l * $e, y: i + r * $e, t: n - .45 * Je }), h = s[s.length - 1], Math.abs(h.x - t) + Math.abs(h.y - i) >= 1.5 && s.push({ x: t, y: i, t: n }), s.length > aa && s.splice(0, s.length - aa), s) : s;
   }
-  function Sa(e, a, t, i, n, l, r) {
+  function Ra(e, a, t, i, n, l, r) {
     var o = 1;
     var f = 0;
-    var s = $e;
+    var s = ta;
     var h = n;
     var u = l;
     var d = 1;
-    oa[0] = n;
-    fa[0] = l;
-    sa[0] = 1;
+    ha[0] = n;
+    ua[0] = l;
+    da[0] = 1;
     for (var c = e.length - 1; c >= 0; c--) {
-      for (var p = e[c].x - t, m = e[c].y - i, g = 1 - (a - e[c].t) / Ue, y = p - h, v = m - u, M = Math.sqrt(y * y + v * v); M > .01 && s <= f + M && s <= r;) {
+      for (var p = e[c].x - t, m = e[c].y - i, g = 1 - (a - e[c].t) / Je, y = p - h, v = m - u, M = Math.sqrt(y * y + v * v); M > .01 && s <= f + M && s <= r;) {
         var T = (s - f) / M;
         var x = d + (g - d) * T;
         if (x <= .02) {
           return o;
         }
-        x = Math.sqrt(x) * (1 - .35 * s / r) * Math.min(1, (r - s + $e) / 16);
-        oa[o] = h + y * T;
-        fa[o] = u + v * T;
-        sa[o] = x;
+        x = Math.sqrt(x) * (1 - .35 * s / r) * Math.min(1, (r - s + ta) / 16);
+        ha[o] = h + y * T;
+        ua[o] = u + v * T;
+        da[o] = x;
         o++;
-        s += $e;
+        s += ta;
       }
       if (s > r || g <= 0) {
         return o;
@@ -3375,23 +3496,23 @@
     }
     return o;
   }
-  function wa(e, a, t, i) {
+  function Aa(e, a, t, i) {
     var n = 0;
-    ha[0] = oa[0];
-    ua[0] = fa[0];
+    ca[0] = ha[0];
+    pa[0] = ua[0];
     for (var l = 1; l < e; l++) {
       var r = l + 1 < e ? l + 1 : l;
-      var o = oa[r] - oa[l - 1];
-      var f = fa[r] - fa[l - 1];
+      var o = ha[r] - ha[l - 1];
+      var f = ua[r] - ua[l - 1];
       var s = Math.sqrt(o * o + f * f) || 1;
-      var h = l * $e;
+      var h = l * ta;
       var u = Math.min(1, h / 10) * (1.8 + 4.2 * h / t) * i;
-      n = .45 * n + (2 * Ta(a, l) - 1) * u;
-      ha[l] = oa[l] - f / s * n;
-      ua[l] = fa[l] + o / s * n;
+      n = .45 * n + (2 * Sa(a, l) - 1) * u;
+      ca[l] = ha[l] - f / s * n;
+      pa[l] = ua[l] + o / s * n;
     }
   }
-  function ka(e, a, t, i, n, l, r, o) {
+  function Ia(e, a, t, i, n, l, r, o) {
     for (var f = o || 1, s = 0; s < l.length; s++) {
       var h = l[s];
       e.strokeStyle = h.col;
@@ -3408,13 +3529,13 @@
       }
     }
   }
-  function Ra(e, a, t, i, n, l, r) {
+  function _a(e, a, t, i, n, l, r) {
     if (!(a < 5)) {
       for (var o = 0; o < l; o++)
-        if (!(Ta(t + 3.1, o) < .2)) {
-          var f = 1 + Math.floor(Ta(t + 5.7, o) * (a - 3));
-          var s = oa[f + 1] - oa[f - 1];
-          var h = fa[f + 1] - fa[f - 1];
+        if (!(Sa(t + 3.1, o) < .2)) {
+          var f = 1 + Math.floor(Sa(t + 5.7, o) * (a - 3));
+          var s = ha[f + 1] - ha[f - 1];
+          var h = ua[f + 1] - ua[f - 1];
           var u = Math.sqrt(s * s + h * h) || 1;
           s /= u;
           h /= u;
@@ -3432,20 +3553,20 @@
           var v = Math.sqrt(g * g + y * y) || 1;
           g /= v;
           y /= v;
-          da[0] = ha[f];
-          ca[0] = ua[f];
-          pa[0] = sa[f];
-          for (var M = 1; M < va; M++) {
-            var T = 2 * Ta(t + 9.3 + o, M) - 1;
-            da[M] = da[M - 1] + 4.5 * g - y * T * 2.4;
-            ca[M] = ca[M - 1] + 4.5 * y + g * T * 2.4;
-            pa[M] = sa[f] * (1 - .18 * M);
+          ma[0] = ca[f];
+          ga[0] = pa[f];
+          ya[0] = da[f];
+          for (var M = 1; M < xa; M++) {
+            var T = 2 * Sa(t + 9.3 + o, M) - 1;
+            ma[M] = ma[M - 1] + 4.5 * g - y * T * 2.4;
+            ga[M] = ga[M - 1] + 4.5 * y + g * T * 2.4;
+            ya[M] = da[f] * (1 - .18 * M);
           }
-          ka(e, da, ca, pa, va, r, .8 * n);
+          Ia(e, ma, ga, ya, xa, r, .8 * n);
         }
     }
   }
-  function Aa(e, a, t, i, n, l, r, o, f, s) {
+  function Pa(e, a, t, i, n, l, r, o, f, s) {
     if (e.arc && e.fill && (e.globalAlpha = (.3 + .2 * s) * f, e.fillStyle = "#7fd8ff", e.beginPath(), e.arc(a, t, 2.5 + 2 * s, 0, 2 * Math.PI), e.fill()), e.fillRect) {
       e.globalAlpha = .85 * f;
       e.fillStyle = "#ffffff";
@@ -3453,7 +3574,7 @@
       for (var h = s > .5 ? 6 : 3, u = 0; u < h; u++) {
         var d = r * (2.6 + 1.6 * s) + u / h + .17 * o;
         var c = d - Math.floor(d);
-        var p = 2 * Ta(Math.floor(d), u + 7 * o) - 1;
+        var p = 2 * Sa(Math.floor(d), u + 7 * o) - 1;
         var m = 3 + c * (16 + 10 * s);
         e.globalAlpha = .9 * (1 - c) * f;
         e.fillStyle = u % 3 ? "#ffd45a" : "#fff3b0";
@@ -3461,38 +3582,38 @@
       }
     }
   }
-  function Ia(e, a, t) {
+  function Fa(e, a, t) {
     var i = t ? 1 - a : a;
     return e.cx + (e.mirror ? .5 - i : i - .5) * e.w;
   }
-  function _a(e) {
+  function Ea(e) {
     return { x: 2 === e.dir ? -1 : 1 === e.dir ? 1 : 0, y: 0 === e.dir ? -1 : 3 === e.dir ? 1 : 1 === e.dir || 2 === e.dir ? 0 : -1 };
   }
-  var Pa = { front: [{ u: .07, v: .14 }, { u: .93, v: .14 }, { u: .24, v: .84 }, { u: .76, v: .84 }], back: [{ u: .07, v: .14 }, { u: .93, v: .14 }, { u: .24, v: .84 }, { u: .76, v: .84 }], side: [{ u: .9, v: .12 }, { u: .68, v: .86 }] };
-  var Fa = 58;
-  var Ea = 98;
-  var Ca = [{ w: 9, col: "#4a0fb0", a: .22 }, { w: 4.5, col: "#8a2eff", a: .42 }, { w: 1.6, col: "#c79aff", a: .6 }];
-  var La = [{ w: 4, col: "#b02cf0", a: .28 }, { w: 1, col: "#e6a6ff", a: .6 }];
-  function Da(e, a, t, i) {
-    ha[0] = oa[0];
-    ua[0] = fa[0];
+  var Ca = { front: [{ u: .07, v: .14 }, { u: .93, v: .14 }, { u: .24, v: .84 }, { u: .76, v: .84 }], back: [{ u: .07, v: .14 }, { u: .93, v: .14 }, { u: .24, v: .84 }, { u: .76, v: .84 }], side: [{ u: .9, v: .12 }, { u: .68, v: .86 }] };
+  var La = 58;
+  var Da = 98;
+  var Ha = [{ w: 9, col: "#4a0fb0", a: .22 }, { w: 4.5, col: "#8a2eff", a: .42 }, { w: 1.6, col: "#c79aff", a: .6 }];
+  var Wa = [{ w: 4, col: "#b02cf0", a: .28 }, { w: 1, col: "#e6a6ff", a: .6 }];
+  function Oa(e, a, t, i) {
+    ca[0] = ha[0];
+    pa[0] = ua[0];
     for (var n = 1; n < e; n++) {
       var l = n + 1 < e ? n + 1 : n;
-      var r = oa[l] - oa[n - 1];
-      var o = fa[l] - fa[n - 1];
+      var r = ha[l] - ha[n - 1];
+      var o = ua[l] - ua[n - 1];
       var f = Math.sqrt(r * r + o * o) || 1;
       var s = Math.sin(.62 * n - 8 * a + t) * i * Math.min(1, n / 6);
-      ha[n] = oa[n] - o / f * s;
-      ua[n] = fa[n] + r / f * s;
+      ca[n] = ha[n] - o / f * s;
+      pa[n] = ua[n] + r / f * s;
     }
   }
-  function Ha(a, t, i, n) {
+  function Va(a, t, i, n) {
     if (a && n && n.flying && n.flyRise > 0 && n.cfg && "phong_song_si" === n.cfg.fly && a.beginPath && a.moveTo && a.lineTo && a.stroke) {
       !function (a, t, i, n) {
         var l = "walk" === n.state;
         var r = Number(e.Game && e.Game.time) || Number(n.animTime) || 0;
-        var o = xa(n, r, l);
-        var f = Xe(n);
+        var o = wa(n, r, l);
+        var f = Be(n);
         var s = n._phongLoiWingTrails;
         if (n._phongLoiView !== f && (n._phongLoiView = f, s)) {
           for (var h = 0; h < s.length; h++)
@@ -3504,23 +3625,23 @@
             s[d] && s[d].length && (u = !0);
         }
         if (l || u) {
-          var c = Oe;
+          var c = Ne;
           var p = Math.max(0, Math.min(1, n.flyRise || 0));
-          var m = _a(n);
+          var m = Ea(n);
           var g = m.x;
           var y = m.y;
           var v = e.Camera || { x: 0, y: 0 };
           var M = Number(v.x) || 0;
           var T = Number(v.y) || 0;
-          var x = Ge(f, t, i, c);
-          var b = Pa["left" === f || "right" === f ? "side" : f];
-          var S = Fa + (Ea - Fa) * o;
+          var x = qe(f, t, i, c);
+          var b = Ca["left" === f || "right" === f ? "side" : f];
+          var S = La + (Da - La) * o;
           var w = n._phongLoiSalt || (n._phongLoiSalt = 1 + 97 * Math.random());
           if (a.save(), a.globalCompositeOperation = "lighter", a.lineCap = "round", a.lineJoin = "round", o > .01 && a.drawImage) {
             var k = e.Assets && e.Assets.get ? e.Assets.get(c.path) : null;
             if (k) {
               for (var R = 1; R <= 2; R++)
-                a.globalAlpha = p * o * (1 === R ? .28 : .12), Be(a, k, Ge(f, t + 12 * g * R, i + 12 * y * R, c));
+                a.globalAlpha = p * o * (1 === R ? .28 : .12), Ye(a, k, qe(f, t + 12 * g * R, i + 12 * y * R, c));
             }
           }
           for (var A = 0; A < b.length; A++) {
@@ -3528,22 +3649,22 @@
             var _ = A >= 2 || 2 === b.length && 1 === A;
             var P = x.cx + (x.mirror ? .5 - I.u : I.u - .5) * x.w;
             var F = x.top + I.v * x.h;
-            var E = ba(n, A, P + M, F + T, r, g, y, l);
+            var E = ka(n, A, P + M, F + T, r, g, y, l);
             var C = _ ? o : 1;
             if (!(C <= .01)) {
-              var L = Sa(E, r, M, T, P, F, _ ? .7 * S : S);
+              var L = Ra(E, r, M, T, P, F, _ ? .7 * S : S);
               if (!(L < 2)) {
                 var D = p * C * (.8 + .35 * o);
                 var H = 1.9 * A + w;
-                if (Da(L, r, H, 2.2 + 1.6 * o), ka(a, ha, ua, sa, L, Ca, D, .9 + .3 * o), Da(L, r, H + Math.PI, 3 + 2 * o), ka(a, ha, ua, sa, L, La, .85 * D, _ ? .7 : 1), a.arc && a.fill && (a.globalAlpha = (.22 + .2 * o) * D, a.fillStyle = "#b566ff", a.beginPath(), a.arc(P, F, 2 + 1.5 * o + .6 * Math.sin(9 * r + A), 0, 2 * Math.PI), a.fill()), a.fillRect && L > 3) {
-                  for (var O = o > .5 ? 5 : 3, W = 0; W < O; W++) {
-                    var V = r * (1.6 + .13 * W) + Ta(w, W + 7 * A);
-                    var X = V - Math.floor(V);
-                    var N = Math.min(L - 1, Math.floor(X * (L - 1)));
-                    var G = (2 * Ta(Math.floor(V), W + 3 * A) - 1) * (2 + 7 * X);
-                    a.globalAlpha = .85 * (1 - X) * D * sa[N];
-                    a.fillStyle = W % 3 == 0 ? "#fbe8ff" : W % 2 ? "#c77dff" : "#8f5bff";
-                    a.fillRect(Math.round(oa[N] - y * G), Math.round(fa[N] + g * G), W % 3 == 0 ? 2 : 1, 1);
+                if (Oa(L, r, H, 2.2 + 1.6 * o), Ia(a, ca, pa, da, L, Ha, D, .9 + .3 * o), Oa(L, r, H + Math.PI, 3 + 2 * o), Ia(a, ca, pa, da, L, Wa, .85 * D, _ ? .7 : 1), a.arc && a.fill && (a.globalAlpha = (.22 + .2 * o) * D, a.fillStyle = "#b566ff", a.beginPath(), a.arc(P, F, 2 + 1.5 * o + .6 * Math.sin(9 * r + A), 0, 2 * Math.PI), a.fill()), a.fillRect && L > 3) {
+                  for (var W = o > .5 ? 5 : 3, O = 0; O < W; O++) {
+                    var V = r * (1.6 + .13 * O) + Sa(w, O + 7 * A);
+                    var N = V - Math.floor(V);
+                    var X = Math.min(L - 1, Math.floor(N * (L - 1)));
+                    var G = (2 * Sa(Math.floor(V), O + 3 * A) - 1) * (2 + 7 * N);
+                    a.globalAlpha = .85 * (1 - N) * D * da[X];
+                    a.fillStyle = O % 3 == 0 ? "#fbe8ff" : O % 2 ? "#c77dff" : "#8f5bff";
+                    a.fillRect(Math.round(ha[X] - y * G), Math.round(ua[X] + g * G), O % 3 == 0 ? 2 : 1, 1);
                   }
                 }
               }
@@ -3557,10 +3678,10 @@
             for (var Y = 0; Y < 5; Y++) {
               var U = 2.2 * r + .41 * Y + w;
               var Q = U - Math.floor(U);
-              var z = 2 * Ta(Math.floor(U), Y + .7) - 1;
+              var z = 2 * Sa(Math.floor(U), Y + .7) - 1;
               var J = (z < 0 ? -1 : 1) * (12 + Math.abs(z) * (q - 12));
               var j = 24 - 80 * Q;
-              var Z = 9 + 12 * Ta(Math.floor(U), Y + 5.3);
+              var Z = 9 + 12 * Sa(Math.floor(U), Y + 5.3);
               var $ = t - g * j + B * J;
               var ee = i - 30 - y * j + K * J;
               a.strokeStyle = Y % 2 ? "#d9b3ff" : "#a45cff";
@@ -3578,22 +3699,22 @@
     else if (a && n && n.flying && !(n.flyRise <= 0) && n.cfg && "phong_loi_si" === n.cfg.fly && a.beginPath && a.moveTo && a.lineTo && a.stroke) {
       var l = "walk" === n.state;
       var r = Number(e.Game && e.Game.time) || Number(n.animTime) || 0;
-      var o = xa(n, r, l);
-      var f = Xe(n);
+      var o = wa(n, r, l);
+      var f = Be(n);
       var s = n._phongLoiWingTrails;
       if (n._phongLoiView !== f && (n._phongLoiView = f, s && (s[0].length = 0, s[1].length = 0)), l || s && (s[0].length || s[1].length)) {
         var h = Math.max(0, Math.min(1, n.flyRise || 0));
-        var u = _a(n);
+        var u = Ea(n);
         var d = u.x;
         var c = u.y;
         var p = e.Camera || { x: 0, y: 0 };
         var m = Number(p.x) || 0;
         var g = Number(p.y) || 0;
-        var y = Ge(f, t, i);
-        var v = qe["left" === f || "right" === f ? "side" : f];
+        var y = qe(f, t, i);
+        var v = Qe["left" === f || "right" === f ? "side" : f];
         var M = n._phongLoiSalt || (n._phongLoiSalt = 1 + 97 * Math.random());
-        var T = Qe + (ze - Qe) * o;
-        var x = Math.floor(r * (o > .5 ? aa : ea));
+        var T = je + (Ze - je) * o;
+        var x = Math.floor(r * (o > .5 ? na : ia));
         a.save();
         a.globalCompositeOperation = "lighter";
         a.lineCap = "round";
@@ -3601,11 +3722,11 @@
         if (o > .01) {
           (function (a, t, i, n, l, r, o) {
             if (a.drawImage) {
-              var f = De.assets || {};
-              var s = e.Assets && e.Assets.get ? e.Assets.get(f[t] || De.path) : null;
+              var f = Oe.assets || {};
+              var s = e.Assets && e.Assets.get ? e.Assets.get(f[t] || Oe.path) : null;
               if (s) {
                 for (var h = 1; h <= 2; h++)
-                  a.globalAlpha = o * (1 === h ? .3 : .14), Be(a, s, Ge(t, i + 13 * l * h, n + 13 * r * h));
+                  a.globalAlpha = o * (1 === h ? .3 : .14), Ye(a, s, qe(t, i + 13 * l * h, n + 13 * r * h));
               }
             }
           })(a, f, t, i, d, c, h * o);
@@ -3620,10 +3741,10 @@
             for (var c = 0; c < 6; c++) {
               var p = 2.4 * l + .37 * c + r;
               var m = p - Math.floor(p);
-              var g = 2 * Ta(Math.floor(p), c + .3) - 1;
+              var g = 2 * Sa(Math.floor(p), c + .3) - 1;
               var y = (g < 0 ? -1 : 1) * (12 + Math.abs(g) * (d - 12));
               var v = 26 - 84 * m;
-              var M = 10 + 12 * Ta(Math.floor(p), c + 7.1);
+              var M = 10 + 12 * Sa(Math.floor(p), c + 7.1);
               var T = h - i * v + f * y;
               var x = u - n * v + s * y;
               e.globalAlpha = .4 * Math.sin(m * Math.PI) * o;
@@ -3638,32 +3759,32 @@
           var S = v[b];
           var w = y.cx + (y.mirror ? .5 - S.u : S.u - .5) * y.w;
           var k = y.top + S.v * y.h;
-          var R = Sa(ba(n, b, w + m, k + g, r, d, c, l), r, m, g, w, k, T);
+          var R = Ra(ka(n, b, w + m, k + g, r, d, c, l), r, m, g, w, k, T);
           if (!(R < 2)) {
             var A = 1.37 * x + 17.3 * b + M;
-            var I = Ta(A, .5);
+            var I = Sa(A, .5);
             var _ = h * (I > .86 ? 1.3 : .72 + .22 * I) * (1 + .25 * o);
-            ka(a, oa, fa, sa, R, ta, h * (1 + .5 * o));
-            wa(R, A, T, 1 + .3 * o);
-            ka(a, ha, ua, sa, R, ia, _);
-            Ra(a, R, A, S, _, o > .5 ? 3 : 2, la);
-            wa(R, A + 51.7, T, .85 + .5 * o);
-            var P = h * (.55 + .45 * o) * (.8 + .3 * Ta(A, 4.4));
-            ka(a, ha, ua, sa, R, na, P, .8 + .4 * o);
+            Ia(a, ha, ua, da, R, la, h * (1 + .5 * o));
+            Aa(R, A, T, 1 + .3 * o);
+            Ia(a, ca, pa, da, R, ra, _);
+            _a(a, R, A, S, _, o > .5 ? 3 : 2, fa);
+            Aa(R, A + 51.7, T, .85 + .5 * o);
+            var P = h * (.55 + .45 * o) * (.8 + .3 * Sa(A, 4.4));
+            Ia(a, ca, pa, da, R, oa, P, .8 + .4 * o);
             if (o > .3) {
-              Ra(a, R, A + 51.7, S, P, 2, ra);
+              _a(a, R, A + 51.7, S, P, 2, sa);
             }
-            Aa(a, w, k, S, d, c, r, b, h * sa[1], o);
+            Pa(a, w, k, S, d, c, r, b, h * da[1], o);
           }
         }
         if (o > .01 && function (e, a, t, i, n) {
-          for (var l = "front" === t || "back" === t, r = Ye[l ? "doi" : "side"], o = 0; o < (l ? 2 : 1); o++)
+          for (var l = "front" === t || "back" === t, r = ze[l ? "doi" : "side"], o = 0; o < (l ? 2 : 1); o++)
             for (var f = 0; f < r.length; f++) {
               var s = r[f];
               var h = i + 7.7 * f + 31.3 * o;
-              if (!(Ta(h, 1.3) < .4)) {
-                for (var u = l && 1 === o, d = Ia(a, s.a[0], u), c = a.top + s.a[1] * a.h, p = Ia(a, s.b[0], u), m = a.top + s.b[1] * a.h, g = Ia(a, s.c[0], u), y = a.top + s.c[1] * a.h, v = 0, M = 0; M < Ma; M++) {
-                  var T = M / (Ma - 1);
+              if (!(Sa(h, 1.3) < .4)) {
+                for (var u = l && 1 === o, d = Fa(a, s.a[0], u), c = a.top + s.a[1] * a.h, p = Fa(a, s.b[0], u), m = a.top + s.b[1] * a.h, g = Fa(a, s.c[0], u), y = a.top + s.c[1] * a.h, v = 0, M = 0; M < ba; M++) {
+                  var T = M / (ba - 1);
                   var x = 1 - T;
                   var b = x * x * d + 2 * x * T * g + T * T * p;
                   var S = x * x * c + 2 * x * T * y + T * T * m;
@@ -3671,13 +3792,13 @@
                   var k = 2 * x * (y - c) + 2 * T * (m - y);
                   var R = Math.sqrt(w * w + k * k) || 1;
                   var A = Math.sin(T * Math.PI);
-                  v = .5 * v + 3.6 * (2 * Ta(h, M) - 1);
-                  ma[M] = b - k / R * v * A;
-                  ga[M] = S + w / R * v * A;
-                  ya[M] = .55 + .45 * A;
+                  v = .5 * v + 3.6 * (2 * Sa(h, M) - 1);
+                  va[M] = b - k / R * v * A;
+                  Ma[M] = S + w / R * v * A;
+                  Ta[M] = .55 + .45 * A;
                 }
-                var I = Ta(h, 2.9) < .4;
-                ka(e, ma, ga, ya, Ma, I ? ra : la, n, .8);
+                var I = Sa(h, 2.9) < .4;
+                Ia(e, va, Ma, Ta, ba, I ? sa : fa, n, .8);
               }
             }
         }(a, y, f, 2.13 * x + M, h * o), o > .01) {
@@ -3688,18 +3809,18 @@
           a.lineJoin = "miter";
           a.lineCap = "butt";
           for (var D = 0; D < v.length; D++)
-            for (var H = v[D], O = D ? 1 : -1, W = y.cx + (y.mirror ? .5 - H.u : H.u - .5) * y.w, V = y.top + H.v * y.h, X = 0; X < 2; X++) {
-              var N = 2.31 * L + 17.3 * D + 9.1 * X + M;
+            for (var H = v[D], W = D ? 1 : -1, O = y.cx + (y.mirror ? .5 - H.u : H.u - .5) * y.w, V = y.top + H.v * y.h, N = 0; N < 2; N++) {
+              var X = 2.31 * L + 17.3 * D + 9.1 * N + M;
               a.beginPath();
               for (var G = 0; G <= 8; G++) {
                 var B = G / 8;
-                var K = 2 + B * (37 + 10 * X);
+                var K = 2 + B * (37 + 10 * N);
                 var q = 0 === G || 8 === G ? 0 : Math.sin(B * Math.PI);
-                var Y = O * B * (X ? 5 : 3) + (2 * Ta(N, G + 7) - 1) * (X ? 6.5 : 5.2) * q;
-                var U = W + d * K + E * Y;
+                var Y = W * B * (N ? 5 : 3) + (2 * Sa(X, G + 7) - 1) * (N ? 6.5 : 5.2) * q;
+                var U = O + d * K + E * Y;
                 var Q = V + c * K + C * Y;
-                ha[G] = U;
-                ua[G] = Q;
+                ca[G] = U;
+                pa[G] = Q;
                 if (G) {
                   a.lineTo(U, Q);
                 }
@@ -3707,37 +3828,37 @@
                   a.moveTo(U, Q);
                 }
               }
-              var z = X ? "#35eeff" : O < 0 ? "#bfff21" : "#ffd12e";
+              var z = N ? "#35eeff" : W < 0 ? "#bfff21" : "#ffd12e";
               a.strokeStyle = z;
-              a.globalAlpha = F * (X ? .72 : .92);
-              a.lineWidth = X ? 1.25 : 1.8;
+              a.globalAlpha = F * (N ? .72 : .92);
+              a.lineWidth = N ? 1.25 : 1.8;
               a.stroke();
               a.beginPath();
               for (var J = 0; J <= 8; J++)
-                J ? a.lineTo(ha[J], ua[J]) : a.moveTo(ha[J], ua[J]);
-              if (a.strokeStyle = "#fff5bd", a.globalAlpha = F * (X ? .62 : .82), a.lineWidth = .7, a.stroke(), !X || Ta(N, 25) > .48) {
-                var j = 2 + Math.floor(3 * Ta(N, 26));
-                var Z = Ta(N, 27) > .5 ? 1 : -1;
-                da[0] = ha[j];
-                ca[0] = ua[j];
+                J ? a.lineTo(ca[J], pa[J]) : a.moveTo(ca[J], pa[J]);
+              if (a.strokeStyle = "#fff5bd", a.globalAlpha = F * (N ? .62 : .82), a.lineWidth = .7, a.stroke(), !N || Sa(X, 25) > .48) {
+                var j = 2 + Math.floor(3 * Sa(X, 26));
+                var Z = Sa(X, 27) > .5 ? 1 : -1;
+                ma[0] = ca[j];
+                ga[0] = pa[j];
                 for (var $ = 1; $ < 5; $++) {
-                  var ee = 2.4 + 1.8 * Ta(N + 3, $);
+                  var ee = 2.4 + 1.8 * Sa(X + 3, $);
                   var ae = Z * ($ % 2 ? 3.2 : -2.1);
-                  da[$] = da[$ - 1] + d * ee + E * ae;
-                  ca[$] = ca[$ - 1] + c * ee + C * ae;
+                  ma[$] = ma[$ - 1] + d * ee + E * ae;
+                  ga[$] = ga[$ - 1] + c * ee + C * ae;
                 }
                 a.beginPath();
-                a.moveTo(da[0], ca[0]);
+                a.moveTo(ma[0], ga[0]);
                 for (var te = 1; te < 5; te++)
-                  a.lineTo(da[te], ca[te]);
+                  a.lineTo(ma[te], ga[te]);
                 a.strokeStyle = z;
                 a.globalAlpha = .88 * F;
                 a.lineWidth = 1.15;
                 a.stroke();
                 a.beginPath();
-                a.moveTo(da[0], ca[0]);
+                a.moveTo(ma[0], ga[0]);
                 for (var ie = 1; ie < 5; ie++)
-                  a.lineTo(da[ie], ca[ie]);
+                  a.lineTo(ma[ie], ga[ie]);
                 a.strokeStyle = "#fff5bd";
                 a.globalAlpha = .72 * F;
                 a.lineWidth = .55;
@@ -3746,14 +3867,14 @@
             }
           if (a.fillRect) {
             for (var ne = 0; ne < 6; ne++) {
-              var le = r * (1.9 + .07 * ne) + Ta(M, ne + 29);
+              var le = r * (1.9 + .07 * ne) + Sa(M, ne + 29);
               var re = le - Math.floor(le);
               var oe = ne % v.length;
               var fe = v[oe];
               var se = y.cx + (y.mirror ? .5 - fe.u : fe.u - .5) * y.w;
               var he = y.top + fe.v * y.h;
               var ue = 4 + 45 * re;
-              var de = (oe ? 1 : -1) * (3 + 8 * Ta(M, ne + 41));
+              var de = (oe ? 1 : -1) * (3 + 8 * Sa(M, ne + 41));
               var ce = se + d * ue + E * de;
               var pe = he + c * ue + C * de;
               a.globalAlpha = F * (1 - re) * .82;
@@ -3767,7 +3888,7 @@
       }
     }
   }
-  function Oa(a, t, i, n) {
+  function Na(a, t, i, n) {
     if (a && n && n.flying && !(n.flyRise <= 0) && n._plRun > .01 && n.cfg && "phong_loi_si" === n.cfg.fly && a.beginPath && a.moveTo && a.lineTo && a.stroke) {
       var l = Math.max(0, Math.min(1, n.flyRise || 0));
       var r = n._plRun * l;
@@ -3780,17 +3901,17 @@
       a.lineJoin = "round";
       for (var h = 0; h < 3; h++) {
         var u = 1.91 * s + 13.7 * h + f;
-        if (!(Ta(u, 1) < .35)) {
-          var d = Ta(u, 4) * Math.PI * 2;
-          da[0] = t + 11 * (2 * Ta(u, 2) - 1);
-          ca[0] = i - 10 - 36 * Ta(u, 3);
-          pa[0] = 1;
-          for (var c = 1; c < va; c++)
-            d += 1.1 * (2 * Ta(u, c + 5) - 1), da[c] = da[c - 1] + 3.5 * Math.cos(d), ca[c] = ca[c - 1] + 3.5 * Math.sin(d), pa[c] = 1 - .15 * c;
-          ka(a, da, ca, pa, va, na, .85 * r);
+        if (!(Sa(u, 1) < .35)) {
+          var d = Sa(u, 4) * Math.PI * 2;
+          ma[0] = t + 11 * (2 * Sa(u, 2) - 1);
+          ga[0] = i - 10 - 36 * Sa(u, 3);
+          ya[0] = 1;
+          for (var c = 1; c < xa; c++)
+            d += 1.1 * (2 * Sa(u, c + 5) - 1), ma[c] = ma[c - 1] + 3.5 * Math.cos(d), ga[c] = ga[c - 1] + 3.5 * Math.sin(d), ya[c] = 1 - .15 * c;
+          Ia(a, ma, ga, ya, xa, oa, .85 * r);
         }
       }
-      for (var p = Xe(n), m = Ge(p, t, i), g = qe["left" === p || "right" === p ? "side" : p], y = 0; y < g.length; y++) {
+      for (var p = Be(n), m = qe(p, t, i), g = Qe["left" === p || "right" === p ? "side" : p], y = 0; y < g.length; y++) {
         var v = g[y];
         var M = m.cx + (m.mirror ? .5 - v.u : v.u - .5) * m.w;
         var T = m.top + v.v * m.h;
@@ -3809,31 +3930,31 @@
       a.restore();
     }
   }
-  function Wa(e, a, t, n) {
-    Re(e, a, t, n);
+  function Xa(e, a, t, n) {
+    _e(e, a, t, n);
     if ("canh" === i.flyArt(n.cfg)) {
-      Ke(e, a, t, n);
+      Ue(e, a, t, n);
     }
     else {
       if ("ngua" === i.flyArt(n.cfg)) {
-        Ee(e, a, t, n);
+        De(e, a, t, n);
       }
       else {
         if ("hac" === i.flyArt(n.cfg)) {
-          Le(e, a, t, n);
+          We(e, a, t, n);
         }
         else {
           if ("la" === i.flyArt(n.cfg)) {
-            Pe(e, a, t, n);
+            Ce(e, a, t, n);
           }
           else {
-            _e(e, a, t, n);
+            Ee(e, a, t, n);
           }
         }
       }
     }
   }
-  i.drawPhongLoiRunVfx = Ha;
-  i.drawPhongLoiFrontVfx = Oa;
-  i.drawFlyMount = Wa;
+  i.drawPhongLoiRunVfx = Va;
+  i.drawPhongLoiFrontVfx = Na;
+  i.drawFlyMount = Xa;
 }(window.PNTT);
