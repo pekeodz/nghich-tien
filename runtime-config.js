@@ -44,12 +44,12 @@ window.PNTT_RUNTIME_CONFIG = {
    *      Project settings -> Your apps -> Web app -> firebaseConfig.
    *      Còn để 'DAN_VAO_DAY' thì game chạy ngoại tuyến (localStorage). */
   firebase: {
-    apiKey: 'DAN_VAO_DAY',
-    authDomain: 'DAN_VAO_DAY.firebaseapp.com',
-    projectId: 'DAN_VAO_DAY',
-    storageBucket: 'DAN_VAO_DAY.appspot.com',
-    messagingSenderId: 'DAN_VAO_DAY',
-    appId: 'DAN_VAO_DAY'
+    apiKey: 'AIzaSyDkvwLjb6BVYAJboeq6d3ZecAaf_mCOnck',
+    authDomain: 'nghich-tien.firebaseapp.com',
+    projectId: 'nghich-tien',
+    storageBucket: 'nghich-tien.firebasestorage.app',
+    messagingSenderId: '55374340407',
+    appId: '1:55374340407:web:e6cc19e9202d62a5a77ab2'
   },
 
   saveIntervalSec: 20,     // tự lưu tiến trình lên đám mây mỗi 20 giây
