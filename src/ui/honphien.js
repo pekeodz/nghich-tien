@@ -118,7 +118,7 @@
         h.appendChild(c("div", "hp-de", "Kiếm Linh"));
         var M = c("div", "hp-ds");
         var P = n.SceneWorld && n.SceneWorld.player ? n.SceneWorld.player.mp : 0;
-        var O = t() ? i.nghiep > 0 ? "Còn Sát Nghiệp" : C <= 0 ? "Hạp trống" : y >= f ? "Đã đủ" : P < o.MP_GOI ? "Thiếu Linh Lực" : null : "Phải nối máy chủ";
+        var O = t() || n.TrieuHoi ? i.nghiep > 0 ? "Còn Sát Nghiệp" : C <= 0 ? "Hạp trống" : y >= f ? "Đã đủ" : P < o.MP_GOI ? "Thiếu Linh Lực" : null : "Phải nối máy chủ";
         M.appendChild(u("Gọi một thanh", o.MP_GOI + " Linh Lực", !!O, O, function () {
           g("hon.goi", {});
         }));
@@ -196,7 +196,7 @@
       o.appendChild(c("div", "hp-de", "Bầy quỷ"));
       var S = c("div", "hp-ds");
       var U = n.SceneWorld && n.SceneWorld.player ? n.SceneWorld.player.mp : 0;
-      var B = t() ? i.am <= 0 ? "Phiên trống" : (0 | i.dang) >= i.tran ? "Bầy đã đủ" : U < h.MP_GOI ? "Thiếu Linh Lực" : null : "Phải nối máy chủ";
+      var B = t() || n.TrieuHoi ? i.am <= 0 ? "Phiên trống" : (0 | i.dang) >= i.tran ? "Bầy đã đủ" : U < h.MP_GOI ? "Thiếu Linh Lực" : null : "Phải nối máy chủ";
       S.appendChild(u("Gọi một con", h.MP_GOI + " Linh Lực", !!B, B, function () {
         g("hon.goi", {});
       }));
@@ -238,6 +238,10 @@
       if ("hon.luyen" === h) {
         return (o = l ? p().luyen(n) : c.luyen(i.congThuc, n)).ok ? (d = null, v(), n.HUD && n.HUD.renderBag && n.HUD.renderBag(), void y(l ? "Luyện thành một Kiếm Linh" : "Luyện thành một Âm Hồn")) : void y(o.why);
       }
+      if (n.TrieuHoi && ("hon.goi" === h || "hon.thu" === h)) {
+        y(n.TrieuHoi.hon("hon.goi" === h ? "goi" : "thu"));
+        return void v();
+      }
       y(l ? "Phải nối máy chủ mới gọi được Kiếm Linh" : "Phải nối máy chủ mới gọi được quỷ");
     }
   }
@@ -252,7 +256,7 @@
   a.trangThai = function () {
     var a;
     var h = d || { phien: (a = e()).coPhien(n) ? 1 : 0, am: n.Inventory.count(a.AM_HON), dang: 0, tran: a.tranAmHon(n), pham: n.Inventory.count(a.PHAM_HON), oan: n.Inventory.count(a.OAN_HON), tuSi: n.Inventory.count(a.TU_SI_HON), thu3: n.Inventory.count(a.THU_HON_3), thu4: n.Inventory.count(a.THU_HON_4), thu6: n.Inventory.count(a.THU_HON_6), nghiep: a.satNghiep(n), moc: { tenDo: a.moc("ten_do", n), tamMa: a.moc("tam_ma", n), phanPhe: a.moc("thanh", n) }, maDao: a.laMaDao(n) ? 1 : 0, dao: p() ? p().dao(n) : a.coPhien(n) ? "ma" : "", hap: p() && p().coHap(n) ? 1 : 0, kl: p() ? n.Inventory.count(p().KIEM_LINH) : 0, tranKl: p() ? p().tran(n) : 0, ck: p() ? n.Inventory.count(p().CHINH_KHI) : 0, hn: p() ? n.Inventory.count(p().HIEP_NGHIA) : 0, tm: p() ? n.Inventory.count(p().TRU_MA) : 0 };
-    if (t()) {
+    if (t() || n.TrieuHoi) {
       h = Object.assign({}, h, { dang: o() });
     }
     return h;

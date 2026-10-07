@@ -1884,6 +1884,12 @@
     }
     return u;
   }
+  // Nghịch Tiên: đồng minh triệu hồi (trieu_hoi.js) đánh quái — quái chết vẫn rơi đồ, cộng Đạo Hạnh cho người chơi
+  i.ntDanhQuai = function (a, t) {
+    return !(!a || a.dead || !i.player) && D(a, t, function (n) {
+      k(n, i.player);
+    }, i.player);
+  };
   function H(a, t, e) {
     var i = !!(a && a.def && a.def.isBoss);
     var o = !i && e && e.cfg && n.Audio.weaponImpactSfx ? n.Audio.weaponImpactSfx(e.cfg.weapon) : null;
@@ -2975,6 +2981,9 @@
                       n.HUD.closeDialog();
                       n.DaiHoiUI.show();
                     }
+                  }
+                  else if (n.NTBot && n.NTBot.chapSu) {
+                    n.NTBot.chapSu(t);   // Nghịch Tiên: Chiến Bảng / Đại Hội đấu với bot khi không có máy chủ
                   }
                   else {
                     n.HUD.openDialog(t.name, 'Người ấy khép sổ lại:\n\n"Đại hội cần đông người mới thành hội. Đạo hữu đang tu một mình nơi hoang sơn, chưa nối được với Tiên Đồ — chờ khi nào nối được rồi hãy tới."');

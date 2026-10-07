@@ -17,6 +17,7 @@
   var SAP_SAU_GIAY = 90;
   var THU_MS = 3000;
   var BOSS_CUOI = "u_minh_cu_mang";
+  var THU_TUONG_CHANCE = 0.05; // Thú Tượng Giáp: mỗi lượt bốc một lần (bản gốc do máy chủ bốc)
   // điểm hái → vật phẩm và số lượng [ít nhất, nhiều nhất] mỗi lần hái
   var THU_HOACH = {
     truc_co_thao: { item: "truc_co_thao", min: 2, max: 3 },     // 12 điểm/lượt → 24–36 Trúc Cơ Thảo
@@ -64,7 +65,7 @@
     var f = flags();
     f.huyetSacDay = homNay();
     f.huyetSacCount = u + 1;
-    f.huyetSacRun = { expiresAt: Date.now() + THOI_LUONG_MS, collapseAt: 0, harvested: [], killed: {} };
+    f.huyetSacRun = { expiresAt: Date.now() + THOI_LUONG_MS, collapseAt: 0, harvested: [], killed: {}, thuTuong: Math.random() < ((P.LootRates && P.LootRates.THU_TUONG_GIAP_CHANCE) || THU_TUONG_CHANCE) };
     luu();
     if (P.HUD && P.HUD.refreshStones) P.HUD.refreshStones();
     vaoTang(TANG[0]);
@@ -131,6 +132,13 @@
     dayTrangThai();
   }
 
+  function roiDo(id, e) {
+    var W = P.SceneWorld;
+    if (!W || !W.drops || !P.ITEMS[id]) { P.Inventory.add(id, 1); return; }
+    W.drops.push({ kind: "item", itemId: id, n: 1, lootId: null, owner: null, boss: true, bossName: "U Minh Cự Mãng", age: 0, x: e.x, y: e.y - 26, vx: 0, vy: -70, gy: e.y + 6, state: "fall", t: 0, asked: false, sortY: e.y });
+    if (P.Audio && P.Audio.atPoint) P.Audio.atPoint("rare_drop", e.x, e.y);
+  }
+
   /* ---- Nhịp kiểm tra: giờ, hái, quái đã hạ, boss cuối ---- */
   function nhip() {
     var W = P.SceneWorld;
@@ -163,6 +171,9 @@
           killed.push(e.id); doi = true;
           if (e.type === BOSS_CUOI && !r.collapseAt) {
             r.collapseAt = Date.now() + SAP_SAU_GIAY * 1000;
+            // nhiệm vụ giai đoạn 21: "Hạ U Minh Cự Mãng ở Huyết Xích Cấm Địa" (bản gốc máy chủ ghi)
+            if (Q() && Q().recordHuyetSacBoss && Q().recordHuyetSacBoss() && W.refreshQuest) W.refreshQuest();
+            if (r.thuTuong) { r.thuTuong = false; roiDo("thu_tuong_giap", e); }
             caption("U Minh Cự Mãng đã ngã! Cấm Địa sẽ sụp sau " + SAP_SAU_GIAY + " giây — mau hái nốt rồi rời đi.");
             dayTrangThai();
           }

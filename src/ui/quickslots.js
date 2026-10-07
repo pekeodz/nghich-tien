@@ -353,6 +353,14 @@
                         }
                       }
                     }
+                    else if (n.TrieuHoi) {
+                      f(n.TrieuHoi.hon(t.dang > 0 ? "thu" : "goiHet"));
+                      if (n.HUD && n.HUD.renderBag) {
+                        n.HUD.renderBag();
+                      }
+                      C();
+                      d.update(p());
+                    }
                     else {
                       f("Phải nối máy chủ mới gọi được " + e + ".");
                     }

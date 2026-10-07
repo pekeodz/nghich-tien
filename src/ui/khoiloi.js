@@ -111,6 +111,22 @@
           });
         }
       }
+      else if (a.TrieuHoi) {
+        var kq = a.TrieuHoi.khoiLoi(n);
+        u(kq.why || kq.toast || "");
+        if (!kq.ok && a.Audio) {
+          a.Audio.play("deny");
+        }
+        if (a.HUD && a.HUD.renderBag) {
+          a.HUD.renderBag();
+        }
+        if (a.QuickSlots && a.QuickSlots.update) {
+          a.QuickSlots.update(e());
+        }
+        if (o) {
+          o(kq);
+        }
+      }
       else {
         u("Phải nối máy chủ mới gọi được khôi lỗi.");
       }
