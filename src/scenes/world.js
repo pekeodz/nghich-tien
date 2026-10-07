@@ -3996,7 +3996,7 @@
     var e = t.daNhan(n);
     var o = t.tong(n);
     var c = n.ITEMS.linh_thach;
-    n.HUD.openDialog(a.name || "Mạnh ShopT1", e ? 'Người đội mão vàng giơ hai ngón cái, cười:\n\n"Hôm nay đạo hữu lĩnh lộ phí rồi. Mai quay lại nhé — hoặc ngồi xuống nghe ta kể chuyện."' : 'Người đội mão vàng giơ hai ngón cái, cười:\n\n"Đạo hữu tới đúng lúc. Mỗi ngày ghé ta một lần, ta phát ' + t.LINH_THACH + ' Linh Thạch lộ phí."', { choices: [{ label: "Điểm Danh Hôm Nay", note: e ? "Hôm nay đã nhận · mai quay lại" + (o ? " · đã điểm danh " + o + " ngày" : "") : "+" + t.LINH_THACH + " Linh Thạch · mỗi ngày một lần" + (o ? " · đã điểm danh " + o + " ngày" : ""), icon: c && c.icon, disabled: e, onChoose: function () {
+    n.HUD.openDialog(a.name || "Mạnh ShopT1", e ? ("Rem" === a.name ? "Rem khẽ nâng vạt tạp dề, cúi chào:" : "Người đội mão vàng giơ hai ngón cái, cười:") + '\n\n"Hôm nay đạo hữu lĩnh lộ phí rồi. Mai quay lại nhé — hoặc ngồi xuống nghe ta kể chuyện."' : ("Rem" === a.name ? "Rem khẽ nâng vạt tạp dề, cúi chào:" : "Người đội mão vàng giơ hai ngón cái, cười:") + '\n\n"Đạo hữu tới đúng lúc. Mỗi ngày ghé ta một lần, ta phát ' + t.LINH_THACH + ' Linh Thạch lộ phí."', { choices: [{ label: "Điểm Danh Hôm Nay", note: e ? "Hôm nay đã nhận · mai quay lại" + (o ? " · đã điểm danh " + o + " ngày" : "") : "+" + t.LINH_THACH + " Linh Thạch · mỗi ngày một lần" + (o ? " · đã điểm danh " + o + " ngày" : ""), icon: c && c.icon, disabled: e, onChoose: function () {
             !function (a) {
               var t = n.DiemDanh;
               var e = i.player;
