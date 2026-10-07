@@ -2,8 +2,8 @@
  *  thu_cuoi.js — THÚ CƯỠI THÊM CỦA NGHỊCH TIÊN
  * ----------------------------------------------------------------------------
  *  Mỗi thú cưỡi = 1 vật phẩm ô "phi_hanh" có fly.art = "ngua" + khối mount
- *  (tấm sprite 8 cột x 4 hàng: xuống, trái, phải, lên; 6 khung chạy + 2 khung
- *  đứng; mỗi khung 128x112, vẽ ra 64x56; chân đặt cùng mặt đất với Hắc Thổ Linh Mã).
+ *  (tấm sprite 2 cột x 4 hàng như Hạc Tiên: xuống, trái, phải, lên; 2 khung
+ *  đổi qua lại; mỗi khung 128x112, vẽ ra 64x56; chân đặt cùng mặt đất với Hắc Thổ Linh Mã).
  *  Tỉ lệ rơi chỉnh trong loot_rates.js (KY_LAN_CHANCE).
  * ==========================================================================*/
 (function (P) {
@@ -12,8 +12,8 @@
   var ICON = "assets/items/icon_ky_lan_xich_diem.png";
 
   // Khai báo ảnh với bộ nạp (manifest.js sinh tự động nên thêm ở đây)
-  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[SPRITE] = 70025; P.ASSET_MANIFEST[ICON] = 2163; }
-  if (P.ASSET_VERSIONS) { P.ASSET_VERSIONS[SPRITE] = "kylan04"; P.ASSET_VERSIONS[ICON] = "kylan01"; }
+  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[SPRITE] = 30373; P.ASSET_MANIFEST[ICON] = 2163; }
+  if (P.ASSET_VERSIONS) { P.ASSET_VERSIONS[SPRITE] = "kylan05"; P.ASSET_VERSIONS[ICON] = "kylan01"; }
 
   P.ITEMS.ky_lan_xich_diem = {
     id: "ky_lan_xich_diem",
@@ -22,8 +22,8 @@
     slot: "phi_hanh",
     grade: "Địa phẩm thượng",
     fly: { art: "ngua", speed: 1.85, realmMin: "luyen_khi_7", name: "Cưỡi Xích Diễm Kỳ Lân" },
-    mount: { path: SPRITE, frameW: 128, frameH: 112, frames: 6, idleFrames: 2, rows: 4,
-             fps: 10, idleFps: 2, drawW: 64, drawH: 56, anchorX: 32, anchorY: 35 },
+    mount: { path: SPRITE, frameW: 128, frameH: 112, frames: 2, rows: 4,
+             fps: 4, drawW: 64, drawH: 56, anchorX: 32, anchorY: 35 },
     mpRegen: 2,
     desc: "Kỳ lân lửa sinh ra từ máu rồng nhỏ xuống Long Uyên. Bờm và chóp đuôi cháy rực không tắt, " +
           "bốn vó giẫm lên linh khí mà chạy. Chỉ chịu theo người từng góp sức hạ Thần Thú Xích Long.",
