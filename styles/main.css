@@ -5400,6 +5400,58 @@ html.gfx-sieu-lo #row-xp.full::after { display: none; }
 .market-price::after { content: ' LT'; font-size: 10px; color: #a58a5a; }
 .market-unit { font-size: 10px; color: #b9ab8d; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .market-empty-nut { margin-top: 4px; min-height: 24px; }
+#dialog .market-qua {
+  margin: 2px 2px 6px; padding: 8px 8px 6px; color: #e7ddc9;
+  background: linear-gradient(180deg, rgba(73, 52, 29, 0.42), rgba(24, 17, 11, 0.55));
+  border: 1px solid rgba(201, 164, 92, 0.55); border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35), 0 0 14px rgba(201, 164, 92, 0.12);
+}
+#dialog .market-qua-tit {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 7px;
+  font: 700 13px/1.2 var(--font-serif); letter-spacing: 0.14em; text-transform: uppercase;
+  color: #f3e4c3; text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+#dialog .market-qua-tit::before,
+#dialog .market-qua-tit::after {
+  content: ''; flex: 1 1 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 164, 92, 0.7));
+}
+#dialog .market-qua-tit::after { transform: scaleX(-1); }
+.market-qua-luoi { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.market-qua-o {
+  position: relative; flex: 0 1 88px; min-width: 66px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 7px 4px 5px;
+  background: rgba(18, 13, 9, 0.55);
+  border: 1px solid rgba(201, 164, 92, 0.38); border-radius: 3px;
+}
+.market-qua-o.hop {
+  border-color: var(--gold);
+  background: radial-gradient(circle at 50% 30%, rgba(201, 164, 92, 0.28), rgba(18, 13, 9, 0.6) 70%);
+  box-shadow: 0 0 10px rgba(201, 164, 92, 0.35);
+}
+.market-qua-ic { width: 36px; height: 36px; image-rendering: pixelated; }
+.market-qua-n { color: #f3e4c3; font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.market-qua-ten { color: #d2c5ac; font-size: 10.5px; line-height: 1.2; text-align: center; }
+.market-qua-khoa {
+  position: absolute; top: 2px; left: 3px; padding: 0 3px; border-radius: 2px;
+  font: 700 8px/11px var(--font-ui, sans-serif);
+  color: #ffd9a0; background: rgba(160, 100, 40, 0.35); border: 1px solid rgba(220, 160, 80, 0.45);
+}
+.market-qua-hop {
+  display: flex; flex-wrap: wrap; column-gap: 12px;
+  margin-top: 8px; padding-top: 6px; border-top: 1px dashed rgba(201, 164, 92, 0.35);
+}
+.market-qua-hop-tit { flex: 1 0 100%; margin-bottom: 3px; color: #d3b875; font-size: 11px; font-weight: 700; text-align: center; }
+.market-qua-phan { flex: 1 1 180px; margin-top: 5px; text-align: left; }
+.market-qua-phan.rong { flex-basis: 100%; }
+.market-qua-phan-ten { margin-bottom: 2px; color: #e8dcc2; font-size: 11px; font-weight: 700; }
+.market-qua-dai { display: flex; flex-wrap: wrap; gap: 2px; }
+.market-qua-mini {
+  width: 26px; height: 26px; padding: 1px; image-rendering: pixelated;
+  background: rgba(18, 13, 9, 0.55);
+  border: 1px solid rgba(201, 164, 92, 0.28); border-radius: 2px;
+}
 .market-empty, .market-hint { padding: 8px 4px; font-size: 12px; color: #826843; text-align: center; }
 .market-hint { padding: 0 2px 3px; text-align: left; font-size: 11px; }
 .market-pager { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 4px 0 0; }
@@ -8452,3 +8504,35 @@ input:focus-visible { outline-color: #dcc083 !important; }
   flex: 1 1 auto; height: auto; min-height: 120px;
 }
 .tm-tong .tm-thu-hang { flex: 0 0 auto; }
+#menu .menu-audio-opts {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+#menu .menu-audio-opts.hidden { display: none; }
+#menu .menu-audio-opts label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 8px 12px;
+  color: #f2ead6;
+  background: rgba(22,16,11,.40);
+  border: 1px solid rgba(201, 164, 92, 0.56);
+  border-radius: 5px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  cursor: pointer;
+}
+#menu .menu-audio-opts input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: #c9a45c;
+}
+#menu .menu-audio-opts .btn-sub { min-height: 48px; }
+@media (max-width: 420px) {
+  #menu .menu-audio-opts { grid-template-columns: 1fr 1fr; }
+  #menu .menu-audio-opts .btn-sub { grid-column: 1 / -1; }
+}
