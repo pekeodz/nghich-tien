@@ -15,8 +15,10 @@
  *  cũ, không có tài khoản, không thấy người chơi khác).
  * ==========================================================================*/
 window.PNTT_RUNTIME_CONFIG = {
-  supabaseUrl: '',
-  supabaseAnonKey: '',
+  /* 'firebase' chỉ là giá trị giữ chỗ để game bật chế độ trực tuyến;
+   dữ liệu thật đi qua Firebase (xem khối firebase bên dưới + vendor/firebase-shim.js) */
+  supabaseUrl: 'firebase',
+  supabaseAnonKey: 'firebase',
 
   /* ------------------------------------------------------------------
    *  MÁY CHỦ GAME CÓ THẨM QUYỀN (server/main.js)
@@ -38,6 +40,18 @@ window.PNTT_RUNTIME_CONFIG = {
   serverUrl: '',
 
   /* Nhịp đồng bộ — chỉnh được nếu muốn tiết kiệm băng thông */
+  /* ---- FIREBASE: dán các giá trị từ Firebase Console ->
+   *      Project settings -> Your apps -> Web app -> firebaseConfig.
+   *      Còn để 'DAN_VAO_DAY' thì game chạy ngoại tuyến (localStorage). */
+  firebase: {
+    apiKey: 'DAN_VAO_DAY',
+    authDomain: 'DAN_VAO_DAY.firebaseapp.com',
+    projectId: 'DAN_VAO_DAY',
+    storageBucket: 'DAN_VAO_DAY.appspot.com',
+    messagingSenderId: 'DAN_VAO_DAY',
+    appId: 'DAN_VAO_DAY'
+  },
+
   saveIntervalSec: 20,     // tự lưu tiến trình lên đám mây mỗi 20 giây
   netTickHz: 10,           // số lần/giây phát vị trí cho người chơi khác
   /* Trần TỔNG số gói mỗi giây khai với Supabase Realtime. Phải lớn hơn tổng
