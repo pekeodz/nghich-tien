@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Quản trị Nghịch Tiên</title>
+<style>
+  :root {
+    --bg: #14100c; --panel: #1f1812; --panel2: #2a2018; --line: rgba(201,164,92,.35);
+    --gold: #c9a45c; --gold-hi: #f3e4c3; --text: #e7ddc9; --muted: #a8997f;
+    --red: #d0644e; --green: #79b06a; --blue: #6fa3c9;
+    --serif: "Noto Serif", Georgia, serif; --ui: system-ui, "Segoe UI", Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.45 var(--ui); }
+  h1, h2, h3 { font-family: var(--serif); color: var(--gold-hi); margin: 0; font-weight: 700; }
+  h1 { font-size: 20px; letter-spacing: .02em; }
+  h2 { font-size: 17px; }
+  h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .12em; color: var(--gold); margin-bottom: 8px; }
+  a { color: var(--gold); }
+  button, input, select, textarea { font: inherit; color: var(--text); }
+  input, select, textarea {
+    background: #120e0a; border: 1px solid var(--line); border-radius: 4px; padding: 7px 9px; min-width: 0;
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--gold); outline-offset: -1px; }
+  button {
+    background: var(--panel2); border: 1px solid var(--line); border-radius: 4px; padding: 7px 12px; cursor: pointer;
+  }
+  button:hover { border-color: var(--gold); }
+  button.primary { background: #6d5427; border-color: var(--gold); color: #fff6df; font-weight: 600; }
+  button.danger { border-color: rgba(208,100,78,.6); color: #f0b3a5; }
+  button:disabled { opacity: .5; cursor: default; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 16px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px;
+    border-bottom: 1px solid var(--line); background: #1a140f; position: sticky; top: 0; z-index: 5; }
+  header.top .who { color: var(--muted); font-size: 12px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px; }
+  .login { max-width: 360px; margin: 10vh auto; display: grid; gap: 10px; }
+  .login p { color: var(--muted); margin: 0; font-size: 13px; }
+  .msg { min-height: 1.2em; font-size: 13px; color: var(--muted); }
+  .msg.err { color: var(--red); } .msg.ok { color: var(--green); }
+  .layout { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; gap: 16px; align-items: start; }
+  @media (max-width: 860px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+  .layout > *, .detail > * { min-width: 0; }
+  .bag { table-layout: fixed; } .bag td:first-child { word-break: break-word; }
+  .list-tools { display: flex; gap: 8px; margin-bottom: 10px; }
+  .list-tools input { flex: 1; }
+  .plist { list-style: none; margin: 0; padding: 0; max-height: 70vh; overflow: auto; }
+  .plist li { padding: 9px 10px; border-bottom: 1px solid rgba(201,164,92,.15); cursor: pointer; display: grid;
+    grid-template-columns: 1fr auto; gap: 2px 8px; }
+  .plist li:hover { background: rgba(201,164,92,.07); }
+  .plist li.sel { background: rgba(201,164,92,.16); }
+  .plist .n { font-weight: 600; color: var(--gold-hi); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .plist .r { color: var(--muted); font-size: 12px; }
+  .plist .t { color: var(--muted); font-size: 11px; text-align: right; }
+  .badge { display: inline-block; font-size: 10px; padding: 0 5px; border-radius: 3px; margin-left: 4px; vertical-align: 1px; }
+  .badge.ban { background: rgba(208,100,78,.25); color: #f0b3a5; border: 1px solid rgba(208,100,78,.5); }
+  .badge.on { background: rgba(121,176,106,.2); color: #b8e0ab; border: 1px solid rgba(121,176,106,.45); }
+  .detail { display: grid; gap: 14px; }
+  .dhead { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+  .meta { color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+  label.f { display: grid; gap: 4px; font-size: 12px; color: var(--muted); }
+  .bag { width: 100%; border-collapse: collapse; }
+  .bag td, .bag th { padding: 5px 6px; border-bottom: 1px solid rgba(201,164,92,.12); text-align: left; font-size: 13px; }
+  .bag th { color: var(--muted); font-weight: 500; font-size: 12px; }
+  .bag input { width: 90px; }
+  .bag .g { color: var(--muted); font-size: 11px; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .row > input[type=text], .row > select { flex: 1 1 200px; }
+  .savebar { position: sticky; bottom: 0; background: #1a140f; border: 1px solid var(--gold); border-radius: 6px;
+    padding: 10px 14px; display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  textarea.json { width: 100%; min-height: 260px; font: 12px/1.4 ui-monospace, Consolas, monospace; }
+  details > summary { cursor: pointer; color: var(--gold); font-weight: 600; }
+  .empty { color: var(--muted); padding: 30px; text-align: center; }
+  .warn { border-left: 3px solid var(--gold); padding: 8px 12px; background: rgba(201,164,92,.08); font-size: 13px; }
+  .hidden { display: none !important; }
+  code { background: #120e0a; padding: 1px 5px; border-radius: 3px; }
+  html, body { overflow-x: hidden; }
+  select { max-width: 100%; }
+  .row > * { min-width: 0; }
+  @media (max-width: 600px) {
+    .wrap { padding: 12px; }
+    header.top { padding: 10px 12px; }
+    h1 { font-size: 16px; }
+    header.top .who { display: none; }
+    .grid { grid-template-columns: 1fr 1fr; }
+    .row > input[type=text], .row > select { flex: 1 1 100%; }
+    .bag input { width: 70px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>Quản trị Nghịch Tiên</h1>
+  <div class="row"><span class="who" id="who"></span><button id="btn-out" class="hidden">Đăng xuất</button></div>
+</header>
+
+<!-- Đăng nhập -->
+<section id="v-login" class="card login hidden">
+  <h2>Đăng nhập quản trị</h2>
+  <p>Dùng chính tài khoản game của bạn (đạo hiệu hoặc email).</p>
+  <input id="l-name" placeholder="Đạo hiệu hoặc email" autocomplete="username">
+  <input id="l-pass" type="password" placeholder="Mật khẩu" autocomplete="current-password">
+  <button id="l-go" class="primary">Đăng nhập</button>
+  <div id="l-msg" class="msg"></div>
+</section>
+
+<!-- Chưa phải admin -->
+<section id="v-noadmin" class="wrap hidden">
+  <div class="card" style="display:grid;gap:10px;max-width:640px">
+    <h2>Tài khoản này chưa có quyền quản trị</h2>
+    <p>Mở <b>Firebase Console → Firestore Database → Start collection</b>:</p>
+    <ol>
+      <li>Collection ID: <code>admins</code></li>
+      <li>Document ID: <code id="my-uid"></code> <button id="copy-uid">Chép</button></li>
+      <li>Thêm một trường bất kỳ, ví dụ <code>role</code> = <code>owner</code>, rồi Save.</li>
+    </ol>
+    <p>Xong thì tải lại trang này.</p>
+  </div>
+</section>
+
+<!-- Bảng quản trị -->
+<main id="v-admin" class="wrap hidden">
+  <div class="layout">
+    <section class="card">
+      <div class="list-tools">
+        <input id="q" type="search" placeholder="Tìm tên hoặc UID…">
+        <button id="reload" title="Tải lại danh sách">↻</button>
+      </div>
+      <div class="meta" id="count"></div>
+      <ul class="plist" id="plist"></ul>
+    </section>
+
+    <section id="detail" class="detail">
+      <div class="card empty">Chọn một nhân vật ở danh sách bên trái.</div>
+    </section>
+  </div>
+</main>
+
+<script src="runtime-config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script src="src/core/config.js"></script>
+<script src="src/systems/items.js"></script>
+<script>
+(function () {
+  "use strict";
+  var FAKE = "@players.phamnhan.game";
+  var MAX_STACK = 9999;
+  var SLOTS = [
+    ["vu_khi", "Vũ khí"], ["mu", "Mũ"], ["ao", "Áo"], ["giap", "Giáp"],
+    ["giay", "Giày"], ["nhan", "Nhẫn"], ["phap_boi", "Pháp bội"], ["phi_hanh", "Phi hành"]
+  ];
+  // Các chỉ số số học hay cần chỉnh (key trong save -> nhãn)
+  var NUMS = [
+    ["exp", "Tu vi (exp)"], ["stones", "Linh thạch"], ["kills", "Số quái đã giết"],
+    ["duocCong", "Dược công"], ["satNghiep", "Sát nghiệp"], ["stage", "Mốc nhiệm vụ (stage)"]
+  ];
+
+  var P = window.PNTT || {};
+  var ITEMS = P.ITEMS || {};
+  var REALMS = P.REALMS || [];
+  var REALM_NAME = {};
+  REALMS.forEach(function (r) { REALM_NAME[r.id] = r.name; });
+
+  var $ = function (s) { return document.querySelector(s); };
+  function el(tag, attrs, kids) {
+    var e = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "text") e.textContent = attrs[k];
+      else if (k === "html") e.innerHTML = attrs[k];
+      else if (k.slice(0, 2) === "on") e.addEventListener(k.slice(2), attrs[k]);
+      else if (attrs[k] !== undefined && attrs[k] !== null && attrs[k] !== false) e.setAttribute(k, attrs[k]);
+    }
+    (kids || []).forEach(function (c) { if (c) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return e;
+  }
+  function show(id) {
+    ["#v-login", "#v-noadmin", "#v-admin"].forEach(function (s) { $(s).classList.toggle("hidden", s !== id); });
+  }
+  function parse(s) { try { return JSON.parse(s || "{}"); } catch (e) { return {}; } }
+  function toMs(t) { return !t ? 0 : typeof t === "number" ? t : t.toMillis ? t.toMillis() : 0; }
+  function ago(t) {
+    var ms = toMs(t); if (!ms) return "—";
+    var s = (Date.now() - ms) / 1000;
+    if (s < 90) return "vừa xong";
+    if (s < 3600) return Math.round(s / 60) + " phút trước";
+    if (s < 86400) return Math.round(s / 3600) + " giờ trước";
+    return Math.round(s / 86400) + " ngày trước";
+  }
+  function fmtTime(t) { var ms = toMs(t); return ms ? new Date(ms).toLocaleString("vi-VN") : "—"; }
+  function itemName(id) { return ITEMS[id] ? ITEMS[id].name : id; }
+
+  var cfg = (window.PNTT_RUNTIME_CONFIG || {}).firebase;
+  if (!window.firebase || !cfg || !cfg.apiKey) {
+    document.body.innerHTML = '<div class="wrap"><div class="card">Không nạp được Firebase. Kiểm tra mạng và runtime-config.js.</div></div>';
+    return;
+  }
+  firebase.initializeApp(cfg);
+  var auth = firebase.auth();
+  var db = firebase.firestore();
+  var FV = firebase.firestore.FieldValue;
+  var me = null;
+  var all = [];       // [{id, data}]
+  var cur = null;     // nhân vật đang mở: {id, doc, save, appearance}
+
+  /* ---------- Đăng nhập ---------- */
+  $("#l-go").onclick = function () {
+    var n = $("#l-name").value.trim(), p = $("#l-pass").value;
+    var email = n.indexOf("@") >= 0 ? n.toLowerCase() : n.toLowerCase() + FAKE;
+    $("#l-msg").className = "msg"; $("#l-msg").textContent = "Đang đăng nhập…";
+    auth.signInWithEmailAndPassword(email, p).catch(function (e) {
+      $("#l-msg").className = "msg err";
+      $("#l-msg").textContent = /invalid|wrong|not-found/i.test(e.code) ? "Sai đạo hiệu hoặc mật khẩu." : e.message;
+    });
+  };
+  $("#l-pass").addEventListener("keydown", function (e) { if (e.key === "Enter") $("#l-go").click(); });
+  $("#btn-out").onclick = function () { auth.signOut(); };
+  $("#copy-uid").onclick = function () { navigator.clipboard && navigator.clipboard.writeText($("#my-uid").textContent); };
+
+  auth.onAuthStateChanged(function (u) {
+    me = u;
+    $("#btn-out").classList.toggle("hidden", !u);
+    $("#who").textContent = u ? (u.email || "").replace(FAKE, "") : "";
+    if (!u) { show("#v-login"); return; }
+    db.collection("admins").doc(u.uid).get().then(function (s) {
+      if (!s.exists) { $("#my-uid").textContent = u.uid; show("#v-noadmin"); return; }
+      show("#v-admin"); loadList();
+    }).catch(function () { $("#my-uid").textContent = u.uid; show("#v-noadmin"); });
+  });
+
+  /* ---------- Danh sách ---------- */
+  function loadList() {
+    $("#count").textContent = "Đang tải…";
+    db.collection("characters").get().then(function (qs) {
+      all = qs.docs.map(function (d) { return { id: d.id, data: d.data() }; });
+      all.sort(function (a, b) { return toMs(b.data.updatedAt) - toMs(a.data.updatedAt); });
+      renderList();
+    }).catch(function (e) { $("#count").textContent = "Lỗi: " + e.message; });
+  }
+  function renderList() {
+    var q = $("#q").value.trim().toLowerCase();
+    var ul = $("#plist"); ul.innerHTML = "";
+    var shown = all.filter(function (c) {
+      return !q || String(c.data.name || "").toLowerCase().indexOf(q) >= 0 || c.id.toLowerCase().indexOf(q) >= 0;
+    });
+    shown.forEach(function (c) {
+      var d = c.data, online = Date.now() - toMs(d.updatedAt) < 60000;
+      ul.appendChild(el("li", { class: cur && cur.id === c.id ? "sel" : "", onclick: function () { openChar(c.id); } }, [
+        el("span", { class: "n" }, [d.name || "(chưa đặt tên)",
+          d.banned ? el("span", { class: "badge ban", text: "khoá" }) : null,
+          online ? el("span", { class: "badge on", text: "online" }) : null]),
+        el("span", { class: "t", text: ago(d.updatedAt) }),
+        el("span", { class: "r", text: (REALM_NAME[d.realm_id] || d.realm_id || "?") + " · tu vi " + (d.exp || 0) })
+      ]));
+    });
+    $("#count").textContent = shown.length + " / " + all.length + " nhân vật";
+  }
+  $("#q").addEventListener("input", renderList);
+  $("#reload").onclick = loadList;
+
+  /* ---------- Chi tiết ---------- */
+  function openChar(id) {
+    var box = $("#detail");
+    box.innerHTML = '<div class="card empty">Đang tải…</div>';
+    return db.collection("characters").doc(id).get().then(function (s) {
+      if (!s.exists) { box.innerHTML = '<div class="card empty">Không còn nhân vật này.</div>'; return; }
+      var d = s.data();
+      cur = { id: id, doc: d, save: parse(d.saveJson), appearance: parse(d.appearanceJson) };
+      renderList(); renderDetail();
+    });
+  }
+
+  function realmSelect(val) {
+    var s = el("select", { id: "f-realm" });
+    REALMS.forEach(function (r) { s.appendChild(el("option", { value: r.id, text: r.name, selected: r.id === val ? "" : null })); });
+    if (val && !REALM_NAME[val]) s.appendChild(el("option", { value: val, text: val, selected: "" }));
+    return s;
+  }
+  function itemOptions(filter, selected, allowEmpty) {
+    var s = el("select");
+    if (allowEmpty) s.appendChild(el("option", { value: "", text: "— trống —" }));
+    Object.keys(ITEMS).filter(function (k) { return filter(ITEMS[k]); })
+      .sort(function (a, b) { return ITEMS[a].name.localeCompare(ITEMS[b].name, "vi"); })
+      .forEach(function (k) {
+        s.appendChild(el("option", { value: k, text: ITEMS[k].name + " · " + (ITEMS[k].grade || ""), selected: k === selected ? "" : null }));
+      });
+    if (selected && !ITEMS[selected]) s.appendChild(el("option", { value: selected, text: selected, selected: "" }));
+    return s;
+  }
+
+  function renderDetail() {
+    var d = cur.doc, sv = cur.save, box = $("#detail");
+    box.innerHTML = "";
+    var online = Date.now() - toMs(d.updatedAt) < 60000;
+
+    // Đầu trang
+    box.appendChild(el("div", { class: "card" }, [
+      el("div", { class: "dhead" }, [
+        el("div", null, [
+          el("h2", { text: d.name || "(chưa đặt tên)" }),
+          el("div", { class: "meta", text: "UID: " + cur.id }),
+          el("div", { class: "meta", text: "Lưu lần cuối: " + fmtTime(d.updatedAt) + " · Phiên bản admin: " + (d.adminRev || 0) })
+        ]),
+        d.banned ? el("span", { class: "badge ban", text: "ĐANG KHOÁ" + (d.banReason ? ": " + d.banReason : "") }) : null
+      ]),
+      online ? el("p", { class: "warn", text: "Người chơi đang online. Khi bạn lưu, game của họ sẽ tự tải lại để nhận dữ liệu mới." }) : null
+    ]));
+
+    // Cảnh giới & chỉ số
+    var numsGrid = el("div", { class: "grid" }, [el("label", { class: "f" }, ["Cảnh giới", realmSelect(sv.realm || d.realm_id)])]);
+    NUMS.forEach(function (n) {
+      numsGrid.appendChild(el("label", { class: "f" }, [n[1],
+        el("input", { type: "number", "data-num": n[0], value: sv[n[0]] != null ? sv[n[0]] : 0, min: 0, step: 1 })]));
+    });
+    box.appendChild(el("div", { class: "card" }, [el("h3", { text: "Cảnh giới & chỉ số" }), numsGrid]));
+
+    // Trang bị
+    var eq = sv.equipment || {};
+    var eqGrid = el("div", { class: "grid" });
+    SLOTS.forEach(function (sl) {
+      var s = itemOptions(function (it) { return it.slot === sl[0]; }, eq[sl[0]] || "", true);
+      s.setAttribute("data-slot", sl[0]);
+      eqGrid.appendChild(el("label", { class: "f" }, [sl[1], s]));
+    });
+    box.appendChild(el("div", { class: "card" }, [el("h3", { text: "Trang bị đang mặc" }), eqGrid]));
+
+    // Túi đồ
+    var bag = sv.bag || {};
+    var tbody = el("tbody");
+    function bagRow(id, n) {
+      var tr = el("tr", { "data-item": id }, [
+        el("td", null, [itemName(id), el("div", { class: "g", text: id + (ITEMS[id] ? " · " + (ITEMS[id].grade || "") : "") })]),
+        el("td", null, [el("input", { type: "number", min: 0, max: MAX_STACK, value: n })]),
+        el("td", null, [el("button", { class: "danger", text: "Xoá", onclick: function () { tr.remove(); } })])
+      ]);
+      return tr;
+    }
+    Object.keys(bag).sort(function (a, b) { return itemName(a).localeCompare(itemName(b), "vi"); })
+      .forEach(function (id) { tbody.appendChild(bagRow(id, bag[id])); });
+    var addSel = itemOptions(function () { return true; }, "", false);
+    var addN = el("input", { type: "number", min: 1, max: MAX_STACK, value: 1, style: "width:90px" });
+    var addFilter = el("input", { type: "text", placeholder: "Lọc tên vật phẩm…" });
+    addFilter.addEventListener("input", function () {
+      var q = addFilter.value.trim().toLowerCase();
+      Array.prototype.forEach.call(addSel.options, function (o) { o.hidden = q && o.text.toLowerCase().indexOf(q) < 0; });
+      var first = Array.prototype.find.call(addSel.options, function (o) { return !o.hidden; });
+      if (first) addSel.value = first.value;
+    });
+    box.appendChild(el("div", { class: "card" }, [
+      el("h3", { text: "Túi đồ" }),
+      el("table", { class: "bag" }, [el("thead", null, [el("tr", null, [el("th", { text: "Vật phẩm" }), el("th", { text: "Số lượng" }), el("th")])]), tbody]),
+      el("div", { class: "row", style: "margin-top:10px" }, [addFilter, addSel, addN,
+        el("button", { text: "Thêm vào túi", onclick: function () {
+          var id = addSel.value, n = Math.max(1, Math.min(MAX_STACK, parseInt(addN.value, 10) || 1));
+          var ex = tbody.querySelector('tr[data-item="' + CSS.escape(id) + '"] input');
+          if (ex) ex.value = Math.min(MAX_STACK, (parseInt(ex.value, 10) || 0) + n);
+          else tbody.appendChild(bagRow(id, n));
+        } })])
+    ]));
+
+    // Khoá / ghi chú
+    var reason = el("input", { type: "text", placeholder: "Lý do khoá (người chơi sẽ thấy)", value: d.banReason || "" });
+    var note = el("input", { type: "text", placeholder: "Ghi chú riêng của admin", value: d.adminNote || "" });
+    box.appendChild(el("div", { class: "card" }, [
+      el("h3", { text: "Khoá tài khoản & ghi chú" }),
+      el("div", { class: "row" }, [reason,
+        d.banned
+          ? el("button", { text: "Mở khoá", onclick: function () { setBan(false, ""); } })
+          : el("button", { class: "danger", text: "Khoá tài khoản", onclick: function () {
+              if (confirm("Khoá " + (d.name || cur.id) + "? Người chơi sẽ bị đăng xuất khỏi game.")) setBan(true, reason.value.trim());
+            } })]),
+      el("div", { class: "row", style: "margin-top:8px" }, [note, el("button", { text: "Lưu ghi chú", onclick: function () {
+        db.collection("characters").doc(cur.id).update({ adminNote: note.value.trim() }).then(function () { toast("Đã lưu ghi chú."); });
+      } })])
+    ]));
+
+    // Sao lưu
+    var bkBox = el("div", null, [el("div", { class: "meta", text: "Đang tải…" })]);
+    box.appendChild(el("div", { class: "card" }, [el("h3", { text: "Bản sao lưu hằng ngày" }), bkBox]));
+    loadBackups(bkBox);
+
+    // Chuyển nhân vật
+    var target = el("select");
+    target.appendChild(el("option", { value: "", text: "— chọn tài khoản nhận —" }));
+    all.filter(function (c) { return c.id !== cur.id; }).forEach(function (c) {
+      target.appendChild(el("option", { value: c.id, text: (c.data.name || "(chưa đặt tên)") + " · " + c.id.slice(0, 8) + "…" }));
+    });
+    box.appendChild(el("div", { class: "card" }, [
+      el("h3", { text: "Chuyển nhân vật sang tài khoản khác" }),
+      el("p", { class: "meta", text: "Dùng khi bạn bè quên mật khẩu: họ đăng ký tài khoản mới và tạo nhân vật tạm, rồi bạn chép nhân vật cũ sang. Tài khoản cũ sẽ bị khoá." }),
+      el("div", { class: "row" }, [target, el("button", { class: "danger", text: "Chép sang", onclick: function () { transfer(target.value); } })])
+    ]));
+
+    // JSON thô
+    var raw = el("textarea", { class: "json", spellcheck: "false" });
+    raw.value = JSON.stringify(sv, null, 2);
+    box.appendChild(el("details", { class: "card" }, [
+      el("summary", { text: "Sửa dữ liệu thô (JSON) — cho người rành" }),
+      el("p", { class: "meta", text: "Nếu bạn sửa ở đây, bấm \"Áp dụng JSON\" — các ô phía trên sẽ được làm mới theo." }),
+      raw,
+      el("div", { class: "row", style: "margin-top:8px" }, [el("button", { text: "Áp dụng JSON", onclick: function () {
+        try { cur.save = JSON.parse(raw.value); renderDetail(); toast("Đã áp dụng, nhớ bấm Lưu."); }
+        catch (e) { alert("JSON lỗi: " + e.message); }
+      } })])
+    ]));
+
+    // Thanh lưu
+    var msg = el("span", { class: "msg", id: "save-msg" });
+    box.appendChild(el("div", { class: "savebar" }, [msg, el("div", { class: "row" }, [
+      el("button", { text: "Huỷ thay đổi", onclick: function () { openChar(cur.id); } }),
+      el("button", { class: "primary", text: "Lưu nhân vật", onclick: saveChar })
+    ])]));
+  }
+
+  function collect() {
+    var sv = JSON.parse(JSON.stringify(cur.save));
+    sv.realm = $("#f-realm").value;
+    document.querySelectorAll("[data-num]").forEach(function (i) {
+      sv[i.getAttribute("data-num")] = Math.max(0, Math.round(Number(i.value) || 0));
+    });
+    sv.equipment = sv.equipment || {};
+    document.querySelectorAll("[data-slot]").forEach(function (s) {
+      sv.equipment[s.getAttribute("data-slot")] = s.value || null;
+    });
+    var bag = {};
+    document.querySelectorAll("tr[data-item]").forEach(function (tr) {
+      var n = Math.min(MAX_STACK, Math.max(0, parseInt(tr.querySelector("input").value, 10) || 0));
+      if (n > 0) bag[tr.getAttribute("data-item")] = n;
+    });
+    sv.bag = bag;
+    // Đồ khoá (bound) không được nhiều hơn số đang có
+    if (sv.bound) for (var k in sv.bound) { if (!bag[k]) delete sv.bound[k]; else sv.bound[k] = Math.min(sv.bound[k], bag[k]); }
+    return sv;
+  }
+
+  function summary(sv) {
+    return { realm: sv.realm, exp: sv.exp, stones: sv.stones, bagCount: Object.keys(sv.bag || {}).length };
+  }
+  function log(action, uid, extra) {
+    var o = { action: action, uid: uid, by: me.uid, byName: (me.email || "").replace(FAKE, ""), at: FV.serverTimestamp() };
+    for (var k in extra) o[k] = extra[k];
+    return db.collection("adminLog").add(o).catch(function () {});
+  }
+
+  function saveChar() {
+    var sv = collect();
+    var before = summary(cur.save);
+    $("#save-msg").className = "msg"; $("#save-msg").textContent = "Đang lưu…";
+    db.collection("characters").doc(cur.id).update({
+      saveJson: JSON.stringify(sv),
+      realm_id: sv.realm,
+      exp: sv.exp || 0,
+      adminRev: FV.increment(1),
+      adminAt: FV.serverTimestamp()
+    }).then(function () {
+      log("edit", cur.id, { name: cur.doc.name || "", before: before, after: summary(sv) });
+      loadList();
+      return openChar(cur.id).then(function () { toast("Đã lưu. Nếu người chơi đang online, game của họ sẽ tự tải lại."); });
+    }).catch(function (e) {
+      $("#save-msg").className = "msg err"; $("#save-msg").textContent = "Lỗi: " + e.message;
+    });
+  }
+
+  function setBan(on, why) {
+    db.collection("characters").doc(cur.id).update({
+      banned: on, banReason: on ? why : "", adminRev: FV.increment(1), adminAt: FV.serverTimestamp()
+    }).then(function () {
+      log(on ? "ban" : "unban", cur.id, { name: cur.doc.name || "", reason: why });
+      loadList();
+      return openChar(cur.id).then(function () { toast(on ? "Đã khoá." : "Đã mở khoá."); });
+    }).catch(function (e) { alert(e.message); });
+  }
+
+  function loadBackups(box) {
+    db.collection("characters").doc(cur.id).collection("backups").get().then(function (qs) {
+      box.innerHTML = "";
+      if (qs.empty) { box.appendChild(el("div", { class: "meta", text: "Chưa có bản sao lưu nào. Game tự sao lưu một bản mỗi ngày khi người chơi vào game." })); return; }
+      var docs = qs.docs.slice().sort(function (a, b) { return a.id < b.id ? 1 : -1; });
+      var t = el("table", { class: "bag" }, [el("thead", null, [el("tr", null, [
+        el("th", { text: "Ngày" }), el("th", { text: "Cảnh giới" }), el("th", { text: "Tu vi" }), el("th")])])]);
+      var tb = el("tbody"); t.appendChild(tb);
+      docs.forEach(function (b) {
+        var bd = b.data(), bs = parse(bd.saveJson);
+        tb.appendChild(el("tr", null, [
+          el("td", { text: b.id }),
+          el("td", { text: REALM_NAME[bs.realm || bd.realm_id] || bs.realm || bd.realm_id || "?" }),
+          el("td", { text: String(bs.exp || bd.exp || 0) }),
+          el("td", null, [el("button", { text: "Khôi phục", onclick: function () {
+            if (!confirm("Khôi phục nhân vật về bản ngày " + b.id + "? Tiến trình sau ngày đó sẽ mất.")) return;
+            cur.save = bs; renderDetail();
+            toast("Đã nạp bản " + b.id + " vào ô chỉnh sửa. Bấm \"Lưu nhân vật\" để áp dụng.");
+          } })])
+        ]));
+      });
+      box.appendChild(t);
+    }).catch(function (e) { box.innerHTML = ""; box.appendChild(el("div", { class: "msg err", text: e.message })); });
+  }
+
+  function transfer(toId) {
+    if (!toId) { alert("Chọn tài khoản nhận trước."); return; }
+    var to = all.filter(function (c) { return c.id === toId; })[0];
+    if (!confirm("Chép nhân vật \"" + (cur.doc.name || cur.id) + "\" sang tài khoản \"" + ((to && to.data.name) || toId) +
+      "\"?\nNhân vật hiện có ở tài khoản nhận sẽ bị thay thế, tài khoản cũ sẽ bị khoá.")) return;
+    var d = cur.doc;
+    var copy = { name: d.name || "", appearanceJson: d.appearanceJson || "{}", saveJson: d.saveJson || "{}",
+      realm_id: d.realm_id || "pham_nhan", exp: d.exp || 0, adminRev: FV.increment(1), adminAt: FV.serverTimestamp(),
+      adminNote: "Chuyển từ " + cur.id };
+    ["map_id", "x", "y", "dir"].forEach(function (k) { if (d[k] !== undefined) copy[k] = d[k]; });
+    var batch = db.batch();
+    batch.set(db.collection("characters").doc(toId), copy, { merge: true });
+    batch.update(db.collection("characters").doc(cur.id), {
+      banned: true, banReason: "Nhân vật đã chuyển sang tài khoản mới", adminRev: FV.increment(1), adminAt: FV.serverTimestamp() });
+    batch.commit().then(function () {
+      log("transfer", cur.id, { to: toId, name: d.name || "" });
+      loadList();
+      return openChar(toId).then(function () { toast("Đã chuyển xong."); });
+    }).catch(function (e) { alert(e.message); });
+  }
+
+  function toast(t) {
+    var m = $("#save-msg");
+    if (m) { m.className = "msg ok"; m.textContent = t; } else alert(t);
+  }
+})();
+</script>
+</body>
+</html>

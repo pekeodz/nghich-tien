@@ -1,1 +1,566 @@
-!function(n){"use strict";var e=n.YenLangUI={st:null},t=0,a=null,o={},i=[],r=null,l={},u=-1,h=null,d=null,s=null,c=0,g=null,p=[],y=[],m=!1,f={tap_hop:"Tập hợp",chay:"Lên núi",toc_truong:"Tộc Trưởng",xong:"Kết thúc"};function x(){return n.YenLang}function b(){return n.HUD}function v(){return n.Gateway}function M(n){n&&b()&&b().setCaption&&b().setCaption(n)}function _(){return Date.now()+t}function k(){return!!x()&&((e=n.SceneWorld&&n.SceneWorld.map)&&e.data&&e.data.id||"")===x().MAP;var e}function w(){var n=v();return!!(n&&n.connected&&n.ready)}function L(){var n=v()&&v().party;return!!(n&&n.activeRunId&&/^yl-/.test(String(n.activeRunId)))}function S(){var n=x(),e=L(),t=v()&&v().party,a=t&&t.members?t.members.length:1,o=e?"Lượt của đội vẫn đang mở. Vào lại không tính thêm lượt.":n.CHU.xac_nhan+"\n\n"+(a<n.TOI_THIEU?"Cần lập tổ đội "+n.TOI_THIEU+"–"+n.TOI_DA+" người, đội trưởng đăng ký.":"Miễn phí, tính một lượt hôm nay của từng thành viên. Cả đội đang ở Miếu Hoang vào ngay.");b().openDialog("Yên Lãng Sơn",o,{actionLabel:e?"Vào lại":"Mở Yên Lãng Sơn",onAction:function(){w()?v().partyEnterDungeon(n.MAP):M("Cần kết nối máy chủ để mở phó bản tổ đội.")}})}e.fxTrangThai=function(){return{lenh:a,st:e.st,now:Date.now()+t}},e.choice=function(){var e=x();if(!e)return null;var t=n.SceneWorld&&n.SceneWorld.player,a=function(){var e=n.Quest&&n.Quest.flags||{},t=n.SceneWorld&&n.SceneWorld.player;return x().conLuot(e,Date.now(),t&&t.realmId)}(),o=L(),i=e.canhGioiHopLe(t&&t.realmId)?a<=0&&!o?"Hôm nay đã hết "+e.luotNgay(t&&t.realmId)+" lượt":"":"Cần Luyện Khí tầng 7 trở lên";return{label:o?"Vào lại Yên Lãng Sơn":e.CHU.dong_dang_ky,icon:"stone_core",note:i||(o?"Lượt đang mở — vào lại, không tính thêm lượt":e.ghiChu(a,t&&t.realmId)),disabled:!!i,onChoose:S}},e.onGoi=function(r){if(r)switch(r.serverNow&&(t=Number(r.serverNow)-Date.now()),r.act){case"yl_state":return function(n){if(n.ra)return e.st=null,a=null,o={},i=[],y=[],p=[],void I();e.st=n,i=Array.isArray(n.hai)?n.hai.slice():[],!n.lenh||a&&a.nid===n.lenh.nid&&a.moLuc===n.lenh.moLuc||(a={kieu:n.lenh.kieu,loai:n.lenh.loai,nid:n.lenh.nid,x:+n.lenh.x,y:+n.lenh.y,gd:n.lenh.gd,moLuc:+n.lenh.moLuc,dongLuc:+n.lenh.dongLuc,amPhaDen:0}),!n.lenh&&a&&"xong"!==a.gd&&(a=null),n.amPhaDen&&a&&"xong"===a.gd&&(a.amPhaDen=+n.amPhaDen),P(),I()}(r);case"yl_lenh":return function(n){"bao"!==n.k&&a?"mo"===n.k?(a.gd="mo",a.moLuc=+n.moLuc,a.dongLuc=+n.dongLuc):"dong"===n.k&&(a.gd="xong",a.amPhaDen=+n.amPhaDen||0,a.amPhaDen||(a=null)):a={kieu:n.kieu,loai:n.loai,nid:n.nid,x:+n.x,y:+n.y,gd:"mo"===n.k?"mo":"bao",moLuc:+n.moLuc,dongLuc:+n.dongLuc,amPhaDen:0},I()}(r);case"yl_hoa":return function(e){o[e.id]=_()+(Number(e.ms)||3e3);var t=v();t&&e.id===t.selfId&&(M("Thạch Hóa — ngươi "+("đứng yên"===e.ly?"đứng yên":String(e.ly||"phạm lệnh"))+"."),n.Camera&&n.Camera.shake&&n.Camera.shake(2.5,.2))}(r);case"yl_ma":return function(e){var t=x().MA&&x().MA.CHIEU[e.k];if(t&&Array.isArray(e.pts)&&e.pts.length&&k()){for(var a=n.VFX,o={k:e.k,bat:Date.now(),w:+e.w||t.bao,r:+e.r||t.r,pts:[],bx:+e.bx||0,by:+e.by||0,ap:[],no:[]},i=0;i<e.pts.length;i++)o.pts.push({x:+e.pts[i].x,y:+e.pts[i].y}),o.ap.push(!1),o.no.push(!1);if(y.push(o),a&&a.spawnText&&a.spawnText(o.bx,o.by-132,t.ten,"#e6b3ff"),"nguyet_quang"===e.k&&n.NguyetQuangFX)for(var r=0;r<o.pts.length;r++)n.NguyetQuangFX.spawn({x:o.bx,y:o.by},{x:o.pts[r].x,y:o.pts[r].y},{radius:o.r,hitDelay:o.w/1e3,ghost:!0});if("ma_hon_phe"===e.k&&a&&a.spawnMaHonPhe)for(var l=function(){for(var e=n.SceneWorld,t=e&&e.enemies,a=x()&&x().TOC_TRUONG_ID,o=0;t&&o<t.length;o++)if(t[o]&&t[o].id===a&&!t[o].dead)return t[o];return null}()||{x:o.bx,y:o.by},u={get x(){return l.x},get y(){return l.y-28}},h=0;h<o.pts.length;h++)a.spawnMaHonPhe(u,{x:o.pts[h].x,y:o.pts[h].y},{hitDelay:o.w/1e3})}}(r);case"yl_chieu":return function(e){if(T[e.k]&&k()){var t=n.VFX,a=x().CHIEU_QUAI&&x().CHIEU_QUAI[e.k],o={k:e.k,id:e.id,bat:Date.now(),w:+e.w||a&&a.bao||1400,r:+e.r||a&&a.r||50,x:+e.x,y:+e.y,sx:+e.sx,sy:+e.sy,ap:!1,no:!1};p.push(o),t&&t.spawnRing&&t.spawnRing(o.sx,o.sy-24,T[e.k].hex,22,.3)}}(r);case"yl_notice":return void(r.banner?e.banner(r.text,r.phu):M(r.text));case"yl_ruong":return function(n){var e=(Array.isArray(n.ds)?n.ds:[]).map(function(n){return"• "+(n.ten||n.id)+(n.n>1?" ×"+n.n:"")});b().openDialog("Rương Tế Đàn",e.length?e.join("\n")+(n.dat?"\n\nĐồ rơi quanh xác Tộc Trưởng — nhặt trước khi núi sụp.":"\n\nĐồ đã vào túi."):"Rương trống.",{})}(r)}};var T={hoa_cau:{ten:"Hoả Cầu",hex:"#ffd27a",mau:["255,120,40","255,214,120"]},phong:{ten:"Phong Nhận",hex:"#c8ffe6",mau:["90,200,150","200,255,230"]},loi:{ten:"Lôi Chưởng",hex:"#dce8ff",mau:["120,150,255","220,235,255"]}};function C(e){for(var t=n.SceneWorld,a=t&&t.enemies,o=0;a&&o<a.length;o++)if(a[o]&&a[o].id===e)return!a[o].dead;return!1}function P(){var e=n.SceneWorld&&n.SceneWorld.map;if(e&&e.props&&k())for(var t=0;t<e.props.length;t++){var a=e.props[t];/^yl_thao_\d$/.test(String(a.id))&&(a.hidden=i.indexOf(a.id)>=0)}}function I(){if((r||k())&&(!r&&document.body&&((r=document.createElement("aside")).id="yen-lang-hud",r.hidden=!0,r.setAttribute("aria-label","Yên Lãng Sơn"),r.innerHTML='<header><b class="yl-gd"></b><span class="yl-gio"></span></header><ul class="yl-muc"><li class="yl-bia"></li><li class="yl-ve"></li><li class="yl-boss"></li></ul><footer><span class="yl-luot"></span><button type="button" class="yl-roi">Rời</button></footer>',(document.getElementById&&document.getElementById("hud-right")||document.body).appendChild(r),l.gd=r.querySelector(".yl-gd"),l.gio=r.querySelector(".yl-gio"),l.bia=r.querySelector(".yl-bia"),l.ve=r.querySelector(".yl-ve"),l.boss=r.querySelector(".yl-boss"),l.luot=r.querySelector(".yl-luot"),l.roi=r.querySelector(".yl-roi"),l.roi.addEventListener("click",function(){b().openDialog("Rời Yên Lãng Sơn","Rời lượt hiện tại? Lượt đã tính không hoàn lại. Còn trong hạn lượt thì vào lại được ở nữ tu Miếu Hoang; ai không ở trong lúc Tộc Trưởng gục thì không có rương.",{actionLabel:"Rời bí cảnh",onAction:function(){w()&&v().partySend("leave_dungeon")}})})),P(),function(){if((h||k())&&(!h&&document.body&&((h=document.createElement("div")).id="yen-lang-lenh",h.hidden=!0,h.setAttribute("aria-live","assertive"),h.innerHTML="<b></b><small></small>",document.body.appendChild(h),(d=document.createElement("div")).id="yen-lang-vien",d.hidden=!0,document.body.appendChild(d)),h)){var n=x(),e=_();if(a&&"xong"===a.gd&&e>=a.amPhaDen&&(a=null),!a||!k()||!n)return h.hidden=!0,void(d.hidden=!0);var t="dao"===a.kieu?"dao":"tinh",o="",i="",r=!1;"bao"===a.gd?(o=("tinh"===t?"⏸ ":"🏃 ")+n.LOI_LENH[t],i="tinh"===t?"Sắp tới: đứng yên, đừng đánh":"Sắp tới: đừng đứng yên"):"mo"===a.gd?(o="tinh"===t?"⏸ ĐỨNG YÊN — ĐỪNG ĐÁNH":"🏃 CHẠY! ĐỪNG ĐỨNG YÊN",i=Math.max(0,Math.ceil((a.dongLuc-e)/1e3))+" giây",r=!0):"xong"===a.gd&&"tinh"===t&&(o="⚔ ÂM PHÁ",i="+"+Math.round(100*n.LENH.AM_PHA_THEM)+"% sát thương lên quái Thạch Tộc"),h.hidden=!o,h.className="yl-"+("xong"===a.gd?"amPha":t),h.querySelector("b").textContent=o,h.querySelector("small").textContent=i,d.hidden=!r,d.className="yl-"+t}}(),r)){var t=e.st,o=x(),i=!!(t&&k()&&o);if(r.hidden=!i,!i)return u=-1,void A(0);var s=_(),c=Math.max(0,function(n){return n.supLuc?n.supLuc:n.hetLuc}(t)-s),g=Math.ceil(c/1e3);"thua"!==t.ketQua&&g!==u&&n.Audio&&n.Audio.play&&("thang"===t.ketQua&&u<0||g<=30&&(g<=10||g%5==0))&&(n.Audio.play("dungeon_warning"),u=g),l.gd.textContent="Yên Lãng Sơn · "+("thua"===t.ketQua?"Núi đã khép":"thang"===t.ketQua?"Núi sắp sụp":f[t.gd]||""),l.gio.textContent=o.giayDoc(c),r.classList.toggle("urgent",c<=6e4);var p=t.bia||[],y=p.filter(function(n){return!n.vo}).length;l.bia.textContent="Trấn Sơn Bia: "+(y?y+"/"+p.length+" còn đứng":"✓ đã đổ hết"),l.bia.classList.toggle("xong",!y),l.ve.textContent=t.linhThaoMo?"Linh thảo: ✓ hái được":"Tuần Vệ: còn "+t.tuanVe,l.ve.classList.toggle("xong",!!t.linhThaoMo);var m=t.boss;if(m)l.boss.textContent="Tộc Trưởng "+(m.hpMax?Math.max(0,Math.round(m.hp/m.hpMax*100)):0)+"%"+(y?" · được hộ thể":"");else if(t.tocTruongHien)l.boss.textContent="Tộc Trưởng: đã gục";else{var M=t.tocTruongLuc?Math.max(0,t.tocTruongLuc-s):Math.max(0,t.tao+o.TOC_TRUONG_MUON_MS-s);l.boss.textContent="Tộc Trưởng: ngủ · tỉnh "+o.giayDoc(M)}var L=n.SceneWorld&&n.SceneWorld.player,S=o.luotNgay(L&&L.realmId);l.luot.textContent="Lượt "+Math.min(S,0|t.used)+"/"+S+" hôm nay",A(r.offsetHeight+6)}}e.closed=function(n){e.st=null,a=null,o={},i=[],y=[],p=[],I(),"yl_thua"===n?M(x().CHU.thua):"yl_sup"===n&&M("Núi đã sụp — cả đội được đưa ra Miếu Hoang.")},e.giuYen=function(n){return!(!a||"dao"===a.kieu||!n||n.downed||!k()||"bao"!==a.gd&&"mo"!==a.gd||(n.path&&n.path.length&&(n.path.length=0),0))},e.interact=function(n){return!(!(n&&k()&&/^yl_thao_\d$/.test(String(n.id)))||(i.indexOf(n.id)>=0?(M("Bụi này ngươi đã hái rồi."),0):e.st&&!e.st.linhThaoMo?(M("Phong ấn còn đó — hạ hai Nhím Tộc Tuần Vệ trước."),0):(w()?v().partySend("huyet_harvest",{propId:n.id}):M("Cần kết nối máy chủ."),0)))};var H=-1;function A(n){n!==H&&document.documentElement&&(H=n,n>0?document.documentElement.style.setProperty("--yl-hud-h",n+"px"):document.documentElement.style.removeProperty("--yl-hud-h"))}e.banner=function(n,e){document.body&&n&&(s||((s=document.createElement("div")).id="yen-lang-banner",s.setAttribute("aria-live","polite"),s.innerHTML="<b></b><small></small>",document.body.appendChild(s)),s.querySelector("b").textContent=n,s.querySelector("small").textContent=e||"",s.hidden=!1,s.classList.remove("hien"),s.offsetWidth,s.classList.add("hien"),c=Date.now()+3600)};var D={ma_bao_an:["176,76,255","226,170,255"],ma_hon_phe:["200,40,90","255,130,160"],tram_ma:["110,60,200","196,150,255"],nguyet_quang:["70,110,220","240,220,140"]},N={core:"#fbe8ff",mid:"#b04cff",edge:"#2a0638",glow:"#d27bff"};function F(n,e,t,a){e=Math.round(e),t=Math.round(t),n.save(),n.globalAlpha=.66,n.fillStyle="#9aa3ad",n.fillRect(e-11,t-46,22,46),n.fillStyle="#c9d0d8",n.fillRect(e-11,t-46,22,5),n.fillStyle="#6b737c",n.fillRect(e+4,t-41,7,41),n.globalAlpha=.9,n.strokeStyle="#3f464e",n.lineWidth=1,n.strokeRect(e-10.5,t-45.5,21,45),n.beginPath(),n.moveTo(e-3,t-44),n.lineTo(e+1,t-32),n.lineTo(e-3,t-22),n.lineTo(e+2,t-10),n.stroke(),n.restore()}e.draw=function(t,i,r,l){if(!k())return g=null,void(m=!1);m||(m=!0,n.VFX&&n.VFX.primeMaHonPhe&&n.VFX.primeMaHonPhe()),function(t,a,o,i){var r=n.SceneWorld&&n.SceneWorld.map,l=e.st;if(r&&r.props&&l&&n.VFX){var u=!!l.linhThaoMo,h=!1===g&&u;if(g=u,!u||h)for(var d=n.CONFIG&&n.CONFIG.TILE||32,s=0;s<r.props.length;s++){var c=r.props[s];if(!c.hidden&&/^yl_thao_\d$/.test(String(c.id))){var p=(c.tx+.5)*d,y=(c.ty+1)*d-2;h?n.VFX.spawnSealBreak&&n.VFX.spawnSealBreak(p,y):n.VFX.drawCamChe&&n.VFX.drawCamChe(t,Math.round(p-a),Math.round(y-o),i,1.7*s)}}}}(t,i,r,l),function(n,e,t,o){var i=x(),r=_();if(a&&"xong"!==a.gd){var l=i.LENH,u="dao"===a.kieu?"dao":"tinh",h=Math.round(a.x-e),d=Math.round(a.y-t),s="tinh"===u?"184,204,226":"255,74,58";if(n.save(),n.lineWidth=2,"bao"===a.gd)for(var c=Math.max(0,Math.min(1,(r-(a.moLuc-l.BAO_TRUOC_MS))/l.BAO_TRUOC_MS)),g=0;g<2;g++){var p=(2*c+.5*g)%1,y=30+270*p;n.strokeStyle="rgba("+s+","+(.85*(1-p)).toFixed(3)+")",n.setLineDash("tinh"===u?[6,5]:[]),n.lineWidth="dao"===u?3:2,n.beginPath(),n.ellipse(h,d,y,.5*y,0,0,2*Math.PI),n.stroke()}else if("mo"===a.gd){var m=.55+.25*Math.sin(o*("dao"===u?12:5));n.strokeStyle="rgba("+s+","+m.toFixed(3)+")",n.setLineDash("tinh"===u?[10,6]:[]),n.lineWidth="dao"===u?4:3,n.beginPath(),n.ellipse(h,d,300,150,0,0,2*Math.PI),n.stroke()}n.restore()}}(t,i,r,l),function(e,t,a,o){for(var i=n.VFX,r=n.Audio,l=Date.now(),u=y.length-1;u>=0;u--){var h=y[u],d=l-h.bat;if(d>h.w+500)y.splice(u,1);else for(var s=Math.max(0,Math.min(1,1-d/h.w)),c=.72+.28*Math.sin(o*(14-9*s)),g=D[h.k]||D.ma_bao_an,p=0;p<h.pts.length;p++){var m=h.pts[p],f=Math.round(m.x-t),x=Math.round(m.y-a);d<h.w&&(n.Pixel.ellipse(e,f,x,h.r,.5*h.r,"rgba("+g[0]+","+(.2+.24*(1-s)).toFixed(2)+")",null),n.Pixel.ellipse(e,f,x,h.r,.5*h.r,null,"rgba("+g[1]+","+c.toFixed(2)+")"),n.Pixel.ellipse(e,f,x,h.r-1,.5*h.r-1,null,"rgba("+g[1]+","+(.6*c).toFixed(2)+")"),n.Pixel.ellipse(e,f,x,Math.max(2,h.r*s),Math.max(1,h.r*s*.5),null,"rgba(250,236,255,0.95)"));var b="ma_bao_an"===h.k?700:"tram_ma"===h.k?260:-1;!h.ap[p]&&b>=0&&d>=h.w-b&&(h.ap[p]=!0,"ma_bao_an"===h.k&&i&&i.spawnMaBaoAn?i.spawnMaBaoAn(m.x,m.y,{colors:N,radius:h.r}):"tram_ma"===h.k&&i&&i.spawnTramMa&&i.spawnTramMa(m.x,m.y),r&&r.atPointSkill&&r.atPointSkill({id:h.k},m.x,m.y,{gain:.8})),!h.no[p]&&d>=h.w&&(h.no[p]=!0,"ma_bao_an"===h.k&&i&&i.spawnMaBaoAnImpact?i.spawnMaBaoAnImpact(m.x,m.y,{colors:N,radius:h.r}):"ma_hon_phe"===h.k&&i&&i.spawnRing&&i.spawnRing(m.x,m.y,"#ef315f",32,.4),"ma_hon_phe"===h.k&&r&&r.atPointSkill&&r.atPointSkill({id:"ma_hon_phe"},m.x,m.y,{gain:.8}))}}}(t,i,r,l),function(e,t,a,o){for(var i=n.VFX,r=Date.now(),l=n.Pixel,u=p.length-1;u>=0;u--){var h=p[u],d=r-h.bat;if(d>h.w+400||d<h.w&&!C(h.id))p.splice(u,1);else{var s=T[h.k].mau,c=Math.round(h.x-t),g=Math.round(h.y-a),y=Math.max(0,Math.min(1,1-d/h.w));if(d<h.w){var m=.7+.3*Math.sin(o*(14-8*y));if(l.ellipse(e,c,g,h.r,.5*h.r,"rgba("+s[0]+","+(.16+.22*(1-y)).toFixed(2)+")",null),l.ellipse(e,c,g,h.r,.5*h.r,null,"rgba("+s[1]+","+m.toFixed(2)+")"),l.ellipse(e,c,g,Math.max(2,h.r*y),Math.max(1,h.r*y*.5),null,"rgba(255,255,255,0.9)"),"hoa_cau"===h.k){var f=1-y,x=h.sx+(h.x-h.sx)*f,b=h.sy-26+(h.y-h.sy+26)*f-26*Math.sin(f*Math.PI),v=Math.round(x-t),M=Math.round(b-a);l.ellipse(e,v,M,7,7,"rgba(255,90,30,0.55)",null),l.ellipse(e,v,M,5,5,"rgba(255,170,60,0.95)",null),l.ellipse(e,v,M,2,2,"rgba(255,250,210,1)",null)}}!h.ap&&"loi"===h.k&&d>=h.w-160&&(h.ap=!0,i&&i.spawnLightning&&i.spawnLightning(h.x,h.y)),!h.no&&d>=h.w&&(h.no=!0,"hoa_cau"===h.k&&i&&i.spawnFireBurst?i.spawnFireBurst(h.x,h.y,null):"phong"===h.k&&i&&i.spawnWindBurst?i.spawnWindBurst(h.x,h.y,{core:"#eafff4",mid:"#5fd0a0",edge:"#1c6a50",glow:"#a8ffd8"}):"loi"===h.k&&i&&i.spawnRing&&i.spawnRing(h.x,h.y,"#dfe8ff",30,.35))}}}(t,i,r,l),function(e,t,a){var i=_(),r=v(),l=n.SceneWorld;for(var u in o)if(i>=o[u])delete o[u];else{var h=r&&u===r.selfId?l&&l.player:r&&r.remotes&&r.remotes[u];h&&!h.downed&&F(e,h.x-t,h.y-a)}}(t,i,r)},setInterval(function(){I(),s&&c&&Date.now()>c&&(s.hidden=!0,c=0)},100)}(window.PNTT);
+!function (n) {
+  "use strict";
+  var e = n.YenLangUI = { st: null };
+  var t = 0;
+  var a = null;
+  var o = {};
+  var i = [];
+  var r = null;
+  var l = {};
+  var u = -1;
+  var h = null;
+  var d = null;
+  var s = null;
+  var c = 0;
+  var g = null;
+  var p = [];
+  var y = [];
+  var m = !1;
+  var f = { tap_hop: "Tập hợp", chay: "Lên núi", toc_truong: "Tộc Trưởng", xong: "Kết thúc" };
+  function x() {
+    return n.YenLang;
+  }
+  function b() {
+    return n.HUD;
+  }
+  function v() {
+    return n.Gateway;
+  }
+  function M(n) {
+    if (n && b() && b().setCaption) {
+      b().setCaption(n);
+    }
+  }
+  function _() {
+    return Date.now() + t;
+  }
+  function k() {
+    return !!x() && ((e = n.SceneWorld && n.SceneWorld.map) && e.data && e.data.id || "") === x().MAP;
+    var e;
+  }
+  function w() {
+    var n = v();
+    return !!(n && n.connected && n.ready);
+  }
+  function L() {
+    var n = v() && v().party;
+    return !!(n && n.activeRunId && /^yl-/.test(String(n.activeRunId)));
+  }
+  function S() {
+    var n = x();
+    var e = L();
+    var t = v() && v().party;
+    var a = t && t.members ? t.members.length : 1;
+    var o = e ? "Lượt của đội vẫn đang mở. Vào lại không tính thêm lượt." : n.CHU.xac_nhan + "\n\n" + (a < n.TOI_THIEU ? "Cần lập tổ đội " + n.TOI_THIEU + "–" + n.TOI_DA + " người, đội trưởng đăng ký." : "Miễn phí, tính một lượt hôm nay của từng thành viên. Cả đội đang ở Miếu Hoang vào ngay.");
+    b().openDialog("Yên Lãng Sơn", o, { actionLabel: e ? "Vào lại" : "Mở Yên Lãng Sơn", onAction: function () {
+        if (w()) {
+          v().partyEnterDungeon(n.MAP);
+        }
+        else {
+          M("Cần kết nối máy chủ để mở phó bản tổ đội.");
+        }
+      } });
+  }
+  e.fxTrangThai = function () {
+    return { lenh: a, st: e.st, now: Date.now() + t };
+  };
+  e.choice = function () {
+    var e = x();
+    if (!e) {
+      return null;
+    }
+    var t = n.SceneWorld && n.SceneWorld.player;
+    var a = function () {
+      var e = n.Quest && n.Quest.flags || {};
+      var t = n.SceneWorld && n.SceneWorld.player;
+      return x().conLuot(e, Date.now(), t && t.realmId);
+    }();
+    var o = L();
+    var i = e.canhGioiHopLe(t && t.realmId) ? a <= 0 && !o ? "Hôm nay đã hết " + e.luotNgay(t && t.realmId) + " lượt" : "" : "Cần Luyện Khí tầng 7 trở lên";
+    return { label: o ? "Vào lại Yên Lãng Sơn" : e.CHU.dong_dang_ky, icon: "stone_core", note: i || (o ? "Lượt đang mở — vào lại, không tính thêm lượt" : e.ghiChu(a, t && t.realmId)), disabled: !!i, onChoose: S };
+  };
+  e.onGoi = function (r) {
+    if (r) {
+      switch ((r.serverNow && (t = Number(r.serverNow) - Date.now()), r.act)) {
+        case "yl_state": return function (n) {
+          if (n.ra) {
+            e.st = null;
+            a = null;
+            o = {};
+            i = [];
+            y = [];
+            p = [];
+            return void I();
+          }
+          e.st = n;
+          i = Array.isArray(n.hai) ? n.hai.slice() : [];
+          if (!(!n.lenh || a && a.nid === n.lenh.nid && a.moLuc === n.lenh.moLuc)) {
+            a = { kieu: n.lenh.kieu, loai: n.lenh.loai, nid: n.lenh.nid, x: +n.lenh.x, y: +n.lenh.y, gd: n.lenh.gd, moLuc: +n.lenh.moLuc, dongLuc: +n.lenh.dongLuc, amPhaDen: 0 };
+          }
+          if (!n.lenh && a && "xong" !== a.gd) {
+            a = null;
+          }
+          if (n.amPhaDen && a && "xong" === a.gd) {
+            a.amPhaDen = +n.amPhaDen;
+          }
+          P();
+          I();
+        }(r);
+        case "yl_lenh": return function (n) {
+          if ("bao" !== n.k && a) {
+            if ("mo" === n.k) {
+              a.gd = "mo";
+              a.moLuc = +n.moLuc;
+              a.dongLuc = +n.dongLuc;
+            }
+            else {
+              if ("dong" === n.k) {
+                a.gd = "xong";
+                a.amPhaDen = +n.amPhaDen || 0;
+                if (!(a.amPhaDen)) {
+                  a = null;
+                }
+              }
+            }
+          }
+          else {
+            a = { kieu: n.kieu, loai: n.loai, nid: n.nid, x: +n.x, y: +n.y, gd: "mo" === n.k ? "mo" : "bao", moLuc: +n.moLuc, dongLuc: +n.dongLuc, amPhaDen: 0 };
+          }
+          I();
+        }(r);
+        case "yl_hoa": return function (e) {
+          o[e.id] = _() + (Number(e.ms) || 3e3);
+          var t = v();
+          if (t && e.id === t.selfId) {
+            M("Thạch Hóa — ngươi " + ("đứng yên" === e.ly ? "đứng yên" : String(e.ly || "phạm lệnh")) + ".");
+            if (n.Camera && n.Camera.shake) {
+              n.Camera.shake(2.5, .2);
+            }
+          }
+        }(r);
+        case "yl_ma": return function (e) {
+          var t = x().MA && x().MA.CHIEU[e.k];
+          if (t && Array.isArray(e.pts) && e.pts.length && k()) {
+            for (var a = n.VFX, o = { k: e.k, bat: Date.now(), w: +e.w || t.bao, r: +e.r || t.r, pts: [], bx: +e.bx || 0, by: +e.by || 0, ap: [], no: [] }, i = 0; i < e.pts.length; i++)
+              o.pts.push({ x: +e.pts[i].x, y: +e.pts[i].y }), o.ap.push(!1), o.no.push(!1);
+            if (y.push(o), a && a.spawnText && a.spawnText(o.bx, o.by - 132, t.ten, "#e6b3ff"), "nguyet_quang" === e.k && n.NguyetQuangFX) {
+              for (var r = 0; r < o.pts.length; r++)
+                n.NguyetQuangFX.spawn({ x: o.bx, y: o.by }, { x: o.pts[r].x, y: o.pts[r].y }, { radius: o.r, hitDelay: o.w / 1e3, ghost: !0 });
+            }
+            if ("ma_hon_phe" === e.k && a && a.spawnMaHonPhe) {
+              for (var l = function () {
+                for (var e = n.SceneWorld, t = e && e.enemies, a = x() && x().TOC_TRUONG_ID, o = 0; t && o < t.length; o++)
+                  if (t[o] && t[o].id === a && !t[o].dead) {
+                    return t[o];
+                  }
+                return null;
+              }() || { x: o.bx, y: o.by }, u = { get x() {
+                  return l.x;
+                }, get y() {
+                  return l.y - 28;
+                } }, h = 0; h < o.pts.length; h++)
+                a.spawnMaHonPhe(u, { x: o.pts[h].x, y: o.pts[h].y }, { hitDelay: o.w / 1e3 });
+            }
+          }
+        }(r);
+        case "yl_chieu": return function (e) {
+          if (T[e.k] && k()) {
+            var t = n.VFX;
+            var a = x().CHIEU_QUAI && x().CHIEU_QUAI[e.k];
+            var o = { k: e.k, id: e.id, bat: Date.now(), w: +e.w || a && a.bao || 1400, r: +e.r || a && a.r || 50, x: +e.x, y: +e.y, sx: +e.sx, sy: +e.sy, ap: !1, no: !1 };
+            p.push(o);
+            if (t && t.spawnRing) {
+              t.spawnRing(o.sx, o.sy - 24, T[e.k].hex, 22, .3);
+            }
+          }
+        }(r);
+        case "yl_notice": return void (r.banner ? e.banner(r.text, r.phu) : M(r.text));
+        case "yl_ruong": return function (n) {
+          var e = (Array.isArray(n.ds) ? n.ds : []).map(function (n) {
+            return "• " + (n.ten || n.id) + (n.n > 1 ? " ×" + n.n : "");
+          });
+          b().openDialog("Rương Tế Đàn", e.length ? e.join("\n") + (n.dat ? "\n\nĐồ rơi quanh xác Tộc Trưởng — nhặt trước khi núi sụp." : "\n\nĐồ đã vào túi.") : "Rương trống.", {});
+        }(r);
+      }
+    }
+  };
+  var T = { hoa_cau: { ten: "Hoả Cầu", hex: "#ffd27a", mau: ["255,120,40", "255,214,120"] }, phong: { ten: "Phong Nhận", hex: "#c8ffe6", mau: ["90,200,150", "200,255,230"] }, loi: { ten: "Lôi Chưởng", hex: "#dce8ff", mau: ["120,150,255", "220,235,255"] } };
+  function C(e) {
+    for (var t = n.SceneWorld, a = t && t.enemies, o = 0; a && o < a.length; o++)
+      if (a[o] && a[o].id === e) {
+        return !a[o].dead;
+      }
+    return !1;
+  }
+  function P() {
+    var e = n.SceneWorld && n.SceneWorld.map;
+    if (e && e.props && k()) {
+      for (var t = 0; t < e.props.length; t++) {
+        var a = e.props[t];
+        if (/^yl_thao_\d$/.test(String(a.id))) {
+          a.hidden = i.indexOf(a.id) >= 0;
+        }
+      }
+    }
+  }
+  function I() {
+    if ((r || k()) && (!r && document.body && ((r = document.createElement("aside")).id = "yen-lang-hud", r.hidden = !0, r.setAttribute("aria-label", "Yên Lãng Sơn"), r.innerHTML = '<header><b class="yl-gd"></b><span class="yl-gio"></span></header><ul class="yl-muc"><li class="yl-bia"></li><li class="yl-ve"></li><li class="yl-boss"></li></ul><footer><span class="yl-luot"></span><button type="button" class="yl-roi">Rời</button></footer>', (document.getElementById && document.getElementById("hud-right") || document.body).appendChild(r), l.gd = r.querySelector(".yl-gd"), l.gio = r.querySelector(".yl-gio"), l.bia = r.querySelector(".yl-bia"), l.ve = r.querySelector(".yl-ve"), l.boss = r.querySelector(".yl-boss"), l.luot = r.querySelector(".yl-luot"), l.roi = r.querySelector(".yl-roi"), l.roi.addEventListener("click", function () {
+      b().openDialog("Rời Yên Lãng Sơn", "Rời lượt hiện tại? Lượt đã tính không hoàn lại. Còn trong hạn lượt thì vào lại được ở nữ tu Miếu Hoang; ai không ở trong lúc Tộc Trưởng gục thì không có rương.", { actionLabel: "Rời bí cảnh", onAction: function () {
+          if (w()) {
+            v().partySend("leave_dungeon");
+          }
+        } });
+    })), P(), function () {
+      if ((h || k()) && (!h && document.body && ((h = document.createElement("div")).id = "yen-lang-lenh", h.hidden = !0, h.setAttribute("aria-live", "assertive"), h.innerHTML = "<b></b><small></small>", document.body.appendChild(h), (d = document.createElement("div")).id = "yen-lang-vien", d.hidden = !0, document.body.appendChild(d)), h)) {
+        var n = x();
+        var e = _();
+        if (a && "xong" === a.gd && e >= a.amPhaDen && (a = null), !a || !k() || !n) {
+          h.hidden = !0;
+          return void (d.hidden = !0);
+        }
+        var t = "dao" === a.kieu ? "dao" : "tinh";
+        var o = "";
+        var i = "";
+        var r = !1;
+        if ("bao" === a.gd) {
+          o = ("tinh" === t ? "⏸ " : "🏃 ") + n.LOI_LENH[t];
+          i = "tinh" === t ? "Sắp tới: đứng yên, đừng đánh" : "Sắp tới: đừng đứng yên";
+        }
+        else {
+          if ("mo" === a.gd) {
+            o = "tinh" === t ? "⏸ ĐỨNG YÊN — ĐỪNG ĐÁNH" : "🏃 CHẠY! ĐỪNG ĐỨNG YÊN";
+            i = Math.max(0, Math.ceil((a.dongLuc - e) / 1e3)) + " giây";
+            r = !0;
+          }
+          else {
+            if ("xong" === a.gd && "tinh" === t) {
+              o = "⚔ ÂM PHÁ";
+              i = "+" + Math.round(100 * n.LENH.AM_PHA_THEM) + "% sát thương lên quái Thạch Tộc";
+            }
+          }
+        }
+        h.hidden = !o;
+        h.className = "yl-" + ("xong" === a.gd ? "amPha" : t);
+        h.querySelector("b").textContent = o;
+        h.querySelector("small").textContent = i;
+        d.hidden = !r;
+        d.className = "yl-" + t;
+      }
+    }(), r)) {
+      var t = e.st;
+      var o = x();
+      var i = !!(t && k() && o);
+      if (r.hidden = !i, !i) {
+        u = -1;
+        return void A(0);
+      }
+      var s = _();
+      var c = Math.max(0, function (n) {
+        return n.supLuc ? n.supLuc : n.hetLuc;
+      }(t) - s);
+      var g = Math.ceil(c / 1e3);
+      if ("thua" !== t.ketQua && g !== u && n.Audio && n.Audio.play && ("thang" === t.ketQua && u < 0 || g <= 30 && (g <= 10 || g % 5 == 0))) {
+        n.Audio.play("dungeon_warning");
+        u = g;
+      }
+      l.gd.textContent = "Yên Lãng Sơn · " + ("thua" === t.ketQua ? "Núi đã khép" : "thang" === t.ketQua ? "Núi sắp sụp" : f[t.gd] || "");
+      l.gio.textContent = o.giayDoc(c);
+      r.classList.toggle("urgent", c <= 6e4);
+      var p = t.bia || [];
+      var y = p.filter(function (n) {
+        return !n.vo;
+      }).length;
+      l.bia.textContent = "Trấn Sơn Bia: " + (y ? y + "/" + p.length + " còn đứng" : "✓ đã đổ hết");
+      l.bia.classList.toggle("xong", !y);
+      l.ve.textContent = t.linhThaoMo ? "Linh thảo: ✓ hái được" : "Tuần Vệ: còn " + t.tuanVe;
+      l.ve.classList.toggle("xong", !!t.linhThaoMo);
+      var m = t.boss;
+      if (m) {
+        l.boss.textContent = "Tộc Trưởng " + (m.hpMax ? Math.max(0, Math.round(m.hp / m.hpMax * 100)) : 0) + "%" + (y ? " · được hộ thể" : "");
+      }
+      else if (t.tocTruongHien) {
+        l.boss.textContent = "Tộc Trưởng: đã gục";
+      }
+      else {
+        var M = t.tocTruongLuc ? Math.max(0, t.tocTruongLuc - s) : Math.max(0, t.tao + o.TOC_TRUONG_MUON_MS - s);
+        l.boss.textContent = "Tộc Trưởng: ngủ · tỉnh " + o.giayDoc(M);
+      }
+      var L = n.SceneWorld && n.SceneWorld.player;
+      var S = o.luotNgay(L && L.realmId);
+      l.luot.textContent = "Lượt " + Math.min(S, 0 | t.used) + "/" + S + " hôm nay";
+      A(r.offsetHeight + 6);
+    }
+  }
+  e.closed = function (n) {
+    e.st = null;
+    a = null;
+    o = {};
+    i = [];
+    y = [];
+    p = [];
+    I();
+    if ("yl_thua" === n) {
+      M(x().CHU.thua);
+    }
+    else {
+      if ("yl_sup" === n) {
+        M("Núi đã sụp — cả đội được đưa ra Miếu Hoang.");
+      }
+    }
+  };
+  e.giuYen = function (n) {
+    return !(!a || "dao" === a.kieu || !n || n.downed || !k() || "bao" !== a.gd && "mo" !== a.gd || (n.path && n.path.length && (n.path.length = 0), 0));
+  };
+  e.interact = function (n) {
+    return !(!(n && k() && /^yl_thao_\d$/.test(String(n.id))) || (i.indexOf(n.id) >= 0 ? (M("Bụi này ngươi đã hái rồi."), 0) : e.st && !e.st.linhThaoMo ? (M("Phong ấn còn đó — hạ hai Nhím Tộc Tuần Vệ trước."), 0) : (w() ? v().partySend("huyet_harvest", { propId: n.id }) : M("Cần kết nối máy chủ."), 0)));
+  };
+  var H = -1;
+  function A(n) {
+    if (n !== H && document.documentElement) {
+      H = n;
+      if (n > 0) {
+        document.documentElement.style.setProperty("--yl-hud-h", n + "px");
+      }
+      else {
+        document.documentElement.style.removeProperty("--yl-hud-h");
+      }
+    }
+  }
+  e.banner = function (n, e) {
+    if (document.body && n) {
+      if (!(s)) {
+        (s = document.createElement("div")).id = "yen-lang-banner";
+        s.setAttribute("aria-live", "polite");
+        s.innerHTML = "<b></b><small></small>";
+        document.body.appendChild(s);
+      }
+      s.querySelector("b").textContent = n;
+      s.querySelector("small").textContent = e || "";
+      s.hidden = !1;
+      s.classList.remove("hien");
+      s.offsetWidth;
+      s.classList.add("hien");
+      c = Date.now() + 3600;
+    }
+  };
+  var D = { ma_bao_an: ["176,76,255", "226,170,255"], ma_hon_phe: ["200,40,90", "255,130,160"], tram_ma: ["110,60,200", "196,150,255"], nguyet_quang: ["70,110,220", "240,220,140"] };
+  var N = { core: "#fbe8ff", mid: "#b04cff", edge: "#2a0638", glow: "#d27bff" };
+  function F(n, e, t, a) {
+    e = Math.round(e);
+    t = Math.round(t);
+    n.save();
+    n.globalAlpha = .66;
+    n.fillStyle = "#9aa3ad";
+    n.fillRect(e - 11, t - 46, 22, 46);
+    n.fillStyle = "#c9d0d8";
+    n.fillRect(e - 11, t - 46, 22, 5);
+    n.fillStyle = "#6b737c";
+    n.fillRect(e + 4, t - 41, 7, 41);
+    n.globalAlpha = .9;
+    n.strokeStyle = "#3f464e";
+    n.lineWidth = 1;
+    n.strokeRect(e - 10.5, t - 45.5, 21, 45);
+    n.beginPath();
+    n.moveTo(e - 3, t - 44);
+    n.lineTo(e + 1, t - 32);
+    n.lineTo(e - 3, t - 22);
+    n.lineTo(e + 2, t - 10);
+    n.stroke();
+    n.restore();
+  }
+  e.draw = function (t, i, r, l) {
+    if (!k()) {
+      g = null;
+      return void (m = !1);
+    }
+    if (!(m)) {
+      m = !0;
+      if (n.VFX && n.VFX.primeMaHonPhe) {
+        n.VFX.primeMaHonPhe();
+      }
+    }
+    (function (t, a, o, i) {
+      var r = n.SceneWorld && n.SceneWorld.map;
+      var l = e.st;
+      if (r && r.props && l && n.VFX) {
+        var u = !!l.linhThaoMo;
+        var h = !1 === g && u;
+        if (g = u, !u || h) {
+          for (var d = n.CONFIG && n.CONFIG.TILE || 32, s = 0; s < r.props.length; s++) {
+            var c = r.props[s];
+            if (!c.hidden && /^yl_thao_\d$/.test(String(c.id))) {
+              var p = (c.tx + .5) * d;
+              var y = (c.ty + 1) * d - 2;
+              if (h) {
+                if (n.VFX.spawnSealBreak) {
+                  n.VFX.spawnSealBreak(p, y);
+                }
+              }
+              else {
+                if (n.VFX.drawCamChe) {
+                  n.VFX.drawCamChe(t, Math.round(p - a), Math.round(y - o), i, 1.7 * s);
+                }
+              }
+            }
+          }
+        }
+      }
+    })(t, i, r, l);
+    (function (n, e, t, o) {
+      var i = x();
+      var r = _();
+      if (a && "xong" !== a.gd) {
+        var l = i.LENH;
+        var u = "dao" === a.kieu ? "dao" : "tinh";
+        var h = Math.round(a.x - e);
+        var d = Math.round(a.y - t);
+        var s = "tinh" === u ? "184,204,226" : "255,74,58";
+        if (n.save(), n.lineWidth = 2, "bao" === a.gd) {
+          for (var c = Math.max(0, Math.min(1, (r - (a.moLuc - l.BAO_TRUOC_MS)) / l.BAO_TRUOC_MS)), g = 0; g < 2; g++) {
+            var p = (2 * c + .5 * g) % 1;
+            var y = 30 + 270 * p;
+            n.strokeStyle = "rgba(" + s + "," + (.85 * (1 - p)).toFixed(3) + ")";
+            n.setLineDash("tinh" === u ? [6, 5] : []);
+            n.lineWidth = "dao" === u ? 3 : 2;
+            n.beginPath();
+            n.ellipse(h, d, y, .5 * y, 0, 0, 2 * Math.PI);
+            n.stroke();
+          }
+        }
+        else if ("mo" === a.gd) {
+          var m = .55 + .25 * Math.sin(o * ("dao" === u ? 12 : 5));
+          n.strokeStyle = "rgba(" + s + "," + m.toFixed(3) + ")";
+          n.setLineDash("tinh" === u ? [10, 6] : []);
+          n.lineWidth = "dao" === u ? 4 : 3;
+          n.beginPath();
+          n.ellipse(h, d, 300, 150, 0, 0, 2 * Math.PI);
+          n.stroke();
+        }
+        n.restore();
+      }
+    })(t, i, r, l);
+    (function (e, t, a, o) {
+      for (var i = n.VFX, r = n.Audio, l = Date.now(), u = y.length - 1; u >= 0; u--) {
+        var h = y[u];
+        var d = l - h.bat;
+        if (d > h.w + 500) {
+          y.splice(u, 1);
+        }
+        else {
+          for (var s = Math.max(0, Math.min(1, 1 - d / h.w)), c = .72 + .28 * Math.sin(o * (14 - 9 * s)), g = D[h.k] || D.ma_bao_an, p = 0; p < h.pts.length; p++) {
+            var m = h.pts[p];
+            var f = Math.round(m.x - t);
+            var x = Math.round(m.y - a);
+            if (d < h.w) {
+              n.Pixel.ellipse(e, f, x, h.r, .5 * h.r, "rgba(" + g[0] + "," + (.2 + .24 * (1 - s)).toFixed(2) + ")", null);
+              n.Pixel.ellipse(e, f, x, h.r, .5 * h.r, null, "rgba(" + g[1] + "," + c.toFixed(2) + ")");
+              n.Pixel.ellipse(e, f, x, h.r - 1, .5 * h.r - 1, null, "rgba(" + g[1] + "," + (.6 * c).toFixed(2) + ")");
+              n.Pixel.ellipse(e, f, x, Math.max(2, h.r * s), Math.max(1, h.r * s * .5), null, "rgba(250,236,255,0.95)");
+            }
+            var b = "ma_bao_an" === h.k ? 700 : "tram_ma" === h.k ? 260 : -1;
+            if (!h.ap[p] && b >= 0 && d >= h.w - b) {
+              h.ap[p] = !0;
+              if ("ma_bao_an" === h.k && i && i.spawnMaBaoAn) {
+                i.spawnMaBaoAn(m.x, m.y, { colors: N, radius: h.r });
+              }
+              else {
+                if ("tram_ma" === h.k && i && i.spawnTramMa) {
+                  i.spawnTramMa(m.x, m.y);
+                }
+              }
+              if (r && r.atPointSkill) {
+                r.atPointSkill({ id: h.k }, m.x, m.y, { gain: .8 });
+              }
+            }
+            if (!h.no[p] && d >= h.w) {
+              h.no[p] = !0;
+              if ("ma_bao_an" === h.k && i && i.spawnMaBaoAnImpact) {
+                i.spawnMaBaoAnImpact(m.x, m.y, { colors: N, radius: h.r });
+              }
+              else {
+                if ("ma_hon_phe" === h.k && i && i.spawnRing) {
+                  i.spawnRing(m.x, m.y, "#ef315f", 32, .4);
+                }
+              }
+              if ("ma_hon_phe" === h.k && r && r.atPointSkill) {
+                r.atPointSkill({ id: "ma_hon_phe" }, m.x, m.y, { gain: .8 });
+              }
+            }
+          }
+        }
+      }
+    })(t, i, r, l);
+    (function (e, t, a, o) {
+      for (var i = n.VFX, r = Date.now(), l = n.Pixel, u = p.length - 1; u >= 0; u--) {
+        var h = p[u];
+        var d = r - h.bat;
+        if (d > h.w + 400 || d < h.w && !C(h.id)) {
+          p.splice(u, 1);
+        }
+        else {
+          var s = T[h.k].mau;
+          var c = Math.round(h.x - t);
+          var g = Math.round(h.y - a);
+          var y = Math.max(0, Math.min(1, 1 - d / h.w));
+          if (d < h.w) {
+            var m = .7 + .3 * Math.sin(o * (14 - 8 * y));
+            if (l.ellipse(e, c, g, h.r, .5 * h.r, "rgba(" + s[0] + "," + (.16 + .22 * (1 - y)).toFixed(2) + ")", null), l.ellipse(e, c, g, h.r, .5 * h.r, null, "rgba(" + s[1] + "," + m.toFixed(2) + ")"), l.ellipse(e, c, g, Math.max(2, h.r * y), Math.max(1, h.r * y * .5), null, "rgba(255,255,255,0.9)"), "hoa_cau" === h.k) {
+              var f = 1 - y;
+              var x = h.sx + (h.x - h.sx) * f;
+              var b = h.sy - 26 + (h.y - h.sy + 26) * f - 26 * Math.sin(f * Math.PI);
+              var v = Math.round(x - t);
+              var M = Math.round(b - a);
+              l.ellipse(e, v, M, 7, 7, "rgba(255,90,30,0.55)", null);
+              l.ellipse(e, v, M, 5, 5, "rgba(255,170,60,0.95)", null);
+              l.ellipse(e, v, M, 2, 2, "rgba(255,250,210,1)", null);
+            }
+          }
+          if (!h.ap && "loi" === h.k && d >= h.w - 160) {
+            h.ap = !0;
+            if (i && i.spawnLightning) {
+              i.spawnLightning(h.x, h.y);
+            }
+          }
+          if (!h.no && d >= h.w) {
+            h.no = !0;
+            if ("hoa_cau" === h.k && i && i.spawnFireBurst) {
+              i.spawnFireBurst(h.x, h.y, null);
+            }
+            else {
+              if ("phong" === h.k && i && i.spawnWindBurst) {
+                i.spawnWindBurst(h.x, h.y, { core: "#eafff4", mid: "#5fd0a0", edge: "#1c6a50", glow: "#a8ffd8" });
+              }
+              else {
+                if ("loi" === h.k && i && i.spawnRing) {
+                  i.spawnRing(h.x, h.y, "#dfe8ff", 30, .35);
+                }
+              }
+            }
+          }
+        }
+      }
+    })(t, i, r, l);
+    (function (e, t, a) {
+      var i = _();
+      var r = v();
+      var l = n.SceneWorld;
+      for (var u in o)
+        if (i >= o[u]) {
+          delete o[u];
+        }
+        else {
+          var h = r && u === r.selfId ? l && l.player : r && r.remotes && r.remotes[u];
+          if (h && !h.downed) {
+            F(e, h.x - t, h.y - a);
+          }
+        }
+    })(t, i, r);
+  };
+  setInterval(function () {
+    I();
+    if (s && c && Date.now() > c) {
+      s.hidden = !0;
+      c = 0;
+    }
+  }, 100);
+}(window.PNTT);

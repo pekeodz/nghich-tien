@@ -1,1 +1,135 @@
-!function(n){"use strict";var t,h=n.Market={};h.NPC_ID="van_bao_phuong",h.FEE_RATE=.1,h.MIN_PRICE=10,h.MAX_PRICE=1e8,h.MAX_QTY=9999,h.TTL_MS=1728e5,h.MAX_LISTINGS=10,h.PAGE_SIZE=30,h.EMAIL_NOI_BO="@players.phamnhan.game",h.CAN_EMAIL=!1,h.emailThat=function(n){var t=String(n||"").trim().toLowerCase();return t.indexOf("@")>0&&t.slice(-h.EMAIL_NOI_BO.length)!==h.EMAIL_NOI_BO},h.GROUPS=[{id:"trang-bi",ten:"Trang Bị"},{id:"vat-pham",ten:"Vật Phẩm"},{id:"dao-thuat",ten:"Bí Tịch · Phù"}],h.GROUP_IDS=h.GROUPS.map(function(n){return n.id}),h.group=function(n){return n?n.slot?"trang-bi":"bi_tich"===n.type||"phu_chu"===n.type?"dao-thuat":"vat-pham":"vat-pham"},h.SUBS={"trang-bi":[{id:"vu_khi",ten:"Vũ Khí"},{id:"mu",ten:"Pháp Bảo"},{id:"phi_hanh",ten:"Phi Hành"},{id:"ao",ten:"Y Phục"},{id:"giap",ten:"Giáp"},{id:"giay",ten:"Hành Ngoa"},{id:"phap_boi",ten:"Pháp Bội"},{id:"nhan",ten:"Linh Giới"}],"vat-pham":[{id:"dan_duoc",ten:"Đan Dược"},{id:"duoc_lieu",ten:"Dược Liệu"},{id:"hat_giong",ten:"Hạt Giống"},{id:"nguyen_lieu",ten:"Nguyên Liệu"},{id:"ren_khi",ten:"Rèn Khí"},{id:"thuc_pham",ten:"Thực Phẩm"},{id:"tran_ban",ten:"Trận Bàn"},{id:"khac",ten:"Khác"}],"dao-thuat":[{id:"bi_tich",ten:"Bí Tịch"},{id:"phu_chu",ten:"Phù Chú"}]},h.SUB_IDS=(t=[],h.GROUP_IDS.forEach(function(n){h.SUBS[n].forEach(function(n){t.indexOf(n.id)<0&&t.push(n.id)})}),t);var i={dan_duoc:"dan_duoc",duoc_lieu:"duoc_lieu",hat_giong:"hat_giong",nguyen_lieu:"nguyen_lieu",nguyen_lieu_ren_khi:"ren_khi",thuc_pham:"thuc_pham",thuc_an_linh_thu:"thuc_pham",tran_ban:"tran_ban"};h.subOk=function(n,t){var i=Object.prototype.hasOwnProperty.call(h.SUBS,n)?h.SUBS[n]:null;return!(!i||"string"!=typeof t)&&i.some(function(n){return n.id===t})},h.sub=function(n){var t=h.group(n),e=null,u=Object.prototype.hasOwnProperty;return n&&("trang-bi"===t?e=n.slot:"dao-thuat"===t?e="phu_chu"===n.type?"phu_chu":"bi_tich":u.call(i,n.type)&&(e=i[n.type])),h.subOk(t,e)?e:"khac"},h.KHOA_TIEN_TRINH={thang_tien_lenh:!0,phuong_tu_khi_dan:!0,truc_co_dan:!0},n.LuyenQuy&&n.LuyenQuy.KHOA_CHO&&n.LuyenQuy.KHOA_CHO.forEach(function(n){h.KHOA_TIEN_TRINH[n]=!0}),n.ChinhDao&&n.ChinhDao.KHOA_CHO&&n.ChinhDao.KHOA_CHO.forEach(function(n){h.KHOA_TIEN_TRINH[n]=!0}),n.HacThi&&n.HacThi.KHOA_CHO&&n.HacThi.KHOA_CHO.forEach(function(n){h.KHOA_TIEN_TRINH[n]=!0}),h.MO_CHO={hiep_nghia_lenh:!0,pham_hon:!0,oan_hon:!0,tu_si_hon:!0,thu_hon_3:!0,thu_hon_4:!0,thu_hon_6:!0},h.whyNot=function(t,i){var e=i&&i.ITEMS||n.ITEMS||{},u=Object.prototype.hasOwnProperty.call(e,t)?e[t]:null;return u?"tien_te"===u.type?"tiền tệ không bày bán được":String(u.type||"").indexOf("nhiem_vu")>=0?"đồ nhiệm vụ không bán được":h.KHOA_TIEN_TRINH[t]&&!h.MO_CHO[t]?u.name+" là vật dẫn đường tu luyện, không bán được":null:"vật phẩm không có thật"},h.tradable=function(n,t){return!h.whyNot(n,t)},h.fee=function(n){return Math.max(1,Math.floor((0|n)*h.FEE_RATE))},h.payout=function(n){return(0|n)-h.fee(n)},h.priceOk=function(n){return"number"==typeof n&&Number.isSafeInteger(n)&&n>=h.MIN_PRICE&&n<=h.MAX_PRICE},h.qtyOk=function(n){return"number"==typeof n&&Number.isSafeInteger(n)&&n>=1&&n<=h.MAX_QTY},h.checkPost=function(n,t,i,e,u){var a=h.whyNot(t,n);if(a)return{ok:!1,why:a};if(!h.qtyOk(i))return{ok:!1,why:"số lượng không hợp lệ"};if(!h.priceOk(e))return{ok:!1,why:"giá phải từ "+h.fmt(h.MIN_PRICE)+" tới "+h.fmt(h.MAX_PRICE)+" Linh Thạch"};if((0|u)>=h.MAX_LISTINGS)return{ok:!1,why:"mỗi người chỉ treo tối đa "+h.MAX_LISTINGS+" món"};var r=n&&n.Inventory;if(!r)return{ok:!1,why:"không đọc được hành trang"};if(!r.canTrade(t,i)){var o=r.tradableCount(t);return{ok:!1,why:o>0?"chỉ còn "+o+" món bán được (phần còn lại đã Khóa Thần Niệm)":r.count(t)>0?"món này đã Khóa Thần Niệm":"không có món này trong túi"}}return{ok:!0,fee:h.fee(e),payout:h.payout(e)}},h.lastSkillBook=function(n,t,h){var i=n&&n.ITEMS&&n.ITEMS[t];return!(!i||"bi_tich"!==i.type||!n.Inventory)&&n.Inventory.count(t)-(0|h)<=0},h.fmt=function(n){return(Number(n)||0).toLocaleString("vi-VN")},h.conLai=function(n,t){var h=Math.max(0,(n||0)-(t||Date.now())),i=Math.floor(h/36e5);return i>=1?"còn "+i+" giờ":"còn "+Math.max(1,Math.ceil(h/6e4))+" phút"}}(window.PNTT);
+!function (n) {
+  "use strict";
+  var t;
+  var h = n.Market = {};
+  h.NPC_ID = "van_bao_phuong";
+  h.FEE_RATE = .1;
+  h.MIN_PRICE = 10;
+  h.MAX_PRICE = 1e8;
+  h.MAX_QTY = 9999;
+  h.TTL_MS = 1728e5;
+  h.MAX_LISTINGS = 10;
+  h.PAGE_SIZE = 30;
+  h.EMAIL_NOI_BO = "@players.phamnhan.game";
+  h.CAN_EMAIL = !1;
+  h.emailThat = function (n) {
+    var t = String(n || "").trim().toLowerCase();
+    return t.indexOf("@") > 0 && t.slice(-h.EMAIL_NOI_BO.length) !== h.EMAIL_NOI_BO;
+  };
+  h.GROUPS = [{ id: "trang-bi", ten: "Trang Bị" }, { id: "vat-pham", ten: "Vật Phẩm" }, { id: "dao-thuat", ten: "Bí Tịch · Phù" }];
+  h.GROUP_IDS = h.GROUPS.map(function (n) {
+    return n.id;
+  });
+  h.group = function (n) {
+    return n ? n.slot ? "trang-bi" : "bi_tich" === n.type || "phu_chu" === n.type ? "dao-thuat" : "vat-pham" : "vat-pham";
+  };
+  h.SUBS = { "trang-bi": [{ id: "vu_khi", ten: "Vũ Khí" }, { id: "mu", ten: "Pháp Bảo" }, { id: "phi_hanh", ten: "Phi Hành" }, { id: "ao", ten: "Y Phục" }, { id: "giap", ten: "Giáp" }, { id: "giay", ten: "Hành Ngoa" }, { id: "phap_boi", ten: "Pháp Bội" }, { id: "nhan", ten: "Linh Giới" }], "vat-pham": [{ id: "dan_duoc", ten: "Đan Dược" }, { id: "duoc_lieu", ten: "Dược Liệu" }, { id: "hat_giong", ten: "Hạt Giống" }, { id: "nguyen_lieu", ten: "Nguyên Liệu" }, { id: "ren_khi", ten: "Rèn Khí" }, { id: "thuc_pham", ten: "Thực Phẩm" }, { id: "tran_ban", ten: "Trận Bàn" }, { id: "khac", ten: "Khác" }], "dao-thuat": [{ id: "bi_tich", ten: "Bí Tịch" }, { id: "phu_chu", ten: "Phù Chú" }] };
+  h.SUB_IDS = (t = [], h.GROUP_IDS.forEach(function (n) {
+    h.SUBS[n].forEach(function (n) {
+      if (t.indexOf(n.id) < 0) {
+        t.push(n.id);
+      }
+    });
+  }), t);
+  var i = { dan_duoc: "dan_duoc", duoc_lieu: "duoc_lieu", hat_giong: "hat_giong", nguyen_lieu: "nguyen_lieu", nguyen_lieu_ren_khi: "ren_khi", thuc_pham: "thuc_pham", thuc_an_linh_thu: "thuc_pham", tran_ban: "tran_ban" };
+  h.subOk = function (n, t) {
+    var i = Object.prototype.hasOwnProperty.call(h.SUBS, n) ? h.SUBS[n] : null;
+    return !(!i || "string" != typeof t) && i.some(function (n) {
+      return n.id === t;
+    });
+  };
+  h.sub = function (n) {
+    var t = h.group(n);
+    var e = null;
+    var u = Object.prototype.hasOwnProperty;
+    if (n) {
+      if ("trang-bi" === t) {
+        e = n.slot;
+      }
+      else {
+        if ("dao-thuat" === t) {
+          e = "phu_chu" === n.type ? "phu_chu" : "bi_tich";
+        }
+        else {
+          if (u.call(i, n.type)) {
+            e = i[n.type];
+          }
+        }
+      }
+    }
+    return h.subOk(t, e) ? e : "khac";
+  };
+  h.KHOA_TIEN_TRINH = { thang_tien_lenh: !0, phuong_tu_khi_dan: !0, truc_co_dan: !0 };
+  if (n.LuyenQuy && n.LuyenQuy.KHOA_CHO) {
+    n.LuyenQuy.KHOA_CHO.forEach(function (n) {
+      h.KHOA_TIEN_TRINH[n] = !0;
+    });
+  }
+  if (n.ChinhDao && n.ChinhDao.KHOA_CHO) {
+    n.ChinhDao.KHOA_CHO.forEach(function (n) {
+      h.KHOA_TIEN_TRINH[n] = !0;
+    });
+  }
+  if (n.HacThi && n.HacThi.KHOA_CHO) {
+    n.HacThi.KHOA_CHO.forEach(function (n) {
+      h.KHOA_TIEN_TRINH[n] = !0;
+    });
+  }
+  h.MO_CHO = { hiep_nghia_lenh: !0, pham_hon: !0, oan_hon: !0, tu_si_hon: !0, thu_hon_3: !0, thu_hon_4: !0, thu_hon_6: !0 };
+  h.whyNot = function (t, i) {
+    var e = i && i.ITEMS || n.ITEMS || {};
+    var u = Object.prototype.hasOwnProperty.call(e, t) ? e[t] : null;
+    return u ? "tien_te" === u.type ? "tiền tệ không bày bán được" : String(u.type || "").indexOf("nhiem_vu") >= 0 ? "đồ nhiệm vụ không bán được" : h.KHOA_TIEN_TRINH[t] && !h.MO_CHO[t] ? u.name + " là vật dẫn đường tu luyện, không bán được" : null : "vật phẩm không có thật";
+  };
+  h.tradable = function (n, t) {
+    return !h.whyNot(n, t);
+  };
+  h.fee = function (n) {
+    return Math.max(1, Math.floor((0 | n) * h.FEE_RATE));
+  };
+  h.payout = function (n) {
+    return (0 | n) - h.fee(n);
+  };
+  h.priceOk = function (n) {
+    return "number" == typeof n && Number.isSafeInteger(n) && n >= h.MIN_PRICE && n <= h.MAX_PRICE;
+  };
+  h.qtyOk = function (n) {
+    return "number" == typeof n && Number.isSafeInteger(n) && n >= 1 && n <= h.MAX_QTY;
+  };
+  h.checkPost = function (n, t, i, e, u) {
+    var a = h.whyNot(t, n);
+    if (a) {
+      return { ok: !1, why: a };
+    }
+    if (!h.qtyOk(i)) {
+      return { ok: !1, why: "số lượng không hợp lệ" };
+    }
+    if (!h.priceOk(e)) {
+      return { ok: !1, why: "giá phải từ " + h.fmt(h.MIN_PRICE) + " tới " + h.fmt(h.MAX_PRICE) + " Linh Thạch" };
+    }
+    if ((0 | u) >= h.MAX_LISTINGS) {
+      return { ok: !1, why: "mỗi người chỉ treo tối đa " + h.MAX_LISTINGS + " món" };
+    }
+    var r = n && n.Inventory;
+    if (!r) {
+      return { ok: !1, why: "không đọc được hành trang" };
+    }
+    if (!r.canTrade(t, i)) {
+      var o = r.tradableCount(t);
+      return { ok: !1, why: o > 0 ? "chỉ còn " + o + " món bán được (phần còn lại đã Khóa Thần Niệm)" : r.count(t) > 0 ? "món này đã Khóa Thần Niệm" : "không có món này trong túi" };
+    }
+    return { ok: !0, fee: h.fee(e), payout: h.payout(e) };
+  };
+  h.lastSkillBook = function (n, t, h) {
+    var i = n && n.ITEMS && n.ITEMS[t];
+    return !(!i || "bi_tich" !== i.type || !n.Inventory) && n.Inventory.count(t) - (0 | h) <= 0;
+  };
+  h.fmt = function (n) {
+    return (Number(n) || 0).toLocaleString("vi-VN");
+  };
+  h.conLai = function (n, t) {
+    var h = Math.max(0, (n || 0) - (t || Date.now()));
+    var i = Math.floor(h / 36e5);
+    return i >= 1 ? "còn " + i + " giờ" : "còn " + Math.max(1, Math.ceil(h / 6e4)) + " phút";
+  };
+}(window.PNTT);

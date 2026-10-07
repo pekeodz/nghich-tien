@@ -1,1 +1,690 @@
-!function(t){"use strict";var n=t.Utils,e=t.Tutorial={active:!1,step:-1},i={},r=null,a=null,o=!1;function u(){return t.SceneWorld}function d(){var t=u();return t&&t.player}function c(){return t.Input&&"touch"===t.Input.mode}function l(){return!(!t.TouchUI||!t.TouchUI.visible)}function h(){return!(!t.TouchUI||"joystick"!==t.TouchUI.controlStyle)}function s(t){return"<kbd>"+t+"</kbd>"}function g(t){var n=t&&document.querySelector(t);if(!n)return null;var e=n.getBoundingClientRect();return e.width<4||e.height<4||e.bottom<0||e.right<0||e.top>innerHeight||e.left>innerWidth?null:n}var f=[{title:"Di chuyển",body:function(){var t=h()?"kéo vòng tròn ở góc trái":"giữ các nút mũi tên ở góc trái";return l()&&c()?t.charAt(0).toUpperCase()+t.slice(1)+" để đi.":"Dùng "+s("W")+s("A")+s("S")+s("D")+" hoặc phím mũi tên để đi."+(l()?" Hoặc "+t+".":"")},target:function(){return l()?h()?"#joystick":"#dpad":null},done:function(t){return t.dist>=40}},{title:"Chạy cho nhanh",body:function(){return c()?"Chạm nút <b>Chạy</b> để chạy nhanh hơn. Chạm lần nữa để đi bộ.":"Bấm "+s("Shift")+" để bật chạy, bấm lần nữa để đi bộ"+(l()?" — hoặc bấm nút <b>Chạy</b>.":".")},target:function(){return l()?"#btn-run":null},avoid:"#dpad",done:function(){return!(!t.Input||!t.Input.run)}},{title:"Theo mũi tên vàng",body:function(){return"Mũi tên vàng quanh chân chỉ tới nơi làm nhiệm vụ. Việc cần làm ghi ở bảng nhiệm vụ đang khoanh vàng. Cứ đi theo mũi tên là tới."},target:function(){return"#quest-tracker"},at:"top",ack:"Đã hiểu",done:function(t){return t.dist>=200&&Date.now()-t.startAt>5e3}}];function m(t){return"pntt_tut_v1_"+String(t||"").toLowerCase()}function b(t){e.step=t;var n=d();a.dist=0,a.lastX=n?n.x:0,a.lastY=n?n.y:0,a.doneAt=0,a.startAt=Date.now(),i.card.classList.remove("tut-ok"),function(){var t=e.step,n=t>=f.length;i.count.textContent=n?"Hướng dẫn":"Hướng dẫn "+(t+1)+"/"+f.length;for(var r="",a=0;a<f.length;a++)r+='<i class="'+(a<t?"on":a===t?"cur":"")+'"></i>';if(i.dots.innerHTML=r,n)return i.title.textContent="Sẵn sàng lên đường!",i.body.innerHTML="Giờ đi theo mũi tên vàng để làm nhiệm vụ đầu tiên. Muốn xem lại: <b>Menu → Xem lại hướng dẫn</b>.",i.ack.textContent="Bắt đầu",void(i.ack.hidden=!1);var o=f[t];i.title.textContent=o.title,i.body.innerHTML=o.body(),i.ack.textContent=o.ack||"",i.ack.hidden=!o.ack}()}function v(){a.doneAt||(a.doneAt=Date.now(),i.card.classList.add("tut-ok"),i.title.textContent="✓ "+f[e.step].title,t.Audio&&t.Audio.play&&t.Audio.play("ui"))}function p(t,n){var e=t.getBoundingClientRect();return{left:e.left-n,top:e.top-n,right:e.right+n,bottom:e.bottom+n}}function y(t,n){return t.left<n.right&&t.right>n.left&&t.top<n.bottom&&t.bottom>n.top}var C=["#dpad","#touch-buttons"];function k(t,n,e,r,a){r=r||i.card,a=a||i.ring;var o=g(t),u=r.offsetWidth,d=r.offsetHeight,c=innerWidth,l=innerHeight,h={left:c/2-70,right:c/2+70,top:l/2-Math.min(120,.28*l),bottom:l/2+Math.min(50,.12*l)};function s(){return[c/2-u/2,12]}var f=null,m=[];if(o){var b=o.getBoundingClientRect();a.hidden=!1,a.style.left=b.left-6+"px",a.style.top=b.top-6+"px",a.style.width=b.width+12+"px",a.style.height=b.height+12+"px",a.style.borderRadius="50%"===getComputedStyle(o).borderRadius?"50%":"10px",f=p(o,6);var v=g(n);if(v){var k=v.getBoundingClientRect();f={left:Math.min(f.left,k.left),top:Math.min(f.top,k.top),right:Math.max(f.right,k.right),bottom:Math.max(f.bottom,k.bottom)}}}else a.hidden=!0;for(var _=0;_<C.length;_++){var H=g(C[_]);if(H)for(var T="touch-buttons"===H.id?H.children:[H],A=0;A<T.length;A++){var M=T[A].getBoundingClientRect();M.width>4&&M.height>4&&m.push(p(T[A],2))}}function w(t,n,e){if(n<8||n+d>l-8||t<8||t+u>c-8)return!1;var i={left:t,top:n,right:t+u,bottom:n+d};if(y(i,h))return!1;if(f&&y(i,f))return!1;if(e)for(var r=0;r<m.length;r++)if(y(i,m[r]))return!1;return!0}var L=[];if(f){var x=(f.left+f.right)/2,E=(f.top+f.bottom)/2,S=[x-u/2,f.top-14-d,0],D=[x-u/2,f.bottom+14,0],B=[f.right+14,E-d/2,1],I=[f.left-14-u,E-d/2,1];L=x<c/3?[B,S,D,I]:x>2*c/3?[I,S,D,B]:[S,D,B,I]}"top"!==e&&f||L.unshift(s().concat(0));for(var N=null,U=null,O=0;O<2&&null==N;O++)for(var q=0;q<L.length&&null==N;q++){var G=Math.max(8,Math.min(c-u-8,L[q][0])),R=[L[q][1]];L[q][2]&&R.push(h.bottom,h.top-d);for(var W=0;W<R.length;W++)if(!(W>0&&Math.abs(R[W]-R[0])>40)&&w(G,R[W],0===O)){N=G,U=R[W];break}}if(null==N){var F=s();N=F[0],U=F[1]}N=Math.max(8,Math.min(c-u-8,N)),U=Math.max(8,Math.min(l-d-8,U)),r.style.left=Math.round(N)+"px",r.style.top=Math.round(U)+"px"}function _(){i.card&&(i.card.hidden=!0),i.ring&&(i.ring.hidden=!0)}e.start=function(t){i.card||(i.ring=document.createElement("div"),i.ring.id="tut-ring",i.ring.hidden=!0,i.card=document.createElement("div"),i.card.id="tut-card",i.card.className="panel",i.card.setAttribute("role","status"),i.card.setAttribute("aria-live","polite"),i.card.hidden=!0,i.card.innerHTML='<div class="tut-head"><span class="tut-count"></span><button type="button" class="tut-skip">Bỏ qua</button></div><div class="tut-title"></div><div class="tut-body"></div><div class="tut-foot"><span class="tut-dots"></span><button type="button" class="tut-ack btn-sub" hidden></button></div>',i.count=i.card.querySelector(".tut-count"),i.title=i.card.querySelector(".tut-title"),i.body=i.card.querySelector(".tut-body"),i.dots=i.card.querySelector(".tut-dots"),i.ack=i.card.querySelector(".tut-ack"),i.card.querySelector(".tut-skip").addEventListener("click",function(){e.finish(!0)}),i.ack.addEventListener("click",function(){e.step>=f.length?e.finish(!1):v()}),document.body.appendChild(i.ring),document.body.appendChild(i.card)),a={name:t,dist:0,lastX:0,lastY:0,doneAt:0},e.active=!0,b(0)},e.finish=function(){a&&a.name&&n.store.set(m(a.name),!0),o=!1,e.active=!1,e.step=-1,_()},e.reset=function(t){var i=d();n.store.set(m(t||i&&i.cfg&&i.cfg.name),!1),e.active=!1,_()},e.debugStep=function(t){e.active&&b(0|t)},e.replay=function(){e.reset(),e.resetHints&&e.resetHints(),o=!0;var t=document.getElementById("menu");t&&!t.classList.contains("hidden")&&t.click()};var H={};function T(){H.ring&&(H.ring.hidden=H.arrow.hidden=H.chip.hidden=!0)}var A={el:null,id:null,doneAt:0};function M(){return t.Quest}function w(){var n=t.TileMap&&t.TileMap.data;return n&&n.id}function L(){return!(!t.HUD||!t.HUD.bagOpen)}function x(t,n){if(!L())return"#hud-left";if(g('.bag-slot.selected[data-item="'+t+'"]'))return".bag-detail-actions .equip-action";var e='.bag-slot[data-item="'+t+'"]';if(g(e))return e;var i='.bag-filter[data-filter="'+n+'"]';return g(i)?i:g('.ht-muc[data-tab="trang-bi"]')?'.ht-muc[data-tab="trang-bi"]':null}function E(t,n,e,i){return L()?g('.bag-slot.selected[data-item="'+t+'"]')?"Bấm <b>"+e+"</b>.":"Chọn <b>"+n+"</b>"+("vat-pham"===i?" (mục Vật Phẩm)":"")+" rồi bấm <b>"+e+"</b>.":(c()?"Chạm vào <b>bảng nhân vật</b>":"Bấm "+s("B")+" hoặc bấm vào <b>bảng nhân vật</b>")+" để mở Hành Trang."}var S=[{id:"cam_kiem",title:"Cầm Trúc Kiếm lên",bag:!0,when:function(){var t=M();return 5===t.stage&&!!t.flags.nhan_viec_ly_thanh&&!t.daCamTrucKiem()},done:function(){return M().daCamTrucKiem()},body:function(){return E("truc_kiem","Trúc Kiếm","Trang Bị","trang-bi")},target:function(){return x("truc_kiem","trang-bi")}},{id:"auto",title:"Tự động đánh",when:function(){var t=M(),n=u();return 5===t.stage&&!!t.flags.nhan_viec_ly_thanh&&t.daCamTrucKiem()&&"thanh_truc_lam"===w()&&!(n&&n.autoOn)&&t.kills<t.NEED_KILLS},done:function(){var t=u();return!(!t||!t.autoOn)},body:function(){return(c()?"Chạm nút <b>Auto</b>":"Bấm "+s("T")+" hoặc nút <b>Auto</b>")+" — nhân vật tự tìm Bọ Ngựa gần nhất mà đánh. Bấm lần nữa để dừng."},target:function(){return g("#btn-auto-touch")?"#btn-auto-touch":"#btn-auto"}},{id:"an_com",title:"Ăn cơm để hồi sức",bag:!0,when:function(){var n=d(),e=M();return!!n&&n.hpMax>0&&n.hp/n.hpMax<.5&&!n.downed&&t.Inventory.has(e.COM_LINH_ME)&&!e.flags.da_an_com_linh_me},done:function(){var n=M();return!!n.flags.da_an_com_linh_me||!t.Inventory.has(n.COM_LINH_ME)},body:function(){return E(M().COM_LINH_ME,"Bát Cơm Linh Mễ","Ăn","vat-pham")+(L()?"":" Cơm hồi máu dần theo thời gian.")},target:function(){return x(M().COM_LINH_ME,"vat-pham")}},{id:"tuong_tac",title:"Nói chuyện · hái · xem",when:function(){return(0|M().stage)<=2&&!!(t.Targeting&&t.Targeting.mucTieuTuongTac&&t.Targeting.mucTieuTuongTac())},done:function(){return!(!t.HUD||!t.HUD.dialogOpen)},body:function(){return c()?"Chạm thẳng vào người hay vật để tương tác — hoặc bấm nút <b>?</b> khi nó hiện.":"Đứng cạnh rồi bấm "+s("E")+" để nói chuyện, hái, hay xem."},target:function(){return c()&&g("#btn-attack")?"#btn-attack":null}},{id:"vuon",title:"Trồng linh thảo",at:"top",when:function(){return 8===M().stage&&"vuon_ca_nhan"===w()},done:function(){return M().stage>=9},body:function(){var n=t.Farm;return n?n.hasAnySeed()&&n.count("empty")>0?"Chạm một <b>luống trống</b> (dấu ?) để gieo — gieo kín cả mười luống.":n.count("dry")>0&&n.hasWaterAccess&&!n.hasWaterAccess()?"Chạm <b>Ao Bích Thuỷ</b> (góc trên bên phải) để mở nguồn nước tưới.":n.count("dry")>0?"Chạm từng <b>luống đang lớn</b> để tưới — tưới rồi một phút là chín.":n.count("ready")>0?"Luống chín có dấu <b>!</b> — chạm để hái.":"Cây đang lớn — chờ một chút rồi hái. Mũi tên vàng chỉ luống cần làm.":"Làm theo mũi tên vàng."},target:function(){return null}},{id:"dao_hanh",title:"Đạo Hạnh viên mãn",ack:"Đã hiểu",when:function(){var t=M(),n=d();return t.stage>=10&&t.stage<=14&&!!n&&n.canMeditate&&t.daoHanhFull()},done:function(){return!M().daoHanhFull()},body:function(){return"Thanh <b>Đạo Hạnh</b> đầy là đủ để phá quan. Tới <b>đài đá</b>, "+(c()?"chạm vào đài đá":"bấm "+s("E"))+" để phá quan."},target:function(){return g("#row-xp")?"#row-xp":null}},{id:"da_toa",title:"Đả tọa tích Đạo Hạnh",when:function(){var t=M(),n=d();return(13===t.stage||t.stage===t.BI_TICH_STAGE&&!t.biTichUnlocked())&&!!n&&n.canMeditate&&"sit"!==n.state&&!t.daoHanhFull()},done:function(){var t=d();return!!t&&"sit"===t.state},body:function(){return(c()?"Chạm nút <b>Đả Tọa</b>":"Bấm "+s("Q"))+" để ngồi thiền. Ngồi trên <b>đài đá</b> được thêm Đạo Hạnh mỗi giây — nhanh hơn đi săn lúc đầu."},target:function(){return c()&&g("#btn-meditate-touch")?"#btn-meditate-touch":null}},{id:"phap_thuat",title:"Dùng pháp quyết",ack:"Đã hiểu",when:function(){var n=M(),e=t.Skills;return n.stage===n.YEU_COT_STAGE&&"mieu_hoang"===w()&&!!(e&&e.barSlots&&e.barSlots().length)},done:function(){var t=M();return t.stage!==t.YEU_COT_STAGE},body:function(){return"Chiêu vừa học nằm trên <b>thanh chiêu</b> dưới màn hình. "+(c()?"Chạm ô chiêu":"Bấm phím số ghi trên ô chiêu")+" để đánh vào con quái đang nhắm. Bật <b>Auto</b> thì nhân vật tự dùng."},target:function(){return g("#hotbar")?"#hotbar":null}},{id:"tu_dong_cau",title:"Câu Linh Ngư",when:function(){var n=M(),e=u();return n.stage===n.LINH_NGU_STAGE&&"duoc_vien"===w()&&t.Inventory.count(n.DOC_DANG_ITEM)>=n.NEED_DOC_DANG&&(Number(n.flags[n.LINH_NGU_CATCH_FLAG])||0)<n.NEED_LINH_NGU&&!(e&&(e.fishing||e.fishingAuto))},done:function(){var t=u();return!(!t||!t.fishingAuto)},body:function(){return"Tới sát mép <b>hồ</b> hoặc <b>suối</b>, "+(c()?"chạm mặt nước":"bấm "+s("E")+" ở mép nước")+" rồi chọn <b>Tự động câu</b>. Linh Ngư hiếm — cứ để nó câu; đi lại là dừng."},target:function(){return null}}];function D(){var t=d(),n=t&&t.cfg&&t.cfg.name;return n?"pntt_hint_v1_"+String(n).toLowerCase():null}function B(t){var e=D(),i=e?n.store.get(e,{}):{};return!(!i||!i[t])}function I(){A.el&&(A.el.card.hidden=!0,A.el.ring.hidden=!0)}function N(){A.id&&function(t){var e=D();if(e){var i=n.store.get(e,{})||{};i[t]=!0,n.store.set(e,i)}}(A.id),A.id=null,A.doneAt=0,I()}e.resetHints=function(){var t=D();t&&n.store.set(t,{}),A.id=null,I()},e.init=function(){if(!r){r=setInterval(function(){try{!function(){if(e.active){var r=d();if(r&&t.Game.scene===u()){var c=e.step;if(function(n){var e=u(),i=f[n]&&f[n].id,r=a&&a.doneAt;if(t.HUD&&t.HUD.dialogOpen)return!0;if(t.HUD&&t.HUD.bagOpen&&("bag"!==i||!r)&&"menu"!==i)return!0;if(t.SkillBook&&t.SkillBook.open)return!0;if(e&&e.menuOpen&&("menu"!==i||!r))return!0;var o=document.getElementById("hud");return!(!o||!o.classList.contains("hidden"))}(c)?_():i.card.hidden=!1,c>=f.length)return i.card.hidden||k(null),a.endAt||(a.endAt=Date.now()),void(Date.now()-a.endAt>7e3&&e.finish());var l=r.x-a.lastX,h=r.y-a.lastY,s=Math.sqrt(l*l+h*h);s<64&&(a.dist+=s),a.lastX=r.x,a.lastY=r.y;var g=f[c];if(!a.doneAt&&g.done(a)&&v(),a.doneAt&&Date.now()-a.doneAt>900)b(c+1);else if(i.card.hidden)i.ring.hidden=!0;else{if(!a.doneAt){var p=g.body();i.body.innerHTML!==p&&(i.body.innerHTML=p)}k(g.target(),g.avoid,g.at)}}else _()}else{var y=function(){var e=d();if(!e||!t.Game||t.Game.scene!==u())return null;var i=e.cfg&&e.cfg.name;return i&&(o||t.Quest&&!((0|t.Quest.stage)>1))?n.store.get(m(i),!1)?null:i:null}();if(!y)return;e.start(y)}}()}finally{try{!function(){var n=t.Quest,i=u(),r=d(),a=document.getElementById("hud");if(!(n&&n.phiHanhHintActive&&n.phiHanhHintActive()&&!e.active&&r&&!r.flying&&t.Game&&t.Game.scene===i)||t.HUD&&(t.HUD.dialogOpen||t.HUD.bagOpen)||i&&i.menuOpen||a&&a.classList.contains("hidden"))T();else{H.ring||(H.ring=document.createElement("div"),H.ring.id="fly-hint-ring",H.ring.hidden=!0,H.arrow=document.createElement("div"),H.arrow.id="fly-hint-arrow",H.arrow.hidden=!0,H.arrow.innerHTML="<span>Bấm để bay</span><b>▼</b>",H.chip=document.createElement("div"),H.chip.id="fly-hint-chip",H.chip.hidden=!0,H.chip.innerHTML="Nhấn "+s("F")+" để Phi Hành",document.body.appendChild(H.ring),document.body.appendChild(H.arrow),document.body.appendChild(H.chip));var o=l()?g("#btn-fly"):null;if(!o)return H.ring.hidden=H.arrow.hidden=!0,void(H.chip.hidden=!1);var c=o.getBoundingClientRect();H.chip.hidden=!0,H.ring.hidden=H.arrow.hidden=!1,H.ring.style.left=c.left-6+"px",H.ring.style.top=c.top-6+"px",H.ring.style.width=c.width+12+"px",H.ring.style.height=c.height+12+"px",H.ring.style.borderRadius="50%"===getComputedStyle(o).borderRadius?"50%":"12px";var h=H.arrow.offsetWidth||90,f=H.arrow.offsetHeight||40,m=Math.max(6,Math.min(innerWidth-h-6,c.left+c.width/2-h/2)),b=Math.max(6,c.top-6-f-2);H.arrow.style.left=m+"px",H.arrow.style.top=b+"px"}}()}catch(t){T()}try{!function(){var n=d();if(!e.active&&n&&t.Quest&&t.Game&&t.Game.scene===u()){var i=A.id?function(t){for(var n=0;n<S.length;n++)if(S[n].id===t)return S[n];return null}(A.id):null;if(i){if(!A.doneAt&&i.done()&&(A.doneAt=Date.now(),A.el.card.classList.add("tut-ok"),A.el.title.textContent="✓ "+i.title,t.Audio&&t.Audio.play&&t.Audio.play("ui")),A.doneAt&&Date.now()-A.doneAt>900)return void N();if(!A.doneAt&&!i.when())return A.id=null,void I()}else{for(var r=0;r<S.length;r++){var a=S[r];if(!B(a.id)&&!a.done()&&a.when()){i=a;break}}if(!i)return void I();!function(){if(!A.el){var t=document.createElement("div");t.id="hint-ring",t.hidden=!0;var n=document.createElement("div");n.id="hint-card",n.className="panel",n.setAttribute("role","status"),n.setAttribute("aria-live","polite"),n.hidden=!0,n.innerHTML='<div class="tut-head"><span class="tut-count">Gợi ý</span><button type="button" class="tut-skip">Ẩn</button></div><div class="tut-title"></div><div class="tut-body"></div><div class="tut-foot"><span></span><button type="button" class="tut-ack btn-sub" hidden></button></div>',A.el={ring:t,card:n,title:n.querySelector(".tut-title"),body:n.querySelector(".tut-body"),ack:n.querySelector(".tut-ack")},n.querySelector(".tut-skip").addEventListener("click",function(){N()}),A.el.ack.addEventListener("click",function(){N()}),document.body.appendChild(t),document.body.appendChild(n)}}(),A.id=i.id,A.doneAt=0,A.el.card.classList.remove("tut-ok"),A.el.title.textContent=i.title,A.el.ack.textContent=i.ack||"",A.el.ack.hidden=!i.ack}if(function(n){var e=u();if(t.HUD&&t.HUD.dialogOpen)return!0;if(L()&&!n.bag)return!0;if(t.SkillBook&&t.SkillBook.open)return!0;if(e&&e.menuOpen)return!0;var i=document.getElementById("hud");return!(!i||!i.classList.contains("hidden"))}(i))I();else{if(A.el.card.hidden=!1,!A.doneAt){var o=i.body();A.el.body.innerHTML!==o&&(A.el.body.innerHTML=o)}k(i.target(),i.avoid,i.at,A.el.card,A.el.ring)}}else I()}()}catch(t){I()}}},120);var c=document.getElementById("menu-tutorial");c&&c.addEventListener("click",e.replay)}},"undefined"!=typeof document&&document.body?e.init():"undefined"!=typeof document&&document.addEventListener("DOMContentLoaded",e.init)}(window.PNTT);
+!function (t) {
+  "use strict";
+  var n = t.Utils;
+  var e = t.Tutorial = { active: !1, step: -1 };
+  var i = {};
+  var r = null;
+  var a = null;
+  var o = !1;
+  function u() {
+    return t.SceneWorld;
+  }
+  function d() {
+    var t = u();
+    return t && t.player;
+  }
+  function c() {
+    return t.Input && "touch" === t.Input.mode;
+  }
+  function l() {
+    return !(!t.TouchUI || !t.TouchUI.visible);
+  }
+  function h() {
+    return !(!t.TouchUI || "joystick" !== t.TouchUI.controlStyle);
+  }
+  function s(t) {
+    return "<kbd>" + t + "</kbd>";
+  }
+  function g(t) {
+    var n = t && document.querySelector(t);
+    if (!n) {
+      return null;
+    }
+    var e = n.getBoundingClientRect();
+    return e.width < 4 || e.height < 4 || e.bottom < 0 || e.right < 0 || e.top > innerHeight || e.left > innerWidth ? null : n;
+  }
+  var f = [{ title: "Di chuyển", body: function () {
+        var t = h() ? "kéo vòng tròn ở góc trái" : "giữ các nút mũi tên ở góc trái";
+        return l() && c() ? t.charAt(0).toUpperCase() + t.slice(1) + " để đi." : "Dùng " + s("W") + s("A") + s("S") + s("D") + " hoặc phím mũi tên để đi." + (l() ? " Hoặc " + t + "." : "");
+      }, target: function () {
+        return l() ? h() ? "#joystick" : "#dpad" : null;
+      }, done: function (t) {
+        return t.dist >= 40;
+      } }, { title: "Chạy cho nhanh", body: function () {
+        return c() ? "Chạm nút <b>Chạy</b> để chạy nhanh hơn. Chạm lần nữa để đi bộ." : "Bấm " + s("Shift") + " để bật chạy, bấm lần nữa để đi bộ" + (l() ? " — hoặc bấm nút <b>Chạy</b>." : ".");
+      }, target: function () {
+        return l() ? "#btn-run" : null;
+      }, avoid: "#dpad", done: function () {
+        return !(!t.Input || !t.Input.run);
+      } }, { title: "Theo mũi tên vàng", body: function () {
+        return "Mũi tên vàng quanh chân chỉ tới nơi làm nhiệm vụ. Việc cần làm ghi ở bảng nhiệm vụ đang khoanh vàng. Cứ đi theo mũi tên là tới.";
+      }, target: function () {
+        return "#quest-tracker";
+      }, at: "top", ack: "Đã hiểu", done: function (t) {
+        return t.dist >= 200 && Date.now() - t.startAt > 5e3;
+      } }];
+  function m(t) {
+    return "pntt_tut_v1_" + String(t || "").toLowerCase();
+  }
+  function b(t) {
+    e.step = t;
+    var n = d();
+    a.dist = 0;
+    a.lastX = n ? n.x : 0;
+    a.lastY = n ? n.y : 0;
+    a.doneAt = 0;
+    a.startAt = Date.now();
+    i.card.classList.remove("tut-ok");
+    (function () {
+      var t = e.step;
+      var n = t >= f.length;
+      i.count.textContent = n ? "Hướng dẫn" : "Hướng dẫn " + (t + 1) + "/" + f.length;
+      for (var r = "", a = 0; a < f.length; a++)
+        r += '<i class="' + (a < t ? "on" : a === t ? "cur" : "") + '"></i>';
+      if (i.dots.innerHTML = r, n) {
+        i.title.textContent = "Sẵn sàng lên đường!";
+        i.body.innerHTML = "Giờ đi theo mũi tên vàng để làm nhiệm vụ đầu tiên. Muốn xem lại: <b>Menu → Xem lại hướng dẫn</b>.";
+        i.ack.textContent = "Bắt đầu";
+        return void (i.ack.hidden = !1);
+      }
+      var o = f[t];
+      i.title.textContent = o.title;
+      i.body.innerHTML = o.body();
+      i.ack.textContent = o.ack || "";
+      i.ack.hidden = !o.ack;
+    })();
+  }
+  function v() {
+    if (!(a.doneAt)) {
+      a.doneAt = Date.now();
+      i.card.classList.add("tut-ok");
+      i.title.textContent = "✓ " + f[e.step].title;
+      if (t.Audio && t.Audio.play) {
+        t.Audio.play("ui");
+      }
+    }
+  }
+  function p(t, n) {
+    var e = t.getBoundingClientRect();
+    return { left: e.left - n, top: e.top - n, right: e.right + n, bottom: e.bottom + n };
+  }
+  function y(t, n) {
+    return t.left < n.right && t.right > n.left && t.top < n.bottom && t.bottom > n.top;
+  }
+  var C = ["#dpad", "#touch-buttons"];
+  function k(t, n, e, r, a) {
+    r = r || i.card;
+    a = a || i.ring;
+    var o = g(t);
+    var u = r.offsetWidth;
+    var d = r.offsetHeight;
+    var c = innerWidth;
+    var l = innerHeight;
+    var h = { left: c / 2 - 70, right: c / 2 + 70, top: l / 2 - Math.min(120, .28 * l), bottom: l / 2 + Math.min(50, .12 * l) };
+    function s() {
+      return [c / 2 - u / 2, 12];
+    }
+    var f = null;
+    var m = [];
+    if (o) {
+      var b = o.getBoundingClientRect();
+      a.hidden = !1;
+      a.style.left = b.left - 6 + "px";
+      a.style.top = b.top - 6 + "px";
+      a.style.width = b.width + 12 + "px";
+      a.style.height = b.height + 12 + "px";
+      a.style.borderRadius = "50%" === getComputedStyle(o).borderRadius ? "50%" : "10px";
+      f = p(o, 6);
+      var v = g(n);
+      if (v) {
+        var k = v.getBoundingClientRect();
+        f = { left: Math.min(f.left, k.left), top: Math.min(f.top, k.top), right: Math.max(f.right, k.right), bottom: Math.max(f.bottom, k.bottom) };
+      }
+    }
+    else {
+      a.hidden = !0;
+    }
+    for (var _ = 0; _ < C.length; _++) {
+      var H = g(C[_]);
+      if (H) {
+        for (var T = "touch-buttons" === H.id ? H.children : [H], A = 0; A < T.length; A++) {
+          var M = T[A].getBoundingClientRect();
+          if (M.width > 4 && M.height > 4) {
+            m.push(p(T[A], 2));
+          }
+        }
+      }
+    }
+    function w(t, n, e) {
+      if (n < 8 || n + d > l - 8 || t < 8 || t + u > c - 8) {
+        return !1;
+      }
+      var i = { left: t, top: n, right: t + u, bottom: n + d };
+      if (y(i, h)) {
+        return !1;
+      }
+      if (f && y(i, f)) {
+        return !1;
+      }
+      if (e) {
+        for (var r = 0; r < m.length; r++)
+          if (y(i, m[r])) {
+            return !1;
+          }
+      }
+      return !0;
+    }
+    var L = [];
+    if (f) {
+      var x = (f.left + f.right) / 2;
+      var E = (f.top + f.bottom) / 2;
+      var S = [x - u / 2, f.top - 14 - d, 0];
+      var D = [x - u / 2, f.bottom + 14, 0];
+      var B = [f.right + 14, E - d / 2, 1];
+      var I = [f.left - 14 - u, E - d / 2, 1];
+      L = x < c / 3 ? [B, S, D, I] : x > 2 * c / 3 ? [I, S, D, B] : [S, D, B, I];
+    }
+    if (!("top" !== e && f)) {
+      L.unshift(s().concat(0));
+    }
+    for (var N = null, U = null, O = 0; O < 2 && null == N; O++)
+      for (var q = 0; q < L.length && null == N; q++) {
+        var G = Math.max(8, Math.min(c - u - 8, L[q][0]));
+        var R = [L[q][1]];
+        if (L[q][2]) {
+          R.push(h.bottom, h.top - d);
+        }
+        for (var W = 0; W < R.length; W++)
+          if (!(W > 0 && Math.abs(R[W] - R[0]) > 40) && w(G, R[W], 0 === O)) {
+            N = G;
+            U = R[W];
+            break;
+          }
+      }
+    if (null == N) {
+      var F = s();
+      N = F[0];
+      U = F[1];
+    }
+    N = Math.max(8, Math.min(c - u - 8, N));
+    U = Math.max(8, Math.min(l - d - 8, U));
+    r.style.left = Math.round(N) + "px";
+    r.style.top = Math.round(U) + "px";
+  }
+  function _() {
+    if (i.card) {
+      i.card.hidden = !0;
+    }
+    if (i.ring) {
+      i.ring.hidden = !0;
+    }
+  }
+  e.start = function (t) {
+    if (!(i.card)) {
+      i.ring = document.createElement("div");
+      i.ring.id = "tut-ring";
+      i.ring.hidden = !0;
+      i.card = document.createElement("div");
+      i.card.id = "tut-card";
+      i.card.className = "panel";
+      i.card.setAttribute("role", "status");
+      i.card.setAttribute("aria-live", "polite");
+      i.card.hidden = !0;
+      i.card.innerHTML = '<div class="tut-head"><span class="tut-count"></span><button type="button" class="tut-skip">Bỏ qua</button></div><div class="tut-title"></div><div class="tut-body"></div><div class="tut-foot"><span class="tut-dots"></span><button type="button" class="tut-ack btn-sub" hidden></button></div>';
+      i.count = i.card.querySelector(".tut-count");
+      i.title = i.card.querySelector(".tut-title");
+      i.body = i.card.querySelector(".tut-body");
+      i.dots = i.card.querySelector(".tut-dots");
+      i.ack = i.card.querySelector(".tut-ack");
+      i.card.querySelector(".tut-skip").addEventListener("click", function () {
+        e.finish(!0);
+      });
+      i.ack.addEventListener("click", function () {
+        if (e.step >= f.length) {
+          e.finish(!1);
+        }
+        else {
+          v();
+        }
+      });
+      document.body.appendChild(i.ring);
+      document.body.appendChild(i.card);
+    }
+    a = { name: t, dist: 0, lastX: 0, lastY: 0, doneAt: 0 };
+    e.active = !0;
+    b(0);
+  };
+  e.finish = function () {
+    if (a && a.name) {
+      n.store.set(m(a.name), !0);
+    }
+    o = !1;
+    e.active = !1;
+    e.step = -1;
+    _();
+  };
+  e.reset = function (t) {
+    var i = d();
+    n.store.set(m(t || i && i.cfg && i.cfg.name), !1);
+    e.active = !1;
+    _();
+  };
+  e.debugStep = function (t) {
+    if (e.active) {
+      b(0 | t);
+    }
+  };
+  e.replay = function () {
+    e.reset();
+    if (e.resetHints) {
+      e.resetHints();
+    }
+    o = !0;
+    var t = document.getElementById("menu");
+    if (t && !t.classList.contains("hidden")) {
+      t.click();
+    }
+  };
+  var H = {};
+  function T() {
+    if (H.ring) {
+      H.ring.hidden = H.arrow.hidden = H.chip.hidden = !0;
+    }
+  }
+  var A = { el: null, id: null, doneAt: 0 };
+  function M() {
+    return t.Quest;
+  }
+  function w() {
+    var n = t.TileMap && t.TileMap.data;
+    return n && n.id;
+  }
+  function L() {
+    return !(!t.HUD || !t.HUD.bagOpen);
+  }
+  function x(t, n) {
+    if (!L()) {
+      return "#hud-left";
+    }
+    if (g('.bag-slot.selected[data-item="' + t + '"]')) {
+      return ".bag-detail-actions .equip-action";
+    }
+    var e = '.bag-slot[data-item="' + t + '"]';
+    if (g(e)) {
+      return e;
+    }
+    var i = '.bag-filter[data-filter="' + n + '"]';
+    return g(i) ? i : g('.ht-muc[data-tab="trang-bi"]') ? '.ht-muc[data-tab="trang-bi"]' : null;
+  }
+  function E(t, n, e, i) {
+    return L() ? g('.bag-slot.selected[data-item="' + t + '"]') ? "Bấm <b>" + e + "</b>." : "Chọn <b>" + n + "</b>" + ("vat-pham" === i ? " (mục Vật Phẩm)" : "") + " rồi bấm <b>" + e + "</b>." : (c() ? "Chạm vào <b>bảng nhân vật</b>" : "Bấm " + s("B") + " hoặc bấm vào <b>bảng nhân vật</b>") + " để mở Hành Trang.";
+  }
+  var S = [{ id: "cam_kiem", title: "Cầm Trúc Kiếm lên", bag: !0, when: function () {
+        var t = M();
+        return 5 === t.stage && !!t.flags.nhan_viec_ly_thanh && !t.daCamTrucKiem();
+      }, done: function () {
+        return M().daCamTrucKiem();
+      }, body: function () {
+        return E("truc_kiem", "Trúc Kiếm", "Trang Bị", "trang-bi");
+      }, target: function () {
+        return x("truc_kiem", "trang-bi");
+      } }, { id: "auto", title: "Tự động đánh", when: function () {
+        var t = M();
+        var n = u();
+        return 5 === t.stage && !!t.flags.nhan_viec_ly_thanh && t.daCamTrucKiem() && "thanh_truc_lam" === w() && !(n && n.autoOn) && t.kills < t.NEED_KILLS;
+      }, done: function () {
+        var t = u();
+        return !(!t || !t.autoOn);
+      }, body: function () {
+        return (c() ? "Chạm nút <b>Auto</b>" : "Bấm " + s("T") + " hoặc nút <b>Auto</b>") + " — nhân vật tự tìm Bọ Ngựa gần nhất mà đánh. Bấm lần nữa để dừng.";
+      }, target: function () {
+        return g("#btn-auto-touch") ? "#btn-auto-touch" : "#btn-auto";
+      } }, { id: "an_com", title: "Ăn cơm để hồi sức", bag: !0, when: function () {
+        var n = d();
+        var e = M();
+        return !!n && n.hpMax > 0 && n.hp / n.hpMax < .5 && !n.downed && t.Inventory.has(e.COM_LINH_ME) && !e.flags.da_an_com_linh_me;
+      }, done: function () {
+        var n = M();
+        return !!n.flags.da_an_com_linh_me || !t.Inventory.has(n.COM_LINH_ME);
+      }, body: function () {
+        return E(M().COM_LINH_ME, "Bát Cơm Linh Mễ", "Ăn", "vat-pham") + (L() ? "" : " Cơm hồi máu dần theo thời gian.");
+      }, target: function () {
+        return x(M().COM_LINH_ME, "vat-pham");
+      } }, { id: "tuong_tac", title: "Nói chuyện · hái · xem", when: function () {
+        return (0 | M().stage) <= 2 && !!(t.Targeting && t.Targeting.mucTieuTuongTac && t.Targeting.mucTieuTuongTac());
+      }, done: function () {
+        return !(!t.HUD || !t.HUD.dialogOpen);
+      }, body: function () {
+        return c() ? "Chạm thẳng vào người hay vật để tương tác — hoặc bấm nút <b>?</b> khi nó hiện." : "Đứng cạnh rồi bấm " + s("E") + " để nói chuyện, hái, hay xem.";
+      }, target: function () {
+        return c() && g("#btn-attack") ? "#btn-attack" : null;
+      } }, { id: "vuon", title: "Trồng linh thảo", at: "top", when: function () {
+        return 8 === M().stage && "vuon_ca_nhan" === w();
+      }, done: function () {
+        return M().stage >= 9;
+      }, body: function () {
+        var n = t.Farm;
+        return n ? n.hasAnySeed() && n.count("empty") > 0 ? "Chạm một <b>luống trống</b> (dấu ?) để gieo — gieo kín cả mười luống." : n.count("dry") > 0 && n.hasWaterAccess && !n.hasWaterAccess() ? "Chạm <b>Ao Bích Thuỷ</b> (góc trên bên phải) để mở nguồn nước tưới." : n.count("dry") > 0 ? "Chạm từng <b>luống đang lớn</b> để tưới — tưới rồi một phút là chín." : n.count("ready") > 0 ? "Luống chín có dấu <b>!</b> — chạm để hái." : "Cây đang lớn — chờ một chút rồi hái. Mũi tên vàng chỉ luống cần làm." : "Làm theo mũi tên vàng.";
+      }, target: function () {
+        return null;
+      } }, { id: "dao_hanh", title: "Đạo Hạnh viên mãn", ack: "Đã hiểu", when: function () {
+        var t = M();
+        var n = d();
+        return t.stage >= 10 && t.stage <= 14 && !!n && n.canMeditate && t.daoHanhFull();
+      }, done: function () {
+        return !M().daoHanhFull();
+      }, body: function () {
+        return "Thanh <b>Đạo Hạnh</b> đầy là đủ để phá quan. Tới <b>đài đá</b>, " + (c() ? "chạm vào đài đá" : "bấm " + s("E")) + " để phá quan.";
+      }, target: function () {
+        return g("#row-xp") ? "#row-xp" : null;
+      } }, { id: "da_toa", title: "Đả tọa tích Đạo Hạnh", when: function () {
+        var t = M();
+        var n = d();
+        return (13 === t.stage || t.stage === t.BI_TICH_STAGE && !t.biTichUnlocked()) && !!n && n.canMeditate && "sit" !== n.state && !t.daoHanhFull();
+      }, done: function () {
+        var t = d();
+        return !!t && "sit" === t.state;
+      }, body: function () {
+        return (c() ? "Chạm nút <b>Đả Tọa</b>" : "Bấm " + s("Q")) + " để ngồi thiền. Ngồi trên <b>đài đá</b> được thêm Đạo Hạnh mỗi giây — nhanh hơn đi săn lúc đầu.";
+      }, target: function () {
+        return c() && g("#btn-meditate-touch") ? "#btn-meditate-touch" : null;
+      } }, { id: "phap_thuat", title: "Dùng pháp quyết", ack: "Đã hiểu", when: function () {
+        var n = M();
+        var e = t.Skills;
+        return n.stage === n.YEU_COT_STAGE && "mieu_hoang" === w() && !!(e && e.barSlots && e.barSlots().length);
+      }, done: function () {
+        var t = M();
+        return t.stage !== t.YEU_COT_STAGE;
+      }, body: function () {
+        return "Chiêu vừa học nằm trên <b>thanh chiêu</b> dưới màn hình. " + (c() ? "Chạm ô chiêu" : "Bấm phím số ghi trên ô chiêu") + " để đánh vào con quái đang nhắm. Bật <b>Auto</b> thì nhân vật tự dùng.";
+      }, target: function () {
+        return g("#hotbar") ? "#hotbar" : null;
+      } }, { id: "tu_dong_cau", title: "Câu Linh Ngư", when: function () {
+        var n = M();
+        var e = u();
+        return n.stage === n.LINH_NGU_STAGE && "duoc_vien" === w() && t.Inventory.count(n.DOC_DANG_ITEM) >= n.NEED_DOC_DANG && (Number(n.flags[n.LINH_NGU_CATCH_FLAG]) || 0) < n.NEED_LINH_NGU && !(e && (e.fishing || e.fishingAuto));
+      }, done: function () {
+        var t = u();
+        return !(!t || !t.fishingAuto);
+      }, body: function () {
+        return "Tới sát mép <b>hồ</b> hoặc <b>suối</b>, " + (c() ? "chạm mặt nước" : "bấm " + s("E") + " ở mép nước") + " rồi chọn <b>Tự động câu</b>. Linh Ngư hiếm — cứ để nó câu; đi lại là dừng.";
+      }, target: function () {
+        return null;
+      } }];
+  function D() {
+    var t = d();
+    var n = t && t.cfg && t.cfg.name;
+    return n ? "pntt_hint_v1_" + String(n).toLowerCase() : null;
+  }
+  function B(t) {
+    var e = D();
+    var i = e ? n.store.get(e, {}) : {};
+    return !(!i || !i[t]);
+  }
+  function I() {
+    if (A.el) {
+      A.el.card.hidden = !0;
+      A.el.ring.hidden = !0;
+    }
+  }
+  function N() {
+    if (A.id) {
+      (function (t) {
+        var e = D();
+        if (e) {
+          var i = n.store.get(e, {}) || {};
+          i[t] = !0;
+          n.store.set(e, i);
+        }
+      })(A.id);
+    }
+    A.id = null;
+    A.doneAt = 0;
+    I();
+  }
+  e.resetHints = function () {
+    var t = D();
+    if (t) {
+      n.store.set(t, {});
+    }
+    A.id = null;
+    I();
+  };
+  e.init = function () {
+    if (!r) {
+      r = setInterval(function () {
+        try {
+          !function () {
+            if (e.active) {
+              var r = d();
+              if (r && t.Game.scene === u()) {
+                var c = e.step;
+                if (function (n) {
+                  var e = u();
+                  var i = f[n] && f[n].id;
+                  var r = a && a.doneAt;
+                  if (t.HUD && t.HUD.dialogOpen) {
+                    return !0;
+                  }
+                  if (t.HUD && t.HUD.bagOpen && ("bag" !== i || !r) && "menu" !== i) {
+                    return !0;
+                  }
+                  if (t.SkillBook && t.SkillBook.open) {
+                    return !0;
+                  }
+                  if (e && e.menuOpen && ("menu" !== i || !r)) {
+                    return !0;
+                  }
+                  var o = document.getElementById("hud");
+                  return !(!o || !o.classList.contains("hidden"));
+                }(c) ? _() : i.card.hidden = !1, c >= f.length) {
+                  if (!(i.card.hidden)) {
+                    k(null);
+                  }
+                  if (!(a.endAt)) {
+                    a.endAt = Date.now();
+                  }
+                  return void (Date.now() - a.endAt > 7e3 && e.finish());
+                }
+                var l = r.x - a.lastX;
+                var h = r.y - a.lastY;
+                var s = Math.sqrt(l * l + h * h);
+                if (s < 64) {
+                  a.dist += s;
+                }
+                a.lastX = r.x;
+                a.lastY = r.y;
+                var g = f[c];
+                if (!a.doneAt && g.done(a) && v(), a.doneAt && Date.now() - a.doneAt > 900) {
+                  b(c + 1);
+                }
+                else if (i.card.hidden) {
+                  i.ring.hidden = !0;
+                }
+                else {
+                  if (!a.doneAt) {
+                    var p = g.body();
+                    if (i.body.innerHTML !== p) {
+                      i.body.innerHTML = p;
+                    }
+                  }
+                  k(g.target(), g.avoid, g.at);
+                }
+              }
+              else {
+                _();
+              }
+            }
+            else {
+              var y = function () {
+                var e = d();
+                if (!e || !t.Game || t.Game.scene !== u()) {
+                  return null;
+                }
+                var i = e.cfg && e.cfg.name;
+                return i && (o || t.Quest && !((0 | t.Quest.stage) > 1)) ? n.store.get(m(i), !1) ? null : i : null;
+              }();
+              if (!y) {
+                return;
+              }
+              e.start(y);
+            }
+          }();
+        }
+        finally {
+          try {
+            !function () {
+              var n = t.Quest;
+              var i = u();
+              var r = d();
+              var a = document.getElementById("hud");
+              if (!(n && n.phiHanhHintActive && n.phiHanhHintActive() && !e.active && r && !r.flying && t.Game && t.Game.scene === i) || t.HUD && (t.HUD.dialogOpen || t.HUD.bagOpen) || i && i.menuOpen || a && a.classList.contains("hidden")) {
+                T();
+              }
+              else {
+                if (!(H.ring)) {
+                  H.ring = document.createElement("div");
+                  H.ring.id = "fly-hint-ring";
+                  H.ring.hidden = !0;
+                  H.arrow = document.createElement("div");
+                  H.arrow.id = "fly-hint-arrow";
+                  H.arrow.hidden = !0;
+                  H.arrow.innerHTML = "<span>Bấm để bay</span><b>▼</b>";
+                  H.chip = document.createElement("div");
+                  H.chip.id = "fly-hint-chip";
+                  H.chip.hidden = !0;
+                  H.chip.innerHTML = "Nhấn " + s("F") + " để Phi Hành";
+                  document.body.appendChild(H.ring);
+                  document.body.appendChild(H.arrow);
+                  document.body.appendChild(H.chip);
+                }
+                var o = l() ? g("#btn-fly") : null;
+                if (!o) {
+                  H.ring.hidden = H.arrow.hidden = !0;
+                  return void (H.chip.hidden = !1);
+                }
+                var c = o.getBoundingClientRect();
+                H.chip.hidden = !0;
+                H.ring.hidden = H.arrow.hidden = !1;
+                H.ring.style.left = c.left - 6 + "px";
+                H.ring.style.top = c.top - 6 + "px";
+                H.ring.style.width = c.width + 12 + "px";
+                H.ring.style.height = c.height + 12 + "px";
+                H.ring.style.borderRadius = "50%" === getComputedStyle(o).borderRadius ? "50%" : "12px";
+                var h = H.arrow.offsetWidth || 90;
+                var f = H.arrow.offsetHeight || 40;
+                var m = Math.max(6, Math.min(innerWidth - h - 6, c.left + c.width / 2 - h / 2));
+                var b = Math.max(6, c.top - 6 - f - 2);
+                H.arrow.style.left = m + "px";
+                H.arrow.style.top = b + "px";
+              }
+            }();
+          }
+          catch (t) {
+            T();
+          }
+          try {
+            !function () {
+              var n = d();
+              if (!e.active && n && t.Quest && t.Game && t.Game.scene === u()) {
+                var i = A.id ? function (t) {
+                  for (var n = 0; n < S.length; n++)
+                    if (S[n].id === t) {
+                      return S[n];
+                    }
+                  return null;
+                }(A.id) : null;
+                if (i) {
+                  if (!A.doneAt && i.done() && (A.doneAt = Date.now(), A.el.card.classList.add("tut-ok"), A.el.title.textContent = "✓ " + i.title, t.Audio && t.Audio.play && t.Audio.play("ui")), A.doneAt && Date.now() - A.doneAt > 900) {
+                    return void N();
+                  }
+                  if (!A.doneAt && !i.when()) {
+                    A.id = null;
+                    return void I();
+                  }
+                }
+                else {
+                  for (var r = 0; r < S.length; r++) {
+                    var a = S[r];
+                    if (!B(a.id) && !a.done() && a.when()) {
+                      i = a;
+                      break;
+                    }
+                  }
+                  if (!i) {
+                    return void I();
+                  }
+                  !function () {
+                    if (!A.el) {
+                      var t = document.createElement("div");
+                      t.id = "hint-ring";
+                      t.hidden = !0;
+                      var n = document.createElement("div");
+                      n.id = "hint-card";
+                      n.className = "panel";
+                      n.setAttribute("role", "status");
+                      n.setAttribute("aria-live", "polite");
+                      n.hidden = !0;
+                      n.innerHTML = '<div class="tut-head"><span class="tut-count">Gợi ý</span><button type="button" class="tut-skip">Ẩn</button></div><div class="tut-title"></div><div class="tut-body"></div><div class="tut-foot"><span></span><button type="button" class="tut-ack btn-sub" hidden></button></div>';
+                      A.el = { ring: t, card: n, title: n.querySelector(".tut-title"), body: n.querySelector(".tut-body"), ack: n.querySelector(".tut-ack") };
+                      n.querySelector(".tut-skip").addEventListener("click", function () {
+                        N();
+                      });
+                      A.el.ack.addEventListener("click", function () {
+                        N();
+                      });
+                      document.body.appendChild(t);
+                      document.body.appendChild(n);
+                    }
+                  }();
+                  A.id = i.id;
+                  A.doneAt = 0;
+                  A.el.card.classList.remove("tut-ok");
+                  A.el.title.textContent = i.title;
+                  A.el.ack.textContent = i.ack || "";
+                  A.el.ack.hidden = !i.ack;
+                }
+                if (function (n) {
+                  var e = u();
+                  if (t.HUD && t.HUD.dialogOpen) {
+                    return !0;
+                  }
+                  if (L() && !n.bag) {
+                    return !0;
+                  }
+                  if (t.SkillBook && t.SkillBook.open) {
+                    return !0;
+                  }
+                  if (e && e.menuOpen) {
+                    return !0;
+                  }
+                  var i = document.getElementById("hud");
+                  return !(!i || !i.classList.contains("hidden"));
+                }(i)) {
+                  I();
+                }
+                else {
+                  if (A.el.card.hidden = !1, !A.doneAt) {
+                    var o = i.body();
+                    if (A.el.body.innerHTML !== o) {
+                      A.el.body.innerHTML = o;
+                    }
+                  }
+                  k(i.target(), i.avoid, i.at, A.el.card, A.el.ring);
+                }
+              }
+              else {
+                I();
+              }
+            }();
+          }
+          catch (t) {
+            I();
+          }
+        }
+      }, 120);
+      var c = document.getElementById("menu-tutorial");
+      if (c) {
+        c.addEventListener("click", e.replay);
+      }
+    }
+  };
+  if ("undefined" != typeof document && document.body) {
+    e.init();
+  }
+  else {
+    if ("undefined" != typeof document) {
+      document.addEventListener("DOMContentLoaded", e.init);
+    }
+  }
+}(window.PNTT);

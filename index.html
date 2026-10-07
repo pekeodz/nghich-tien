@@ -2,49 +2,18 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<script src="src/website/chuyen-trang-chu.js?v=32a285988ba2"></script>
 <script src="src/website/tu-tai-lai.js?v=4887a28157f7"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#171310">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="description" content="Tu Tiên 2D Online là game tu tiên online phong cách 2D pixel, MMORPG Việt. Tu luyện, săn yêu thú, khám phá bí cảnh và chơi ngay trên web.">
+<meta name="description" content="Nghịch Tiên — game tu tiên 2D pixel chơi trên trình duyệt.">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="assets/website/logo-256.png?v=c8367016d2d1">
-<link rel="canonical" href="https://tutien2d.online/">
-<link rel="icon" type="image/png" href="assets/branding/tu-tien-2d-logo.png?v=7b93bec5c46e">
-<title>Tu Tiên 2D Online | Game tu tiên 2D pixel Việt</title>
-<meta property="og:type" content="website">
-<meta property="og:locale" content="vi_VN">
-<meta property="og:site_name" content="Tu Tiên 2D Online">
-<meta property="og:title" content="Tu Tiên 2D Online | Game tu tiên 2D pixel Việt">
-<meta property="og:description" content="Game MMORPG 2D pixel Việt: tu luyện, săn yêu thú, khám phá bí cảnh và chơi ngay trên web.">
-<meta property="og:url" content="https://tutien2d.online/">
-<meta property="og:image" content="https://tutien2d.online/landing-assets/gameplay-real/hero-gameplay-poster.jpg">
-<meta property="og:image:width" content="1280">
-<meta property="og:image:height" content="720">
-<meta property="og:image:alt" content="Gameplay thật của game Tu Tiên 2D Online phong cách pixel">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Tu Tiên 2D Online | Game tu tiên 2D pixel Việt">
-<meta name="twitter:description" content="Game MMORPG 2D pixel Việt: tu luyện, săn yêu thú, khám phá bí cảnh và chơi ngay trên web.">
-<meta name="twitter:image" content="https://tutien2d.online/landing-assets/gameplay-real/hero-gameplay-poster.jpg">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "VideoGame",
-  "name": "Tu Tiên 2D Online",
-  "alternateName": "Tu Tiên 2D",
-  "url": "https://tutien2d.online/",
-  "image": "https://tutien2d.online/landing-assets/gameplay-real/hero-gameplay-poster.jpg",
-  "description": "Game MMORPG 2D pixel Việt lấy cảm hứng từ tu tiên. Người chơi tu luyện, săn yêu thú, khám phá bí cảnh và chiến đấu cùng đạo hữu.",
-  "genre": ["MMORPG", "Pixel art", "Tu tiên"],
-  "gamePlatform": ["Web browser", "Windows", "Android"],
-  "inLanguage": "vi",
-  "author": { "@type": "Organization", "name": "Shopt1" },
-  "publisher": { "@type": "Organization", "name": "Shopt1" }
-}
-</script>
+<link rel="apple-touch-icon" href="assets/branding/nghich-tien-icon.png">
+<link rel="icon" type="image/png" href="assets/branding/nghich-tien-icon.png">
+<title>Nghịch Tiên</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Serif:wght@400;600;700&display=swap">
@@ -57,7 +26,7 @@
   <canvas id="game-canvas"></canvas>
   <div id="loading">
     <div class="load-box">
-      <h1>Tu Tiên 2D</h1>
+      <h1>Nghịch Tiên</h1>
       <p id="load-phase">Đang khai mở Tiên Đồ…</p>
       <div id="load-bar" role="progressbar" aria-labelledby="load-phase">
         <div id="load-bar-fill"></div>
@@ -74,7 +43,7 @@
       <canvas id="auth-scenery-canvas"></canvas>
     </div>
     <div class="auth-box">
-      <h1 id="auth-title">Tu Tiên 2D Online</h1>
+      <h1 id="auth-title">Nghịch Tiên</h1>
       <p class="auth-sub">Tiên lộ mở ra, đạo hữu cùng hành.</p>
       <label class="auth-field">
         <span>Đạo hiệu</span>
@@ -110,12 +79,12 @@
         <button id="auth-submit" class="auth-btn is-active" type="button">Đăng nhập</button>
         <button id="auth-toggle" class="auth-btn" type="button">Đăng ký</button>
       </div>
-      <button id="auth-guest" class="auth-guest" type="button">
+      <button id="auth-guest" class="auth-guest" type="button" style="display:none" title="Tắt: tài khoản khách chỉ nhớ trên một máy, dễ mất">
         Chơi ngay không cần tài khoản
       </button>
-      <p class="auth-guest-note">Vào thế giới online ngay bằng tài khoản khách, nhớ trên máy này · đăng ký để giữ nhân vật lâu dài</p>
+      <p class="auth-guest-note" style="display:none">Vào thế giới online ngay bằng tài khoản khách, nhớ trên máy này · đăng ký để giữ nhân vật lâu dài</p>
     </div>
-    <nav id="auth-tai" class="auth-tai" aria-label="Tải game về máy">
+    <nav id="auth-tai" class="auth-tai" style="display:none" aria-label="Tải game về máy">
       <a id="tai-pc" class="auth-tai-nut" target="_blank" rel="noopener noreferrer"
          href="https://drive.google.com/drive/folders/1_383i6HantVm5VdxmNAAIdk9Yzp9QDB2?usp=drive_link">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v12H3zM8 20h8M12 16v4"/></svg>
@@ -126,7 +95,7 @@
         <span>Phiên bản Android</span>
       </a>
     </nav>
-    <nav class="auth-community" aria-label="Cộng đồng Tu Tiên 2D">
+    <nav class="auth-community" style="display:none" aria-label="Cộng đồng Nghịch Tiên">
       <a class="auth-tai-nut auth-zalo-nut"
          href="https://zalo.me/g/ktb5khygwsop0fwrmp96"
          target="_blank" rel="noopener noreferrer"
@@ -1134,7 +1103,6 @@
 <script src="src/core/camera.js?v=7e17f0d91264"></script>
 <script src="src/core/input.js?v=140c2f67978e"></script>
 <script src="src/fx/audio.js?v=ba6288f6df70"></script>
-<script src="src/fx/audio_panel.js?v=1"></script>
 <script src="src/fx/vfx.js?v=74504c06f1e9"></script>
 <script src="src/fx/am_hon.js?v=508f0df95d42"></script>
 <script src="src/fx/khoi_loi.js?v=d98fb63871da"></script>

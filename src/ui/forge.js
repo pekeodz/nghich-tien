@@ -1,1 +1,319 @@
-!function(e){"use strict";var n=e.ForgeUI={},t={vu_khi:"Vũ Khí",phi_hanh:"Phi Hành",mu:"Pháp Bảo",giap:"Giáp",giay:"Hành Ngoa",phap_boi:"Pháp Bội",nhan:"Linh Giới",khoi_loi:"Khôi Lỗi"};function i(e,n,t){var i=document.createElement(e);return n&&(i.className=n),null!=t&&(i.textContent=t),i}function a(n,t){var i=document.createElement("canvas");return i.width=i.height=t,n&&e.drawItemIcon&&e.drawItemIcon(i.getContext("2d"),n,0,0,t),n&&e.sharpenItemIcon&&e.sharpenItemIcon(i,n),i}function r(n){return"grade-"+(e.Loot?e.Loot.gradeKey(n&&n.grade):"common")}var o=[{id:"vu-khi",ten:"Vũ Khí"},{id:"phap-bao",ten:"Pháp Bảo"},{id:"nguyen-lieu",ten:"Nguyên Liệu"}];function d(e){var n=String(e||"").toLowerCase();return 3*(n.indexOf("thiên")>=0?3:n.indexOf("địa")>=0?2:n.indexOf("linh")>=0?1:0)+(n.indexOf("thượng")>=0?2:n.indexOf("trung")>=0?1:n.indexOf("hạ")>=0?0:1)}function l(e,n){return 3*(n.atkBonus||e.atk||0)+(n.hpBonus||0)+(n.mpBonus||0)+(n.bpBonus||0)+(n.spBonus||0)}function c(n){if(!n)return 0;var t=e.REALMS_CHUA_MO;return t&&t[n]?(e.REALMS?e.REALMS.length:0)+Object.keys(t).indexOf(n)+1:e.realmIndexById?e.realmIndexById(n):0}function u(e,n){return n.requireRealm||e.requireRealm||n.fly&&n.fly.realmMin||""}function p(e,n){var t=e.querySelector(".forge-detail");t&&t.remove(),n&&document.contains(n)&&n.focus({preventScroll:!0})}n._muc="vu-khi",n.sortKey=function(e,n){return[c(u(n=n||{},e=e||{})),d(e.grade),l(n,e),n.stones||0]},n.compareKey=function(e,n){for(var t=0;t<e.length;t++)if(e[t]!==n[t])return e[t]-n[t];return 0},n.sorted=function(t){return"khoi-loi"===t?e.KhoiLoi?e.KhoiLoi.RECIPES.slice():[]:e.Forge.RECIPES.filter(function(n){return((i=e.ITEMS&&e.ITEMS[n.id])&&"vu_khi"===i.slot?"vu-khi":"phap-bao")===t;var i}).map(function(t,i){var a=e.ITEMS&&e.ITEMS[t.id]||{};return{r:t,i:i,k:n.sortKey(a,t)}}).sort(function(e,t){return n.compareKey(e.k,t.k)||e.i-t.i}).map(function(e){return e.r})},n.materials=function(){return(e.Forge.MATERIALS||[]).map(function(n,t){return{m:n,i:t,k:d((e.ITEMS&&e.ITEMS[n.item]||{}).grade)}}).sort(function(e,n){return e.k-n.k||e.i-n.i}).map(function(e){return e.m})},n.open=function(d,l,c){e.HUD.openDialog(d&&d.name||"Thợ Rèn",c||"Chọn một món để xem chi tiết và rèn.",{content:function(d,c){d.classList.add("forge-box");var u=i("div","bag-filters forge-tabs");u.setAttribute("role","tablist"),u.setAttribute("aria-label","Loại đồ ở lò rèn");var h=i("div","bag-list forge-grid");function s(){h.innerHTML="","nguyen-lieu"===n._muc?n.materials().forEach(function(n){h.appendChild(function(n,t){var o=e.ITEMS&&e.ITEMS[n.item]||{name:n.name},d=e.Inventory?e.Inventory.count(n.item):0,l=i("button","bag-slot forge-slot "+r(o));return l.type="button",l.setAttribute("role","listitem"),l.setAttribute("aria-label",n.name+", đang có "+d),l.title=n.name,l.appendChild(a(o.icon,32)),d>0&&l.appendChild(i("span","bag-qty","x"+d)),l.addEventListener("click",function(){!function(n,t,o){var d=e.ITEMS&&e.ITEMS[n.item]||{name:n.name};p(t);var l=i("div","bag-detail forge-detail");l.setAttribute("role","dialog"),l.setAttribute("aria-label","Chi tiết "+n.name),l.addEventListener("click",function(e){e.target===l&&p(t,o)});var c=i("div","bag-detail-card"),u=i("button","panel-x","✕");u.type="button",u.setAttribute("aria-label","Đóng chi tiết"),u.addEventListener("click",function(){p(t,o)}),c.appendChild(u);var h=i("div","bag-detail-head"),s=i("div","bag-detail-icon "+r(d));s.appendChild(a(d.icon,32)),h.appendChild(s);var f=i("div");f.appendChild(i("h3",null,n.name));var g=e.Inventory?e.Inventory.count(n.item):0;f.appendChild(i("div","bag-detail-meta",[d.grade,"Nguyên liệu","Đang có "+g].filter(Boolean).join(" · "))),h.appendChild(f),c.appendChild(h),d.desc&&c.appendChild(i("p",null,d.desc)),c.appendChild(i("div","forge-section","Cách lấy"));var v=i("ul","forge-how"),m=String(n.hint||"").replace(/^[^:]*:\s*/,"");v.appendChild(i("li",null,m.charAt(0).toUpperCase()+m.slice(1))),c.appendChild(v);var b=function(n){return e.Forge.RECIPES.concat(e.KhoiLoi?e.KhoiLoi.RECIPES:[]).filter(function(e){return!e.dropOnly&&!e.rewardOnly&&(0|e[n.key])>0}).map(function(e){return e.name+" (×"+e[n.key]+")"})}(n);if(b.length){c.appendChild(i("div","forge-section","Dùng để rèn"));var C=i("ul","forge-how");b.forEach(function(e){C.appendChild(i("li",null,e))}),c.appendChild(C)}var y=i("div","bag-detail-actions"),E=i("button","equip-action secondary","Đóng");E.type="button",E.addEventListener("click",function(){p(t,o)}),y.appendChild(E),c.appendChild(y),l.appendChild(c),t.appendChild(l),u.focus({preventScroll:!0})}(n,t,l)}),l}(n,c))}):n.sorted(n._muc).forEach(function(n){h.appendChild(function(n,o,d){var l=e.Forge,c=e.ITEMS&&e.ITEMS[n.id]||{name:n.name},u=l.check(n.id,e),h=i("button","bag-slot forge-slot "+r(c));if(h.type="button",h.setAttribute("role","listitem"),h.setAttribute("aria-label",n.name+(n.rewardOnly?", "+(e.Forge.rewardNote?e.Forge.rewardNote(n):"phần thưởng")+", không rèn được":n.dropOnly?", chỉ rơi, không rèn được":u.ok?", đủ nguyên liệu để rèn":", có công thức rèn nhưng "+u.why)),h.title=n.name,h.appendChild(a(c.icon,32)),n.rewardOnly){var s=e.Forge.REWARDS&&e.Forge.REWARDS[n.rewardOnly];h.appendChild(i("span","bag-qty forge-tag reward",s&&s.tag||"Thưởng"))}else n.dropOnly?h.appendChild(i("span","bag-qty forge-tag drop","Rơi")):h.appendChild(i("span","bag-qty forge-tag "+(u.ok?"ready":"recipe"),"Rèn"));return h.addEventListener("click",function(){!function(n,o,d,l){var c=e.Forge,u=e.ITEMS&&e.ITEMS[n.id]||{name:n.name},h=c.check(n.id,e);p(o);var s=i("div","bag-detail forge-detail");s.setAttribute("role","dialog"),s.setAttribute("aria-label","Chi tiết "+n.name),s.addEventListener("click",function(e){e.target===s&&p(o,l)});var f=i("div","bag-detail-card"),g=i("button","panel-x","✕");g.type="button",g.setAttribute("aria-label","Đóng chi tiết"),g.addEventListener("click",function(){p(o,l)}),f.appendChild(g);var v=i("div","bag-detail-head"),m=i("div","bag-detail-icon "+r(u));m.appendChild(a(u.icon,32)),v.appendChild(m);var b=i("div");b.appendChild(i("h3",null,n.name));var C=t[n.khoiLoi?"khoi_loi":n.slot||u.slot||"vu_khi"]||"";b.appendChild(i("div","bag-detail-meta",[u.grade,C].filter(Boolean).join(" · "))),v.appendChild(b),f.appendChild(v);var y=e.HUD.itemStatLabels?e.HUD.itemStatLabels(u):[];if(y.length&&f.appendChild(i("div","item-bonuses",y.join(" · "))),(e.Inventory&&e.Inventory.effectLines?e.Inventory.effectLines(u):[]).forEach(function(e){f.appendChild(i("div","item-effect",e))}),u.requireRealm&&e.Inventory&&e.Inventory.realmOk){var E=e.Inventory.realmOk(u);f.appendChild(i("div","item-require"+(E?" met":""),(E?"✓ ":"✕ ")+"Cần "+e.Inventory.realmNeedName(u)+(E?"":" — chưa đủ cảnh giới")))}if(u.desc&&f.appendChild(i("p",null,u.desc)),!n.dropOnly&&!n.rewardOnly){f.appendChild(i("div","forge-section","Nguyên liệu"));var I=i("ul","forge-mats");c.costRows(n,e).forEach(function(e){var n=i("li",e.have>=e.need?"met":"");n.textContent=(e.have>=e.need?"✓ ":"✕ ")+e.name+": "+e.have+" / "+e.need,I.appendChild(n)}),f.appendChild(I)}f.appendChild(i("div","forge-section","Cách nhận"));var k=i("ul","forge-how");c.obtainLines(n).forEach(function(e){k.appendChild(i("li",null,e))}),f.appendChild(k);var L=i("div","bag-detail-actions");if(!n.dropOnly&&!n.rewardOnly){var S=i("button","equip-action",h.ok?"Rèn":"Rèn — "+h.why);S.type="button",S.disabled=!h.ok,S.addEventListener("click",function(){c.check(n.id,e).ok&&(p(o),e.HUD.closeDialog(),d&&d(n))}),L.appendChild(S)}var A=i("button","equip-action secondary","Đóng");A.type="button",A.addEventListener("click",function(){p(o,l)}),L.appendChild(A),f.appendChild(L),s.appendChild(f),o.appendChild(s),g.focus({preventScroll:!0})}(n,o,d,h)}),h}(n,c,l))}),Array.prototype.forEach.call(u.children,function(e){var t=e.dataset.muc===n._muc;e.classList.toggle("on",t),e.setAttribute("aria-selected",t?"true":"false")})}h.setAttribute("role","list"),o.forEach(function(e){var t=i("button","bag-filter",e.ten);t.type="button",t.setAttribute("role","tab"),t.dataset.muc=e.id,t.addEventListener("click",function(){n._muc!==e.id&&(n._muc=e.id,s())}),u.appendChild(t)}),d.appendChild(u),d.appendChild(h),s()}})},n.closeDetail=function(){var e=document.getElementById("dialog");e&&p(e)}}(window.PNTT);
+!function (e) {
+  "use strict";
+  var n = e.ForgeUI = {};
+  var t = { vu_khi: "Vũ Khí", phi_hanh: "Phi Hành", mu: "Pháp Bảo", giap: "Giáp", giay: "Hành Ngoa", phap_boi: "Pháp Bội", nhan: "Linh Giới", khoi_loi: "Khôi Lỗi" };
+  function i(e, n, t) {
+    var i = document.createElement(e);
+    if (n) {
+      i.className = n;
+    }
+    if (null != t) {
+      i.textContent = t;
+    }
+    return i;
+  }
+  function a(n, t) {
+    var i = document.createElement("canvas");
+    i.width = i.height = t;
+    if (n && e.drawItemIcon) {
+      e.drawItemIcon(i.getContext("2d"), n, 0, 0, t);
+    }
+    if (n && e.sharpenItemIcon) {
+      e.sharpenItemIcon(i, n);
+    }
+    return i;
+  }
+  function r(n) {
+    return "grade-" + (e.Loot ? e.Loot.gradeKey(n && n.grade) : "common");
+  }
+  var o = [{ id: "vu-khi", ten: "Vũ Khí" }, { id: "phap-bao", ten: "Pháp Bảo" }, { id: "nguyen-lieu", ten: "Nguyên Liệu" }];
+  function d(e) {
+    var n = String(e || "").toLowerCase();
+    return 3 * (n.indexOf("thiên") >= 0 ? 3 : n.indexOf("địa") >= 0 ? 2 : n.indexOf("linh") >= 0 ? 1 : 0) + (n.indexOf("thượng") >= 0 ? 2 : n.indexOf("trung") >= 0 ? 1 : n.indexOf("hạ") >= 0 ? 0 : 1);
+  }
+  function l(e, n) {
+    return 3 * (n.atkBonus || e.atk || 0) + (n.hpBonus || 0) + (n.mpBonus || 0) + (n.bpBonus || 0) + (n.spBonus || 0);
+  }
+  function c(n) {
+    if (!n) {
+      return 0;
+    }
+    var t = e.REALMS_CHUA_MO;
+    return t && t[n] ? (e.REALMS ? e.REALMS.length : 0) + Object.keys(t).indexOf(n) + 1 : e.realmIndexById ? e.realmIndexById(n) : 0;
+  }
+  function u(e, n) {
+    return n.requireRealm || e.requireRealm || n.fly && n.fly.realmMin || "";
+  }
+  function p(e, n) {
+    var t = e.querySelector(".forge-detail");
+    if (t) {
+      t.remove();
+    }
+    if (n && document.contains(n)) {
+      n.focus({ preventScroll: !0 });
+    }
+  }
+  n._muc = "vu-khi";
+  n.sortKey = function (e, n) {
+    return [c(u(n = n || {}, e = e || {})), d(e.grade), l(n, e), n.stones || 0];
+  };
+  n.compareKey = function (e, n) {
+    for (var t = 0; t < e.length; t++)
+      if (e[t] !== n[t]) {
+        return e[t] - n[t];
+      }
+    return 0;
+  };
+  n.sorted = function (t) {
+    return "khoi-loi" === t ? e.KhoiLoi ? e.KhoiLoi.RECIPES.slice() : [] : e.Forge.RECIPES.filter(function (n) {
+      return ((i = e.ITEMS && e.ITEMS[n.id]) && "vu_khi" === i.slot ? "vu-khi" : "phap-bao") === t;
+      var i;
+    }).map(function (t, i) {
+      var a = e.ITEMS && e.ITEMS[t.id] || {};
+      return { r: t, i: i, k: n.sortKey(a, t) };
+    }).sort(function (e, t) {
+      return n.compareKey(e.k, t.k) || e.i - t.i;
+    }).map(function (e) {
+      return e.r;
+    });
+  };
+  n.materials = function () {
+    return (e.Forge.MATERIALS || []).map(function (n, t) {
+      return { m: n, i: t, k: d((e.ITEMS && e.ITEMS[n.item] || {}).grade) };
+    }).sort(function (e, n) {
+      return e.k - n.k || e.i - n.i;
+    }).map(function (e) {
+      return e.m;
+    });
+  };
+  n.open = function (d, l, c) {
+    e.HUD.openDialog(d && d.name || "Thợ Rèn", c || "Chọn một món để xem chi tiết và rèn.", { content: function (d, c) {
+        d.classList.add("forge-box");
+        var u = i("div", "bag-filters forge-tabs");
+        u.setAttribute("role", "tablist");
+        u.setAttribute("aria-label", "Loại đồ ở lò rèn");
+        var h = i("div", "bag-list forge-grid");
+        function s() {
+          h.innerHTML = "";
+          if ("nguyen-lieu" === n._muc) {
+            n.materials().forEach(function (n) {
+              h.appendChild(function (n, t) {
+                var o = e.ITEMS && e.ITEMS[n.item] || { name: n.name };
+                var d = e.Inventory ? e.Inventory.count(n.item) : 0;
+                var l = i("button", "bag-slot forge-slot " + r(o));
+                l.type = "button";
+                l.setAttribute("role", "listitem");
+                l.setAttribute("aria-label", n.name + ", đang có " + d);
+                l.title = n.name;
+                l.appendChild(a(o.icon, 32));
+                if (d > 0) {
+                  l.appendChild(i("span", "bag-qty", "x" + d));
+                }
+                l.addEventListener("click", function () {
+                  !function (n, t, o) {
+                    var d = e.ITEMS && e.ITEMS[n.item] || { name: n.name };
+                    p(t);
+                    var l = i("div", "bag-detail forge-detail");
+                    l.setAttribute("role", "dialog");
+                    l.setAttribute("aria-label", "Chi tiết " + n.name);
+                    l.addEventListener("click", function (e) {
+                      if (e.target === l) {
+                        p(t, o);
+                      }
+                    });
+                    var c = i("div", "bag-detail-card");
+                    var u = i("button", "panel-x", "✕");
+                    u.type = "button";
+                    u.setAttribute("aria-label", "Đóng chi tiết");
+                    u.addEventListener("click", function () {
+                      p(t, o);
+                    });
+                    c.appendChild(u);
+                    var h = i("div", "bag-detail-head");
+                    var s = i("div", "bag-detail-icon " + r(d));
+                    s.appendChild(a(d.icon, 32));
+                    h.appendChild(s);
+                    var f = i("div");
+                    f.appendChild(i("h3", null, n.name));
+                    var g = e.Inventory ? e.Inventory.count(n.item) : 0;
+                    f.appendChild(i("div", "bag-detail-meta", [d.grade, "Nguyên liệu", "Đang có " + g].filter(Boolean).join(" · ")));
+                    h.appendChild(f);
+                    c.appendChild(h);
+                    if (d.desc) {
+                      c.appendChild(i("p", null, d.desc));
+                    }
+                    c.appendChild(i("div", "forge-section", "Cách lấy"));
+                    var v = i("ul", "forge-how");
+                    var m = String(n.hint || "").replace(/^[^:]*:\s*/, "");
+                    v.appendChild(i("li", null, m.charAt(0).toUpperCase() + m.slice(1)));
+                    c.appendChild(v);
+                    var b = function (n) {
+                      return e.Forge.RECIPES.concat(e.KhoiLoi ? e.KhoiLoi.RECIPES : []).filter(function (e) {
+                        return !e.dropOnly && !e.rewardOnly && (0 | e[n.key]) > 0;
+                      }).map(function (e) {
+                        return e.name + " (×" + e[n.key] + ")";
+                      });
+                    }(n);
+                    if (b.length) {
+                      c.appendChild(i("div", "forge-section", "Dùng để rèn"));
+                      var C = i("ul", "forge-how");
+                      b.forEach(function (e) {
+                        C.appendChild(i("li", null, e));
+                      });
+                      c.appendChild(C);
+                    }
+                    var y = i("div", "bag-detail-actions");
+                    var E = i("button", "equip-action secondary", "Đóng");
+                    E.type = "button";
+                    E.addEventListener("click", function () {
+                      p(t, o);
+                    });
+                    y.appendChild(E);
+                    c.appendChild(y);
+                    l.appendChild(c);
+                    t.appendChild(l);
+                    u.focus({ preventScroll: !0 });
+                  }(n, t, l);
+                });
+                return l;
+              }(n, c));
+            });
+          }
+          else {
+            n.sorted(n._muc).forEach(function (n) {
+              h.appendChild(function (n, o, d) {
+                var l = e.Forge;
+                var c = e.ITEMS && e.ITEMS[n.id] || { name: n.name };
+                var u = l.check(n.id, e);
+                var h = i("button", "bag-slot forge-slot " + r(c));
+                if (h.type = "button", h.setAttribute("role", "listitem"), h.setAttribute("aria-label", n.name + (n.rewardOnly ? ", " + (e.Forge.rewardNote ? e.Forge.rewardNote(n) : "phần thưởng") + ", không rèn được" : n.dropOnly ? ", chỉ rơi, không rèn được" : u.ok ? ", đủ nguyên liệu để rèn" : ", có công thức rèn nhưng " + u.why)), h.title = n.name, h.appendChild(a(c.icon, 32)), n.rewardOnly) {
+                  var s = e.Forge.REWARDS && e.Forge.REWARDS[n.rewardOnly];
+                  h.appendChild(i("span", "bag-qty forge-tag reward", s && s.tag || "Thưởng"));
+                }
+                else {
+                  if (n.dropOnly) {
+                    h.appendChild(i("span", "bag-qty forge-tag drop", "Rơi"));
+                  }
+                  else {
+                    h.appendChild(i("span", "bag-qty forge-tag " + (u.ok ? "ready" : "recipe"), "Rèn"));
+                  }
+                }
+                h.addEventListener("click", function () {
+                  !function (n, o, d, l) {
+                    var c = e.Forge;
+                    var u = e.ITEMS && e.ITEMS[n.id] || { name: n.name };
+                    var h = c.check(n.id, e);
+                    p(o);
+                    var s = i("div", "bag-detail forge-detail");
+                    s.setAttribute("role", "dialog");
+                    s.setAttribute("aria-label", "Chi tiết " + n.name);
+                    s.addEventListener("click", function (e) {
+                      if (e.target === s) {
+                        p(o, l);
+                      }
+                    });
+                    var f = i("div", "bag-detail-card");
+                    var g = i("button", "panel-x", "✕");
+                    g.type = "button";
+                    g.setAttribute("aria-label", "Đóng chi tiết");
+                    g.addEventListener("click", function () {
+                      p(o, l);
+                    });
+                    f.appendChild(g);
+                    var v = i("div", "bag-detail-head");
+                    var m = i("div", "bag-detail-icon " + r(u));
+                    m.appendChild(a(u.icon, 32));
+                    v.appendChild(m);
+                    var b = i("div");
+                    b.appendChild(i("h3", null, n.name));
+                    var C = t[n.khoiLoi ? "khoi_loi" : n.slot || u.slot || "vu_khi"] || "";
+                    b.appendChild(i("div", "bag-detail-meta", [u.grade, C].filter(Boolean).join(" · ")));
+                    v.appendChild(b);
+                    f.appendChild(v);
+                    var y = e.HUD.itemStatLabels ? e.HUD.itemStatLabels(u) : [];
+                    if (y.length && f.appendChild(i("div", "item-bonuses", y.join(" · "))), (e.Inventory && e.Inventory.effectLines ? e.Inventory.effectLines(u) : []).forEach(function (e) {
+                      f.appendChild(i("div", "item-effect", e));
+                    }), u.requireRealm && e.Inventory && e.Inventory.realmOk) {
+                      var E = e.Inventory.realmOk(u);
+                      f.appendChild(i("div", "item-require" + (E ? " met" : ""), (E ? "✓ " : "✕ ") + "Cần " + e.Inventory.realmNeedName(u) + (E ? "" : " — chưa đủ cảnh giới")));
+                    }
+                    if (u.desc && f.appendChild(i("p", null, u.desc)), !n.dropOnly && !n.rewardOnly) {
+                      f.appendChild(i("div", "forge-section", "Nguyên liệu"));
+                      var I = i("ul", "forge-mats");
+                      c.costRows(n, e).forEach(function (e) {
+                        var n = i("li", e.have >= e.need ? "met" : "");
+                        n.textContent = (e.have >= e.need ? "✓ " : "✕ ") + e.name + ": " + e.have + " / " + e.need;
+                        I.appendChild(n);
+                      });
+                      f.appendChild(I);
+                    }
+                    f.appendChild(i("div", "forge-section", "Cách nhận"));
+                    var k = i("ul", "forge-how");
+                    c.obtainLines(n).forEach(function (e) {
+                      k.appendChild(i("li", null, e));
+                    });
+                    f.appendChild(k);
+                    var L = i("div", "bag-detail-actions");
+                    if (!n.dropOnly && !n.rewardOnly) {
+                      var S = i("button", "equip-action", h.ok ? "Rèn" : "Rèn — " + h.why);
+                      S.type = "button";
+                      S.disabled = !h.ok;
+                      S.addEventListener("click", function () {
+                        if (c.check(n.id, e).ok) {
+                          p(o);
+                          e.HUD.closeDialog();
+                          if (d) {
+                            d(n);
+                          }
+                        }
+                      });
+                      L.appendChild(S);
+                    }
+                    var A = i("button", "equip-action secondary", "Đóng");
+                    A.type = "button";
+                    A.addEventListener("click", function () {
+                      p(o, l);
+                    });
+                    L.appendChild(A);
+                    f.appendChild(L);
+                    s.appendChild(f);
+                    o.appendChild(s);
+                    g.focus({ preventScroll: !0 });
+                  }(n, o, d, h);
+                });
+                return h;
+              }(n, c, l));
+            });
+          }
+          Array.prototype.forEach.call(u.children, function (e) {
+            var t = e.dataset.muc === n._muc;
+            e.classList.toggle("on", t);
+            e.setAttribute("aria-selected", t ? "true" : "false");
+          });
+        }
+        h.setAttribute("role", "list");
+        o.forEach(function (e) {
+          var t = i("button", "bag-filter", e.ten);
+          t.type = "button";
+          t.setAttribute("role", "tab");
+          t.dataset.muc = e.id;
+          t.addEventListener("click", function () {
+            if (n._muc !== e.id) {
+              n._muc = e.id;
+              s();
+            }
+          });
+          u.appendChild(t);
+        });
+        d.appendChild(u);
+        d.appendChild(h);
+        s();
+      } });
+  };
+  n.closeDetail = function () {
+    var e = document.getElementById("dialog");
+    if (e) {
+      p(e);
+    }
+  };
+}(window.PNTT);

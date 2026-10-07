@@ -106,9 +106,26 @@
       resend: function () { return Promise.resolve({ error: NOT_SUPPORTED }); }
     };
 
+    // adminRev: số phiên bản do trang quản trị (admin.html) tăng mỗi lần sửa nhân vật.
+    // Máy khách gửi kèm số nó đang biết; nếu admin vừa sửa thì Firestore Rules từ chối
+    // bản lưu cũ -> game tải lại để nhận dữ liệu mới, không ghi đè thay đổi của admin.
+    var knownRev = {};
+    var reloading = false;
+    var FV = firebase.firestore.FieldValue;
+
+    function today() {
+      var d = new Date();
+      return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+    }
+    function showBan(d) {
+      alert("Tài khoản này đã bị khoá." + (d.banReason ? "\nLý do: " + d.banReason : "") +
+        "\nLiên hệ quản trị viên để biết thêm.");
+      fa.signOut().then(function () { location.reload(); });
+    }
+
     // Firestore không nhận mảng lồng mảng nên appearance/save được lưu dạng chuỗi JSON.
     function encode(row) {
-      var o = { uid: row.user_id, updatedAt: Date.now() };
+      var o = { uid: row.user_id, updatedAt: FV.serverTimestamp(), adminRev: knownRev[row.user_id] || 0 };
       ["name", "map_id", "x", "y", "dir", "realm_id", "exp"].forEach(function (k) {
         if (row[k] !== undefined && row[k] !== null) o[k] = row[k];
       });
@@ -130,14 +147,52 @@
     Table.prototype.eq = function (col, val) { if (col === "user_id") this.id = val; return this; };
     Table.prototype.maybeSingle = function () {
       if (!this.id) return Promise.resolve({ data: null, error: null });
-      return db.collection(this.name).doc(this.id).get().then(function (snap) {
-        return { data: snap.exists ? decode(snap.data()) : null, error: null };
+      var id = this.id;
+      return db.collection(this.name).doc(id).get().then(function (snap) {
+        if (!snap.exists) { knownRev[id] = 0; return { data: null, error: null }; }
+        var d = snap.data();
+        if (d.banned) { showBan(d); return { data: null, error: { message: "Tài khoản đã bị khoá." } }; }
+        knownRev[id] = d.adminRev || 0;
+        return { data: decode(d), error: null };
       }).catch(function (e) { return { data: null, error: mkErr(e) }; });
     };
+
+    // Sao lưu mỗi ngày một bản: characters/{uid}/backups/{YYYY-MM-DD}.
+    // Rules chỉ cho TẠO, không cho sửa/xoá, nên bản cũ không bị ghi đè.
+    function backupOnce(col, uid, data) {
+      var day = today(), key = "pntt_backup_day_" + uid;
+      try { if (localStorage.getItem(key) === day) return; } catch (e) {}
+      var copy = {};
+      for (var k in data) copy[k] = data[k];
+      copy.backupAt = FV.serverTimestamp();
+      db.collection(col).doc(uid).collection("backups").doc(day).set(copy)
+        .catch(function () { /* đã có bản hôm nay */ })
+        .then(function () { try { localStorage.setItem(key, day); } catch (e) {} });
+    }
+
+    // Khi bị từ chối ghi: kiểm tra xem admin vừa sửa hoặc khoá nhân vật không.
+    function checkRejected(col, uid) {
+      return db.collection(col).doc(uid).get().then(function (snap) {
+        if (!snap.exists || reloading) return;
+        var d = snap.data();
+        if (d.banned) { reloading = true; showBan(d); return; }
+        if ((d.adminRev || 0) !== (knownRev[uid] || 0)) {
+          reloading = true;
+          alert("Quản trị viên vừa cập nhật nhân vật của bạn. Game sẽ tải lại để nhận dữ liệu mới.");
+          location.reload();
+        }
+      }).catch(function () {});
+    }
+
     Table.prototype.upsert = function (row) {
-      return db.collection(this.name).doc(row.user_id).set(encode(row), { merge: true })
-        .then(function () { return { error: null }; })
-        .catch(function (e) { return { error: mkErr(e) }; });
+      if (reloading) return Promise.resolve({ error: { message: "Đang tải lại." } });
+      var col = this.name, data = encode(row);
+      return db.collection(col).doc(row.user_id).set(data, { merge: true })
+        .then(function () { backupOnce(col, row.user_id, data); return { error: null }; })
+        .catch(function (e) {
+          if (e && e.code === "permission-denied") checkRejected(col, row.user_id);
+          return { error: mkErr(e) };
+        });
     };
 
     return { auth: auth, from: function (t) { return new Table(t); } };
