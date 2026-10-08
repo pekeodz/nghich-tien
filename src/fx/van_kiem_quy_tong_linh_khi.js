@@ -11,7 +11,7 @@
             var o = t.owner;
             if (Number.isFinite(o.x) && Number.isFinite(o.y)) {
               var h = a.CONFIG && a.CONFIG.FLY;
-              var s = h ? h.HOVER * (o.flyRise || 0) : 0;
+              var s = window.NTBayCao ? window.NTBayCao(o) : h ? h.HOVER * (o.flyRise || 0) : 0;   // Nghịch Tiên
               var v = o.x - l;
               var M = o.y - s - 30 - n;
               var b = t.hitDelay || 1;

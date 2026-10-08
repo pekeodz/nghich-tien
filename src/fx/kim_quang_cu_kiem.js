@@ -32,6 +32,7 @@
     return o - Math.floor(o);
   }
   function d(t) {
+    if (window.NTBayCao) return window.NTBayCao(t);   // Nghịch Tiên: theo độ cao thú cưỡi / mặt nạ
     var r = a.CONFIG && a.CONFIG.FLY;
     return r ? r.HOVER * (t.flyRise || 0) : 0;
   }
