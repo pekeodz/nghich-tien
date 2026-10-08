@@ -20,8 +20,13 @@
   var MN = P.MatNa = {};
   var MAT_NA = MN.DS = {
     mat_na_noel: { hinh: "noel", anh: "assets/sprites/ngoai_trang/noel.png", fw: 140, fh: 174, ax: 70, ay: 148, tiLe: 0.46,
-      di: [0, 8], danh: [8, 8], ngoi: [16, 2], dung: 18, fpsDi: 11, fpsDanh: 14, fpsNgoi: 1.1 }
+      di: [0, 8], danh: [8, 8], ngoi: [16, 2], dung: 18, fpsDi: 11, fpsDanh: 14, fpsNgoi: 1.1 },
+    // Liễu Như Yên: hàng xuống/lên 12 khung, trái/phải 10 khung (soDi/soDanh theo hướng game: xuống, trái, phải, lên)
+    mat_na_lieu_nhu_yen: { hinh: "lieu_nhu_yen", anh: "assets/sprites/ngoai_trang/lieu_nhu_yen.png", fw: 150, fh: 180, ax: 75, ay: 160, tiLe: 0.42,
+      di: [0, 12], danh: [12, 12], soDi: [12, 10, 10, 12], soDanh: [12, 10, 10, 12], ngoi: [24, 2], dung: 26, fpsDi: 12, fpsDanh: 16, fpsNgoi: 1.1 }
   };
+  var ICON_LNY = "assets/items/icon_mat_na_lieu_nhu_yen.png";
+  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON_LNY] = 8730; P.ASSET_MANIFEST[MAT_NA.mat_na_lieu_nhu_yen.anh] = 416173; }
   var ICON = "assets/items/icon_mat_na_noel.png";
   if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON] = 6881; P.ASSET_MANIFEST[MAT_NA.mat_na_noel.anh] = 286997; }
 
@@ -30,6 +35,11 @@
     id: "mat_na_noel", name: "Mặt Nạ Ông Già Noel", type: "vat_pham", slot: "mat_na", grade: "Linh phẩm thượng",
     ngoaiTrang: true, matNa: "noel", icon: "mat_na_noel",
     desc: "Đeo vào là hoá thành Ông Già Noel vác bao quà. Đi đâu, đánh gì, cưỡi thú hay ngồi thiền cũng vẫn là Ông Già Noel. Phi phong và thú cưỡi tạm ẩn, chỉ số vẫn giữ."
+  };
+  P.ITEMS.mat_na_lieu_nhu_yen = {
+    id: "mat_na_lieu_nhu_yen", name: "Mặt Nạ Liễu Như Yên", type: "vat_pham", slot: "mat_na", grade: "Linh phẩm thượng",
+    ngoaiTrang: true, matNa: "lieu_nhu_yen", icon: "mat_na_lieu_nhu_yen",
+    desc: "Đeo vào là hoá thành Liễu Như Yên — nữ hiệp đội mão bạc hình trăng khuyết, áo xanh ngọc, bước đi gió cuốn theo chân. Đi, đánh, cưỡi thú hay ngồi thiền cũng vẫn là Liễu Như Yên. Phi phong và thú cưỡi tạm ẩn, chỉ số vẫn giữ."
   };
   var INV = P.Inventory;
   if (INV && INV.slots && !INV.slots.some(function (s) { return s.id === "mat_na"; })) {
@@ -70,7 +80,7 @@
   function layAnh(m) {
     var a = anh[m.anh];
     if (a) return a.complete && a.naturalWidth ? a : null;
-    a = anh[m.anh] = new Image(); a.src = m.anh + "?v=5";
+    a = anh[m.anh] = new Image(); a.src = m.anh + "?v=7";
     return null;
   }
 
@@ -92,14 +102,15 @@
     }
     return -1;
   }
-  function khungCua(m, col, e) {
-    var t = gio();
-    if (col >= 0 && col <= 3) return m.di[0] + Math.floor(t * m.fpsDi) % m.di[1];          // đi
-    if (col >= 24 && col <= 35) return m.di[0] + Math.floor(t * m.fpsDi) % m.di[1];         // vừa đi vừa ra chiêu
+  function khungCua(m, col, e, dir) {
+    var t = gio(), h = (dir | 0) & 3;
+    var soDi = m.soDi ? m.soDi[h] : m.di[1], soDanh = m.soDanh ? m.soDanh[h] : m.danh[1];
+    if (col >= 0 && col <= 3) return m.di[0] + Math.floor(t * m.fpsDi) % soDi;              // đi
+    if (col >= 24 && col <= 35) return m.di[0] + Math.floor(t * m.fpsDi) % soDi;             // vừa đi vừa ra chiêu
     if (col === 4 || col === 5 || (col >= 10 && col <= 19)) {                                // đánh / ra chiêu
       var k = tienDoDanh(e);
-      if (k >= 0) return m.danh[0] + Math.floor(k * m.danh[1]);
-      var nua = m.danh[1] / 2, dau = (col & 1) ? nua : 0;
+      if (k >= 0) return m.danh[0] + Math.floor(k * soDanh);
+      var nua = Math.floor(soDanh / 2), dau = (col & 1) ? nua : 0;
       return m.danh[0] + dau + Math.floor(t * m.fpsDanh) % nua;
     }
     if (col === 8 || col === 9 || col === 22 || col === 23) return m.ngoi[0] + (col & 1);    // ngồi thiền / ngã
@@ -111,7 +122,7 @@
     s = s || 1;
     var C = P.CONFIG || {}, chanX = x + (C.CHAR_ANCHOR_X || 16) * s, chanY = y + (C.CHAR_ANCHOR_Y || 62) * s;
     var w = W(), e = w && w.player && cfg && w.player.cfg === cfg ? w.player : null;
-    var f = khungCua(m, col, e), hang = dir & 3;
+    var f = khungCua(m, col, e, dir), hang = dir & 3;
     var sm = ctx.imageSmoothingEnabled; ctx.imageSmoothingEnabled = true;
     // ảnh giữ độ phân giải gốc, chỉ thu nhỏ lúc vẽ (tiLe) → lên màn hình phóng to vẫn nét
     var k = (m.tiLe || 1) * s;
