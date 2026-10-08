@@ -1,13 +1,14 @@
 /* ============================================================================
  *  huyen_am_tram.js — CHIÊU HUYỀN ÂM TRẢM (Nghịch Tiên, theo chiêu Ngũ Độc của Kiếm Thế)
  * ----------------------------------------------------------------------------
- *  Dạng phóng tia (bolt) như Phong Nhẫn: 3 luồng đao khí độc toả quạt hẹp bay thẳng,
- *  trúng thì bùng độc + bãi độc đọng dưới đất; mục tiêu trúng độc mất máu 4 giây và bị chậm.
+ *  Dạng phóng tia (bolt), bắn liên tục (hồi 1 giây): 3 luồng đao khí độc bay thẳng,
+ *  trúng thì bùng độc + bãi độc; độc CỘNG TẦNG (effect.chong, xử lý trong skills.js) tối đa 10 tầng, 6 giây.
  *  Hình ảnh: sprite assets/sprites/fx/huyen_am_tram/{khi,no,vung}.png (cắt bằng tools/huyen_am_tram/cat_sprite.py)
  *            + vòng ấn dưới chân, nhát chém trăng khuyết, tia và giọt độc vẽ bằng canvas.
  *  Gắn vào skills.js ở các chỗ ghi "Nghịch Tiên: Huyền Âm Trảm" (phát chiêu, vẽ đạn, trúng đích, tính độc).
  *  Âm thanh: assets/audio/sfx/huyen_am_tram_{phat,trung}.mp3 (thay tiếng tổng hợp mặc định của chiêu).
- *  Bí tịch: Tàng Kinh Trung Cấp (độ hiếm "Hiếm"). Chỉnh số ở DEF bên dưới.
+ *  Chiêu thượng phẩm (như Phi Long Tại Thiên): cần Trúc Cơ Trung Kỳ; bí tịch rơi 2% từ Song Dực Ma Báo.
+ *  Chỉnh số ở DEF và ROI bên dưới.
  * ==========================================================================*/
 (function (P) {
   "use strict";
@@ -20,7 +21,7 @@
 
   /* ---------------- sprite ---------------- */
   var THU_MUC = "assets/sprites/fx/huyen_am_tram/", VER = "1";
-  var SP = { khi: { w: 142, h: 57, n: 8, fps: 16, tl: 0.36 }, no: { w: 156, h: 143, n: 4, tl: 0.42 }, vung: { w: 173, h: 136, n: 3, tl: 0.42 } };
+  var SP = { khi: { w: 142, h: 57, n: 8, fps: 16, tl: 0.46 }, no: { w: 156, h: 143, n: 4, tl: 0.5 }, vung: { w: 173, h: 136, n: 3, tl: 0.42 } };
   var anh = {};
   function lay(k) {
     var a = anh[k];
@@ -96,7 +97,7 @@
   // vẽ một viên đạn (bolt) của chiêu: u = bolt của Skills, (sx,sy) = toạ độ màn hình
   HAT.veDan = function (c, u, sx, sy) {
     var S = SP.khi, f = Math.floor(((u.elapsed || 0) + (u.spin || 0)) * S.fps) % S.n;
-    if (!veKhung(c, "khi", f, sx, sy, u.angle, 0.36, 0.36)) {
+    if (!veKhung(c, "khi", f, sx, sy, u.angle, 0.42, 0.42)) {
       c.save(); c.strokeStyle = M.vua; c.lineWidth = 3; c.beginPath(); c.moveTo(sx, sy); c.lineTo(sx - Math.cos(u.angle) * 20, sy - Math.sin(u.angle) * 20); c.stroke(); c.restore();
     }
     if (Math.random() < 0.5) HAT.list.push({ k: "tia", x: u.x - Math.cos(u.angle) * 10, y: u.y + rnd(-2, 2), vx: -Math.cos(u.angle) * rnd(20, 50) + rnd(-15, 15), vy: rnd(-25, 10), t: 0, max: rnd(0.2, 0.35) });
@@ -145,7 +146,7 @@
   function veVung(c, p) {
     var k = p.t / p.max, f = k < 0.25 ? 0 : k < 0.6 ? 1 : 2;
     var al = Math.min(1, p.t / 0.15) * Math.min(1, (p.max - p.t) / 0.5);
-    c.save(); c.globalAlpha = al * 0.95; veKhung(c, "vung", f, p.x, p.y, 0, 0.42, 0.34); c.restore();
+    c.save(); c.globalAlpha = al * 0.95; veKhung(c, "vung", f, p.x, p.y, 0, 0.5, 0.4); c.restore();
   }
   // lop "back": ấn + bãi độc (dưới nhân vật); "front": còn lại
   HAT.draw = function (c, camX, camY, lop) {
@@ -175,19 +176,20 @@
 
   /* ---------------- chiêu + bí tịch ---------------- */
   var BOOK = "bi_tich_huyen_am_tram", ICON = "assets/items/icon_" + BOOK + ".png";
-  if (P.ASSET_MANIFEST) P.ASSET_MANIFEST[ICON] = 1956;
-  if (P.ASSET_VERSIONS) P.ASSET_VERSIONS[ICON] = "hat01";
+  if (P.ASSET_MANIFEST) P.ASSET_MANIFEST[ICON] = 2069;
+  if (P.ASSET_VERSIONS) P.ASSET_VERSIONS[ICON] = "hat03";
   var DEF = HAT.DEF = {
     id: "huyen_am_tram", short: "Huyền Âm", name: "Huyền Âm Trảm", book: BOOK, element: "Độc", glyph: "毒", icon: BOOK,
-    shape: "bolt", medium: !0, requireRealm: "luyen_khi_10", straight: !0,
-    cooldown: 3, cast: 0.25, mp: 12, sp: 4, range: 170, speed: 300, shots: 3, spread: 14,
-    coef: 4.5, hitR: 12, blastR: 0,
-    effect: [{ kind: "poison", time: 4, dpsCoef: 0.25 }, { kind: "slow", time: 2, mult: 0.7 }],
+    shape: "bolt", medium: !0, thuongPham: !0, requireRealm: "truc_co_2", straight: !0,
+    // bắn liên tục: sát thương mỗi phát thấp, mạnh nhờ độc cộng tầng khi đánh lâu
+    cooldown: 1, cast: 0.2, mp: 7, sp: 2, range: 190, speed: 320, shots: 3, spread: 12,
+    coef: 0.8, hitR: 13, blastR: 0,
+    effect: [{ kind: "poison", time: 6, dpsCoef: 0.1, chong: 10 }, { kind: "slow", time: 1.5, mult: 0.8 }],
     colors: { core: "#f4ffd8", mid: "#3fe03a", edge: "#06401a", glow: "#9dff4a" },
-    tip: "Vung đao chém ra ba luồng âm độc toả quạt hẹp bay thẳng, trúng thì bùng độc và để lại bãi độc. Mục tiêu trúng độc mất máu 4 giây và chậm 30% trong 2 giây. Cần Luyện Khí Tầng 10."
+    tip: "Tuyệt kỹ Ngũ Độc: chém liên tục ba luồng âm độc hình rắn, hồi chiêu chỉ 1 giây. Sát thương mỗi phát nhẹ nhưng độc cộng dồn: mỗi luồng trúng thêm một tầng (tối đa 10), mỗi tầng rút máu thêm, độc kéo dài 6 giây và làm mới khi trúng tiếp. Hợp đánh lâu. Cần Trúc Cơ Trung Kỳ."
   };
-  if (P.ITEMS && !P.ITEMS[BOOK]) P.ITEMS[BOOK] = { id: BOOK, name: "Bí Tịch Huyền Âm Trảm", type: "bi_tich", grade: "Linh phẩm trung", requireRealm: "luyen_khi_10", icon: BOOK,
-    desc: "Bí truyền của Ngũ Độc giáo: dẫn âm độc vào lưỡi đao, chém ra ba luồng độc khí. Trúng độc mất máu dần và bị chậm. Học được từ Luyện Khí Tầng 10." };
+  if (P.ITEMS && !P.ITEMS[BOOK]) P.ITEMS[BOOK] = { id: BOOK, name: "Bí Tịch Huyền Âm Trảm", type: "bi_tich", grade: "Địa phẩm thượng", requireRealm: "truc_co_2", icon: BOOK,
+    desc: "Tuyệt kỹ thất truyền của Ngũ Độc giáo: dẫn âm độc vào lưỡi đao, chém liên tục ra từng luồng độc khí hình rắn. Độc ngấm dần, càng đánh lâu càng rút máu mạnh. Song Dực Ma Báo đôi khi rơi ra. Cần Trúc Cơ Trung Kỳ." };
   function ganSkill() {
     var S = P.Skills; if (!S || !S.DEFS) return;
     if (!S.DEFS.huyen_am_tram) {
@@ -196,11 +198,19 @@
       if (S.SLOTS && S.SLOTS.indexOf(DEF.id) < 0) S.SLOTS.push(DEF.id);
     }
   }
-  function ganTangKinh() {
-    var G = P.Gacha, pool = G && G.POOLS && G.POOLS.trung_cap; if (!pool || pool.__hat) return;
-    pool.__hat = true; pool.pool.push({ id: BOOK, weight: 50, tier: "Hiếm" }); pool.totalWeight = (pool.totalWeight || 0) + 50;
+  // rơi từ Song Dực Ma Báo như Phi Long Tại Thiên / Cửu U Ma Trảo (2%)
+  var ROI = HAT.ROI = { TYPE: "song_duc_ma_bao", CHANCE: 0.02 };
+  function ganRoi() {
+    var L = P.Loot; if (!L || !L.rollKill || L.rollKill.__hat) return;
+    var g = L.rollKill;
+    L.rollKill = function (a, t, e) {
+      var o = g.apply(this, arguments);
+      if (a && a.type === ROI.TYPE && Array.isArray(o) && (e ? e() : Math.random()) < ROI.CHANCE) o.push(BOOK);
+      return o;
+    };
+    L.rollKill.__hat = true;
   }
-  function caiDat() { ganSkill(); ganVFX(); ganTangKinh(); ganAm(); }
+  function caiDat() { ganSkill(); ganVFX(); ganRoi(); ganAm(); }
   caiDat();
   if (typeof window !== "undefined") window.addEventListener("load", caiDat);
 })(window.PNTT);

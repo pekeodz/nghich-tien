@@ -1507,7 +1507,16 @@
             }
           }
           else {
-            if ("poison" === e.kind) {
+            if ("poison" === e.kind && e.chong > 1) {
+              // Nghịch Tiên: độc cộng tầng (Huyền Âm Trảm) — mỗi lần trúng thêm 1 tầng tới e.chong, làm mới thời gian
+              n.poisonChong = n.poisonT > 0 ? Math.min(e.chong, (n.poisonChong || 0) + 1) : 1;
+              n.poisonT = Math.max(n.poisonT || 0, e.time);
+              n.poisonDps = Math.max(1, Math.round((e.dps || 1) * n.poisonChong));
+              if (void 0 === n.poisonTick) {
+                n.poisonTick = 1;
+              }
+            }
+            else if ("poison" === e.kind) {
               n.poisonT = Math.max(n.poisonT || 0, e.time);
               n.poisonDps = Math.max(n.poisonDps || 0, e.dps || 1);
               if (void 0 === n.poisonTick) {
@@ -1906,6 +1915,7 @@
       if (n.poisonT <= 0) {
         n.poisonT = 0;
         n.poisonDps = 0;
+        n.poisonChong = 0;
         n.poisonTick = 1;
       }
     }
