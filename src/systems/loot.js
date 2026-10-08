@@ -138,8 +138,8 @@
       o.push("nanh_ho");
     }
     else if (a.type === n.HO_PHAP_MA_BAO.TYPE) {
-      var E = n.HO_PHAP_MA_BAO.ITEMS;
-      o.push(E[Math.min(E.length - 1, Math.floor((e ? e() : Math.random()) * E.length))]);
+      var C = n.HO_PHAP_MA_BAO.ITEMS;
+      o.push(C[Math.min(C.length - 1, Math.floor((e ? e() : Math.random()) * C.length))]);
     }
     else if ("xich_nhan_nguu" === a.type) {
       if ((e ? e() : Math.random()) < n.NGUU_SUNG_CHANCE) {
@@ -153,8 +153,8 @@
     }
     else if ("yl_hac_tien" === a.type) {
       if ((e ? e() : Math.random()) < n.rate("HAC_TIEN_CHANCE", t) && o.push("hac_tien"), (e ? e() : Math.random()) < n.rate("HAC_TIEN_PHU_CHANCE", t)) {
-        var C = Math.floor((e ? e() : Math.random()) * n.PHU_CHU_ROI.length);
-        o.push(n.PHU_CHU_ROI[Math.min(n.PHU_CHU_ROI.length - 1, Math.max(0, C))]);
+        var E = Math.floor((e ? e() : Math.random()) * n.PHU_CHU_ROI.length);
+        o.push(n.PHU_CHU_ROI[Math.min(n.PHU_CHU_ROI.length - 1, Math.max(0, E))]);
       }
     }
     else if ("xuyen_son_giap" === a.type) {
@@ -166,14 +166,14 @@
     if (a.def && a.def.manhGiay && t.Quest && t.Quest.manhGiayCanRoi && t.Quest.manhGiayCanRoi(a.def.manhGiay)) {
       o.push(a.def.manhGiay);
     }
-    var M = 0 | (a.def && a.def.stones);
-    var l = !!n.BOSS_LINH_THACH[a.type];
+    var l = 0 | (a.def && a.def.stones);
+    var M = !!n.BOSS_LINH_THACH[a.type];
     var N = "number" == typeof a.stoneChance;
     if (!N) {
-      for (var d = 0; d < M; d++)
+      for (var d = 0; d < l; d++)
         o.push("linh_thach");
     }
-    if (a.def && a.def.ore && (e ? e() : Math.random()) < n.rateOf("ORE", a.type, t) && o.indexOf("huyen_thiet_khoang") < 0 && o.push("huyen_thiet_khoang"), N && (e ? e() : Math.random()) < a.stoneChance ? o.unshift("linh_thach") : !N && !M && !l && (e ? e() : Math.random()) < n.rate("STONE_CHANCE", t) && o.push("linh_thach"), (e ? e() : Math.random()) < n.rate("RARE_GEAR_CHANCE", t)) {
+    if (a.def && a.def.ore && (e ? e() : Math.random()) < n.rateOf("ORE", a.type, t) && o.indexOf("huyen_thiet_khoang") < 0 && o.push("huyen_thiet_khoang"), N && (e ? e() : Math.random()) < a.stoneChance ? o.unshift("linh_thach") : !N && !l && !M && (e ? e() : Math.random()) < n.rate("STONE_CHANCE", t) && o.push("linh_thach"), (e ? e() : Math.random()) < n.rate("RARE_GEAR_CHANCE", t)) {
       var g = Math.floor((e ? e() : Math.random()) * n.RARE_GEAR.length);
       o.push(n.RARE_GEAR[Math.min(n.RARE_GEAR.length - 1, Math.max(0, g))]);
     }
@@ -181,17 +181,17 @@
       var m = n.MA_BAO_Y_PHUC;
       o.push(m[Math.min(m.length - 1, Math.floor((e ? e() : Math.random()) * m.length))]);
     }
-    if ("song_duc_ma_bao" === a.type && (e ? e() : Math.random()) < n.MA_BAO_THANH_TAM_Y.CHANCE && o.push(n.MA_BAO_THANH_TAM_Y.ITEM), l) {
-      for (var f = n.bossLinhThach(a.type, e), p = 0; p < f; p++)
+    if ("song_duc_ma_bao" === a.type && (e ? e() : Math.random()) < n.MA_BAO_THANH_TAM_Y.CHANCE && o.push(n.MA_BAO_THANH_TAM_Y.ITEM), M) {
+      for (var T = n.bossLinhThach(a.type, e), f = 0; f < T; f++)
         o.push("linh_thach");
     }
     if (n.YEU_DAN[a.type] && (e ? e() : Math.random()) < n.rate("PHU_CHU_CHANCE", t)) {
-      var O = Math.floor((e ? e() : Math.random()) * n.PHU_CHU_ROI.length);
-      o.push(n.PHU_CHU_ROI[Math.min(n.PHU_CHU_ROI.length - 1, Math.max(0, O))]);
+      var p = Math.floor((e ? e() : Math.random()) * n.PHU_CHU_ROI.length);
+      o.push(n.PHU_CHU_ROI[Math.min(n.PHU_CHU_ROI.length - 1, Math.max(0, p))]);
     }
-    var T = n.YEU_HUYET[a.type];
-    if (T && (e ? e() : Math.random()) < T.chance) {
-      o.push(T.item);
+    var O = n.YEU_HUYET[a.type];
+    if (O && (e ? e() : Math.random()) < O.chance) {
+      o.push(O.item);
     }
     var I = n.TONG_MON_LENH[a.type];
     if (I && (e ? e() : Math.random()) < I && o.push(n.TONG_MON_LENH_ITEM), "song_duc_ma_bao" === a.type && (e ? e() : Math.random()) < n.MA_BAO_PHI_LONG.CHANCE && o.push(n.MA_BAO_PHI_LONG.ITEM), "song_duc_ma_bao" === a.type && (e ? e() : Math.random()) < n.MA_BAO_CUU_U_MA_TRAO.CHANCE && o.push(n.MA_BAO_CUU_U_MA_TRAO.ITEM), "song_duc_ma_bao" === a.type && (e ? e() : Math.random()) < n.MA_BAO_MA_HON_PHE.CHANCE && o.push(n.MA_BAO_MA_HON_PHE.ITEM), "song_duc_ma_bao" === a.type) {
@@ -214,10 +214,10 @@
     if (n.HUYET_SAC_BOSSES.indexOf(a.type) >= 0 && (e ? e() : Math.random()) < n.HUYET_SAC_SONG_KICH.CHANCE) {
       o.push(n.HUYET_SAC_SONG_KICH.ITEM);
     }
-    var S = a.def && a.def.hon;
-    var U = t.ChinhDao ? t.ChinhDao.thuDuoc(S, t) : !(!t.LuyenQuy || !t.LuyenQuy.coPhien(t));
-    if (S && U) {
-      o.push(S);
+    var U = a.def && a.def.hon;
+    var S = t.ChinhDao ? t.ChinhDao.thuDuoc(U, t) : !(!t.LuyenQuy || !t.LuyenQuy.coPhien(t));
+    if (U && S) {
+      o.push(U);
     }
     return o;
   };
@@ -241,12 +241,12 @@
     for (var e = n.stoneToday(t, h), o = Math.max(0, e.tran - e.da), u = [], i = 0, r = 0, A = 0; A < a.length; A++) {
       var c = a[A];
       if ("linh_thach" === ("string" == typeof c ? c : c && c.item)) {
-        var E = "string" == typeof c ? 1 : Math.max(1, 0 | c.n);
-        var C = Math.min(E, o - i);
-        r += E - C;
-        if (!(C <= 0)) {
-          i += C;
-          u.push("string" == typeof c ? c : { item: "linh_thach", n: C });
+        var C = "string" == typeof c ? 1 : Math.max(1, 0 | c.n);
+        var E = Math.min(C, o - i);
+        r += C - E;
+        if (!(E <= 0)) {
+          i += E;
+          u.push("string" == typeof c ? c : { item: "linh_thach", n: E });
         }
       }
       else {
@@ -329,23 +329,23 @@
     }
     for (var e, o = a || Math.random, u = [], i = h.soCuc || t.SO_CUC, r = i[0] + Math.min(i[1] - i[0], Math.floor(o() * (i[1] - i[0] + 1))), A = 0; A < r; A++) {
       var c = (A + .2 + .6 * o()) / r;
-      var E = h.lt[0] + Math.min(h.lt[1] - h.lt[0], Math.floor(o() * (h.lt[1] - h.lt[0] + 1)));
-      u.push({ moc: .95 - .9 * c, item: "linh_thach", n: E });
+      var C = h.lt[0] + Math.min(h.lt[1] - h.lt[0], Math.floor(o() * (h.lt[1] - h.lt[0] + 1)));
+      u.push({ moc: .95 - .9 * c, item: "linh_thach", n: C });
     }
-    function C(_, n) {
+    function E(_, n) {
       if (o() < n) {
         u.push({ moc: .1 + .8 * o(), item: _, n: 1 });
       }
     }
     if (!h.khongTranBan) {
       for (e in t.TRAN_BAN)
-        C(e, t.TRAN_BAN[e]);
+        E(e, t.TRAN_BAN[e]);
     }
     var H = null != h.heSoPhu ? h.heSoPhu : 1;
     for (e in t.PHU)
-      C(e, t.PHU[e] * H);
-    for (e in C(t.PHA_CANH, h.phaCanh), h.them || {})
-      C(e, h.them[e]);
+      E(e, t.PHU[e] * H);
+    for (e in E(t.PHA_CANH, h.phaCanh), h.them || {})
+      E(e, h.them[e]);
     u.sort(function (_, n) {
       return n.moc - _.moc;
     });
@@ -387,6 +387,11 @@
   n.YEU_DAN_CHOT_HA = { song_duc_ma_bao: "yeu_dan_cap_6" };
   n.yeuDanChotHaOf = function (_) {
     return _ && n.YEU_DAN_CHOT_HA[_.type] || null;
+  };
+  n.BOC_THAM_TUI = { than_thu_xich_long: !0, linh_ho_tran_son: !0, song_duc_ma_bao: !0 };
+  n.TUI_GIU_CHOT = { linh_thach: !0 };
+  n.laDoBocThamTui = function (_, a) {
+    return !!(_ && n.BOC_THAM_TUI[_.type] && a) && !n.TUI_GIU_CHOT[a];
   };
   n.bitichGiuaTran = function (_, a, t) {
     var h = n.BITICH_GIUA_TRAN;

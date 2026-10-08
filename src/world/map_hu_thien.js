@@ -1,7 +1,7 @@
 !function (t) {
   "use strict";
   var n = t.HuThien;
-  var o = { ".": { ground: "grass", block: !1 }, ",": { ground: "grass_flower", block: !1 }, '"': { ground: "grass_tall", block: !1 }, d: { ground: "dirt", block: !1 }, D: { ground: "dirt_pebble", block: !1 }, s: { ground: "stone_floor", block: !1 }, "~": { ground: "pebble", block: !1 }, g: { ground: "sacred_soil", block: !1 }, h: { ground: "sacred_soil", block: !1, obj: "herb" }, p: { ground: "dt_paving", block: !1 }, a: { ground: "ancient_ruin_floor", block: !1 }, j: { ground: "jade_floor", block: !1 }, k: { ground: "rift_stone", block: !1 }, o: { ground: "abyss_stone", block: !1 }, v: { ground: "cave_floor", block: !1 }, n: { ground: "dtr_cam_bay", block: !1, flyBlock: !0, anim: !0 }, w: { ground: "water", block: !0, anim: !0 }, 1: { ground: "water_white", block: !0, anim: !0 }, L: { ground: "lava_purple", block: !0, anim: !0 }, C: { ground: "cliff", block: !0, flyBlock: !0 }, B: { ground: "grass", block: !0, flyBlock: !0, obj: "bamboo_tall" }, b: { ground: "grass", block: !1, obj: "bamboo_clump" }, R: { ground: "grass", block: !0, obj: "rock_big" }, r: { ground: "grass", block: !1, obj: "rock_small" }, P: { ground: "ancient_ruin_floor", block: !0, obj: "ruined_pillar" }, S: { ground: "ancient_ruin_floor", block: !0, obj: "ancient_stele_broken" }, M: { ground: "ancient_ruin_floor", block: !0, obj: "ruined_sect_wall" }, K: { ground: "pebble", block: !0, flyBlock: !0, obj: "karst_pillar" } };
+  var o = { ".": { ground: "grass", block: !1 }, ",": { ground: "grass_flower", block: !1 }, '"': { ground: "grass_tall", block: !1 }, d: { ground: "dirt", block: !1 }, D: { ground: "dirt_pebble", block: !1 }, s: { ground: "stone_floor", block: !1 }, "~": { ground: "pebble", block: !1 }, g: { ground: "sacred_soil", block: !1 }, h: { ground: "sacred_soil", block: !1, obj: "herb" }, p: { ground: "dt_paving", block: !1 }, a: { ground: "ancient_ruin_floor", block: !1 }, j: { ground: "jade_floor", block: !1 }, k: { ground: "rift_stone", block: !1 }, o: { ground: "abyss_stone", block: !1 }, v: { ground: "cave_floor", block: !1 }, n: { ground: "dtr_cam_bay", block: !1, anim: !0 }, w: { ground: "water", block: !0, anim: !0 }, 1: { ground: "water_white", block: !0, anim: !0 }, L: { ground: "lava_purple", block: !0, anim: !0 }, C: { ground: "cliff", block: !0, flyBlock: !0 }, B: { ground: "grass", block: !0, flyBlock: !0, obj: "bamboo_tall" }, b: { ground: "grass", block: !1, obj: "bamboo_clump" }, R: { ground: "grass", block: !0, obj: "rock_big" }, r: { ground: "grass", block: !1, obj: "rock_small" }, P: { ground: "ancient_ruin_floor", block: !0, obj: "ruined_pillar" }, S: { ground: "ancient_ruin_floor", block: !0, obj: "ancient_stele_broken" }, M: { ground: "ancient_ruin_floor", block: !0, obj: "ruined_sect_wall" }, K: { ground: "pebble", block: !0, flyBlock: !0, obj: "karst_pillar" } };
   function r(t, n) {
     return (73856093 * t ^ 19349663 * n) >>> 0;
   }
@@ -90,15 +90,15 @@
       for (t = 3; t < 57; t++) {
         var _ = u.at(t, i);
         if ("." === _ || "," === _ || '"' === _) {
-          for (var f = !1, g = -1; g <= 1 && !f; g++)
-            for (var d = -1; d <= 1; d++) {
-              var s = u.at(t + d, i + g);
-              if (s && "." !== s && "," !== s && '"' !== s && "B" !== s) {
-                f = !0;
+          for (var g = !1, f = -1; f <= 1 && !g; f++)
+            for (var s = -1; s <= 1; s++) {
+              var d = u.at(t + s, i + f);
+              if (d && "." !== d && "," !== d && '"' !== d && "B" !== d) {
+                g = !0;
                 break;
               }
             }
-          if (!f) {
+          if (!g) {
             var p = r(3 * t + 1, 7 * i + 2) % 97;
             if (p < 3) {
               u.o("B", t, i);
@@ -183,16 +183,16 @@
     u.vat("long_uyen_brazier", 28, 22, { sortOffset: -8 });
     var l = [c(20, 7, 30, "Trận Nhãn Băng"), c(20, 29, 30, "Trận Nhãn Hỏa")];
     var _ = [e([[17, 5], [23, 5], [20, 10]]), e([[17, 27], [23, 27], [20, 32]])];
-    var f = e([[9, 15], [15, 23], [25, 15], [8, 27], [26, 22]]);
-    var g = { tx: 7, ty: 6 };
-    [l, _[0], _[1], f, [g]].forEach(function (t) {
+    var g = e([[9, 15], [15, 23], [25, 15], [8, 27], [26, 22]]);
+    var f = { tx: 7, ty: 6 };
+    [l, _[0], _[1], g, [f]].forEach(function (t) {
       u.epDiDuoc(t, "k");
     });
-    return { id: n.MAP_2, scope: "match", huThien: !0, htAi: 2, pkTuDo: !0, name: "Sỹ Sách Điện · Băng Hỏa Trận", subtitle: "Ải 2 — đánh sập Trụ Băng và Trụ Hoả để mở hành lang", width: 52, height: 36, legend: o, ground: u.ground(), decorations: u.decor, props: [], interactables: [{ id: "htd_cam_che", tx: 31, ty: 18, r: 70, title: "Cấm Chế Băng Hỏa", text: "Hành lang đốt máu, cấm bay. Đánh sập cả Trụ Băng và Trụ Hoả thì cấm chế mới vỡ." }], critters: [], enemies: [], portals: [17, 18, 19].map(function (t) {
+    return { id: n.MAP_2, scope: "match", huThien: !0, htAi: 2, pkTuDo: !0, name: "Sỹ Sách Điện · Băng Hỏa Trận", subtitle: "Ải 2 — đánh sập Trụ Băng và Trụ Hoả để mở hàng rào sang Ải 3", width: 52, height: 36, legend: o, ground: u.ground(), decorations: u.decor, props: [], interactables: [{ id: "htd_cam_che", tx: 29, ty: 18, r: 70, title: "Hàng Rào Băng Hỏa", text: "Hàng rào chắn lối sang Ải 3, mở cho mọi tông khi cả Trụ Băng và Trụ Hoả đã sập. Hành lang sau hàng rào luôn đốt máu (bay được)." }], critters: [], enemies: [], portals: [17, 18, 19].map(function (t) {
         return { tx: 0, ty: t, toMap: n.MAP_1, targetSpawn: { tx: 55, ty: 20 }, label: n.TEN_AI[n.MAP_1] };
       }).concat([17, 18, 19].map(function (t) {
         return { tx: 51, ty: t, toMap: n.MAP_3, targetSpawn: { tx: 24, ty: 36 }, label: n.TEN_AI[n.MAP_3] };
-      })), spawn: { tx: 4, ty: 18 }, ambient: "#141a26", htCamChe: { tx0: 30, ty0: 16, tx1: 45, ty1: 20 }, htTranNhan: l, htVeNhan: _, htThachMa: g, htTuanTra: f, napQuai: ["htd_ve_nhan", "htd_tieu_ve", "htd_thach_ma", "yl_toc_truong"] };
+      })), spawn: { tx: 4, ty: 18 }, ambient: "#141a26", htCamChe: { tx0: 30, ty0: 16, tx1: 45, ty1: 20 }, htRao: { tx0: 30, ty0: 16, tx1: 31, ty1: 20 }, htTranNhan: l, htVeNhan: _, htThachMa: f, htTuanTra: g, napQuai: ["htd_ve_nhan", "htd_tieu_ve", "htd_thach_ma", "yl_toc_truong"] };
   }();
   var h = function () {
     var t;
@@ -261,7 +261,7 @@
   if (_ && _.props && !_.props.some(function (t) {
     return t.id === n.NPC;
   })) {
-    for (var f = function (t, n) {
+    for (var g = function (t, n) {
       var o = _.ground && _.ground[n];
       var r = o && o.charAt(t);
       return !(!r || !_.legend[r] || _.legend[r].block || _.props.some(function (o) {
@@ -269,11 +269,11 @@
       }) || (_.decorations || []).some(function (o) {
         return o.tx === t && Math.abs(o.ty - n) <= 1 && o.block;
       }));
-    }, g = [[21, 14], [20, 14], [22, 14], [21, 13], [20, 13], [22, 13]], d = null, s = 0; s < g.length && !d; s++)
-      f(g[s][0], g[s][1]) && f(g[s][0], g[s][1] + 1) && (d = { tx: g[s][0], ty: g[s][1] });
-    if (d) {
-      _.props.push({ id: n.NPC, type: "npc", tx: d.tx, ty: d.ty, block: !0, r: 48, name: "Thủ Điện Sỹ Sách", face: 0, text: "Tối Thứ Năm: 20:00 chốt bảng chia tông, 20:16 tông môn vào Sỹ Sách Điện.", cfg: { gender: "male", hair: "bui_dao_si", hairColor: "ngan", beard: "rau_de", outfit: "npc_long_bao", skin: "light", aura: "none" } });
-      n.VE_O = { tx: d.tx, ty: d.ty + 1 };
+    }, f = [[21, 14], [20, 14], [22, 14], [21, 13], [20, 13], [22, 13]], s = null, d = 0; d < f.length && !s; d++)
+      g(f[d][0], f[d][1]) && g(f[d][0], f[d][1] + 1) && (s = { tx: f[d][0], ty: f[d][1] });
+    if (s) {
+      _.props.push({ id: n.NPC, type: "npc", tx: s.tx, ty: s.ty, block: !0, r: 48, name: "Thủ Điện Sỹ Sách", face: 0, text: "Tối Thứ Năm: 20:00 chốt danh sách tông, 20:16 mọi tông môn cùng vào Sỹ Sách Điện.", cfg: { gender: "male", hair: "bui_dao_si", hairColor: "ngan", beard: "rau_de", outfit: "npc_long_bao", skin: "light", aura: "none" } });
+      n.VE_O = { tx: s.tx, ty: s.ty + 1 };
     }
   }
 }(window.PNTT);

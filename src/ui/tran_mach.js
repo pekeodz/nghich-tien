@@ -51,11 +51,13 @@
       }
     return null;
   }
-  function f(n) {
-    if (n !== c && i() && document.documentElement) {
-      c = n;
-      if (n > 0) {
-        document.documentElement.style.setProperty("--yl-hud-h", n + "px");
+  function f(e) {
+    t.cao = e;
+    var a = e + (n.VanTieuUI && n.VanTieuUI.cao || 0);
+    if (a !== c && i() && document.documentElement) {
+      c = a;
+      if (a > 0) {
+        document.documentElement.style.setProperty("--yl-hud-h", a + "px");
       }
       else {
         document.documentElement.style.removeProperty("--yl-hud-h");

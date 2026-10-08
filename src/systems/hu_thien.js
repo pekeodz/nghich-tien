@@ -1,15 +1,15 @@
 !function (n) {
   "use strict";
   var t = n.HuThien = {};
-  var a = 36e5;
-  var _ = 24 * a;
+  var _ = 36e5;
+  var a = 24 * _;
   function h(n) {
-    return Math.floor((n + t.VN_OFFSET_MS) / _) * _;
+    return Math.floor((n + t.VN_OFFSET_MS) / a) * a;
   }
-  function o(n) {
+  function i(n) {
     return (n < 10 ? "0" : "") + n;
   }
-  t.VN_OFFSET_MS = 7 * a;
+  t.VN_OFFSET_MS = 7 * _;
   t.MAP_1 = "hu_thien_1";
   t.MAP_2 = "hu_thien_2";
   t.MAP_3 = "hu_thien_3";
@@ -35,101 +35,68 @@
   t.BAO_TRUOC = 96e4;
   t.DONG_CUA_SAU = 12e5;
   t.ngayVN = function (n) {
-    var a = new Date(Math.floor(Number(n) || 0) + t.VN_OFFSET_MS);
-    return a.getUTCFullYear() + "-" + o(a.getUTCMonth() + 1) + "-" + o(a.getUTCDate());
+    var _ = new Date(Math.floor(Number(n) || 0) + t.VN_OFFSET_MS);
+    return _.getUTCFullYear() + "-" + i(_.getUTCMonth() + 1) + "-" + i(_.getUTCDate());
   };
   t.laNgayKhai = function (n) {
-    var a = new Date(h(Math.floor(Number(n) || 0))).getUTCDay();
-    return t.THU_KHAI.indexOf(a) >= 0;
+    var _ = new Date(h(Math.floor(Number(n) || 0))).getUTCDay();
+    return t.THU_KHAI.indexOf(_) >= 0;
   };
-  t.dungKy = function (n, a, _) {
-    a = a || t.KEO_DAI;
-    return { id: (_ || "htd") + ":" + n, ngay: t.ngayVN(n), baoLuc: n - t.BAO_TRUOC, batDauLuc: n, dongCuaLuc: n + Math.min(t.DONG_CUA_SAU, a), ketThucLuc: n + a };
+  t.dungKy = function (n, _, a) {
+    _ = _ || t.KEO_DAI;
+    return { id: (a || "htd") + ":" + n, ngay: t.ngayVN(n), baoLuc: n - t.BAO_TRUOC, batDauLuc: n, dongCuaLuc: n + Math.min(t.DONG_CUA_SAU, _), ketThucLuc: n + _ };
   };
   t.kyTai = function (n) {
-    var o = h(n = Math.floor(Number(n) || 0)) + t.GIO_KHAI * a + 6e4 * t.PHUT_KHAI - t.VN_OFFSET_MS;
-    if (n >= o + t.KEO_DAI) {
-      o += _;
+    var i = h(n = Math.floor(Number(n) || 0)) + t.GIO_KHAI * _ + 6e4 * t.PHUT_KHAI - t.VN_OFFSET_MS;
+    if (n >= i + t.KEO_DAI) {
+      i += a;
     }
-    for (var r = 0; r < 8 && !t.laNgayKhai(o); r++)
-      o += _;
-    return t.dungKy(o);
+    for (var o = 0; o < 8 && !t.laNgayKhai(i); o++)
+      i += a;
+    return t.dungKy(i);
   };
-  t.giaiDoan = function (n, a) {
-    return n < (a = a || t.kyTai(n)).baoLuc ? "NGHI" : n < a.batDauLuc ? "BAO" : n < a.ketThucLuc ? "MO" : "XONG";
+  t.giaiDoan = function (n, _) {
+    return n < (_ = _ || t.kyTai(n)).baoLuc ? "NGHI" : n < _.batDauLuc ? "BAO" : n < _.ketThucLuc ? "MO" : "XONG";
   };
-  t.conNhanDoi = function (n, a) {
-    return "MO" === t.giaiDoan(n, a) && n < a.dongCuaLuc;
+  t.conNhanDoi = function (n, _) {
+    return "MO" === t.giaiDoan(n, _) && n < _.dongCuaLuc;
   };
   t.gioDoc = function (n) {
-    var a = new Date(Math.floor(Number(n) || 0) + t.VN_OFFSET_MS);
-    return o(a.getUTCHours()) + ":" + o(a.getUTCMinutes());
+    var _ = new Date(Math.floor(Number(n) || 0) + t.VN_OFFSET_MS);
+    return i(_.getUTCHours()) + ":" + i(_.getUTCMinutes());
   };
   t.giayDoc = function (n) {
     var t = Math.max(0, Math.ceil((Number(n) || 0) / 1e3));
-    return Math.floor(t / 60) + ":" + o(t % 60);
+    return Math.floor(t / 60) + ":" + i(t % 60);
   };
-  t.TUOI_TONG_MS = 3 * a;
-  t.TUOI_THANH_VIEN_MS = 3 * a;
+  t.TUOI_TONG_MS = 3 * _;
+  t.TUOI_THANH_VIEN_MS = 3 * _;
   t.TONG_TOI_THIEU = 3;
   t.TOI_DA_MOI_TONG = 20;
-  t.TONG_MOI_BAN = 10;
-  t.TONG_TOI_DA_BAN = 13;
   t.TONG_TOI_THIEU_KY = 2;
-  t.tongDuTuoi = function (n, a) {
-    return a - (Number(n && n.taoLuc) || 0) >= t.TUOI_TONG_MS;
+  t.tongDuTuoi = function (n, _) {
+    return _ - (Number(n && n.taoLuc) || 0) >= t.TUOI_TONG_MS;
   };
-  t.thanhVienDuTuoi = function (n, a) {
-    return a - (Number(n && n.vaoLuc) || 0) >= t.TUOI_THANH_VIEN_MS;
+  t.thanhVienDuTuoi = function (n, _) {
+    return _ - (Number(n && n.vaoLuc) || 0) >= t.TUOI_THANH_VIEN_MS;
   };
-  t.chiaBang = function (n) {
-    if ((n = Math.floor(Number(n) || 0)) <= 0) {
-      return [];
-    }
-    for (var a = Math.max(1, Math.round(n / t.TONG_MOI_BAN)); Math.ceil(n / a) > t.TONG_TOI_DA_BAN;)
-      a++;
-    for (var _ = Math.floor(n / a), h = n % a, o = [], r = 0; r < a; r++)
-      o.push(_ + (r < h ? 1 : 0));
-    return o;
-  };
-  t.bamChuoi = function (n) {
-    var t = 2166136261;
-    n = String(n);
-    for (var a = 0; a < n.length; a++)
-      t ^= n.charCodeAt(a), t = Math.imul ? Math.imul(t, 16777619) : 16777619 * t;
-    return t >>> 0;
-  };
-  t.xaoCoHat = function (n, t) {
-    var a = n.slice();
-    var _ = t >>> 0 || 1;
-    function h() {
-      _ = _ + 1831565813 >>> 0;
-      var n = Math.imul ? Math.imul(_ ^ _ >>> 15, 1 | _) : (_ ^ _ >>> 15) * (1 | _);
-      return (((n = n + (Math.imul ? Math.imul(n ^ n >>> 7, 61 | n) : (n ^ n >>> 7) * (61 | n)) ^ n) ^ n >>> 14) >>> 0) / 4294967296;
-    }
-    for (var o = a.length - 1; o > 0; o--) {
-      var r = Math.floor(h() * (o + 1));
-      var i = a[o];
-      a[o] = a[r];
-      a[r] = i;
-    }
-    return a;
-  };
-  t.TEN_BANG = function (n) {
-    return "Bảng " + String.fromCharCode(65 + n % 26) + (n >= 26 ? Math.floor(n / 26) : "");
+  t.TEN_BANG = function () {
+    return "Bản chung";
   };
   t.CAN_CANH_GIOI = "luyen_khi_7";
   t.CANH_GIOI = ["truc_co"];
   t.TEN_CG = { truc_co: "Trúc Cơ" };
-  t.duCanhGioi = function (a) {
-    var _ = n.realmIndexById ? n.realmIndexById(String(a || "")) : 0;
-    return (0 | _) >= (0 | (n.realmIndexById ? n.realmIndexById(t.CAN_CANH_GIOI) : 7)) && (0 | _) > 0;
+  t.duCanhGioi = function (_) {
+    var a = n.realmIndexById ? n.realmIndexById(String(_ || "")) : 0;
+    return (0 | a) >= (0 | (n.realmIndexById ? n.realmIndexById(t.CAN_CANH_GIOI) : 7)) && (0 | a) > 0;
   };
   t.canhGioi = function (n) {
     return t.duCanhGioi(n) ? "truc_co" : null;
   };
   t.NGOC_PHU = "htd_ngoc_phu";
   t.CAN_NGOC_PHU = 3;
+  t.NGOC_PHU_TOI_DA = 3;
+  t.HUT_PHU_THEM = 110;
   t.HU_ANH = "HU_ANH";
   t.AI1_DONG_MS = 9e5;
   t.BAO_AI1_DONG = [3e5, 6e4];
@@ -146,68 +113,62 @@
   t.laDinh = function (n) {
     return !!n && !n.dead && n.type === t.LOAI_DINH;
   };
-  t.trongSanh = function (t, a, _) {
+  t.trongSanh = function (t, _, a) {
     var h = t && t.htSanh;
     if (!h) {
       return !1;
     }
-    var o = n.CONFIG && n.CONFIG.TILE || 32;
-    var r = Math.floor(a / o);
-    var i = Math.floor((_ - 1) / o);
-    return r >= h.tx0 && r <= h.tx1 && i >= h.ty0 && i <= h.ty1;
+    var i = n.CONFIG && n.CONFIG.TILE || 32;
+    var o = Math.floor(_ / i);
+    var u = Math.floor((a - 1) / i);
+    return o >= h.tx0 && o <= h.tx1 && u >= h.ty0 && u <= h.ty1;
   };
-  t.trongVong = function (t, a, _) {
+  t.trongVong = function (t, _, a) {
     if (!t) {
       return !1;
     }
     var h = n.CONFIG && n.CONFIG.TILE || 32;
-    var o = (t.tx + .5) * h;
-    var r = (t.ty + .5) * h;
-    var i = t.r || 40;
-    var u = a - o;
-    var c = _ - r;
-    return u * u + c * c <= i * i;
+    var i = (t.tx + .5) * h;
+    var o = (t.ty + .5) * h;
+    var u = t.r || 40;
+    var r = _ - i;
+    var c = a - o;
+    return r * r + c * c <= u * u;
   };
-  t.trongHanhLang = function (t, a, _) {
+  t.trongHanhLang = function (t, _, a) {
     var h = t && t.htCamChe;
     if (!h) {
       return !1;
     }
-    var o = n.CONFIG && n.CONFIG.TILE || 32;
-    var r = Math.floor(a / o);
-    var i = Math.floor((_ - 1) / o);
-    return r >= h.tx0 && r <= h.tx1 && i >= h.ty0 && i <= h.ty1;
+    var i = n.CONFIG && n.CONFIG.TILE || 32;
+    var o = Math.floor(_ / i);
+    var u = Math.floor((a - 1) / i);
+    return o >= h.tx0 && o <= h.tx1 && u >= h.ty0 && u <= h.ty1;
   };
-  t.cachHanhLang = function (t, a, _) {
-    var h = t && t.htCamChe;
-    if (!h) {
-      return 1 / 0;
+  t.raoKhung = function (t) {
+    var _ = t && t.htRao;
+    if (!_) {
+      return null;
     }
-    var o = n.CONFIG && n.CONFIG.TILE || 32;
-    var r = h.tx0 * o;
-    var i = h.ty0 * o;
-    var u = (h.tx1 + 1) * o;
-    var c = (h.ty1 + 1) * o;
-    var g = Math.max(r - a, 0, a - u);
-    var e = Math.max(i - _, 0, _ - c);
-    return Math.sqrt(g * g + e * e);
+    var a = n.CONFIG && n.CONFIG.TILE || 32;
+    return { x0: _.tx0 * a, y0: _.ty0 * a, x1: (_.tx1 + 1) * a, y1: (_.ty1 + 1) * a };
   };
-  var r = 7 * _;
-  var i = 4 * _;
+  var o = 7 * a;
+  var u = 23 * _;
   t.tuanSo = function (n) {
-    return Math.floor((Math.floor(Number(n) || 0) + t.VN_OFFSET_MS - i) / r);
+    return Math.floor((Math.floor(Number(n) || 0) + t.VN_OFFSET_MS - u) / o);
   };
   t.chotKeTiep = function (n) {
-    return (t.tuanSo(n) + 1) * r + i - t.VN_OFFSET_MS;
+    return (t.tuanSo(n) + 1) * o + u - t.VN_OFFSET_MS;
   };
   t.PHAN_THUONG_HA_SAT = { 1: [{ id: "manh_yeu_dan_cap_3", n: 3 }, { id: "linh_thach", n: 1e3 }, { id: "ruong_khoi_loi", n: 1 }], 2: [{ id: "manh_yeu_dan_cap_3", n: 2 }, { id: "linh_thach", n: 700 }, { id: "ruong_khoi_loi", n: 1 }], 3: [{ id: "manh_yeu_dan_cap_3", n: 1 }, { id: "linh_thach", n: 500 }, { id: "ruong_khoi_loi", n: 1 }] };
   t.PHAN_THUONG_DINH = { 1: [{ id: "manh_yeu_dan_cap_3", n: 2 }, { id: "linh_thach", n: 800 }], 2: [{ id: "manh_yeu_dan_cap_3", n: 1 }, { id: "linh_thach", n: 500 }], 3: [{ id: "linh_thach", n: 300 }] };
-  t.LOI = { chua_mo: "Sỹ Sách Điện chưa mở.", khoa: "Sỹ Sách Điện đang đóng.", het_nhan: "Đã qua giờ nhận người mới.", chua_co_bang: "Bảng tông môn chốt lúc 20:00 tối Thứ Năm — chưa có bảng.", khong_o_tong: "Sỹ Sách Điện chỉ dành cho tông môn — đạo hữu chưa thuộc tông môn nào.", tong_non: "Tông môn chưa đủ 3 giờ tuổi.", moi_vao_tong: "Đạo hữu vào tông chưa đủ 3 giờ.", chua_du_canh_gioi: "Cần Luyện Khí tầng 7 trở lên.", tong_ngoai_bang: "Tông môn không có tên trong bảng kỳ này (cần 3 người đủ tư cách lúc 20:00).", xa_npc: "Hãy tới cạnh Thủ Điện Sỹ Sách ở Miếu Ông Trường Con.", tong_day: "Tông môn đã đủ 20 người trong điện.", ai1_dong: "Ải 1 đã đóng — tông môn chưa mở được cửa nên không vào nữa.", ai1_da_mo: "Tông môn đã mở cửa Ải 1 — không nhặt đồ ở đây nữa.", trong_thuong: "Có người đang trọng thương.", dang_tran: "Đang tỉ thí hoặc trong trận.", dang_giam: "Đang bị giam.", dang_giao_chien: "Vừa giao chiến, đợi một lát.", khong_trong: "Đạo hữu không ở trong Sỹ Sách Điện.", thieu_ngoc_phu: "Tông môn cần 3 Sỹ Sách Ngọc Phù để mở cửa Ải 1.", xoay_dong: "Vòng xoáy đã đóng.", xoay_day: "Mật Thất đã đủ tông.", xa_vat: "Đứng sát hơn nữa.", dang_van: "Đang vận rồi.", nguoi_khac_van: "Có người đang vận món này.", tui_day: "Túi đồ đã đầy.", tran_ky: "Đã nhặt đủ phần của đạo hữu kỳ này.", da_co_ngoc_phu: "Mỗi người chỉ mang 1 Ngọc Phù.", vung_an_toan: "Không vận trong vùng an toàn.", cho_hoi_sinh: "Chưa hồi sinh được." };
+  t.LOI = { chua_mo: "Sỹ Sách Điện chưa mở.", khoa: "Sỹ Sách Điện đang đóng.", het_nhan: "Đã qua giờ nhận người mới.", chua_co_bang: "Danh sách tông môn chốt lúc 20:00 tối Thứ Năm — chưa có.", khong_o_tong: "Sỹ Sách Điện chỉ dành cho tông môn — đạo hữu chưa thuộc tông môn nào.", tong_non: "Tông môn chưa đủ 3 giờ tuổi.", moi_vao_tong: "Đạo hữu vào tông chưa đủ 3 giờ.", chua_du_canh_gioi: "Cần Luyện Khí tầng 7 trở lên.", tong_ngoai_bang: "Tông môn không có tên trong bảng kỳ này (cần 3 người đủ tư cách lúc 20:00).", xa_npc: "Hãy tới cạnh Thủ Điện Sỹ Sách ở Miếu Ông Trường Con.", tong_day: "Tông môn đã đủ 20 người trong điện.", ai1_dong: "Ải 1 đã đóng — tông môn chưa mở được cửa nên không vào nữa.", ai1_da_mo: "Tông môn đã mở cửa Ải 1 — không nhặt đồ ở đây nữa.", trong_thuong: "Có người đang trọng thương.", dang_tran: "Đang tỉ thí hoặc trong trận.", dang_giam: "Đang bị giam.", dang_giao_chien: "Vừa giao chiến, đợi một lát.", khong_trong: "Đạo hữu không ở trong Sỹ Sách Điện.", thieu_ngoc_phu: "Tông môn cần 3 Sỹ Sách Ngọc Phù để mở cửa Ải 1.", rao_dong: "Hàng rào Băng Hỏa còn đóng — đánh sập cả Trụ Băng và Trụ Hoả trước.", xoay_dong: "Vòng xoáy đã đóng.", xoay_day: "Mật Thất đã đủ tông.", xa_vat: "Đứng sát hơn nữa.", dang_van: "Đang vận rồi.", nguoi_khac_van: "Có người đang vận món này.", tui_day: "Túi đồ đã đầy.", tran_ky: "Đã nhặt đủ phần của đạo hữu kỳ này.", da_co_ngoc_phu: "Mỗi người mang tối đa 3 Ngọc Phù.", vung_an_toan: "Không vận trong vùng an toàn.", cho_hoi_sinh: "Chưa hồi sinh được." };
   t.viLoi = function (n) {
-    a = t.LOI;
-    _ = n;
-    return Object.prototype.hasOwnProperty.call(a, _) ? t.LOI[n] : "Chưa thực hiện được.";
-    var a;
+    _ = t.LOI;
+    a = n;
+    return Object.prototype.hasOwnProperty.call(_, a) ? t.LOI[n] : "Chưa thực hiện được.";
     var _;
+    var a;
   };
 }(window.PNTT);

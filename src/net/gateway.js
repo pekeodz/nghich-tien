@@ -1,6 +1,6 @@
 !function (e) {
   "use strict";
-  var n = e.Gateway = { PROTOCOL: 10, socket: null, connected: !1, selfId: null, mapId: null, remotes: {}, serverTime: 0, lastError: null, ready: !1, duel: null, duelResults: Object.create(null), invite: null, duelInvites: Object.create(null), duelInviteOrder: [], onCreateCharError: null, party: null, partyPending: Object.create(null), partyInviteOrder: [], sect: null, clan: null, sectPending: Object.create(null), sectInviteOrder: [], doSatUntil: 0, formation: e.FormationState ? e.FormationState.create() : { supported: !1 } };
+  var n = e.Gateway = { PROTOCOL: 12, socket: null, connected: !1, selfId: null, mapId: null, remotes: {}, serverTime: 0, lastError: null, ready: !1, duel: null, duelResults: Object.create(null), invite: null, duelInvites: Object.create(null), duelInviteOrder: [], onCreateCharError: null, party: null, partyPending: Object.create(null), partyInviteOrder: [], sect: null, clan: null, sectPending: Object.create(null), sectInviteOrder: [], doSatUntil: 0, formation: e.FormationState ? e.FormationState.create() : { supported: !1 } };
   var t = 160;
   var a = 160;
   var i = [];
@@ -318,6 +318,9 @@
             }
             n.coChien = "";
             n.coDenBuoc = !1;
+            if (e.VanTieuUI) {
+              e.VanTieuUI.reset();
+            }
             if (e.TayTrai && e.TayTrai.ve) {
               e.TayTrai.ve();
             }
@@ -681,6 +684,7 @@
           case "hacthi": return void (e.HacThiUI && e.HacThiUI.nhan(t));
           case "huthien": return void (e.HuThienUI && e.HuThienUI.nhan(t));
           case "tranmach": return void (e.TranMachUI && e.TranMachUI.nhan(t));
+          case "vantieu": return void (e.VanTieuUI && e.VanTieuUI.nhan(t));
           case "bosscong": return void (e.CongBossUI && e.CongBossUI.nhan(t));
           case "spawn": return function (n) {
             if (n && n.e) {
@@ -1171,7 +1175,11 @@
             }
           }(t);
           case "sect": return function (t) {
-            var a;
+            var a = function (n) {
+              if (e.HUD && e.HUD.setCaption) {
+                e.HUD.setCaption(n);
+              }
+            };
             switch (t.act) {
               case "state":
                 n.sect = t.tong || null;
@@ -1206,12 +1214,16 @@
               }(t);
               case "nv": return void (e.QuanSuUI && e.QuanSuUI.onNv && e.QuanSuUI.onNv(t));
               case "lamlang": return void (e.LamLangUI && e.LamLangUI.onGoi && e.LamLangUI.onGoi(t));
+              case "tin":
+                if (e.Chat && e.Chat.line) {
+                  e.Chat.line(t.text, "sys", { muc: "sys" });
+                }
+                return a(t.text || "");
               case "bao":
                 if (e.Chat && e.Chat.line) {
                   e.Chat.line(t.text, "sys", { muc: n.sect ? "clan" : "sys" });
                 }
-                a = t.text || "";
-                return void (e.HUD && e.HUD.setCaption && e.HUD.setCaption(a));
+                return a(t.text || "");
             }
           }(t);
           case "daihoi": return function (t) {
@@ -1300,6 +1312,9 @@
               var t = e.Skills && e.Skills.DEFS && e.Skills.DEFS[n.s];
               if (!t || !t.bienHinh) {
                 var a = e.SceneWorld && e.SceneWorld.player;
+                if (0 === n.ok && a && t && e.Skills.huyTreo) {
+                  e.Skills.huyTreo(a, t);
+                }
                 if (a && e.VFX) {
                   e.VFX.spawnText(a.x, a.y - 64, "Hụt", "#9aa3ad");
                 }

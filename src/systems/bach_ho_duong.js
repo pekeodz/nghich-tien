@@ -18,7 +18,7 @@
     LUOT_NGAY: 2,                // số lượt mỗi ngày
     PHI: 200,                    // Linh Thạch mỗi lượt
     MAP: "bat_quai_thach_phan",  // Thành Thăng Long
-    TX: 10, TY: 28,              // vừa qua cổng tây, mép bắc đường vào thành
+    TX: 14, TY: 27,              // trong cổng tây, chừa chỗ cho Bảnh Tiên Sinh (10,29)
     PB: "bach_ho_duong",         // bản đồ phó bản
     PHUT: 15,                    // thời gian mỗi lượt
     SO_CHUOT: 10,                // Thử Bảo chạy ra khi Đường Chủ ngã

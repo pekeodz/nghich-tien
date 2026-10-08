@@ -16,7 +16,11 @@
     var t = e.ITEMS[n];
     return t ? t.name : n;
   }
-  function u(n, t, o) {
+  function u(e) {
+    var n = g(e.item);
+    return e.n > 1 ? e.n.toLocaleString("vi-VN") + " " + n : n;
+  }
+  function m(n, t, o) {
     var i = e.ITEMS[t];
     if (i) {
       e.drawItemIcon(n.getContext("2d"), i.icon, 0, 0, o);
@@ -25,9 +29,9 @@
       }
     }
   }
-  function m() {
+  function v() {
     var n = r[s];
-    !function (e) {
+    if (function (e) {
       i = [];
       o.grid.innerHTML = "";
       o.grid.classList.remove("xong");
@@ -39,7 +43,7 @@
         t.title = g(e);
         var a = document.createElement("canvas");
         a.width = a.height = 32;
-        u(a, e, 32);
+        m(a, e, 32);
         t.appendChild(a);
         var l = document.createElement("span");
         l.className = "gacha-burst";
@@ -48,86 +52,85 @@
         i.push({ el: t, id: e, index: n });
       });
       l = -1;
-    }(n.pool);
-    o.step.textContent = s + 1 + "/" + r.length;
-    o.next.disabled = !0;
-    o.next.textContent = "Đang bốc…";
-    f("Phần " + (s + 1) + "/" + r.length + " · " + n.ten + "…");
-    t.rolling = !0;
-    var d = n.pool.indexOf(n.item);
-    if (d < 0) {
-      d = 0;
+    }(n.pool), o.step.textContent = s + 1 + "/" + r.length, o.next.disabled = !0, o.next.textContent = "Đang bốc…", H("Phần " + (s + 1) + "/" + r.length + " · " + n.ten + "…"), t.rolling = !0, 1 !== n.pool.length) {
+      var c = n.pool.indexOf(n.item);
+      if (c < 0) {
+        c = 0;
+      }
+      var d = i.length;
+      var h = Math.floor(Math.random() * d);
+      var p = Math.max(25, d + 4);
+      p += ((c - h - p) % d + d) % d;
+      var u = 0;
+      !function t() {
+        if (r = (h + u) % d, l >= 0 && i[l] && i[l].el.classList.remove("lit"), i[l = r] && i[l].el.classList.add("lit"), e.Audio.play("ui", { gain: .35, rate: 1.4 }), u >= p) {
+          f(n, i[c]);
+        }
+        else {
+          var o = ++u / p;
+          a = setTimeout(t, 40 + 280 * Math.pow(o, 3));
+        }
+        var r;
+      }();
     }
-    var h = i.length;
-    var p = Math.floor(Math.random() * h);
-    var m = Math.max(25, h + 4);
-    m += ((d - p - m) % h + h) % h;
-    var v = 0;
-    !function x() {
-      if (C = (p + v) % h, l >= 0 && i[l] && i[l].el.classList.remove("lit"), i[l = C] && i[l].el.classList.add("lit"), e.Audio.play("ui", { gain: .35, rate: 1.4 }), v >= m) {
-        !function (n, i) {
-          a = null;
-          i.el.classList.remove("lit");
-          l = i.index;
-          o.grid.classList.add("xong");
-          i.el.classList.add("won");
-          e.Audio.play("spell");
-          i.el.classList.remove("burst");
-          i.el.offsetWidth;
-          i.el.classList.add("burst");
-          var d = g(n.item);
-          c.push(d);
-          f(n.ten + ": " + d + (n.trung ? " (trùng — ngươi đã có đủ cả bể)" : "") + (!1 === n.khoa ? "." : " · món khoá."));
-          (function (n) {
-            var t = e.ITEMS[n];
-            if (t) {
-              o.haul.classList.remove("hidden");
-              var i = document.createElement("div");
-              i.className = "gacha-chip";
-              var a = document.createElement("canvas");
-              a.width = a.height = 16;
-              u(a, n, 16);
-              i.appendChild(a);
-              var l = document.createElement("span");
-              l.textContent = t.name;
-              i.appendChild(l);
-              o.haul.appendChild(i);
-            }
-          })(n.item);
-          o.next.textContent = s >= r.length - 1 ? "Xong" : "Tiếp ›";
-          o.next.disabled = !1;
-          t.rolling = !1;
-          if (e.HUD && e.HUD.renderBag) {
-            e.HUD.renderBag();
-          }
-        }(n, i[d]);
-      }
-      else {
-        var H = ++v / m;
-        a = setTimeout(x, 40 + 280 * Math.pow(H, 3));
-      }
-      var C;
-    }();
+    else {
+      f(n, i[0]);
+    }
   }
-  function v() {
+  function f(n, i) {
+    a = null;
+    i.el.classList.remove("lit");
+    l = i.index;
+    o.grid.classList.add("xong");
+    i.el.classList.add("won");
+    e.Audio.play("spell");
+    i.el.classList.remove("burst");
+    i.el.offsetWidth;
+    i.el.classList.add("burst");
+    var d = u(n);
+    c.push(d);
+    H(n.ten + ": " + d + (n.trung ? " (trùng — ngươi đã có đủ cả bể)" : "") + (!1 === n.khoa ? "." : " · món khoá."));
+    (function (n) {
+      if (e.ITEMS[n.item]) {
+        o.haul.classList.remove("hidden");
+        var t = document.createElement("div");
+        t.className = "gacha-chip";
+        var i = document.createElement("canvas");
+        i.width = i.height = 16;
+        m(i, n.item, 16);
+        t.appendChild(i);
+        var a = document.createElement("span");
+        a.textContent = u(n);
+        t.appendChild(a);
+        o.haul.appendChild(t);
+      }
+    })(n);
+    o.next.textContent = s >= r.length - 1 ? "Xong" : "Tiếp ›";
+    o.next.disabled = !1;
+    t.rolling = !1;
+    if (e.HUD && e.HUD.renderBag) {
+      e.HUD.renderBag();
+    }
+  }
+  function x() {
     if (!(o.next.disabled)) {
       if (!r || s >= r.length - 1) {
         t.close();
       }
       else {
         s++;
-        m();
+        v();
       }
     }
   }
-  function f(e) {
+  function H(e) {
     if (o.say) {
       o.say.textContent = e;
     }
   }
   t.init = function () {
     o.root = n.$("#hop-mo");
-    return o.root ? (o.title = n.$("#hop-title"), o.step = n.$("#hop-step"), o.grid = n.$("#hop-grid"), o.say = n.$("#hop-say"), o.haul = n.$("#hop-haul"), o.next = n.$("#hop-next"), o.close = n.$("#hop-close"), o.next.addEventListener("click", v), o.close.addEventListener("click", function () {
+    return o.root ? (o.title = n.$("#hop-title"), o.step = n.$("#hop-step"), o.grid = n.$("#hop-grid"), o.say = n.$("#hop-say"), o.haul = n.$("#hop-haul"), o.next = n.$("#hop-next"), o.close = n.$("#hop-close"), o.next.addEventListener("click", x), o.close.addEventListener("click", function () {
       t.close();
     }), o.root.addEventListener("click", function (e) {
       if (e.target === o.root) {
@@ -151,7 +154,7 @@
         o.haul.innerHTML = "";
         o.next.disabled = !0;
         o.next.textContent = "Đang mở…";
-        f("Nắp hộp rung lên, khoá đồng bật ra…");
+        H("Nắp hộp rung lên, khoá đồng bật ra…");
         o.root.classList.remove("hidden");
         t.open = !0;
         t.rolling = !0;
@@ -166,17 +169,15 @@
               o.next.textContent = "Đóng";
               o.next.disabled = !1;
               e.Audio.play("deny");
-              return void f(n && (p[n.why] || n.why) || "Hộp chưa mở được lúc này");
+              return void H(n && (p[n.why] || n.why) || "Hộp chưa mở được lúc này");
             }
             r = n.ket;
-            m();
+            v();
           }
           else {
             if (i && e.HUD) {
               if (e.HUD.setCaption) {
-                e.HUD.setCaption(d + ": " + n.ket.map(function (e) {
-                  return g(e.item);
-                }).join(", ") + ".");
+                e.HUD.setCaption(d + ": " + n.ket.map(u).join(", ") + ".");
               }
               if (e.HUD.renderBag) {
                 e.HUD.renderBag();
@@ -208,9 +209,7 @@
       t.open = !1;
       t.rolling = !1;
       if (n && e.HUD && e.HUD.setCaption) {
-        e.HUD.setCaption(d + ": " + r.map(function (e) {
-          return g(e.item);
-        }).join(", ") + ".");
+        e.HUD.setCaption(d + ": " + r.map(u).join(", ") + ".");
       }
       if (e.HUD && e.HUD.renderBag) {
         e.HUD.renderBag();

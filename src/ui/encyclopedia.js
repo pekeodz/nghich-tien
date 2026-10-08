@@ -482,7 +482,7 @@
               return 0 === n.indexOf("Luyện tại Đan Lô");
             }) && S(i, "Luyện tại Đan Lô trong làng."), "manh_yeu_dan_cap_3" === t) {
               S(i, "Ghép 3 mảnh ở Đan Lô (mục Đan Khác) thành Yêu Đan Cấp 3: 70%, thất bại mất mảnh; kèm 3 Bảo Mệnh Phù thì 100%.");
-              S(i, "Rơi từ kho bảo vật chung của Sỹ Sách Điện khi hạ boss (tối Chủ Nhật) — tổng mỗi bản cố định 10 mảnh.");
+              S(i, "Rơi từ kho bảo vật chung của Sỹ Sách Điện khi hạ boss (tối Thứ Năm) — tổng cả máy chủ cố định 10 mảnh mỗi kỳ.");
               S(i, "Đổi 20 Điểm Đại Hội ở Chấp Sự Đại Hội (mảnh khoá: không giao dịch, vẫn ghép chung).");
             }
             else if ("yeu_dan_cap_3" === t) {
@@ -498,7 +498,7 @@
                 var O = v[t].map(function (n) {
                   return n.ten;
                 }).join(" · ");
-                S(i, "hop_van_bao" === t ? "Quà của Vạn Bảo Phường, tặng một lần khi chợ được mở khoá. Mở hộp ngẫu nhiên ra: " + O + " (đều khoá)." : "Mở ra ngẫu nhiên: " + O + (v[t].some(function (n) {
+                S(i, "hop_van_bao" === t ? "Quà của Vạn Bảo Phường, tặng một lần khi chợ được mở khoá. Mở hộp ngẫu nhiên ra: " + O + " (đều khoá)." : "hop_qua_tan_thu" === t ? "Quà của Gift Code. Mở ra ngẫu nhiên một trong bốn: Ngưu Sừng, Nanh Hổ, Mảnh Yêu Đan Cấp 3 (đều khoá) hoặc 2.000–3.000 Linh Thạch. Đang ở Luyện Khí thì ra Mảnh Yêu Đan Cấp 3." : "Mở ra ngẫu nhiên: " + O + (v[t].some(function (n) {
                   return !1 !== n.khoa;
                 }) ? " (đều khoá)." : " — không khoá, bán được ở chợ."));
               }
@@ -507,7 +507,7 @@
                   return n.pool.indexOf(t) >= 0;
                 })[0];
                 if (e) {
-                  S(i, "Có thể mở ra từ " + f(n) + " (ngẫu nhiên" + (!1 === e.khoa ? ", không khoá" : ", món khoá") + ").");
+                  S(i, "Có thể mở ra từ " + f(n) + " (ngẫu nhiên" + (!1 === e.khoa || "linh_thach" === t ? ", không khoá" : ", món khoá") + ").");
                 }
               });
             }
@@ -624,7 +624,7 @@
               S(i, D[t]);
             }
             if (n.HuThien && n.HuThien.NGOC_PHU === t) {
-              S(i, "Rơi khi hạ Thủ Vệ ở Ải 1 Sỹ Sách Điện (tối Chủ Nhật). Mỗi người mang tối đa 1; đủ 3 viên thì tông tự mở cửa Ải 1. Không vào túi đồ.");
+              S(i, "Rơi khi hạ Thủ Vệ ở Ải 1 Sỹ Sách Điện (tối Thứ Năm), tự hút vào người đánh nhiều nhất. Mỗi người mang tối đa 3; đủ 3 viên thì tông tự mở cửa Ải 1. Không vào túi đồ.");
             }
             var R = n.Food;
             if (R && Array.isArray(R.SHOP)) {

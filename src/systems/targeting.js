@@ -31,44 +31,46 @@
     var h = a.list;
     if (h.length = 0, u && d) {
       var c;
-      var y;
-      var f = e.CONFIG.TILE;
+      var f;
+      var y = e.CONFIG.TILE;
       var k = e.Player && e.Player.reach ? e.Player.reach(u) : 0;
       var s = Math.max(t().RANGE, k + (t().REACH_PAD || 0));
       var p = s + (t().KEEP_PAD || 0);
       var v = a.key;
       for (w(d.props), w(d.flatProps), c = 0; c < d.interactables.length; c++) {
         var m = d.interactables[c];
-        if (!((y = n.dist(u.x, u.y, m.x, m.y)) > s)) {
-          h.push({ key: "scn:" + (m.id || c), kind: "scenery", obj: m, x: m.x, y: m.y, baseY: m.y + 14, topY: m.y - 26, name: m.title, r: a.propReach(m), dist: y });
+        if (!((f = n.dist(u.x, u.y, m.x, m.y)) > s)) {
+          h.push({ key: "scn:" + (m.id || c), kind: "scenery", obj: m, x: m.x, y: m.y, baseY: m.y + 14, topY: m.y - 26, name: m.title, r: a.propReach(m), dist: f });
         }
       }
       for (l = l || [], c = 0; c < l.length; c++) {
-        var g = l[c];
-        if (!(g.dead || e.ChinhDao && !e.ChinhDao.danhDuoc(g.def))) {
-          y = n.dist(u.x, u.y, g.x, g.y);
-          if (j("foe:" + g.id, y)) {
-            h.push({ key: "foe:" + g.id, kind: "enemy", obj: g, x: g.x, y: g.y, baseY: g.y, topY: r(g), name: g.def && g.def.name || "Quái", r: e.CONFIG.PLAYER.REACH, dist: y });
+        var T = l[c];
+        if (!(T.dead || e.ChinhDao && !e.ChinhDao.danhDuoc(T.def))) {
+          if ((!T.def || !T.def.tieuXa || e.VanTieuUI && e.VanTieuUI.cuopDuoc())) {
+            f = n.dist(u.x, u.y, T.x, T.y);
+            if (j("foe:" + T.id, f)) {
+              h.push({ key: "foe:" + T.id, kind: "enemy", obj: T, x: T.x, y: T.y, baseY: T.y, topY: r(T), name: T.def && T.def.name || "Quái", r: e.CONFIG.PLAYER.REACH, dist: f });
+            }
           }
         }
       }
-      var T = e.Gateway;
+      var g = e.Gateway;
       var D = null;
-      if (T && T.duel && T.remotes) {
-        var b = T.remotes[T.duel.id];
+      if (g && g.duel && g.remotes) {
+        var b = g.remotes[g.duel.id];
         if (b) {
           D = "duel:" + b.id;
           h.push(O(b, "duel", "Đối thủ"));
         }
       }
-      if (T && T.remotes && e.DoSat) {
-        var x = T.doSatActive && T.doSatActive();
+      if (g && g.remotes && e.DoSat) {
+        var x = g.doSatActive && g.doSatActive();
         var C = a.pkTuDo();
         var A = a.khoaNguoi;
-        for (var N in A && !a.thuDich(T.remotes[A]) && (a.khoaNguoi = null, A = null), T.remotes) {
-          var P = T.remotes[N];
-          if (P && !P.downed && (!T.duel || T.duel.id !== N)) {
-            var M = !(!T.tmcLaDich || !T.tmcLaDich(N));
+        for (var N in A && !a.thuDich(g.remotes[A]) && (a.khoaNguoi = null, A = null), g.remotes) {
+          var P = g.remotes[N];
+          if (P && !P.downed && (!g.duel || g.duel.id !== N)) {
+            var M = !(!g.tmcLaDich || !g.tmcLaDich(N));
             var S = C && !a.dongDoiPk(N) && !a.khongPk(N, P);
             if ((x || P.doSat || M || S || a.coDich(P) || a.daoDich(P)) && (N === A || j("dosat:" + N, n.dist(u.x, u.y, P.x, P.y)))) {
               var H = O(P, "dosat", "Đạo hữu");
@@ -78,12 +80,12 @@
           }
         }
       }
-      if (T && T.remotes) {
-        for (var R in T.remotes) {
-          var G = T.remotes[R];
+      if (g && g.remotes) {
+        for (var R in g.remotes) {
+          var G = g.remotes[R];
           if (G && !G.downed) {
-            if (!(T.duel && T.duel.id === R || a.thuDich(G))) {
-              if (j("player:" + R, y = n.dist(u.x, u.y, G.x, G.y))) {
+            if (!(g.duel && g.duel.id === R || a.thuDich(G))) {
+              if (j("player:" + R, f = n.dist(u.x, u.y, G.x, G.y))) {
                 h.push(O(G, "player", "Đạo hữu"));
               }
             }
@@ -93,10 +95,10 @@
       h.sort(function (e, n) {
         return e.dist - n.dist;
       });
-      var Y = null;
+      var I = null;
       for (c = 0; c < h.length; c++)
         if ("dosat" === h[c].kind && !h[c].chiCo) {
-          Y = h[c].key;
+          I = h[c].key;
           break;
         }
       if (a.key && o(a.key) < 0 && (a.key = null, a.manual = !1), a.manual && a.key || (a.key = function (n) {
@@ -123,14 +125,14 @@
             return t.key;
           }
         for (a = 0; a < n.length; a++)
-          if ("player" !== (t = n[a]).kind && !("enemy" === t.kind && t.obj && t.obj.def && t.obj.def.human)) {
+          if (!("player" === (t = n[a]).kind || "enemy" === t.kind && t.obj && t.obj.def && (t.obj.def.human || t.obj.def.tieuXa))) {
             return "dosat" === t.kind && i ? i : t.key;
           }
         return null;
-      }(h)), Y && !a.doSatTruoc && (a.key = Y, a.manual = !1), a.doSatTruoc = !!Y, a.khoaNguoi) {
-        var I = "dosat:" + a.khoaNguoi;
-        if (o(I) >= 0) {
-          a.key = I;
+      }(h)), I && !a.doSatTruoc && (a.key = I, a.manual = !1), a.doSatTruoc = !!I, a.khoaNguoi) {
+        var Y = "dosat:" + a.khoaNguoi;
+        if (o(Y) >= 0) {
+          a.key = Y;
           a.manual = !0;
         }
         else {
@@ -151,8 +153,8 @@
     function w(e) {
       for (var t = 0; t < e.length; t++) {
         var r = e[t];
-        if (!(r.hidden || !1 === r.targetable || (y = n.dist(u.x, u.y, r.x, r.y - f / 2)) > s)) {
-          h.push({ key: "prop:" + r.id, kind: "prop", obj: r, x: r.x, y: r.y - f / 2, baseY: r.y, topY: i(r), name: r.name || r.id, r: a.propReach(r), dist: y });
+        if (!(r.hidden || !1 === r.targetable || (f = n.dist(u.x, u.y, r.x, r.y - y / 2)) > s)) {
+          h.push({ key: "prop:" + r.id, kind: "prop", obj: r, x: r.x, y: r.y - y / 2, baseY: r.y, topY: i(r), name: r.name || r.id, r: a.propReach(r), dist: f });
         }
       }
     }
@@ -243,17 +245,17 @@
   a.pickAt = function (e, i) {
     for (var r = a.list, o = null, u = t().TAP_RADIUS, d = null, l = t().TAP_RADIUS, h = 0; h < r.length; h++) {
       var c = r[h];
-      var y = (c.topY + c.baseY) / 2;
-      var f = n.dist(e, i, c.x, y);
+      var f = (c.topY + c.baseY) / 2;
+      var y = n.dist(e, i, c.x, f);
       if ("dosat" === c.kind || "duel" === c.kind) {
-        if (f < l) {
-          l = f;
+        if (y < l) {
+          l = y;
           d = c;
         }
       }
       else {
-        if (f < u) {
-          u = f;
+        if (y < u) {
+          u = y;
           o = c;
         }
       }
@@ -276,10 +278,10 @@
     for (var o = e.CONFIG.TILE, u = a.props || [], d = null, l = 1 / 0, h = 0; h < u.length; h++) {
       var c = u[h];
       if ("npc" === c.type && !c.hidden) {
-        var y = c.tapW || o / 2;
-        var f = i(c) - (c.tapTopPad || 0);
+        var f = c.tapW || o / 2;
+        var y = i(c) - (c.tapTopPad || 0);
         var k = c.y + (c.tapBottomPad || 0);
-        if (!(Math.abs(t - c.x) > y || r > k || r < f)) {
+        if (!(Math.abs(t - c.x) > f || r > k || r < y)) {
           var s = n.dist(t, r, c.x, c.y - o / 2);
           if (s < l) {
             l = s;
@@ -297,13 +299,13 @@
     a.doSatTruoc = !1;
     a.khoaNguoi = null;
   };
-  a.draw = function (i, r, o, y) {
-    var f = a.current();
-    if (f) {
-      var k = Math.round(2 * Math.sin(3.4 * (y || 0)));
-      var s = Math.round(f.x - r);
-      var p = Math.round(f.topY - o) + k;
-      e.Pixel.ellipse(i, s, Math.round(f.baseY - o) + 1, 11, 4, null, n.alpha(t().COLOR, .55));
+  a.draw = function (i, r, o, f) {
+    var y = a.current();
+    if (y) {
+      var k = Math.round(2 * Math.sin(3.4 * (f || 0)));
+      var s = Math.round(y.x - r);
+      var p = Math.round(y.topY - o) + k;
+      e.Pixel.ellipse(i, s, Math.round(y.baseY - o) + 1, 11, 4, null, n.alpha(t().COLOR, .55));
       (function (n, a, t) {
         var i;
         var r;

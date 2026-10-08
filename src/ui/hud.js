@@ -72,6 +72,13 @@
     a.targetLevel = t.$("#target-level");
     a.targetHp = t.$("#bar-target-hp");
     a.targetHpText = t.$("#target-hp");
+    if (a.target) {
+      a.target.addEventListener("click", function (t) {
+        if (a.target.classList.contains("dao-huu") && e.SceneWorld && e.SceneWorld.moBangDaoHuu) {
+          e.SceneWorld.moBangDaoHuu({ x: t.clientX, y: t.clientY });
+        }
+      });
+    }
     a.party = t.$("#party-hud");
     a.partyCount = t.$("#party-count");
     a.partyMembers = t.$("#party-members");
@@ -863,24 +870,33 @@
     var r = e.QuanSuUI && e.QuanSuUI.trackerObj ? e.QuanSuUI.trackerObj() : null;
     if (r && (o = (o || []).concat([r])), !t || !i && !o.length) {
       a.tracker.classList.add("hidden");
+      a.tracker.classList.remove("q-alert");
       return void (u = null);
     }
     a.tracker.classList.remove("hidden");
-    n.toggleQuestCollapsed(n.questCollapsed);
-    var l;
-    var d;
-    var c = i ? i.name : "";
-    if (a.qStageFull && a.qStageShort) {
-      a.qStageFull.textContent = c;
-      a.qStageShort.textContent = (d = (l = String(c || "").trim()).match(/^(Giai đoạn\s+\d+)/i)) ? d[1] : l.split(/\s+—\s+/)[0].trim();
+    var l = t.trackerAlert ? t.trackerAlert() : null;
+    a.tracker.classList.toggle("q-alert", !!l);
+    if (l) {
+      a.tracker.setAttribute("data-alert", l);
     }
     else {
-      a.qStage.textContent = c;
+      a.tracker.removeAttribute("data-alert");
+    }
+    n.toggleQuestCollapsed(n.questCollapsed);
+    var d;
+    var c;
+    var h = i ? i.name : "";
+    if (a.qStageFull && a.qStageShort) {
+      a.qStageFull.textContent = h;
+      a.qStageShort.textContent = (c = (d = String(h || "").trim()).match(/^(Giai đoạn\s+\d+)/i)) ? c[1] : d.split(/\s+—\s+/)[0].trim();
+    }
+    else {
+      a.qStage.textContent = h;
     }
     a.qHint.textContent = i ? i.hint : "";
     s = { info: i, objs: o };
     a.qObjs.innerHTML = "";
-    var h = (i ? i.name : "") + "|" + o.map(function (e) {
+    var p = (i ? i.name : "") + "|" + o.map(function (e) {
       return void 0 !== e.max ? e.cur + "/" + e.max : e.done ? 1 : 0;
     }).join(",");
     o.forEach(function (e) {
@@ -898,24 +914,22 @@
       t.textContent = o ? "➜ " + String(e.text).slice(2) + i : (n ? "✔ " : e.sub ? "· " : "○ ") + e.text + i;
       a.qObjs.appendChild(t);
     });
-    if (null !== u && u !== h) {
+    if (null !== u && u !== p) {
       a.tracker.classList.remove("pulse");
       a.tracker.offsetWidth;
       a.tracker.classList.add("pulse");
     }
-    u = h;
+    u = p;
   };
   n.toggleQuestCollapsed = function (e) {
     var t = void 0 === e ? !n.questCollapsed : !!e;
-    n.questCollapsed = t;
-    if (a.tracker) {
-      a.tracker.classList.toggle("collapsed", t);
-    }
-    if (a.qCollapse) {
+    if (n.questCollapsed = t, a.tracker && a.tracker.classList.toggle("collapsed", t), a.qCollapse) {
       a.qCollapse.setAttribute("aria-expanded", t ? "false" : "true");
-      a.qCollapse.setAttribute("aria-label", t ? "Mở danh sách nhiệm vụ" : "Thu gọn nhiệm vụ");
-      a.qCollapse.setAttribute("title", t ? "Mở danh sách nhiệm vụ" : "Thu gọn nhiệm vụ");
-      a.qCollapse.textContent = t ? "▾" : "▴";
+      var i = a.tracker && a.tracker.getAttribute("data-alert");
+      var o = "xong" === i ? "Có việc đã xong — mở danh sách nhiệm vụ" : "moi" === i ? "Có việc mới — mở danh sách nhiệm vụ" : "Mở danh sách nhiệm vụ";
+      a.qCollapse.setAttribute("aria-label", t ? o : "Thu gọn nhiệm vụ");
+      a.qCollapse.setAttribute("title", t ? o : "Thu gọn nhiệm vụ");
+      a.qCollapse.textContent = t ? "?" : "▴";
     }
     return t;
   };

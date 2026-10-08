@@ -789,7 +789,7 @@
     t.splice(e + 1, 0, { text: "* Hướng dẫn: bấm nút Phi Hành để cất cánh hoặc hạ cánh" + (h ? "" : " (phím F)"), done: !!a.flags[a.PHI_HANH_FLAG] });
     return t;
   }
-  function O() {
+  function b() {
     var n = a.turnInNpc();
     if (n) {
       return P("mạch chính đang chờ ở " + n);
@@ -798,7 +798,7 @@
     var e = a.buocCuaQuan();
     return P("mạch chính: " + (t ? t.name.replace(/^Giai đoạn \d+ — /, "") : "còn việc dở") + (e && /duoc_cong|gap_dai_phu/.test(e.id) ? " — gom Dược Công đổi hạt" : ""));
   }
-  function b(n) {
+  function O(n) {
     return "Thầy Ông Nội" === n ? { mapId: "tan_vien", ids: ["su_phu"], anyState: !0 } : "Huấn Sư Huynh" === n ? { mapId: "thanh_truc_lam", ids: ["ly_thanh"], anyState: !0 } : "Đại Phu" === n ? { mapId: "duoc_vien", ids: ["dai_phu"], anyState: !0 } : "Tàng Kinh Lão Nhân" === n ? { mapId: "tan_vien", ids: ["tang_kinh_lao_nhan"], anyState: !0 } : "Thợ Rèn" === n ? { mapId: "tan_vien", ids: ["tho_ren"], anyState: !0 } : "Tông Môn Quản Sự" === n ? { mapId: "bat_quai_thach_phan", ids: ["tong_mon_quan_su"], anyState: !0 } : null;
   }
   function U() {
@@ -806,7 +806,7 @@
       return a.flags.bai_kien_dai_phu && !a.daCamTrucKiem() ? null : { mapId: "duoc_vien", ids: ["dai_phu"], anyState: !0 };
     }
     if (!a.autoAdvances() && a.stageComplete()) {
-      var t = b(a.turnInNpc());
+      var t = O(a.turnInNpc());
       if (t) {
         return t;
       }
@@ -856,7 +856,7 @@
       case a.XSG_STAGE: return { mapId: "bai_da_hang_gio" };
       case a.TAY_TAM_STAGE: return { mapId: "tan_vien", ids: ["dan_lo"], anyState: !0 };
       case a.TOC_TRUONG_STAGE: return { mapId: "mieu_hoang", ids: ["nu_tu_mieu_hoang"], anyState: !0 };
-      case a.HOANG_CUU_BAO_STAGE: return b("Tông Môn Quản Sự");
+      case a.HOANG_CUU_BAO_STAGE: return O("Tông Môn Quản Sự");
       case 31:
       case 32:
       case 33:
@@ -1100,21 +1100,21 @@
     if (a.hangDongActive() && !a.hangDongIsMainStage()) {
       t = a.hangDongObjectives();
       if (a.isActive()) {
-        t = t.concat(O());
+        t = t.concat(b());
       }
       return t;
     }
     if (a.biTichActive() && !a.biTichIsMainStage()) {
       t = L(a.biTichObjectives());
       if (a.isActive()) {
-        t = t.concat(O());
+        t = t.concat(b());
       }
       return t;
     }
     if (E()) {
       t = a.khamChoObjectives();
       if (a.isActive()) {
-        t = t.concat(O());
+        t = t.concat(b());
       }
       return t;
     }
@@ -1160,15 +1160,30 @@
     if ("tournament" === i.kind) {
       var u = [{ text: "Thắng 1 trận Đại Hội Tu Tiên", done: !1 }, { text: "Trọng tài tự ghi công · thưởng " + i.reward + " Dược Công", done: !1 }];
       if (a.isActive()) {
-        u = u.concat(O());
+        u = u.concat(b());
       }
       return u;
     }
     e = "escort" === i.kind ? [{ text: "Dẫn Cháu của Đại Phu về làng Tản Viên", done: !1 }, { text: "Đưa người tới gặp Thầy Ông Nội", done: !1 }] : "fishing" === i.kind ? [{ text: "Câu cá ở bờ ao / sông", cur: a.seedQuestProgress(), max: i.need }, { text: "Mang đủ ba cá về giao Đại Phu", done: !1 }] : [{ text: i.objectiveVerb + " " + i.itemName, cur: n.Inventory.count(i.item), max: i.need }, { text: "Mang nguyên liệu về giao Đại Phu", done: !1 }];
     if (a.isActive()) {
-      e = e.concat(O());
+      e = e.concat(b());
     }
     return e;
+  };
+  a.trackerAlert = function () {
+    if (a.isActive() && a.turnInNpc() && !a.autoAdvances() && a.stageComplete()) {
+      return "xong";
+    }
+    if (a.biTichActive() && !a.biTichIsMainStage() && a.biTichComplete()) {
+      return "xong";
+    }
+    var t = a.seedTaskInfo();
+    if (t) {
+      var e = 0 | t.need;
+      var i = "fishing" === t.kind ? a.seedQuestProgress() : n.Inventory.count(t.item);
+      return e > 0 && i >= e ? "xong" : null;
+    }
+    return a.isActive() || a.hangDongActive() || a.biTichActive() || E() ? null : a.khamChoMo() || a.biTichPointed() || a.biTichOffered() ? "moi" : null;
   };
   var k = ["plot_1", "plot_2", "plot_3", "plot_4", "plot_5", "plot_6", "plot_7", "plot_8", "plot_9", "plot_10"];
   function x() {

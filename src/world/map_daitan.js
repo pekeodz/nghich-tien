@@ -5,14 +5,14 @@
   var o = [];
   t.legend = Object.assign({}, t.legend, { v: { ground: "dt_paving", block: !1 }, s: { ground: "dt_slate", block: !1 }, j: { ground: "dt_jade", block: !1 }, o: { ground: "dt_basalt", block: !1 }, "=": { ground: "bridge", block: !1 }, d: { ground: "dirt", block: !1 }, p: { ground: "pebble", block: !1 }, V: { ground: "dt_wall", block: !0, flyBlock: !0 }, "#": { ground: "dt_slate", block: !0, flyBlock: !0 } });
   for (var r = 0; r < 40; r++) {
-    for (var i = [], h = 0; h < 60; h++)
-      i.push(h < 2 || h > 57 || r < 2 || r > 37 ? "V" : "v");
-    a.push(i);
+    for (var h = [], i = 0; i < 60; i++)
+      h.push(i < 2 || i > 57 || r < 2 || r > 37 ? "V" : "v");
+    a.push(h);
   }
-  function c(n, t, o, r, i) {
-    for (var h = t; h < t + r; h++)
+  function c(n, t, o, r, h) {
+    for (var i = t; i < t + r; i++)
       for (var c = n; c < n + o; c++)
-        a[h] && c >= 0 && c < 60 && (a[h][c] = i);
+        a[i] && c >= 0 && c < 60 && (a[i][c] = h);
   }
   function e(n, t, a, r) {
     o.push({ name: n, tx: t, ty: a, variant: r || 0 });
@@ -150,6 +150,7 @@
     return "tran_phap_su" === n.id;
   });
   m.push({ id: "tong_mon_quan_su", type: "npc", tx: 13, ty: 18, block: !0, r: 48, name: "Tông Môn Quản Sự", face: 0, text: "Sổ sách tông môn qua tay lão cả: ghi danh Tông Môn Chiến, giao nhiệm vụ, ghi công.", cfg: { gender: "male", hair: "cao_ke_ngoc_quan", hairColor: "ngan", beard: "rau_de", outfit: "lam_y", skin: "light", aura: "none" } });
+  m.push({ id: "huyet_anh_khach", type: "npc", tx: 10, ty: 29, block: !0, r: 48, name: "Bảnh Tiên Sinh", text: "Trong mắt bản tọa, xã hội này không có đúng hay sai — chỉ có kẻ yếu và kẻ mạnh thế thôi!", face: 0, cfg: { gender: "male", hair: "npc_curly", hairColor: "nau", outfit: "npc_long_bao", skin: "tan", aura: "none", accessory: "npc_tattoo", bag: "none", hat: "none", shoes: "ink" } });
   m.push({ id: "dan_lo_thang_long", type: "cauldron", art: "dan_lo_thang_long", tx: 17, ty: 25, block: !0, r: 46, shadow: !0, name: "Đan Lô Thăng Long" });
   c(41, 32, 5, 3, "s");
   t.name = "Thành Thăng Long";
@@ -169,10 +170,10 @@
       return o;
     }
     var r = Math.floor(o.x / n.CONFIG.TILE);
-    var i = Math.floor(o.y / n.CONFIG.TILE);
-    var h = t.ground[i] && t.ground[i].charAt(r);
-    return isFinite(o.x) && isFinite(o.y) && r >= 0 && r < 60 && i >= 0 && i < 40 && h && !t.legend[h].block && !t.props.some(function (n) {
-      return n.block && n.tx === r && n.ty === i;
+    var h = Math.floor(o.y / n.CONFIG.TILE);
+    var i = t.ground[h] && t.ground[h].charAt(r);
+    return isFinite(o.x) && isFinite(o.y) && r >= 0 && r < 60 && h >= 0 && h < 40 && i && !t.legend[i].block && !t.props.some(function (n) {
+      return n.block && n.tx === r && n.ty === h;
     }) ? o : { x: (t.spawn.tx + .5) * n.CONFIG.TILE, y: (t.spawn.ty + 1) * n.CONFIG.TILE - 4, dir: o.dir || 0 };
   };
   t.interactables = [{ id: "daitan_cam_che", tx: 30, ty: 20, r: 90, title: "Cấm Chế Trấn Thiên", text: "Tám trụ linh ngọc khóa long mạch dưới Thành Thăng Long.\nThiên quang và ma khí gặp nhau tại đây, bị cấm chế giữ trong thế cân bằng." }, { id: "daitan_thien_mon", tx: 24, ty: 5, r: 70, title: "Biên Giới Thiên Đạo", text: "Qua ba cột Khí Bổng là Chính Đảo.\nBạch ngọc dẫn lối lên biển mây của chính đạo." }, { id: "daitan_ma_mon", tx: 23, ty: 35, r: 70, title: "Biên Giới Ma Đạo", text: "Hắc thạch và tàn lửa tím báo hiệu Ma Động.\nCấm vệ Thăng Long giữ ranh giới giữa thành và ma đạo." }];

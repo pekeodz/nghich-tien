@@ -654,6 +654,10 @@
                   a(t.tx0 * f + 40 + 96 * l, (t.ty1 + 1) * f - 30, 96, "#ff8c50", R ? .25 : .55);
                 a(r, (e + (t.ty1 + 1) * f) / 2, 240, "#b48cff", R ? .2 : .4);
               }
+              if (T.htRao && !(A && A.ai2 && A.ai2.rao)) {
+                var c = T.htRao;
+                a((c.tx0 + c.tx1 + 1) * f / 2, (c.ty0 + c.ty1 + 1) * f / 2, 170, "#b9a2ff", .9);
+              }
               if (S && S.coCanh) {
                 a(S.coCanh.cx, S.coCanh.cy, 210, "#9a6cff", .5 + .1 * Math.sin(.8 * k));
               }

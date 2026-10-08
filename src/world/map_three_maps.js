@@ -36,7 +36,7 @@
         return (((t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t) ^ t >>> 14) >>> 0) / 4294967296;
       };
     }
-    function e(t, n) {
+    function d(t, n) {
       return t > function (t) {
         return 32.5 + 2.6 * o(.24 * t + 1.1) + 1.3 * o(.105 * t + 3);
       }(n) || n < function (t) {
@@ -45,12 +45,12 @@
         return 19.5 + .115 * t + 1.9 * o(.235 * t + 2.1) + 1.1 * o(.104 * t + .5);
       }(t) ? 1 : 0;
     }
-    var d = [];
+    var e = [];
     for (n = 0; n < 30; n++)
-      for (d[n] = [], t = 0; t < a; t++)
-        d[n][t] = e(t, n);
+      for (e[n] = [], t = 0; t < a; t++)
+        e[n][t] = d(t, n);
     function u(t, n) {
-      return h(t, n) ? d[n][t] : -1;
+      return h(t, n) ? e[n][t] : -1;
     }
     var g = [];
     for (n = 0; n < 30; n++)
@@ -75,31 +75,31 @@
       for (t = 0; t < a; t++)
         "V" !== g[n][t] || g[n + 1][t] || T(t, n + 1, "c");
     var W = { C: 1, V: 1, c: 1, m: 1, g: 1, K: 1, O: 1 };
-    function l(t, n, a) {
+    function w(t, n, a) {
       for (var o = 0; o < t.length - 1; o++)
         for (var r = t[o], c = t[o + 1], h = 3 * Math.max(Math.abs(c[0] - r[0]), Math.abs(c[1] - r[1])) + 1, i = 0; i <= h; i++)
-          for (var e = Math.round(r[0] + (c[0] - r[0]) * i / h), d = Math.round(r[1] + (c[1] - r[1]) * i / h), u = -n; u <= n; u++)
+          for (var d = Math.round(r[0] + (c[0] - r[0]) * i / h), e = Math.round(r[1] + (c[1] - r[1]) * i / h), u = -n; u <= n; u++)
             for (var g = -n; g <= n; g++)
               if (!(g * g + u * u > n * n + n)) {
-                var s = e + g;
-                var W = d + u;
+                var s = d + g;
+                var W = e + u;
                 if (!(s < 1 || W < 1 || s > 38 || W > 28)) {
                   T(s, W, a(_(s, W)));
                 }
               }
     }
-    function w(t, n) {
-      l(t, n, function (t) {
+    function l(t, n) {
+      w(t, n, function (t) {
         return "=" === t || "S" === t ? t : W[t] ? "S" : "w" === t || "F" === t ? "=" : "d";
       });
     }
-    function b(t, n, a, o, r, _, e) {
-      for (var d = i(((73856093 * t ^ 19349663 * n) >>> 0) + 7), u = Math.floor(n - o) - 1; u <= Math.ceil(n + o) + 1; u++)
+    function b(t, n, a, o, r, _, d) {
+      for (var e = i(((73856093 * t ^ 19349663 * n) >>> 0) + 7), u = Math.floor(n - o) - 1; u <= Math.ceil(n + o) + 1; u++)
         for (var g = Math.floor(t - a) - 1; g <= Math.ceil(t + a) + 1; g++)
-          if (h(g, u) && (!e || !e[c[u][g]])) {
+          if (h(g, u) && (!d || !d[c[u][g]])) {
             var s = (g - t) / a;
             var W = (u - n) / o;
-            if (s * s + W * W < 1 + 2 * (d() - .5) * (_ || 0)) {
+            if (s * s + W * W < 1 + 2 * (e() - .5) * (_ || 0)) {
               T(g, u, r);
             }
           }
@@ -130,14 +130,14 @@
           }
         }
       }
-    l([[4, 9], [5, 13], [7, 17], [8, 21], [9, 24], [9, 28]], 0, function (t) {
+    w([[4, 9], [5, 13], [7, 17], [8, 21], [9, 24], [9, 28]], 0, function (t) {
       return "F" === t || W[t] ? "F" : "w";
     });
     T(9, 29, "w");
-    w([[3, 28], [6, 28], [11, 26], [14, 23], [17, 21], [19, 18], [21, 15], [22, 12]], 1);
-    w([[23, 13], [27, 14], [30, 13], [33, 10]], 1);
-    w([[33, 10], [35, 6], [36, 4], [37, 3], [38, 2]], 0);
-    w([[6, 26], [4, 23], [4, 19], [6, 16], [9, 14]], 0);
+    l([[3, 28], [6, 28], [11, 26], [14, 23], [17, 21], [19, 18], [21, 15], [22, 12]], 1);
+    l([[23, 13], [27, 14], [30, 13], [33, 10]], 1);
+    l([[33, 10], [35, 6], [36, 4], [37, 3], [38, 2]], 0);
+    l([[6, 26], [4, 23], [4, 19], [6, 16], [9, 14]], 0);
     T(0, 27, "d");
     T(1, 27, "d");
     T(0, 28, "d");
@@ -193,10 +193,10 @@
     function B(t, n, a, o) {
       for (var r = i(a), h = 0, T = 0; T < 60 * n && h < n; T++) {
         var _ = 1 + (38 * r() | 0);
-        var e = 1 + (28 * r() | 0);
-        if ("." === c[e][_]) {
-          if (!(o && C(_, e))) {
-            c[e][_] = t;
+        var d = 1 + (28 * r() | 0);
+        if ("." === c[d][_]) {
+          if (!(o && C(_, d))) {
+            c[d][_] = t;
             h++;
           }
         }
@@ -209,8 +209,8 @@
       var r;
       var h;
       var T;
-      var e;
       var d;
+      var e;
       var u = i(n);
       var g = [];
       var s = [];
@@ -218,22 +218,22 @@
         for (r = 2; r < 38; r++)
           "." === c[h][r] && (W[_(r - 1, h)] || W[_(r + 1, h)] || W[_(r, h - 1)] || W[_(r, h + 1)]) && (C(r, h) || D(r, h) < 2 || s.push([r, h]));
       for (T = s.length - 1; T > 0; T--) {
-        var l = u() * (T + 1) | 0;
-        var w = s[T];
-        s[T] = s[l];
-        s[l] = w;
+        var w = u() * (T + 1) | 0;
+        var l = s[T];
+        s[T] = s[w];
+        s[w] = l;
       }
-      for (e = 0; e < s.length && g.length < t; e++) {
-        var b = s[e];
+      for (d = 0; d < s.length && g.length < t; d++) {
+        var b = s[d];
         var p = !0;
-        for (d = 0; d < o.length; d++)
-          if (Math.abs(o[d][0] - b[0]) + Math.abs(o[d][1] - b[1]) < a) {
+        for (e = 0; e < o.length; e++)
+          if (Math.abs(o[e][0] - b[0]) + Math.abs(o[e][1] - b[1]) < a) {
             p = !1;
             break;
           }
         if (p) {
-          for (d = 0; d < g.length; d++)
-            if (Math.abs(g[d][0] - b[0]) + Math.abs(g[d][1] - b[1]) < a) {
+          for (e = 0; e < g.length; e++)
+            if (Math.abs(g[e][0] - b[0]) + Math.abs(g[e][1] - b[1]) < a) {
               p = !1;
               break;
             }
@@ -286,12 +286,12 @@
     })();
     return { rows: c.map(function (t) {
         return t.join("");
-      }), tang: d.map(function (t) {
+      }), tang: e.map(function (t) {
         return t.join("");
       }), warps: [], props: A, decor: O };
   }();
   var a = n.rows;
-  t.MapData.BAI_DA_HANG_GIO = { id: "bai_da_hang_gio", scope: "shared", napQuai: ["xich_nhan_nguu", "bach_ho_tuyet"], name: "Bãi Đá", subtitle: "Lòng chảo đá ba tầng — Hang Gió dẫn xuống Mỏ Linh Thạch", width: 40, height: 30, legend: { ".": { ground: "co_nui", block: !1 }, ",": { ground: "co_nui_hoa", block: !1 }, '"': { ground: "co_nui_cao", block: !1 }, d: { ground: "duong_cat", block: !1 }, D: { ground: "duong_cat", block: !1 }, S: { ground: "bac_da_nui", block: !1 }, "~": { ground: "pebble", block: !1 }, "=": { ground: "bridge", block: !1 }, w: { ground: "water", block: !0, anim: !0 }, F: { ground: "thac_nui", block: !0, flyBlock: !0, anim: !0 }, C: { ground: "cliff", block: !0, flyBlock: !0 }, V: { ground: "cliff2", block: !0, flyBlock: !0 }, c: { ground: "cliff_base", block: !0, flyBlock: !0 }, m: { ground: "cliff_base", block: !0, flyBlock: !0, obj: "mountain_moss" }, g: { ground: "cliff_base", block: !0, flyBlock: !0, obj: "mountain_fern" }, T: { ground: "co_nui", block: !0, flyBlock: !0, obj: "oak_tree" }, P: { ground: "co_nui", block: !0, obj: "pine_small" }, R: { ground: "co_nui", block: !0, obj: "rock_big" }, r: { ground: "co_nui", block: !1, obj: "rock_small" }, K: { ground: "cliff", block: !0, flyBlock: !0, obj: "tinh_thach_vach" }, O: { ground: "hang_toi", block: !0, flyBlock: !0 }, N: { ground: "hang_mieng", block: !0, flyBlock: !0 }, B: { ground: "co_nui", block: !0, obj: "stele" } }, ground: a, tang: n.tang, treeSwap: { oak_tree: ["forest_tree_round", "forest_tree_lean", "forest_tree_windswept_fork", "forest_tree_round", "forest_tree_ancient_wide"] }, warps: n.warps, interactables: [{ id: "vom_da_co", tx: 27, ty: 18, r: 46, title: "Vòm Đá Cổ", text: "Hai trụ đá đội một thanh xà ngang, mặt đá mòn nhẵn vì gió chứ không vì tay\nngười. Người đi đường xưa gọi đây là cửa đếm bước: qua khỏi vòm là nửa\nđường lên mỏ." }], props: n.props.concat([{ id: "huyet_anh_khach", type: "npc", tx: 36, ty: 5, block: !0, r: 48, name: "Bảnh Tiên Sinh", text: "Trong mắt bản tọa, xã hội này không có đúng hay sai — chỉ có kẻ yếu và kẻ mạnh thế thôi!", face: 0, cfg: { gender: "male", hair: "npc_curly", hairColor: "nau", outfit: "npc_long_bao", skin: "tan", aura: "none", accessory: "npc_tattoo", bag: "none", hat: "none", shoes: "ink" } }]), decorations: [{ name: "vom_da_co", tx: 27, ty: 18 }, { name: "fallen_log", tx: 11, ty: 20 }, { name: "dry_branch", tx: 30, ty: 22 }].concat(n.decor), enemies: [{ id: "xsg_1", type: "xuyen_son_giap", tx: 5, ty: 22 }, { id: "xsg_2", type: "xuyen_son_giap", tx: 15, ty: 22 }, { id: "xsg_3", type: "xuyen_son_giap", tx: 8, ty: 14 }, { id: "xsg_4", type: "xuyen_son_giap", tx: 28, ty: 15 }, { id: "xsg_5", type: "xuyen_son_giap", tx: 32, ty: 10 }, { id: "pn_dn_2", type: "duoc_nong", tx: 22, ty: 17 }, { id: "td_tn_3", type: "thuong_nhan", tx: 21, ty: 12, thuongDoi: !0 }, { id: "td_ts_5", type: "tieu_su", tx: 20, ty: 12, thuongDoi: !0 }, { id: "td_ts_6", type: "tieu_su", tx: 22, ty: 12, thuongDoi: !0 }, { id: "sot_9", type: "son_tac", tx: 10, ty: 25 }, { id: "td_kt_7", type: "kiep_tac", tx: 20, ty: 14, thuongDoi: !0 }, { id: "td_kt_8", type: "kiep_tac", tx: 21, ty: 14, thuongDoi: !0 }, { id: "td_kt_9", type: "kiep_tac", tx: 22, ty: 14, thuongDoi: !0 }], critters: [], portals: [{ tx: 0, ty: 27, toMap: "tan_vien", targetSpawn: { tx: 37, ty: 14 }, label: "Về Chân Núi Tản Viên" }, { tx: 0, ty: 28, toMap: "tan_vien", targetSpawn: { tx: 37, ty: 15 }, label: "Về Chân Núi Tản Viên" }], spawn: { tx: 3, ty: 28 }, ambient: "#16211c" };
+  t.MapData.BAI_DA_HANG_GIO = { id: "bai_da_hang_gio", scope: "shared", napQuai: ["xich_nhan_nguu", "bach_ho_tuyet"], name: "Bãi Đá", subtitle: "Lòng chảo đá ba tầng — Hang Gió dẫn xuống Mỏ Linh Thạch", width: 40, height: 30, legend: { ".": { ground: "co_nui", block: !1 }, ",": { ground: "co_nui_hoa", block: !1 }, '"': { ground: "co_nui_cao", block: !1 }, d: { ground: "duong_cat", block: !1 }, D: { ground: "duong_cat", block: !1 }, S: { ground: "bac_da_nui", block: !1 }, "~": { ground: "pebble", block: !1 }, "=": { ground: "bridge", block: !1 }, w: { ground: "water", block: !0, anim: !0 }, F: { ground: "thac_nui", block: !0, flyBlock: !0, anim: !0 }, C: { ground: "cliff", block: !0, flyBlock: !0 }, V: { ground: "cliff2", block: !0, flyBlock: !0 }, c: { ground: "cliff_base", block: !0, flyBlock: !0 }, m: { ground: "cliff_base", block: !0, flyBlock: !0, obj: "mountain_moss" }, g: { ground: "cliff_base", block: !0, flyBlock: !0, obj: "mountain_fern" }, T: { ground: "co_nui", block: !0, flyBlock: !0, obj: "oak_tree" }, P: { ground: "co_nui", block: !0, obj: "pine_small" }, R: { ground: "co_nui", block: !0, obj: "rock_big" }, r: { ground: "co_nui", block: !1, obj: "rock_small" }, K: { ground: "cliff", block: !0, flyBlock: !0, obj: "tinh_thach_vach" }, O: { ground: "hang_toi", block: !0, flyBlock: !0 }, N: { ground: "hang_mieng", block: !0, flyBlock: !0 }, B: { ground: "co_nui", block: !0, obj: "stele" } }, ground: a, tang: n.tang, treeSwap: { oak_tree: ["forest_tree_round", "forest_tree_lean", "forest_tree_windswept_fork", "forest_tree_round", "forest_tree_ancient_wide"] }, warps: n.warps, interactables: [{ id: "vom_da_co", tx: 27, ty: 18, r: 46, title: "Vòm Đá Cổ", text: "Hai trụ đá đội một thanh xà ngang, mặt đá mòn nhẵn vì gió chứ không vì tay\nngười. Người đi đường xưa gọi đây là cửa đếm bước: qua khỏi vòm là nửa\nđường lên mỏ." }], props: n.props, decorations: [{ name: "vom_da_co", tx: 27, ty: 18 }, { name: "fallen_log", tx: 11, ty: 20 }, { name: "dry_branch", tx: 30, ty: 22 }].concat(n.decor), enemies: [{ id: "xsg_1", type: "xuyen_son_giap", tx: 5, ty: 22 }, { id: "xsg_2", type: "xuyen_son_giap", tx: 15, ty: 22 }, { id: "xsg_3", type: "xuyen_son_giap", tx: 8, ty: 14 }, { id: "xsg_4", type: "xuyen_son_giap", tx: 28, ty: 15 }, { id: "xsg_5", type: "xuyen_son_giap", tx: 32, ty: 10 }, { id: "pn_dn_2", type: "duoc_nong", tx: 22, ty: 17 }, { id: "td_tn_3", type: "thuong_nhan", tx: 21, ty: 12, thuongDoi: !0 }, { id: "td_ts_5", type: "tieu_su", tx: 20, ty: 12, thuongDoi: !0 }, { id: "td_ts_6", type: "tieu_su", tx: 22, ty: 12, thuongDoi: !0 }, { id: "sot_9", type: "son_tac", tx: 10, ty: 25 }, { id: "td_kt_7", type: "kiep_tac", tx: 20, ty: 14, thuongDoi: !0 }, { id: "td_kt_8", type: "kiep_tac", tx: 21, ty: 14, thuongDoi: !0 }, { id: "td_kt_9", type: "kiep_tac", tx: 22, ty: 14, thuongDoi: !0 }], critters: [], portals: [{ tx: 0, ty: 27, toMap: "tan_vien", targetSpawn: { tx: 37, ty: 14 }, label: "Về Chân Núi Tản Viên" }, { tx: 0, ty: 28, toMap: "tan_vien", targetSpawn: { tx: 37, ty: 15 }, label: "Về Chân Núi Tản Viên" }], spawn: { tx: 3, ty: 28 }, ambient: "#16211c" };
   t.MapData.bai_da_hang_gio = t.MapData.BAI_DA_HANG_GIO;
   var o = [{ id: "cua_tay", ten: "Cửa Mỏ Tây", bau: [[4, 13, 3.6, 3], [8, 16, 3, 2.2]] }, { id: "tang_thuong", ten: "Tầng Thượng", bau: [[13, 7, 4, 2.6], [18, 9, 3.2, 2.2]] }, { id: "san_goong", ten: "Sân Goòng", bau: [[15, 17, 4.2, 2.8], [11, 20, 3, 2.2]] }, { id: "tang_sau", ten: "Tầng Sâu", bau: [[20, 25, 4.2, 2.4], [25, 23, 3.2, 2]] }, { id: "tang_dong", ten: "Tầng Đông", bau: [[28, 9, 4.2, 2.6], [33, 7, 3, 2.2]] }, { id: "cua_dong", ten: "Cửa Mỏ Đông", bau: [[34, 17, 4, 2.8], [30, 20, 3, 2.2]] }];
   var r = [[1, 13], [1, 14]];
@@ -313,10 +313,10 @@
         a[n][t] = o;
       }
     }
-    function e(t, n) {
+    function d(t, n) {
       return _(t, n) ? a[n][t] : "X";
     }
-    function d(t) {
+    function e(t) {
       var n = t >>> 0;
       return function () {
         n = n + 1831565813 >>> 0;
@@ -325,13 +325,13 @@
       };
     }
     function u(t, n, a, o, r, c) {
-      for (var h = d(((73856093 * t ^ 19349663 * n) >>> 0) + 11), T = Math.floor(n - o) - 1; T <= Math.ceil(n + o) + 1; T++)
-        for (var e = Math.floor(t - a) - 1; e <= Math.ceil(t + a) + 1; e++)
-          if (_(e, T)) {
-            var u = (e - t) / a;
+      for (var h = e(((73856093 * t ^ 19349663 * n) >>> 0) + 11), T = Math.floor(n - o) - 1; T <= Math.ceil(n + o) + 1; T++)
+        for (var d = Math.floor(t - a) - 1; d <= Math.ceil(t + a) + 1; d++)
+          if (_(d, T)) {
+            var u = (d - t) / a;
             var g = (T - n) / o;
             if (u * u + g * g < 1 + 2 * (h() - .5) * (c || 0)) {
-              i(e, T, r);
+              i(d, T, r);
             }
           }
     }
@@ -346,13 +346,13 @@
     function g(t, n, a) {
       for (var o = 0; o < t.length - 1; o++)
         for (var r = t[o], c = t[o + 1], h = 3 * Math.max(Math.abs(c[0] - r[0]), Math.abs(c[1] - r[1])) + 1, T = 0; T <= h; T++)
-          for (var _ = Math.round(r[0] + (c[0] - r[0]) * T / h), d = Math.round(r[1] + (c[1] - r[1]) * T / h), u = -n; u <= n; u++)
+          for (var _ = Math.round(r[0] + (c[0] - r[0]) * T / h), e = Math.round(r[1] + (c[1] - r[1]) * T / h), u = -n; u <= n; u++)
             for (var g = -n; g <= n; g++)
               if (!(g * g + u * u > n * n + n)) {
                 var s = _ + g;
-                var W = d + u;
+                var W = e + u;
                 if (!(s < 1 || W < 1 || s > 38 || W > 28)) {
-                  i(s, W, a(e(s, W)));
+                  i(s, W, a(d(s, W)));
                 }
               }
     }
@@ -370,21 +370,21 @@
     s([[26, 23], [30, 21]], 1);
     s([[24, 24], [22, 20], [19, 19]], 0);
     var W = [];
-    function l(t) {
+    function w(t) {
       W.push(t);
       g(t, 0, function (t) {
         return "#" === t ? "=" : "=" === t ? t : "r";
       });
     }
-    l([[3, 14], [7, 16], [11, 19]]);
-    l([[13, 8], [16, 11]]);
-    l([[27, 9], [30, 11]]);
-    l([[32, 16], [36, 17]]);
-    var w = r.concat(c, h, T);
+    w([[3, 14], [7, 16], [11, 19]]);
+    w([[13, 8], [16, 11]]);
+    w([[27, 9], [30, 11]]);
+    w([[32, 16], [36, 17]]);
+    var l = r.concat(c, h, T);
     function b(t, n) {
-      for (var a = 0; a < w.length; a++) {
-        var o = t - w[a][0];
-        var r = n - w[a][1];
+      for (var a = 0; a < l.length; a++) {
+        var o = t - l[a][0];
+        var r = n - l[a][1];
         if (Math.abs(o) <= 2 && r >= -1 && r <= 3) {
           return !0;
         }
@@ -392,7 +392,7 @@
       return !1;
     }
     function p() {
-      w.forEach(function (t) {
+      l.forEach(function (t) {
         for (var n = -1; n <= 1; n++)
           for (var o = -1; o <= 1; o++) {
             var r = t[0] + o;
@@ -426,7 +426,7 @@
     var M = [];
     for (n = 1; n < 29; n++)
       for (t = 1; t < 39; t++)
-        k[a[n][t]] && ("#" === e(t, n + 1) ? M.push([t, n, "_"]) : "#" === e(t, n - 1) ? M.push([t, n, "^"]) : "#" !== e(t - 1, n) && "#" !== e(t + 1, n) || M.push([t, n, "|"]));
+        k[a[n][t]] && ("#" === d(t, n + 1) ? M.push([t, n, "_"]) : "#" === d(t, n - 1) ? M.push([t, n, "^"]) : "#" !== d(t - 1, n) && "#" !== d(t + 1, n) || M.push([t, n, "|"]));
     M.forEach(function (t) {
       a[t[1]][t[0]] = t[2];
     });
@@ -434,7 +434,7 @@
     function G(t, n) {
       for (var a = -1; a <= 1; a++)
         for (var o = -1; o <= 1; o++)
-          if (v[e(t + o, n + a)]) {
+          if (v[d(t + o, n + a)]) {
             return !0;
           }
       return !1;
@@ -449,13 +449,13 @@
         var c = r.pop();
         o++;
         for (var T = [[c[0] + 1, c[1]], [c[0] - 1, c[1]], [c[0], c[1] + 1], [c[0], c[1] - 1]], i = 0; i < 4; i++) {
-          var e = T[i][0];
-          var d = T[i][1];
-          if (_(e, d) && Q[a[d][e]]) {
-            var u = 40 * d + e;
+          var d = T[i][0];
+          var e = T[i][1];
+          if (_(d, e) && Q[a[e][d]]) {
+            var u = 40 * e + d;
             if (!(n[u])) {
               n[u] = 1;
-              r.push([e, d]);
+              r.push([d, e]);
             }
           }
         }
@@ -463,14 +463,14 @@
       return o;
     }
     function N(t, n, o, r) {
-      for (var c = d(o), h = 0, T = r ? C() : 0, _ = 0; _ < 120 * n && h < n; _++) {
+      for (var c = e(o), h = 0, T = r ? C() : 0, _ = 0; _ < 120 * n && h < n; _++) {
         var i = 1 + (38 * c() | 0);
-        var e = 1 + (28 * c() | 0);
-        if ("." === a[e][i] && !(b(i, e) || x(i, e) || r && G(i, e))) {
-          if (a[e][i] = t, r) {
+        var d = 1 + (28 * c() | 0);
+        if ("." === a[d][i] && !(b(i, d) || x(i, d) || r && G(i, d))) {
+          if (a[d][i] = t, r) {
             var u = C();
             if (u !== T - 1) {
-              a[e][i] = ".";
+              a[d][i] = ".";
               continue;
             }
             T = u;
@@ -497,34 +497,34 @@
       var T;
       var _;
       var i;
-      var e = d(12545);
+      var d = e(12545);
       var u = [];
       var g = [];
       for (h = 2; h < 28; h++)
         for (c = 2; c < 38; c++)
           "_" !== a[h][c] && "^" !== a[h][c] && "|" !== a[h][c] || G(c, h) || b(c, h) || x(c, h) || g.push([c, h]);
       for (T = g.length - 1; T > 0; T--) {
-        var s = e() * (T + 1) | 0;
+        var s = d() * (T + 1) | 0;
         var W = g[T];
         g[T] = g[s];
         g[s] = W;
       }
       for (_ = 0; _ < g.length && u.length < 24; _++) {
-        var l = g[_];
-        var w = !0;
+        var w = g[_];
+        var l = !0;
         for (i = 0; i < r.length; i++)
-          if (Math.abs(r[i][0] - l[0]) + Math.abs(r[i][1] - l[1]) < 4) {
-            w = !1;
+          if (Math.abs(r[i][0] - w[0]) + Math.abs(r[i][1] - w[1]) < 4) {
+            l = !1;
             break;
           }
-        if (w) {
+        if (l) {
           for (i = 0; i < u.length; i++)
-            if (Math.abs(u[i][0] - l[0]) + Math.abs(u[i][1] - l[1]) < 4) {
-              w = !1;
+            if (Math.abs(u[i][0] - w[0]) + Math.abs(u[i][1] - w[1]) < 4) {
+              l = !1;
               break;
             }
-          if (w) {
-            u.push(l);
+          if (l) {
+            u.push(w);
           }
         }
       }
@@ -600,19 +600,19 @@
                 var T = n + r;
                 if (_(h, T) && L[a[T][h]] && !b(h, T) && !x(h, T)) {
                   var i;
-                  var e = !1;
+                  var d = !1;
                   for (i = 0; i < D.length; i++)
                     if (D[i].tx === h && D[i].ty === T) {
-                      e = !0;
+                      d = !0;
                       break;
                     }
-                  if (!e) {
+                  if (!d) {
                     for (i = 0; i < S.length; i++)
                       if (S[i].tx === h && S[i].ty === T) {
-                        e = !0;
+                        d = !0;
                         break;
                       }
-                    if (!e) {
+                    if (!d) {
                       return [h, T];
                     }
                   }
@@ -653,8 +653,8 @@
       return { tx: t[0], ty: t[1], toMap: "bai_da_hang_gio", targetSpawn: { tx: 22 + n, ty: 13 }, label: "Về Bãi Đá" };
     }), spawn: { tx: h[0][0], ty: h[0][1] }, daoBay: _.oDao, ambient: "#070c14" };
   t.MapData.mo_linh_thach = t.MapData.MO_LINH_THACH;
-  var e = [[16, 11], [19, 10], [23, 10], [26, 11], [26, 14], [23, 16], [18, 16], [15, 14]];
-  var d = function () {
+  var d = [[16, 11], [19, 10], [23, 10], [26, 11], [26, 14], [23, 16], [18, 16], [15, 14]];
+  var e = function () {
     var t;
     var n;
     var a = [];
@@ -706,7 +706,7 @@
     r(33, 18, 19, "c");
     o(25, 25, 31, "C");
     r(31, 24, 25, "c");
-    c("K", e);
+    c("K", d);
     c(",", [[5, 20], [9, 25], [14, 21], [24, 20], [31, 22], [35, 18], [7, 12], [12, 10], [29, 14], [32, 11], [22, 26], [16, 27], [5, 6], [12, 5], [28, 6]]);
     c("~", [[6, 22], [10, 18], [13, 24], [24, 18], [29, 20], [34, 23], [8, 27], [16, 19], [30, 13], [36, 10], [12, 12], [5, 17], [27, 26], [20, 25]]);
     c("r", [[7, 19], [11, 22], [14, 18], [27, 20], [32, 24], [5, 26], [34, 17], [12, 7], [28, 5], [22, 18], [17, 25], [7, 10], [29, 11], [35, 7]]);
@@ -745,7 +745,7 @@
       console.error("[PNTT] " + t.id + " không có cửa ở (" + n + "," + a + ") để nối vào tuyến Bát Quái — đường cái đang trỏ sai chỗ.");
     }
   }
-  t.MapData.THACH_PHONG_THUNG_LUNG = { id: "thach_phong_thung_lung", scope: "shared", name: "Thung Lũng", subtitle: "Chân Núi Bát Quái — trận cột đá vôi dẫn lên độc đạo", width: 40, height: 30, legend: { ".": { ground: "stone_floor", block: !1 }, ",": { ground: "pebble", block: !1 }, "~": { ground: "pebble", block: !1 }, d: { ground: "humus_path", block: !1 }, D: { ground: "stone_floor", block: !1 }, S: { ground: "stone_floor", block: !1 }, C: { ground: "cliff", block: !0, flyBlock: !0 }, V: { ground: "cliff2", block: !0, flyBlock: !0 }, c: { ground: "cliff_base", block: !0, flyBlock: !0 }, m: { ground: "cliff_base", block: !0, flyBlock: !0, obj: "mountain_moss" }, g: { ground: "cliff_base", block: !0, flyBlock: !0, obj: "mountain_fern" }, K: { ground: "cliff2", block: !0, flyBlock: !0 }, R: { ground: "stone_floor", block: !0, obj: "rock_big" }, r: { ground: "pebble", block: !1, obj: "rock_small" } }, ground: d, interactables: [{ id: "tran_cot_da_von", tx: 21, ty: 12, r: 50, title: "Trận Cột Đá Vôi", text: "Tám trụ đá bị gió và nước bào mòn thành một vòng gần như bát quái.\nKhoảng trống giữa chúng vừa khít một lối leo lên sườn đông." }, { id: "doc_dao_bat_quai", tx: 36, ty: 3, r: 46, title: "Độc Đạo Lên Bát Quái", text: "Bậc đá xuyên qua cửa hẹp giữa hai vách dựng. Trên cao là Bát Quái\nThạch Phàn; Linh Hổ Trấn Sơn đang trấn giữ con đường cuối cùng." }], props: [], decorations: e.map(function (t, n) {
+  t.MapData.THACH_PHONG_THUNG_LUNG = { id: "thach_phong_thung_lung", scope: "shared", name: "Thung Lũng", subtitle: "Chân Núi Bát Quái — trận cột đá vôi dẫn lên độc đạo", width: 40, height: 30, legend: { ".": { ground: "stone_floor", block: !1 }, ",": { ground: "pebble", block: !1 }, "~": { ground: "pebble", block: !1 }, d: { ground: "humus_path", block: !1 }, D: { ground: "stone_floor", block: !1 }, S: { ground: "stone_floor", block: !1 }, C: { ground: "cliff", block: !0, flyBlock: !0 }, V: { ground: "cliff2", block: !0, flyBlock: !0 }, c: { ground: "cliff_base", block: !0, flyBlock: !0 }, m: { ground: "cliff_base", block: !0, flyBlock: !0, obj: "mountain_moss" }, g: { ground: "cliff_base", block: !0, flyBlock: !0, obj: "mountain_fern" }, K: { ground: "cliff2", block: !0, flyBlock: !0 }, R: { ground: "stone_floor", block: !0, obj: "rock_big" }, r: { ground: "pebble", block: !1, obj: "rock_small" } }, ground: e, interactables: [{ id: "tran_cot_da_von", tx: 21, ty: 12, r: 50, title: "Trận Cột Đá Vôi", text: "Tám trụ đá bị gió và nước bào mòn thành một vòng gần như bát quái.\nKhoảng trống giữa chúng vừa khít một lối leo lên sườn đông." }, { id: "doc_dao_bat_quai", tx: 36, ty: 3, r: 46, title: "Độc Đạo Lên Bát Quái", text: "Bậc đá xuyên qua cửa hẹp giữa hai vách dựng. Trên cao là Bát Quái\nThạch Phàn; Linh Hổ Trấn Sơn đang trấn giữ con đường cuối cùng." }], props: [], decorations: d.map(function (t, n) {
       return { name: "karst_pillar", tx: t[0], ty: t[1], variant: n % 4, block: !0, flyBlock: !0 };
     }), enemies: [{ id: "boss_linh_ho_tran_son", type: "linh_ho_tran_son", tx: 33, ty: 5 }, { id: "bach_ho_tuyet_1", type: "bach_ho_tuyet", tx: 29, ty: 4 }, { id: "bach_ho_tuyet_2", type: "bach_ho_tuyet", tx: 37, ty: 4 }, { id: "bach_ho_tuyet_3", type: "bach_ho_tuyet", tx: 33, ty: 2 }], bossBoards: [{ tx: 5, ty: 27, mapId: "thach_phong_thung_lung" }], critters: [], portals: [{ tx: 1, ty: 27, toMap: "mo_linh_thach", targetSpawn: { tx: 4, ty: 27 }, label: "Về Mỏ Linh Thạch" }, { tx: 38, ty: 2, toMap: "bat_quai_thach_phan", targetSpawn: { tx: 50, ty: 30 }, label: "Bát Quái Thạch Phàn" }], spawn: { tx: 3, ty: 27 }, ambient: "#20292d" };
   t.MapData.thach_phong_thung_lung = t.MapData.THACH_PHONG_THUNG_LUNG;
@@ -763,9 +763,9 @@
     t.MapData.MO_LINH_THACH.portals.push({ tx: n[0], ty: n[1], toMap: "thach_phong_thung_lung", targetSpawn: { tx: 3 + a, ty: 27 }, label: "Thung Lũng" });
   });
   for (var s = null, W = 0; W < t.MapData.THACH_PHONG_THUNG_LUNG.portals.length; W++) {
-    var l = t.MapData.THACH_PHONG_THUNG_LUNG.portals[W];
-    if ("mo_linh_thach" === l.toMap) {
-      s = l;
+    var w = t.MapData.THACH_PHONG_THUNG_LUNG.portals[W];
+    if ("mo_linh_thach" === w.toMap) {
+      s = w;
       break;
     }
   }

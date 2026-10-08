@@ -8,7 +8,7 @@
       r |= e[a.charAt(t)] || 0;
     return r;
   }
-  var o = a.TileMap = { data: null, width: 0, height: 0, pxWidth: 0, pxHeight: 0, blocked: null, flyBlocked: null, flyDrop: null, groundName: null, objects: [], flatObjects: [], props: [], flatProps: [], interactables: [], portals: [], enemySpawns: [], critterSpawns: [] };
+  var o = a.TileMap = { data: null, width: 0, height: 0, pxWidth: 0, pxHeight: 0, blocked: null, flyBlocked: null, flyDrop: null, rao: null, groundName: null, objects: [], flatObjects: [], props: [], flatProps: [], interactables: [], portals: [], enemySpawns: [], critterSpawns: [] };
   var l = { tree_pine: 1, oak_tree: 1 };
   var i = ["forest_tree_round", "forest_tree_lean", "forest_tree_tall"];
   var f = ["forest_bush_dense", "forest_bush_spread", "forest_bush_cardamom"];
@@ -178,7 +178,7 @@
           o.objects.push({ name: w, variant: k, tx: i, ty: f, sortY: (f + 1) * r + (u.sortOffset || 0) });
         }
     }
-    (function () {
+    if (function () {
       var a;
       var r;
       var t;
@@ -191,8 +191,7 @@
               o.groundName[t] = "bridge_v";
             }
           }
-    })();
-    (e.decorations || []).forEach(function (n) {
+    }(), (e.decorations || []).forEach(function (n) {
       if (!(n.tx < 0 || n.ty < 0 || n.tx >= e.width || n.ty >= e.height)) {
         var l = d(n.name, n.tx, n.ty, e);
         l = s(l = c(l, n.tx, n.ty), n.tx, n.ty, e);
@@ -209,13 +208,9 @@
           }
         }
       }
-    });
-    o.interactables = (e.interactables || []).map(function (a) {
+    }), o.interactables = (e.interactables || []).map(function (a) {
       return { id: a.id, x: a.tx * r + r / 2, y: a.ty * r + r / 2, r: a.r || 40, title: a.title, text: a.text };
-    });
-    o.props = [];
-    o.flatProps = [];
-    (e.props || []).forEach(function (t) {
+    }), o.props = [], o.flatProps = [], (e.props || []).forEach(function (t) {
       var n = { id: t.id, type: t.type, name: t.name, art: t.art || null, variant: t.variant, tx: t.tx, ty: t.ty, x: t.tx * r + r / 2, y: (t.ty + 1) * r, r: t.r || 40, block: !!t.block, flat: !!t.flat, targetable: !1 !== t.targetable, herb: !!t.herb, doiCho: !!t.doiCho, seedTask: t.seedTask || null, chopTask: t.chopTask || null, shadow: !!t.shadow, text: t.text || null, cfg: t.cfg, npcSprite: t.npcSprite || null, face: t.face || 0, sortY: (t.ty + 1) * r, hidden: t.seedTask ? !(a.Quest && a.Quest.isSeedMaterialVisible(t.seedTask, t.id)) : t.requireRealm ? !(a.Progress && a.realmIndexById(a.Progress.realmId) >= a.realmIndexById(t.requireRealm)) : !!(t.herb && a.Progress && a.Progress.isHarvested(t.id)) };
       if (n.block && !n.hidden) {
         o.blocked[t.ty * e.width + t.tx] = 1;
@@ -229,13 +224,9 @@
       else {
         o.props.push(n);
       }
-    });
-    o.linhChiDay = null;
-    o.applyLinhChi();
-    o.enemySpawns = (e.enemies || []).map(function (t) {
+    }), o.linhChiDay = null, o.applyLinhChi(), o.enemySpawns = (e.enemies || []).map(function (t) {
       return { id: t.id, type: t.type, huyetSac: !!e.huyetSac, noRespawn: "party" === e.scope, requireStage: t.requireStage || 0, dungGiaiDoan: !!t.dungGiaiDoan, thuongDoi: !!t.thuongDoi, stoneRate: t.stoneRate, stoneChance: t.stoneRate && a.Loot ? a.Loot.rateOf("ENEMY_STONE", t.stoneRate, a) : e.stoneRate && a.Loot ? a.Loot.rateOf("MAP_STONE", e.stoneRate, a) : void 0, x: t.tx * r + r / 2, y: (t.ty + 1) * r };
-    });
-    o.enemySpawns = function (t, e) {
+    }), o.enemySpawns = function (t, e) {
       if (v[t.id]) {
         return e;
       }
@@ -260,24 +251,9 @@
         }
       });
       return l;
-    }(e, o.enemySpawns);
-    o.critterSpawns = (e.critters || []).map(function (a) {
+    }(e, o.enemySpawns), o.critterSpawns = (e.critters || []).map(function (a) {
       return { id: a.id, type: a.type, x: a.tx * r + r / 2, y: (a.ty + 1) * r };
-    });
-    o.portals = e.portals || [];
-    o.warps = e.warps || [];
-    o.decals = !1 !== e.decals;
-    if (a.HuThienArt && a.HuThienArt.doiVat) {
-      a.HuThienArt.doiVat(o);
-    }
-    if (a.ThungLungArt && a.ThungLungArt.doiVat) {
-      a.ThungLungArt.doiVat(o);
-    }
-    if (a.VeTay && a.VeTay.doiVat) {
-      a.VeTay.doiVat(o);
-    }
-    o.banks = !1 !== e.banks;
-    (function () {
+    }), o.portals = e.portals || [], o.warps = e.warps || [], o.decals = !1 !== e.decals, a.HuThienArt && a.HuThienArt.doiVat && a.HuThienArt.doiVat(o), a.ThungLungArt && a.ThungLungArt.doiVat && a.ThungLungArt.doiVat(o), a.VeTay && a.VeTay.doiVat && a.VeTay.doiVat(o), a.TanVienNha && a.TanVienNha.doiVat && a.TanVienNha.doiVat(o), o.banks = !1 !== e.banks, function () {
       var a;
       var r = o.width;
       var t = o.height;
@@ -306,8 +282,29 @@
         l(d, h + 1);
         l(d, h - 1);
       }
-    })();
+    }(), o.rao = null, e.htRao) {
+      var T = e.htRao;
+      var A = [];
+      for (f = T.ty0; f <= T.ty1; f++)
+        for (i = T.tx0; i <= T.tx1; i++)
+          i < 0 || f < 0 || i >= e.width || f >= e.height || (h = f * e.width + i, A.push({ i: h, b: o.blocked[h], f: o.flyBlocked[h] }));
+      o.rao = { mo: !1, goc: A };
+      o.datRao(!1);
+    }
     return o;
+  };
+  o.datRao = function (a) {
+    var r = o.rao;
+    if (!r) {
+      return !1;
+    }
+    r.mo = !!a;
+    for (var t = 0; t < r.goc.length; t++) {
+      var e = r.goc[t];
+      o.blocked[e.i] = r.mo ? e.b : 1;
+      o.flyBlocked[e.i] = r.mo ? e.f : 1;
+    }
+    return !0;
   };
   o.checkWarp = function (a, t) {
     if (!o.warps || !o.warps.length) {
@@ -507,168 +504,168 @@
                   if (!(_ && !1 !== a.SanDauArt.draw(e, _, n, l, i, f) || a.VeTay && a.VeTay.veNen(o, e, n, l, i, f, h))) {
                     var m = Math.max(0, Math.floor(n / r));
                     var T = Math.max(0, Math.floor(l / r));
-                    var I = Math.min(o.width - 1, Math.floor((n + i) / r));
-                    var R = Math.min(o.height - 1, Math.floor((l + f) / r));
-                    var H = a.Tileset;
-                    var B = a.Terrace ? a.Terrace.layerFor(o) : null;
-                    var E = !a.TanVienArt || !B && o.data.terrace ? null : a.TanVienArt.layerFor(o);
-                    if (E) {
-                      a.TanVienArt.draw(e, E, n, l, i, f, h);
+                    var C = Math.min(o.width - 1, Math.floor((n + i) / r));
+                    var I = Math.min(o.height - 1, Math.floor((l + f) / r));
+                    var B = a.Tileset;
+                    var H = a.Terrace ? a.Terrace.layerFor(o) : null;
+                    var V = !a.TanVienArt || !H && o.data.terrace ? null : a.TanVienArt.layerFor(o);
+                    if (V) {
+                      a.TanVienArt.draw(e, V, n, l, i, f, h);
                     }
-                    if (!E && a.BaiDaArt && (E = a.BaiDaArt.layerFor(o))) {
-                      a.BaiDaArt.draw(e, E, n, l, i, f, h);
+                    if (!V && a.BaiDaArt && (V = a.BaiDaArt.layerFor(o))) {
+                      a.BaiDaArt.draw(e, V, n, l, i, f, h);
                     }
-                    if (!E && a.RungTrucArt && (E = a.RungTrucArt.layerFor(o))) {
-                      a.RungTrucArt.draw(e, E, n, l, i, f, h);
+                    if (!V && a.RungTrucArt && (V = a.RungTrucArt.layerFor(o))) {
+                      a.RungTrucArt.draw(e, V, n, l, i, f, h);
                     }
-                    if (!E && a.DuocCocArt && (E = a.DuocCocArt.layerFor(o))) {
-                      a.DuocCocArt.draw(e, E, n, l, i, f, h);
+                    if (!V && a.DuocCocArt && (V = a.DuocCocArt.layerFor(o))) {
+                      a.DuocCocArt.draw(e, V, n, l, i, f, h);
                     }
-                    if (!E && a.MieuHoangArt && (E = a.MieuHoangArt.layerFor(o))) {
-                      a.MieuHoangArt.draw(e, E, n, l, i, f, h);
+                    if (!V && a.MieuHoangArt && (V = a.MieuHoangArt.layerFor(o))) {
+                      a.MieuHoangArt.draw(e, V, n, l, i, f, h);
                     }
-                    if (!E && a.LongUyenArt && B && (E = a.LongUyenArt.layerFor(o))) {
-                      a.LongUyenArt.draw(e, E, n, l, i, f, h);
+                    if (!V && a.LongUyenArt && H && (V = a.LongUyenArt.layerFor(o))) {
+                      a.LongUyenArt.draw(e, V, n, l, i, f, h);
                     }
-                    if (!E && a.ThungLungArt && B && (E = a.ThungLungArt.layerFor(o))) {
-                      a.ThungLungArt.draw(e, E, n, l, i, f);
+                    if (!V && a.ThungLungArt && H && (V = a.ThungLungArt.layerFor(o))) {
+                      a.ThungLungArt.draw(e, V, n, l, i, f);
                     }
-                    for (var U = T; U <= R; U++)
-                      for (var V = m; V <= I; V++)
-                        if (!B || !a.Terrace.isMountain(B, V, U)) {
-                          var q = o.groundName[U * o.width + V];
-                          var G = V * r - n;
-                          var W = U * r - l;
-                          if ((!E || b(q)) && (F && L(q) || H.draw(e, "cliff_base" === q ? H.edgeName("cliff_base", V) : q, G, W, h), !b(q) || ("bridge" === q ? (b(y(V, U - 1)) || H.draw(e, "rail_n", G, W, 0), b(y(V, U + 1)) || H.draw(e, "rail_s", G, W, 0)) : (b(y(V - 1, U)) || H.draw(e, "rail_w", G, W, 0), b(y(V + 1, U)) || H.draw(e, "rail_e", G, W, 0)), !E))) {
+                    for (var E = T; E <= I; E++)
+                      for (var U = m; U <= C; U++)
+                        if (!H || !a.Terrace.isMountain(H, U, E)) {
+                          var q = o.groundName[E * o.width + U];
+                          var G = U * r - n;
+                          var W = E * r - l;
+                          if ((!V || b(q)) && (F && R(q) || B.draw(e, "cliff_base" === q ? B.edgeName("cliff_base", U) : q, G, W, h), !b(q) || ("bridge" === q ? (b(y(U, E - 1)) || B.draw(e, "rail_n", G, W, 0), b(y(U, E + 1)) || B.draw(e, "rail_s", G, W, 0)) : (b(y(U - 1, E)) || B.draw(e, "rail_w", G, W, 0), b(y(U + 1, E)) || B.draw(e, "rail_e", G, W, 0)), !V))) {
                             if (!d && x(q)) {
-                              var Y = w(V, U - 1);
-                              var Q = w(V, U + 1);
-                              var X = w(V - 1, U);
-                              var K = w(V + 1, U);
+                              var Y = w(U, E - 1);
+                              var Q = w(U, E + 1);
+                              var X = w(U - 1, E);
+                              var K = w(U + 1, E);
                               if (Y) {
-                                H.draw(e, H.edgeName("edge_t", V), G, W, 0);
+                                B.draw(e, B.edgeName("edge_t", U), G, W, 0);
                               }
                               if (Q) {
-                                H.draw(e, H.edgeName("edge_b", V), G, W, 0);
+                                B.draw(e, B.edgeName("edge_b", U), G, W, 0);
                               }
                               if (X) {
-                                H.draw(e, H.edgeName("edge_l", U), G, W, 0);
+                                B.draw(e, B.edgeName("edge_l", E), G, W, 0);
                               }
                               if (K) {
-                                H.draw(e, H.edgeName("edge_r", U), G, W, 0);
+                                B.draw(e, B.edgeName("edge_r", E), G, W, 0);
                               }
                               if (Y && X) {
-                                H.draw(e, "edge_ctl", G, W, 0);
+                                B.draw(e, "edge_ctl", G, W, 0);
                               }
                               if (Y && K) {
-                                H.draw(e, "edge_ctr", G, W, 0);
+                                B.draw(e, "edge_ctr", G, W, 0);
                               }
                               if (Q && X) {
-                                H.draw(e, "edge_cbl", G, W, 0);
+                                B.draw(e, "edge_cbl", G, W, 0);
                               }
                               if (Q && K) {
-                                H.draw(e, "edge_cbr", G, W, 0);
+                                B.draw(e, "edge_cbr", G, W, 0);
                               }
-                              if (!(Y || X || !w(V - 1, U - 1))) {
-                                H.draw(e, "corner_tl", G, W, 0);
+                              if (!(Y || X || !w(U - 1, E - 1))) {
+                                B.draw(e, "corner_tl", G, W, 0);
                               }
-                              if (!(Y || K || !w(V + 1, U - 1))) {
-                                H.draw(e, "corner_tr", G, W, 0);
+                              if (!(Y || K || !w(U + 1, E - 1))) {
+                                B.draw(e, "corner_tr", G, W, 0);
                               }
-                              if (!(Q || X || !w(V - 1, U + 1))) {
-                                H.draw(e, "corner_bl", G, W, 0);
+                              if (!(Q || X || !w(U - 1, E + 1))) {
+                                B.draw(e, "corner_bl", G, W, 0);
                               }
-                              if (!(Q || K || !w(V + 1, U + 1))) {
-                                H.draw(e, "corner_br", G, W, 0);
+                              if (!(Q || K || !w(U + 1, E + 1))) {
+                                B.draw(e, "corner_br", G, W, 0);
                               }
                             }
                             if ("water" === q) {
-                              var z = !M(V, U - 1);
-                              var J = !M(V, U + 1);
-                              var Z = !M(V - 1, U);
-                              var $ = !M(V + 1, U);
+                              var z = !M(U, E - 1);
+                              var J = !M(U, E + 1);
+                              var Z = !M(U - 1, E);
+                              var $ = !M(U + 1, E);
                               if (z) {
-                                H.draw(e, H.edgeName("shore_t", V), G, W, 0);
+                                B.draw(e, B.edgeName("shore_t", U), G, W, 0);
                               }
                               if (J) {
-                                H.draw(e, H.edgeName("shore_b", V), G, W, 0);
+                                B.draw(e, B.edgeName("shore_b", U), G, W, 0);
                               }
                               if (Z) {
-                                H.draw(e, H.edgeName("shore_l", U), G, W, 0);
+                                B.draw(e, B.edgeName("shore_l", E), G, W, 0);
                               }
                               if ($) {
-                                H.draw(e, H.edgeName("shore_r", U), G, W, 0);
+                                B.draw(e, B.edgeName("shore_r", E), G, W, 0);
                               }
-                              if (!(z || Z || M(V - 1, U - 1))) {
-                                H.draw(e, "shore_dtl", G, W, 0);
+                              if (!(z || Z || M(U - 1, E - 1))) {
+                                B.draw(e, "shore_dtl", G, W, 0);
                               }
-                              if (!(z || $ || M(V + 1, U - 1))) {
-                                H.draw(e, "shore_dtr", G, W, 0);
+                              if (!(z || $ || M(U + 1, E - 1))) {
+                                B.draw(e, "shore_dtr", G, W, 0);
                               }
-                              if (!(J || Z || M(V - 1, U + 1))) {
-                                H.draw(e, "shore_dbl", G, W, 0);
+                              if (!(J || Z || M(U - 1, E + 1))) {
+                                B.draw(e, "shore_dbl", G, W, 0);
                               }
-                              if (!(J || $ || M(V + 1, U + 1))) {
-                                H.draw(e, "shore_dbr", G, W, 0);
+                              if (!(J || $ || M(U + 1, E + 1))) {
+                                B.draw(e, "shore_dbr", G, W, 0);
                               }
                               if (z) {
-                                H.draw(e, H.edgeName("wshade_t", V), G, W, 0);
+                                B.draw(e, B.edgeName("wshade_t", U), G, W, 0);
                               }
                               else {
-                                if (M(V - 1, U) && !M(V - 1, U - 1)) {
-                                  H.draw(e, "wshade_capl", G, W, 0);
+                                if (M(U - 1, E) && !M(U - 1, E - 1)) {
+                                  B.draw(e, "wshade_capl", G, W, 0);
                                 }
-                                if (M(V + 1, U) && !M(V + 1, U - 1)) {
-                                  H.draw(e, "wshade_capr", G, W, 0);
+                                if (M(U + 1, E) && !M(U + 1, E - 1)) {
+                                  B.draw(e, "wshade_capr", G, W, 0);
                                 }
                               }
                               if (Z) {
-                                H.draw(e, H.edgeName("wshade_l", U), G, W, 0);
+                                B.draw(e, B.edgeName("wshade_l", E), G, W, 0);
                               }
                               if ($) {
-                                H.draw(e, H.edgeName("wshade_r", U), G, W, 0);
+                                B.draw(e, B.edgeName("wshade_r", E), G, W, 0);
                               }
                             }
                             else if (k(q)) {
-                              var aa = M(V, U - 1);
-                              var ra = M(V, U + 1);
-                              var ta = M(V - 1, U);
-                              var ea = M(V + 1, U);
+                              var aa = M(U, E - 1);
+                              var ra = M(U, E + 1);
+                              var ta = M(U - 1, E);
+                              var ea = M(U + 1, E);
                               if (aa) {
-                                H.draw(e, H.edgeName("bank_t", V), G, W, 0);
+                                B.draw(e, B.edgeName("bank_t", U), G, W, 0);
                               }
                               if (ra) {
-                                H.draw(e, H.edgeName("bank_b", V), G, W, 0);
+                                B.draw(e, B.edgeName("bank_b", U), G, W, 0);
                               }
                               if (ta) {
-                                H.draw(e, H.edgeName("bank_l", U), G, W, 0);
+                                B.draw(e, B.edgeName("bank_l", E), G, W, 0);
                               }
                               if (ea) {
-                                H.draw(e, H.edgeName("bank_r", U), G, W, 0);
+                                B.draw(e, B.edgeName("bank_r", E), G, W, 0);
                               }
-                              if (!(aa || ta || !M(V - 1, U - 1))) {
-                                H.draw(e, "bank_dtl", G, W, 0);
+                              if (!(aa || ta || !M(U - 1, E - 1))) {
+                                B.draw(e, "bank_dtl", G, W, 0);
                               }
-                              if (!(aa || ea || !M(V + 1, U - 1))) {
-                                H.draw(e, "bank_dtr", G, W, 0);
+                              if (!(aa || ea || !M(U + 1, E - 1))) {
+                                B.draw(e, "bank_dtr", G, W, 0);
                               }
-                              if (!(ra || ta || !M(V - 1, U + 1))) {
-                                H.draw(e, "bank_dbl", G, W, 0);
+                              if (!(ra || ta || !M(U - 1, E + 1))) {
+                                B.draw(e, "bank_dbl", G, W, 0);
                               }
-                              if (!(ra || ea || !M(V + 1, U + 1))) {
-                                H.draw(e, "bank_dbr", G, W, 0);
+                              if (!(ra || ea || !M(U + 1, E + 1))) {
+                                B.draw(e, "bank_dbr", G, W, 0);
                               }
                             }
                             if (!d && A(q)) {
-                              var na = t.hash2(3 * V + 11, 7 * U + 5);
+                              var na = t.hash2(3 * U + 11, 7 * E + 5);
                               if (na % 1e3 / 1e3 < .34) {
-                                H.draw(e, P[(na >>> 10) % P.length], G, W, 0);
+                                B.draw(e, P[(na >>> 10) % P.length], G, W, 0);
                               }
                             }
                           }
                         }
-                    if (B) {
-                      a.Terrace.draw(e, B, n, l, i, f);
+                    if (H) {
+                      a.Terrace.draw(e, H, n, l, i, f);
                     }
                     var oa = a.Chasm ? a.Chasm.layerFor(o) : null;
                     if (oa) {
@@ -697,15 +694,15 @@
         for (var d = Math.max(0, Math.floor(e / r)), c = Math.max(0, Math.floor(n / r)), u = Math.min(o.width - 1, Math.floor((e + l) / r)), s = Math.min(o.height - 1, Math.floor((n + i) / r)), p = c; p <= s; p++)
           for (var v = d; v <= u; v++) {
             var g = o.groundName[p * o.width + v];
-            if (L(g)) {
+            if (R(g)) {
               h.draw(t, g, v * r - e, p * r - n, f);
             }
           }
-        var _ = C * r;
+        var _ = j * r;
         var y = Math.max(0, Math.floor(e / _));
         var b = Math.max(0, Math.floor(n / _));
-        var m = Math.min(Math.ceil(o.width / C) - 1, Math.floor((e + l) / _));
-        var w = Math.min(Math.ceil(o.height / C) - 1, Math.floor((n + i) / _));
+        var m = Math.min(Math.ceil(o.width / j) - 1, Math.floor((e + l) / _));
+        var w = Math.min(Math.ceil(o.height / j) - 1, Math.floor((n + i) / _));
         var x = ++S.clock;
         var M = t.imageSmoothingEnabled;
         t.imageSmoothingEnabled = !1;
@@ -714,7 +711,7 @@
             var A = T + "," + k;
             var P = S.chunks[A];
             if (!(P)) {
-              P = S.chunks[A] = j(T, k);
+              P = S.chunks[A] = L(T, k);
               S.count++;
             }
             P.used = x;
@@ -738,12 +735,12 @@
   var F = !1;
   var S = { ground: null, atlas: null, chunks: {}, count: 0, clock: 0 };
   var D = 36;
-  function L(r) {
+  function R(r) {
     var t = a.Tileset.index[r];
     return !!(t && t.frames > 1);
   }
-  function j(a, e) {
-    var n = C * r;
+  function L(a, e) {
+    var n = j * r;
     var l = t.canvas(n, n);
     l.ctx.imageSmoothingEnabled = !1;
     F = !0;
@@ -755,23 +752,23 @@
     }
     return { canvas: l.canvas, used: 0 };
   }
-  var C = 8;
-  var I = { ground: null, atlas: null, gfx: 0, chunks: {}, count: 0, clock: 0 };
-  function R(a, e, n) {
-    var l = C * r;
+  var j = 8;
+  var C = { ground: null, atlas: null, gfx: 0, chunks: {}, count: 0, clock: 0 };
+  function I(a, e, n) {
+    var l = j * r;
     var i = t.canvas(l * n, l * n);
     i.ctx.setTransform(n, 0, 0, n, 0, 0);
     i.ctx.imageSmoothingEnabled = !1;
     o.drawGround(i.ctx, a * l, e * l, l - 1, l - 1, 0, !0);
     return { canvas: i.canvas, used: 0 };
   }
-  function H(a, r) {
+  function B(a, r) {
     return a && r && a.toMap === r.toMap && !!a.byHand == !!r.byHand && (a.label || a.hintLabel || "") === (r.label || r.hintLabel || "");
   }
-  function B(a, r) {
+  function H(a, r) {
     return a.tx >= r.minTx - 1 && a.tx <= r.maxTx + 1 && a.ty >= r.minTy - 1 && a.ty <= r.maxTy + 1;
   }
-  function E(a, r, t, e) {
+  function V(a, r, t, e) {
     var n = e ? 1 : -1;
     a.save();
     a.translate(Math.round(r), Math.round(t));
@@ -794,38 +791,38 @@
   o.drawGroundBaked = function (t, e, n, l, i, f) {
     var h = a.Tileset;
     f = Math.max(1, 0 | f);
-    if (!(I.ground === o.groundName && I.atlas === h.atlas && I.gfx === f)) {
-      I.ground = o.groundName;
-      I.atlas = h.atlas;
-      I.gfx = f;
-      I.chunks = {};
-      I.count = 0;
+    if (!(C.ground === o.groundName && C.atlas === h.atlas && C.gfx === f)) {
+      C.ground = o.groundName;
+      C.atlas = h.atlas;
+      C.gfx = f;
+      C.chunks = {};
+      C.count = 0;
     }
-    for (var d = C * r, c = Math.max(0, Math.floor(e / d)), u = Math.max(0, Math.floor(n / d)), s = Math.min(Math.ceil(o.width / C) - 1, Math.floor((e + l) / d)), p = Math.min(Math.ceil(o.height / C) - 1, Math.floor((n + i) / d)), v = ++I.clock, g = u; g <= p; g++)
+    for (var d = j * r, c = Math.max(0, Math.floor(e / d)), u = Math.max(0, Math.floor(n / d)), s = Math.min(Math.ceil(o.width / j) - 1, Math.floor((e + l) / d)), p = Math.min(Math.ceil(o.height / j) - 1, Math.floor((n + i) / d)), v = ++C.clock, g = u; g <= p; g++)
       for (var _ = c; _ <= s; _++) {
         var y = _ + "," + g;
-        var b = I.chunks[y];
+        var b = C.chunks[y];
         if (!(b)) {
-          b = I.chunks[y] = R(_, g, f);
-          I.count++;
+          b = C.chunks[y] = I(_, g, f);
+          C.count++;
         }
         b.used = v;
         t.drawImage(b.canvas, 0, 0, b.canvas.width, b.canvas.height, _ * d - e, g * d - n, d, d);
       }
-    for (; I.count > 36;) {
+    for (; C.count > 36;) {
       var m = null;
       var w = v;
-      for (var x in I.chunks)
-        I.chunks[x].used < w && (w = I.chunks[x].used, m = x);
+      for (var x in C.chunks)
+        C.chunks[x].used < w && (w = C.chunks[x].used, m = x);
       if (!m) {
         break;
       }
-      delete I.chunks[m];
-      I.count--;
+      delete C.chunks[m];
+      C.count--;
     }
   };
-  var U = { src: null, list: null };
-  function V(r, e, n, o, l) {
+  var E = { src: null, list: null };
+  function U(r, e, n, o, l) {
     if ("function" != typeof a.drawItemIcon) {
       return !1;
     }
@@ -851,8 +848,8 @@
     var c = a.Pixel;
     if ((h.length || d.length) && c && c.text && c.textWidth) {
       for (var u = "700 12px " + c.MAP_FONT, s = f || 0, p = function (a) {
-        if (U.src === a && U.n === a.length) {
-          return U.list;
+        if (E.src === a && E.n === a.length) {
+          return E.list;
         }
         for (var r = [], t = [], e = 0; e < a.length; e++)
           if (!r[e] && a[e] && null != a[e].tx && null != a[e].ty) {
@@ -862,13 +859,13 @@
             for (var l = !0; l;) {
               l = !1;
               for (var i = 0; i < a.length; i++)
-                !r[i] && H(n, a[i]) && B(a[i], o) && (r[i] = !0, o.portals.push(a[i]), o.minTx = Math.min(o.minTx, a[i].tx), o.maxTx = Math.max(o.maxTx, a[i].tx), o.minTy = Math.min(o.minTy, a[i].ty), o.maxTy = Math.max(o.maxTy, a[i].ty), l = !0);
+                !r[i] && B(n, a[i]) && H(a[i], o) && (r[i] = !0, o.portals.push(a[i]), o.minTx = Math.min(o.minTx, a[i].tx), o.maxTx = Math.max(o.maxTx, a[i].tx), o.minTy = Math.min(o.minTy, a[i].ty), o.maxTy = Math.max(o.maxTy, a[i].ty), l = !0);
             }
             t.push({ first: n, gate: o, i: e });
           }
-        U.src = a;
-        U.n = a.length;
-        U.list = t;
+        E.src = a;
+        E.n = a.length;
+        E.list = t;
         return t;
       }(h), v = 0; v < p.length; v++) {
         var g = p[v].first;
@@ -901,22 +898,22 @@
           }
           c.text(t, S + 2, O + 2, P, "#1b120b", !1, u, "center");
           c.text(t, S, O, P, "#fff0b2", !0, u, "center");
-          E(t, S, N, T);
+          V(t, S, N, T);
         }
       }
       for (var D = 0; D < d.length; D++) {
-        var L = d[D];
-        if (L && null != L.tx && null != L.ty && L.text) {
-          var j = (L.tx + .5) * r - e;
-          var C = (L.ty + 1) * r - n + (void 0 === L.dy ? -8 : L.dy);
-          var I = L.font || "700 12px " + c.MAP_FONT;
-          var R = L.color || "#f0d27a";
-          var V = L.outline || "#000000";
-          var q = c.textWidth(L.text, I) + 8;
-          if (!(j < -q || j > l + q || C < -24 || C > i + 24)) {
-            var G = Math.max(q / 2 + 4, Math.min(l - q / 2 - 4, j));
-            c.text(t, G + 2, C + 2, L.text, V, !1, I, "center");
-            c.text(t, G, C, L.text, R, !0, I, "center");
+        var R = d[D];
+        if (R && null != R.tx && null != R.ty && R.text) {
+          var L = (R.tx + .5) * r - e;
+          var j = (R.ty + 1) * r - n + (void 0 === R.dy ? -8 : R.dy);
+          var C = R.font || "700 12px " + c.MAP_FONT;
+          var I = R.color || "#f0d27a";
+          var U = R.outline || "#000000";
+          var q = c.textWidth(R.text, C) + 8;
+          if (!(L < -q || L > l + q || j < -24 || j > i + 24)) {
+            var G = Math.max(q / 2 + 4, Math.min(l - q / 2 - 4, L));
+            c.text(t, G + 2, j + 2, R.text, U, !1, C, "center");
+            c.text(t, G, j, R.text, I, !0, C, "center");
           }
         }
       }
@@ -949,7 +946,7 @@
     return i;
   };
   o.drawObject = function (t, e, n, l, i) {
-    if ("dia_linh_qua" !== e.name || !V(t, "dia_linh_qua", e.tx * r + r / 2 - n, (e.ty + 1) * r - l, 36)) {
+    if ("dia_linh_qua" !== e.name || !U(t, "dia_linh_qua", e.tx * r + r / 2 - n, (e.ty + 1) * r - l, 36)) {
       var f = a.ObjectArt.defs[e.name];
       var h = e.variant;
       if (f && f.animated) {
@@ -1181,15 +1178,15 @@
       }
       var S = "herb" === e.type ? "herb_tay_ue" : "dia_linh_qua" === e.type ? "dia_linh_qua" : "ling_chi_prop" === e.type ? "fungus_tu_van" : null;
       var D = S && "function" == typeof a.drawItemIcon;
-      var L = D ? null : a.ObjectArt.get(e.art || e.type, O);
-      if (L && e.shadow && N() > 0) {
-        var j = a.ObjectArt.shadowOf(e.art || e.type);
-        if (j) {
-          a.Pixel.ellipse(r, f, h - 1, j.rx, j.ry, a.Palette.WORLD.shadow, null);
+      var R = D ? null : a.ObjectArt.get(e.art || e.type, O);
+      if (R && e.shadow && N() > 0) {
+        var L = a.ObjectArt.shadowOf(e.art || e.type);
+        if (L) {
+          a.Pixel.ellipse(r, f, h - 1, L.rx, L.ry, a.Palette.WORLD.shadow, null);
         }
       }
-      var C = L && q[e.type];
-      if (C && function (r, e, n, o, l, i, f) {
+      var j = R && q[e.type];
+      if (j && function (r, e, n, o, l, i, f) {
         var h = a.Pixel;
         var d = .5 + .5 * Math.sin(2 * i + .9 * n.tx + .5 * n.ty);
         var c = l - .45 * f;
@@ -1199,20 +1196,20 @@
         h.ellipse(r, o, c + 3, Math.round(12 * e.k), Math.round(.42 * f), t.alpha(e.c, (.16 + .1 * d) * e.s), null);
         h.ellipse(r, o, l - 1, Math.round(18 * e.k), Math.round(5 * e.k), t.alpha(e.c, Math.min(1, (.3 + .15 * d) * e.s)), t.alpha(e.hot, Math.min(1, (.35 + .2 * d) * e.s)));
         r.restore();
-      }(r, C, e, f, h, l || 0, L.ay), D) {
-        var I = "dia_linh_qua" === e.type ? 36 : "ling_chi_prop" === e.type ? 30 : 32;
-        V(r, S, f, h, I);
-        i = h - I - 8;
+      }(r, j, e, f, h, l || 0, R.ay), D) {
+        var C = "dia_linh_qua" === e.type ? 36 : "ling_chi_prop" === e.type ? 30 : 32;
+        U(r, S, f, h, C);
+        i = h - C - 8;
       }
       else {
-        if (L) {
-          if (L.density > 1) {
-            r.drawImage(L.canvas, f - L.ax | 0, h - L.ay | 0, L.w, L.h);
+        if (R) {
+          if (R.density > 1) {
+            r.drawImage(R.canvas, f - R.ax | 0, h - R.ay | 0, R.w, R.h);
           }
           else {
-            r.drawImage(L.canvas, f - L.ax | 0, h - L.ay | 0);
+            r.drawImage(R.canvas, f - R.ax | 0, h - R.ay | 0);
           }
-          i = h - L.ay - 8;
+          i = h - R.ay - 8;
         }
         else {
           i = h - 30;
@@ -1242,17 +1239,17 @@
               var F = Math.sin(O * Math.PI);
               var S = Math.sin(u + 2.3 * P + 4.2 * O) * (2 + .5 * P);
               var D = Math.round(n + S + 3 * (P - (k - 1) / 2));
-              var L = Math.round(p - O * T);
-              h.r(r, D - 1, L - 1, 3, 3, t.alpha(m, F * (i ? .4 : .3)));
-              h.r(r, D, L, 1, 2, t.alpha(w, F * (i ? .95 : .78)));
+              var R = Math.round(p - O * T);
+              h.r(r, D - 1, R - 1, 3, 3, t.alpha(m, F * (i ? .4 : .3)));
+              h.r(r, D, R, 1, 2, t.alpha(w, F * (i ? .95 : .78)));
               if (O > .45) {
-                h.dot(r, D, L + 3, t.alpha(x, .46 * F));
+                h.dot(r, D, R + 3, t.alpha(x, .46 * F));
               }
             }
           }
         })(r, e, f, h, l || 0, T, i + 8);
       }
-      if (C) {
+      if (j) {
         (function (r, e, n, o, l, i, f) {
           if (0 !== N()) {
             var h = a.Pixel;
@@ -1280,7 +1277,7 @@
             }
             r.restore();
           }
-        })(r, C, e, f, h, l || 0, L.ay);
+        })(r, j, e, f, h, l || 0, R.ay);
       }
       if ("herb_plot" === e.type && a.Farm) {
         (function (r, e, n, o, l) {
@@ -1321,8 +1318,8 @@
         })(r, e, f, h);
       }
     }
-    var R = a.Quest ? a.Quest.markerFor(e.id, e) : null;
-    if (R) {
+    var I = a.Quest ? a.Quest.markerFor(e.id, e) : null;
+    if (I) {
       (function (r, e, n, o) {
         var l = a.Pixel;
         var i = "#f0d27a";
@@ -1339,7 +1336,7 @@
           l.blk(r, e, n - 2, 3, 3, i, f);
           l.blk(r, e, n + 3, 2, 2, i, f);
         }
-      })(r, f, i + d - ("npc" === e.type && e.name ? 21 : 0), R);
+      })(r, f, i + d - ("npc" === e.type && e.name ? 21 : 0), I);
     }
   };
 }(window.PNTT);

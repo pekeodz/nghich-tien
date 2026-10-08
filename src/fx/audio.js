@@ -28,12 +28,12 @@
   function _(n) {
     return Math.max(0, Math.min(1, n));
   }
-  function w() {
+  function m() {
     if (n.Utils) {
       n.Utils.store.set(a, { on: e.on, vol: e.volume, nhac: e.musicOn, hieuUng: e.sfxOn });
     }
   }
-  function m() {
+  function h() {
     var n = e.ctx;
     if (n && e.daMo) {
       if (e.musicUpdate) {
@@ -59,7 +59,7 @@
     if (t) {
       t.gain.value = e.on ? e.volume : 0;
     }
-    m();
+    h();
   }
   e.SKILL_SFX = c;
   e.init = function () {
@@ -97,7 +97,7 @@
         }
         function t() {
           e.daMo = !0;
-          m();
+          h();
           for (var t = 0; t < n.length; t++)
             window.removeEventListener(n[t], a, !0);
         }
@@ -107,7 +107,7 @@
     }
   };
   if ("undefined" != typeof document && document.addEventListener) {
-    document.addEventListener("visibilitychange", m);
+    document.addEventListener("visibilitychange", h);
   }
   e.setVolume = function (n) {
     e.volume = _(n);
@@ -115,26 +115,26 @@
       e.on = !0;
     }
     u();
-    w();
+    m();
   };
   e.setOn = function (n) {
     e.on = !!n;
     u();
-    w();
+    m();
   };
   e.setMusicOn = function (n) {
     e.musicOn = !!n;
     if (e.musicUpdate) {
       e.musicUpdate();
     }
-    w();
+    m();
   };
   e.setSfxOn = function (n) {
     if (e.sfxOn = !!n, !e.sfxOn) {
       for (var a in U)
         e.bed(a, 0);
     }
-    w();
+    m();
   };
   e.toggle = function () {
     e.setOn(!e.on);
@@ -159,7 +159,7 @@
     e.on = n.on;
     e.volume = n.vol;
     u();
-    w();
+    m();
     if (e.on) {
       e.play("ui");
     }
@@ -200,11 +200,11 @@
     }
     return !0;
   };
-  var h = { rung_mang_xa: { sfx: "huyet_rung_ambient", gain: .42 }, mach_dat_dong: { sfx: "huyet_hang_ambient", gain: .4 }, dam_lay_boss: { sfx: "huyet_dam_ambient", gain: .42 } };
+  var w = { rung_mang_xa: { sfx: "huyet_rung_ambient", gain: .42 }, mach_dat_dong: { sfx: "huyet_hang_ambient", gain: .4 }, dam_lay_boss: { sfx: "huyet_dam_ambient", gain: .42 } };
   var p = null;
   var v = 0;
-  var y = { tan_vien: "lang", thanh_truc_lam: "lang", mieu_hoang: "lang", yen_lang_son: "bicanh", lam_lang: "bicanh", hu_thien_1: "bicanh", hu_thien_2: "bicanh", hu_thien_3: "bicanh", hu_thien_4: "bicanh", rung_mang_xa: "bicanh", mach_dat_dong: "bicanh", dam_lay_boss: "bicanh", tam_canh: "bicanh", dai_hoi_dau: "bicanh", san_dau_vip: "bicanh", chien_bang_dai: "bicanh" };
-  var b = { lang: { src: "assets/audio/bgm/tien-tran-thanh-xuan.mp3", gain: .3, off: null }, bicanh: { src: "assets/audio/bgm/tu-tien-luc.mp3", gain: .32, off: null, nhuong: "boss" }, mieu: { src: "assets/audio/bgm/mieu-truong-con.mp3", gain: .4, off: null, lap: !1 }, boss: { src: "assets/audio/bgm/boss-toc-truong.mp3", gain: .34, off: null }, tientruyen: { src: "assets/audio/bgm/pha-hieu-chi-chien.mp3", gain: .34, off: null } };
+  var y = { tan_vien: "lang", thanh_truc_lam: "lang", mieu_hoang: "lang", hang_dong_co: "lang", mo_linh_thach: "lang", thach_phong_thung_lung: "lang", bai_da_hang_gio: "lang", long_uyen: "lang", duoc_vien: "lang", vuon_ca_nhan: "lang", dai_hoi_cho: "phongcho", tmc_cho: "phongcho", u_uynh_vuc: "madao", hac_phong_linh: "madao", hac_thi: "madao", thien_dao_khuyet: "thanhlong", bat_quai_thach_phan: "thanhlong", yen_lang_son: "bicanh", lam_lang: "bicanh", hu_thien_1: "bicanh", hu_thien_2: "bicanh", hu_thien_3: "bicanh", hu_thien_4: "bicanh", rung_mang_xa: "bicanh", mach_dat_dong: "bicanh", dam_lay_boss: "bicanh", tam_canh: "bicanh", dai_hoi_dau: "bicanh", san_dau_vip: "bicanh", chien_bang_dai: "bicanh" };
+  var b = { lang: { src: "assets/audio/bgm/tien-tran-thanh-xuan.mp3", gain: .3, off: null }, bicanh: { src: "assets/audio/bgm/tu-tien-luc.mp3", gain: .32, off: null, nhuong: "boss", ds: ["assets/audio/bgm/tu-tien-luc.mp3", "assets/audio/bgm/son-thuy-hanh-lu.mp3"] }, thanhlong: { src: "assets/audio/bgm/van-cung-thang-thien.mp3", gain: .32, off: null }, madao: { src: "assets/audio/bgm/cam-son-tham-u.mp3", gain: .32, off: null }, phongcho: { src: "assets/audio/bgm/suc-the-dai-phat.mp3", gain: .32, off: null }, mieu: { src: "assets/audio/bgm/mieu-truong-con.mp3", gain: .4, off: null, lap: !1 }, boss: { src: "assets/audio/bgm/boss-toc-truong.mp3", gain: .34, off: null }, tientruyen: { src: "assets/audio/bgm/pha-hieu-chi-chien.mp3", gain: .34, off: null } };
   var q = 1.2;
   function k(n) {
     return !(!n.want || n.xong || n.nhuong && b[n.nhuong].want || !e.on || !e.musicOn || !(e.volume > 0) || !e.daMo || "running" !== e.ctx.state || "undefined" != typeof document && document.hidden);
@@ -218,9 +218,20 @@
         }
         try {
           n.el = new Audio;
-          n.el.loop = !1 !== n.lap;
+          n.el.loop = !1 !== n.lap && !n.ds;
           n.el.onended = function () {
-            n.xong = !0;
+            if (n.ds) {
+              n.i = ((n.i || 0) + 1) % n.ds.length;
+              n.el.src = n.ds[n.i];
+              var a = n.el.play();
+              if (a && a.catch) {
+                a.catch(function () {
+                });
+              }
+            }
+            else {
+              n.xong = !0;
+            }
           };
           n.el.preload = "auto";
           n.el.src = n.src;
@@ -309,8 +320,8 @@
     if (a.lp || a.hp || a.bp) {
       var _ = e.ctx.createBiquadFilter();
       _.type = a.bp ? "bandpass" : a.hp ? "highpass" : "lowpass";
-      var w = (a.bp || a.hp || a.lp) * f;
-      _.frequency.setValueAtTime(w, s);
+      var m = (a.bp || a.hp || a.lp) * f;
+      _.frequency.setValueAtTime(m, s);
       if (a.f1) {
         _.frequency.exponentialRampToValueAtTime(Math.max(20, a.f1 * f), s + r);
       }
@@ -320,10 +331,10 @@
       l.connect(_);
       c = _;
     }
-    var m = e.ctx.createGain();
-    S(m, s, r, a.g * g);
-    c.connect(m);
-    m.connect(t);
+    var h = e.ctx.createGain();
+    S(h, s, r, a.g * g);
+    c.connect(h);
+    h.connect(t);
     o++;
     l.start(s, Math.max(0, d), r + .02);
     l.stop(s + r + .02);
@@ -351,13 +362,16 @@
     var a = y[n];
     e.music("lang", "lang" === a);
     e.music("bicanh", "bicanh" === a);
+    e.music("thanhlong", "thanhlong" === a);
+    e.music("madao", "madao" === a);
+    e.music("phongcho", "phongcho" === a);
     e.music("mieu", "dong_mach_ngam" === n);
     if (null !== p) {
       clearTimeout(p);
       p = null;
     }
     v++;
-    var t = h[n];
+    var t = w[n];
     if (t) {
       var i = v;
       e.play(t.sfx, { gain: t.gain, rate: .94 + .12 * Math.random() });
@@ -432,19 +446,19 @@
         d = _;
       }
       if (i.bp) {
-        var w = e.ctx.createBiquadFilter();
-        w.type = "bandpass";
-        w.frequency.value = i.bp;
-        w.Q.value = i.q || 1;
-        d.connect(w);
-        d = w;
+        var m = e.ctx.createBiquadFilter();
+        m.type = "bandpass";
+        m.frequency.value = i.bp;
+        m.Q.value = i.q || 1;
+        d.connect(m);
+        d = m;
       }
-      var m = e.ctx.createGain();
-      m.gain.value = 1e-4;
-      d.connect(m);
-      m.connect(t);
+      var h = e.ctx.createGain();
+      h.gain.value = 1e-4;
+      d.connect(h);
+      h.connect(t);
       l.start(0, 2 * Math.random());
-      g = U[n] = { src: l, g: m, v: 1e-4 };
+      g = U[n] = { src: l, g: h, v: 1e-4 };
     }
     var u = Math.max(1e-4, Math.min(1, a) * i.v);
     g.g.gain.setValueAtTime(Math.max(1e-4, g.v), o);

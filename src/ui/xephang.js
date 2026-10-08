@@ -155,7 +155,7 @@
       }
       var c = "hasat" === h ? i.haSat || null : "dinh" === h && i.dinh || null;
       if (!("hasat" !== h && "dinh" !== h)) {
-        e.note.textContent = ("hasat" === h ? "Số người tông khác hạ được ở Sỹ Sách Điện. " : "Tổng sát thương lên Sỹ Sách Đỉnh. ") + "Cộng các kỳ trong tuần, chốt 00:00 Thứ Hai" + (c && c.chotLuc ? " (còn " + v(c.chotLuc) + ")." : ".");
+        e.note.textContent = ("hasat" === h ? "Số người tông khác hạ được ở Sỹ Sách Điện. " : "Tổng sát thương lên Sỹ Sách Đỉnh. ") + "Cộng các kỳ trong tuần, chốt 23:00 Thứ Năm" + (c && c.chotLuc ? " (còn " + v(c.chotLuc) + ")." : ".");
       }
       var u = "tong" === h ? i.tongMon : "boss" === h ? t && t.ds : c ? c.ds : i.tuSi;
       u = Array.isArray(u) ? u : [];
@@ -269,12 +269,12 @@
         return a;
       }(r[h], x)), "boss" !== h)
         if ("hasat" !== h && "dinh" !== h) {
-          var H;
           var S;
+          var H;
           var y = "tong" === h ? i.hangTong : i.hangTuSi;
           var M = "tong" === h ? y ? "Tông của bạn: hạng " + y : "Bạn chưa vào tông môn" : y ? "Hạng của bạn: " + y : "Bạn chưa vào bảng";
           if ("tusi" === h && i.capNhat) {
-            M += " · cập nhật " + (H = i.capNhat, (S = Math.max(0, Math.round((Date.now() - H) / 1e3))) < 60 ? "vừa xong" : S < 3600 ? Math.round(S / 60) + " phút trước" : Math.round(S / 3600) + " giờ trước");
+            M += " · cập nhật " + (S = i.capNhat, (H = Math.max(0, Math.round((Date.now() - S) / 1e3))) < 60 ? "vừa xong" : H < 3600 ? Math.round(H / 60) + " phút trước" : Math.round(H / 3600) + " giờ trước");
           }
           e.chan.textContent = M;
         }

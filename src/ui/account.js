@@ -2,9 +2,19 @@
   "use strict";
   var e = null;
   var n = null;
-  function o(t) {
+  function o(e) {
     if (n) {
-      n.classList.toggle("hidden", !t);
+      n.classList.toggle("hidden", !e);
+    }
+    var o;
+    var c;
+    var i = document.getElementById("account-login-name");
+    if (i) {
+      var a = !(!e || t.Auth && t.Auth.localFixture || !t.Auth.username);
+      i.classList.toggle("hidden", !a);
+      if (a) {
+        i.textContent = "Tên đăng nhập: " + (2 !== (c = (o = String(t.Auth && t.Auth.username || "")).split("@")).length ? o : (c[0].length < 3 ? c[0].charAt(0) : c[0].slice(0, 2)) + "***@" + c[1]);
+      }
     }
   }
   var c = {};

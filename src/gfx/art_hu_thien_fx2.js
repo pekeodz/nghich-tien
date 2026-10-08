@@ -1,26 +1,28 @@
 !function (a) {
   "use strict";
   var t = a.HuThienArt;
-  var f = t.kit;
-  var o = t.fx;
-  var h = o._util;
-  var i = 32;
-  var r = 2 * Math.PI;
-  var n = f.h01;
-  var e = (f.clamp01, h.glow);
-  var l = h.glowE;
-  var s = h.diem;
-  var M = h.chop;
-  var v = h.tt;
-  var c = h.pha;
-  var g = h.veShaft;
-  var b = h.trong;
-  var d = h.state;
-  function u(a, t, f, o, h, i, r, e, l, s, M) {
-    for (var v = [[t, f]], c = o - t, g = h - f, b = Math.sqrt(c * c + g * g) + .001, d = -g / b, u = c / b, y = 1; y < r; y++) {
-      var p = y / r;
-      var x = 2 * (n(i, y, 3301) - .5) * e * Math.sin(p * Math.PI);
-      v.push([t + c * p + d * x, f + g * p + u * x]);
+  var o = t.kit;
+  var f = t.fx;
+  var i = f._util;
+  var r = 32;
+  var h = 2 * Math.PI;
+  var e = o.h01;
+  var l = o.clamp01;
+  var n = i.glow;
+  var s = i.glowE;
+  var M = i.diem;
+  var v = i.chop;
+  var c = i.tt;
+  var g = i.pha;
+  var b = i.veShaft;
+  var d = i.trong;
+  var u = i.state;
+  var p = (i.hexOf, i.rgbCss);
+  function y(a, t, o, f, i, r, h, l, n, s, M) {
+    for (var v = [[t, o]], c = f - t, g = i - o, b = Math.sqrt(c * c + g * g) + .001, d = -g / b, u = c / b, p = 1; p < h; p++) {
+      var y = p / h;
+      var x = 2 * (e(r, p, 3301) - .5) * l * Math.sin(y * Math.PI);
+      v.push([t + c * y + d * x, o + g * y + u * x]);
     }
     function k() {
       a.beginPath();
@@ -29,74 +31,73 @@
         a.lineTo(v[t][0], v[t][1]);
       a.stroke();
     }
-    if (v.push([o, h]), a.lineJoin = "round", a.strokeStyle = l, a.globalAlpha = .28 * s, a.lineWidth = 3.4, k(), a.globalAlpha = .8 * s, a.strokeStyle = l, a.lineWidth = 1.4, k(), a.globalAlpha = s, a.strokeStyle = "#ffffff", a.lineWidth = .7, k(), M) {
-      for (var P = 0; P < M; P++) {
-        var m = 1 + Math.floor(n(i, P, 3302) * (v.length - 2));
-        var S = v[m];
-        var T = Math.atan2(g, c) + 2.2 * (n(i, P, 3303) - .5);
-        var A = 8 + 16 * n(i, P, 3304);
+    if (v.push([f, i]), a.lineJoin = "round", a.strokeStyle = n, a.globalAlpha = .28 * s, a.lineWidth = 3.4, k(), a.globalAlpha = .8 * s, a.strokeStyle = n, a.lineWidth = 1.4, k(), a.globalAlpha = s, a.strokeStyle = "#ffffff", a.lineWidth = .7, k(), M) {
+      for (var m = 0; m < M; m++) {
+        var P = 1 + Math.floor(e(r, m, 3302) * (v.length - 2));
+        var S = v[P];
+        var T = Math.atan2(g, c) + 2.2 * (e(r, m, 3303) - .5);
+        var A = 8 + 16 * e(r, m, 3304);
         a.globalAlpha = .7 * s;
-        a.strokeStyle = l;
+        a.strokeStyle = n;
         a.lineWidth = .8;
         a.beginPath();
         a.moveTo(S[0], S[1]);
-        a.lineTo(S[0] + Math.cos(T) * A * .5 + 4 * (n(i, P, 3305) - .5), S[1] + Math.sin(T) * A * .5);
+        a.lineTo(S[0] + Math.cos(T) * A * .5 + 4 * (e(r, m, 3305) - .5), S[1] + Math.sin(T) * A * .5);
         a.lineTo(S[0] + Math.cos(T) * A, S[1] + Math.sin(T) * A);
         a.stroke();
       }
     }
   }
-  function y(t) {
-    for (var f = a.SceneWorld, o = f && f.enemies || [], h = [], i = 0; i < o.length; i++) {
-      var r = o[i];
-      if (r && !r.dead && r.type === t) {
-        h.push(r);
+  function x(t) {
+    for (var o = a.SceneWorld, f = o && o.enemies || [], i = [], r = 0; r < f.length; r++) {
+      var h = f[r];
+      if (h && !h.dead && h.type === t) {
+        i.push(h);
       }
     }
-    return h;
+    return i;
   }
-  h.hexOf;
-  o.bolt = u;
-  o.ai34 = function (a, t, o, h, n, p, x, k, P, m) {
+  f.bolt = y;
+  f.ai34 = function (a, t, f, i, e, l, p, k, m, P) {
     if (3 === t) {
-      (function (a, t, o, h, n, u, p, x, k) {
-        var P;
-        var m = x >= 2;
-        var S = d();
+      (function (a, t, f, i, e, l, p, y, k) {
+        var m;
+        var P = y >= 2;
+        var S = u();
         var T = t.data;
         var A = T.htDinh || { tx: 24, ty: 17 };
-        var E = (A.tx + .5) * i;
-        var W = (A.ty + .5) * i;
+        var E = (A.tx + .5) * r;
+        var W = (A.ty + .5) * r;
         var I = !!(S && S.dinh && S.dinh.song) || !S;
-        var O = S && S.rut && S.rut[T.id] || [];
-        var _ = k && k.tham ? k.tham.cx : T.width * i / 2;
+        var R = S && S.rut && S.rut[T.id] || [];
+        var C = k && k.tham ? k.tham.cx : T.width * r / 2;
         a.save();
         a.imageSmoothingEnabled = !0;
-        t.dan.forEach(function (t, f) {
-          if (b(t.x, t.y, o, h, n, u, 160)) {
-            l(a, [214, 208, 200], t.x - o + 10 * Math.sin(.25 * p + f), t.y - h + 20, 60, 18, .1);
+        t.dan.forEach(function (t, o) {
+          if (d(t.x, t.y, f, i, e, l, 160)) {
+            s(a, [214, 208, 200], t.x - f + 10 * Math.sin(.25 * p + o), t.y - i + 20, 60, 18, .1);
           }
         });
         a.restore();
-        f.veToi(a, o, h, n, u, x, "rgb(98,110,146)", function (a) {
-          f.nguonNguoi(a, o, h, n, u, 250, 175, "#fff0da");
-          t.lu.forEach(function (t, f) {
+        o.veToi(a, f, i, e, l, y, "rgb(98,110,146)", function (a) {
+          o.nguonNguoi(a, f, i, e, l, 250, 175, "#fff0da");
+          t.lu.forEach(function (t, o) {
             a(t.x, t.y, 200, "#ffa250", .95 + .06 * Math.sin(8 * p + t.k));
             a(t.x, t.y, 90, "#ffe0a8", .5);
           });
           t.dan.forEach(function (t) {
             a(t.x, t.y + 24, 140, "#ffb060", .7 + .08 * Math.sin(7 * p + t.k));
           });
-          var r = I ? 1 : .55;
-          a(E, W, 300, "#9dffe0", .5 * r + .08 * Math.sin(1.2 * p));
-          a(E, W, 170, "#ffe6a8", .6 * r);
-          a(E, W, 90, "#fff6dc", .5 * r);
-          (T.htRut || []).forEach(function (t, f) {
-            var o = O.indexOf(f) >= 0;
-            a((t.tx + .5) * i, (t.ty + .5) * i, 120, "#8ff6ee", o ? 1 : .42);
+          var h = I ? 1 : .55;
+          a(E, W, 300, "#9dffe0", .5 * h + .08 * Math.sin(1.2 * p));
+          a(E, W, 170, "#ffe6a8", .6 * h);
+          a(E, W, 90, "#fff6dc", .5 * h);
+          (T.htRut || []).forEach(function (t, o) {
+            var f = R.indexOf(o) >= 0;
+            a((t.tx + .5) * r, (t.ty + .5) * r, 120, "#8ff6ee", f ? 1 : .42);
           });
-          a(_, T.height * i - 26, 200, "#a8d0ff", .75);
-          a(_, T.height * i - 150, 130, "#c8e0ff", .4);
+          a(C, T.height * r - 26, 200, "#a8d0ff", .75);
+          a(C, T.height * r - 150, 130, "#c8e0ff", .4);
           t.co.forEach(function (t) {
             a(t.x, t.y, 70, "#9ac0ff", .3);
           });
@@ -104,230 +105,230 @@
         a.save();
         a.globalCompositeOperation = "lighter";
         a.imageSmoothingEnabled = !0;
-        if (b(E, W, o, h, n, u, 500)) {
-          g(a, [190, 230, 255], E - o, W - h - 330, 400, 360, 0, (I ? .13 : .08) + .03 * Math.sin(.7 * p));
-          g(a, [255, 236, 190], E - o, W - h - 260, 210, 290, 0, (I ? .13 : .06) + .03 * Math.sin(1.1 * p));
+        if (d(E, W, f, i, e, l, 500)) {
+          b(a, [190, 230, 255], E - f, W - i - 330, 400, 360, 0, (I ? .13 : .08) + .03 * Math.sin(.7 * p));
+          b(a, [255, 236, 190], E - f, W - i - 260, 210, 290, 0, (I ? .13 : .06) + .03 * Math.sin(1.1 * p));
         }
-        var R = E - o;
-        var C = W - h;
-        if (R > -320 && R < n + 320 && C > -320 && C < u + 320) {
+        var O = E - f;
+        var _ = W - i;
+        if (O > -320 && O < e + 320 && _ > -320 && _ < l + 320) {
           var w = I ? 1 : .5;
-          e(a, [140, 255, 214], R, C, 190, (.14 + .05 * Math.sin(1.2 * p)) * w);
-          e(a, [255, 210, 120], R, C, 70, (.3 + .1 * Math.sin(2.2 * p)) * w);
+          n(a, [140, 255, 214], O, _, 190, (.14 + .05 * Math.sin(1.2 * p)) * w);
+          n(a, [255, 210, 120], O, _, 70, (.3 + .1 * Math.sin(2.2 * p)) * w);
           a.lineWidth = 1;
-          for (var N = 0; N < 3; N++) {
-            var j = [208, 150, 82][N];
-            var F = [48, 32, 24][N];
-            var V = [.12, -.2, .3][N] * (I ? 1 : .4);
-            for (P = 0; P < F; P++) {
-              var q = P / F * r + p * V;
-              var B = M(p, 2.2, .55 * -P + N, 3) * (I ? 1 : .5);
-              a.globalAlpha = .12 + .7 * B;
-              a.fillStyle = 1 === N ? "#8fffe4" : "#ffdc8a";
-              a.fillRect(Math.round(R + Math.cos(q) * j), Math.round(C + Math.sin(q) * j), 1.5, 1.5);
-              if (B > .5) {
-                e(a, 1 === N ? [120, 255, 220] : [255, 214, 120], R + Math.cos(q) * j, C + Math.sin(q) * j, 8, .35 * B);
+          for (var L = 0; L < 3; L++) {
+            var N = [208, 150, 82][L];
+            var j = [48, 32, 24][L];
+            var F = [.12, -.2, .3][L] * (I ? 1 : .4);
+            for (m = 0; m < j; m++) {
+              var G = m / j * h + p * F;
+              var V = v(p, 2.2, .55 * -m + L, 3) * (I ? 1 : .5);
+              a.globalAlpha = .12 + .7 * V;
+              a.fillStyle = 1 === L ? "#8fffe4" : "#ffdc8a";
+              a.fillRect(Math.round(O + Math.cos(G) * N), Math.round(_ + Math.sin(G) * N), 1.5, 1.5);
+              if (V > .5) {
+                n(a, 1 === L ? [120, 255, 220] : [255, 214, 120], O + Math.cos(G) * N, _ + Math.sin(G) * N, 8, .35 * V);
               }
             }
           }
-          for (P = 0; P < 8; P++) {
-            var D = P / 8 * r + .1 * p;
-            var H = (.4 * p + P / 8) % 1;
-            e(a, [255, 226, 150], R + Math.cos(D) * (100 + 80 * H), C + Math.sin(D) * (100 + 80 * H), 7, .4 * Math.sin(H * Math.PI) * (I ? 1 : .5));
+          for (m = 0; m < 8; m++) {
+            var q = m / 8 * h + .1 * p;
+            var B = (.4 * p + m / 8) % 1;
+            n(a, [255, 226, 150], O + Math.cos(q) * (100 + 80 * B), _ + Math.sin(q) * (100 + 80 * B), 7, .4 * Math.sin(B * Math.PI) * (I ? 1 : .5));
           }
-          var J = m ? 34 : 12;
-          for (P = 0; P < J; P++) {
-            var L = (p * (.24 + .2 * v(P, 1, 3401)) + v(P, 2, 3402)) % 1;
-            var X = v(P, 3, 3403) * r;
-            var z = 30 + 190 * v(P, 4, 3404);
-            var G = R + Math.cos(X) * z * (1 - .55 * L);
-            var K = C + Math.sin(X) * z * (1 - .55 * L) * .9 - L * (60 + 80 * v(P, 5, 3405));
-            var Q = Math.sin(L * Math.PI) * (I ? 1 : .4);
-            e(a, P % 3 ? [255, 214, 120] : [150, 255, 220], G, K, 5, .45 * Q);
-            s(a, G, K, "#fff4d0", Q, 1);
+          var D = P ? 34 : 12;
+          for (m = 0; m < D; m++) {
+            var H = (p * (.24 + .2 * c(m, 1, 3401)) + c(m, 2, 3402)) % 1;
+            var J = c(m, 3, 3403) * h;
+            var X = 30 + 190 * c(m, 4, 3404);
+            var z = O + Math.cos(J) * X * (1 - .55 * H);
+            var K = _ + Math.sin(J) * X * (1 - .55 * H) * .9 - H * (60 + 80 * c(m, 5, 3405));
+            var Q = Math.sin(H * Math.PI) * (I ? 1 : .4);
+            n(a, m % 3 ? [255, 214, 120] : [150, 255, 220], z, K, 5, .45 * Q);
+            M(a, z, K, "#fff4d0", Q, 1);
           }
           if (I) {
-            g(a, [255, 230, 160], R, C - 200, 60, 200, 0, .18 + .06 * Math.sin(2.6 * p));
+            b(a, [255, 230, 160], O, _ - 200, 60, 200, 0, .18 + .06 * Math.sin(2.6 * p));
           }
         }
         t.lu.forEach(function (t) {
-          if (b(t.x, t.y, o, h, n, u, 100)) {
-            var f = .72 + .14 * Math.sin(9.3 * p + t.k) + .1 * Math.sin(15 * p + 2 * t.k);
-            e(a, [255, 150, 60], t.x - o, t.y - h, 62, .42 * f);
-            e(a, [255, 220, 150], t.x - o, t.y - h, 20, .42 * f);
-            for (var i = 0; i < (m ? 4 : 1); i++) {
-              var r = (.7 * p + v(t.k, i, 3501)) % 1;
-              s(a, t.x + 6 * Math.sin(9 * r + i) - o, t.y - 4 - 44 * r - h, "#ffb45a", .95 * (1 - r), 1);
+          if (d(t.x, t.y, f, i, e, l, 100)) {
+            var o = .72 + .14 * Math.sin(9.3 * p + t.k) + .1 * Math.sin(15 * p + 2 * t.k);
+            n(a, [255, 150, 60], t.x - f, t.y - i, 62, .42 * o);
+            n(a, [255, 220, 150], t.x - f, t.y - i, 20, .42 * o);
+            for (var r = 0; r < (P ? 4 : 1); r++) {
+              var h = (.7 * p + c(t.k, r, 3501)) % 1;
+              M(a, t.x + 6 * Math.sin(9 * h + r) - f, t.y - 4 - 44 * h - i, "#ffb45a", .95 * (1 - h), 1);
             }
           }
         });
         t.dan.forEach(function (t) {
-          if (b(t.x, t.y, o, h, n, u, 100)) {
-            e(a, [255, 160, 70], t.x - o, t.y - h + 6, 46, .3 + .1 * Math.sin(7 * p + t.k));
+          if (d(t.x, t.y, f, i, e, l, 100)) {
+            n(a, [255, 160, 70], t.x - f, t.y - i + 6, 46, .3 + .1 * Math.sin(7 * p + t.k));
           }
         });
-        for (var U = 96, Y = Math.floor((o - 20) / U), Z = Math.floor((o + n + 20) / U), $ = Math.floor((h - 20) / U), aa = Math.floor((h + u + 20) / U), ta = $; ta <= aa; ta++)
-          for (var fa = Y; fa <= Z; fa++) {
-            var oa = v(fa, ta, 3601);
-            if (!(oa > (m ? .5 : .22))) {
-              var ha = fa * U + v(fa, ta, 3602) * U + 16 * Math.sin(.2 * p + 20 * oa);
-              var ia = ta * U + v(fa, ta, 3603) * U + 12 * Math.cos(.17 * p + 11 * oa) - 2 * p % 8;
-              var ra = .2 + .3 * Math.sin(.9 * p + 30 * oa);
-              if (!(ra < .05)) {
-                s(a, ha - o, ia - h, "#ffe6bc", ra, 1);
+        for (var U = 96, Y = Math.floor((f - 20) / U), Z = Math.floor((f + e + 20) / U), $ = Math.floor((i - 20) / U), aa = Math.floor((i + l + 20) / U), ta = $; ta <= aa; ta++)
+          for (var oa = Y; oa <= Z; oa++) {
+            var fa = c(oa, ta, 3601);
+            if (!(fa > (P ? .5 : .22))) {
+              var ia = oa * U + c(oa, ta, 3602) * U + 16 * Math.sin(.2 * p + 20 * fa);
+              var ra = ta * U + c(oa, ta, 3603) * U + 12 * Math.cos(.17 * p + 11 * fa) - 2 * p % 8;
+              var ha = .2 + .3 * Math.sin(.9 * p + 30 * fa);
+              if (!(ha < .05)) {
+                M(a, ia - f, ra - i, "#ffe6bc", ha, 1);
               }
             }
           }
-        for (var na = 72, ea = Math.floor(o / na), la = Math.floor((o + n) / na), sa = Math.floor(h / na), Ma = Math.floor((h + u) / na), va = sa; va <= Ma; va++)
-          for (var ca = ea; ca <= la; ca++)
-            if (!(v(ca, va, 3701) > .36)) {
-              var ga = ca * na + v(ca, va, 3702) * na;
-              var ba = va * na + v(ca, va, 3703) * na;
-              var da = M(p, 1.4 + v(ca, va, 3704), c(ca, va), 7);
+        for (var ea = 72, la = Math.floor(f / ea), na = Math.floor((f + e) / ea), sa = Math.floor(i / ea), Ma = Math.floor((i + l) / ea), va = sa; va <= Ma; va++)
+          for (var ca = la; ca <= na; ca++)
+            if (!(c(ca, va, 3701) > .36)) {
+              var ga = ca * ea + c(ca, va, 3702) * ea;
+              var ba = va * ea + c(ca, va, 3703) * ea;
+              var da = v(p, 1.4 + c(ca, va, 3704), g(ca, va), 7);
               if (!(da < .08)) {
-                var ua = ga - o;
-                var ya = ba - h;
-                s(a, ua, ya, "#ffffff", da, 1);
+                var ua = ga - f;
+                var pa = ba - i;
+                M(a, ua, pa, "#ffffff", da, 1);
                 if (da > .4) {
-                  s(a, ua - 1, ya, "#cfe4ff", .6 * da, 1);
-                  s(a, ua + 1, ya, "#cfe4ff", .6 * da, 1);
-                  s(a, ua, ya - 1, "#cfe4ff", .6 * da, 1);
-                  s(a, ua, ya + 1, "#cfe4ff", .6 * da, 1);
+                  M(a, ua - 1, pa, "#cfe4ff", .6 * da, 1);
+                  M(a, ua + 1, pa, "#cfe4ff", .6 * da, 1);
+                  M(a, ua, pa - 1, "#cfe4ff", .6 * da, 1);
+                  M(a, ua, pa + 1, "#cfe4ff", .6 * da, 1);
                 }
               }
             }
-        (T.htRut || []).forEach(function (t, f) {
-          var l = O.indexOf(f) >= 0;
-          var s = (t.tx + .5) * i - o;
-          var M = (t.ty + .5) * i - h;
-          if (!(s < -120 || s > n + 120 || M < -200 || M > u + 120) && (e(a, [110, 250, 236], s, M, 50, (l ? .4 : .12) + .05 * Math.sin(2 * p + f)), l)) {
-            for (g(a, [130, 255, 240], s, M - 150, 56, 156, 0, .3 + .08 * Math.sin(3 * p)), P = 0; P < (m ? 12 : 4); P++) {
-              var c = (.6 * p + v(P, f, 3801)) % 1;
-              var b = v(P, 3, 3802) * r + p;
-              e(a, [150, 255, 240], s + Math.cos(b) * (1 - c) * 38, M + Math.sin(b) * (1 - c) * 38 - 90 * c, 5, .55 * Math.sin(c * Math.PI));
+        (T.htRut || []).forEach(function (t, o) {
+          var s = R.indexOf(o) >= 0;
+          var M = (t.tx + .5) * r - f;
+          var v = (t.ty + .5) * r - i;
+          if (!(M < -120 || M > e + 120 || v < -200 || v > l + 120) && (n(a, [110, 250, 236], M, v, 50, (s ? .4 : .12) + .05 * Math.sin(2 * p + o)), s)) {
+            for (b(a, [130, 255, 240], M, v - 150, 56, 156, 0, .3 + .08 * Math.sin(3 * p)), m = 0; m < (P ? 12 : 4); m++) {
+              var g = (.6 * p + c(m, o, 3801)) % 1;
+              var d = c(m, 3, 3802) * h + p;
+              n(a, [150, 255, 240], M + Math.cos(d) * (1 - g) * 38, v + Math.sin(d) * (1 - g) * 38 - 90 * g, 5, .55 * Math.sin(g * Math.PI));
             }
           }
         });
-        var pa = _ - o;
-        var xa = T.height * i - h;
-        if (xa > -80 && xa < u + 300) {
-          for (l(a, [170, 210, 255], pa, xa - 10, 150, 90, .2 + .05 * Math.sin(1.5 * p)), g(a, [190, 220, 255], pa, xa - 170, 130, 180, 0, .12), P = 0; P < (m ? 10 : 4); P++) {
-            var ka = (.4 * p + v(P, 1, 3901)) % 1;
-            e(a, [200, 225, 255], pa + 100 * (v(P, 2, 3902) - .5), xa - 110 * ka, 5, .4 * Math.sin(ka * Math.PI));
+        var ya = C - f;
+        var xa = T.height * r - i;
+        if (xa > -80 && xa < l + 300) {
+          for (s(a, [170, 210, 255], ya, xa - 10, 150, 90, .2 + .05 * Math.sin(1.5 * p)), b(a, [190, 220, 255], ya, xa - 170, 130, 180, 0, .12), m = 0; m < (P ? 10 : 4); m++) {
+            var ka = (.4 * p + c(m, 1, 3901)) % 1;
+            n(a, [200, 225, 255], ya + 100 * (c(m, 2, 3902) - .5), xa - 110 * ka, 5, .4 * Math.sin(ka * Math.PI));
           }
         }
-        y("htd_dinh").forEach(function (t) {
-          if (b(t.x, t.y, o, h, n, u, 200)) {
-            var f = t.x - o;
-            var i = t.y - h;
-            l(a, [255, 200, 110], f, i - 2, 90, 30, .3 + .1 * Math.sin(2 * p));
+        x("htd_dinh").forEach(function (t) {
+          if (d(t.x, t.y, f, i, e, l, 200)) {
+            var o = t.x - f;
+            var r = t.y - i;
+            s(a, [255, 200, 110], o, r - 2, 90, 30, .3 + .1 * Math.sin(2 * p));
           }
         });
         a.restore();
-      })(a, o, h, n, p, x, k, P, m);
+      })(a, f, i, e, l, p, k, m, P);
     }
     else {
       if (4 === t) {
-        (function (a, t, o, h, n, p, x, k) {
-          var P;
-          var m = k >= 2;
-          var S = d();
+        (function (a, t, f, i, e, l, p, k) {
+          var m;
+          var P = k >= 2;
+          var S = u();
           var T = t.data;
           var A = T.htLoiThu || { tx: 16, ty: 9 };
-          var E = (A.tx + .5) * i;
-          var W = (A.ty + .5) * i;
+          var E = (A.tx + .5) * r;
+          var W = (A.ty + .5) * r;
           var I = S && S.rut && S.rut[T.id] || [];
-          var O = T.htVao || { tx: 16, ty: 19 };
-          var _ = Math.floor(x / .4);
-          var R = x - .4 * _;
-          var C = v(_, 1, 4001) < .34 ? Math.max(0, 1 - R / .28) : 0;
-          var w = E + 260 * (v(_, 2, 4002) - .5);
-          var N = W - 260;
-          var j = v(_, 3, 4003) * r;
-          var F = E + 132 * Math.cos(j);
-          var V = W + 132 * Math.sin(j);
+          var R = T.htVao || { tx: 16, ty: 19 };
+          var C = Math.floor(p / .4);
+          var O = p - .4 * C;
+          var _ = c(C, 1, 4001) < .34 ? Math.max(0, 1 - O / .28) : 0;
+          var w = E + 260 * (c(C, 2, 4002) - .5);
+          var L = W - 260;
+          var N = c(C, 3, 4003) * h;
+          var j = E + 132 * Math.cos(N);
+          var F = W + 132 * Math.sin(N);
           a.save();
           a.imageSmoothingEnabled = !0;
-          for (var q = Math.floor((o - 200) / 210), B = Math.floor((o + n + 60) / 210), D = Math.floor((h - 100) / 170), H = Math.floor((h + p + 40) / 170), J = D; J <= H; J++)
-            for (var L = q; L <= B; L++) {
-              var X = v(L, J, 4101);
-              if (!(X > (m ? .55 : .28))) {
-                var z = 210 * L + 120 * X + 50 * Math.sin(.06 * x + 20 * X);
-                var G = 170 * J + 100 * v(L, J, 4102) + 8 * Math.sin(.1 * x + 8 * X);
-                l(a, [120, 150, 230], z - o, G - h, 140 + 50 * X, 36, .14 + .05 * Math.sin(.2 * x + 12 * X));
+          for (var G = Math.floor((f - 200) / 210), V = Math.floor((f + e + 60) / 210), q = Math.floor((i - 100) / 170), B = Math.floor((i + l + 40) / 170), D = q; D <= B; D++)
+            for (var H = G; H <= V; H++) {
+              var J = c(H, D, 4101);
+              if (!(J > (P ? .55 : .28))) {
+                var X = 210 * H + 120 * J + 50 * Math.sin(.06 * p + 20 * J);
+                var z = 170 * D + 100 * c(H, D, 4102) + 8 * Math.sin(.1 * p + 8 * J);
+                s(a, [120, 150, 230], X - f, z - i, 140 + 50 * J, 36, .14 + .05 * Math.sin(.2 * p + 12 * J));
               }
             }
           a.restore();
-          f.veToi(a, o, h, n, p, k, "rgb(88,96,140)", function (a) {
-            f.nguonNguoi(a, o, h, n, p, 240, 170, "#f4f0ff");
-            t.tinh.forEach(function (t, f) {
-              a(t.x, t.y, 150, 1 === t.v ? "#a874ff" : 2 === t.v ? "#bfe2ff" : "#5cc0ff", .9 + .1 * Math.sin(1.6 * x + t.k));
+          o.veToi(a, f, i, e, l, k, "rgb(88,96,140)", function (a) {
+            o.nguonNguoi(a, f, i, e, l, 240, 170, "#f4f0ff");
+            t.tinh.forEach(function (t, o) {
+              a(t.x, t.y, 150, 1 === t.v ? "#a874ff" : 2 === t.v ? "#bfe2ff" : "#5cc0ff", .9 + .1 * Math.sin(1.6 * p + t.k));
             });
-            a(E, W, 260, "#7ffff0", .55 + .1 * Math.sin(1.4 * x));
+            a(E, W, 260, "#7ffff0", .55 + .1 * Math.sin(1.4 * p));
             a(E, W, 130, "#d8fff8", .35);
-            (T.htRut || []).forEach(function (t, f) {
-              var o = I.indexOf(f) >= 0;
-              a((t.tx + .5) * i, (t.ty + .5) * i, 110, "#8ff6ee", o ? 1 : .42);
+            (T.htRut || []).forEach(function (t, o) {
+              var f = I.indexOf(o) >= 0;
+              a((t.tx + .5) * r, (t.ty + .5) * r, 110, "#8ff6ee", f ? 1 : .42);
             });
-            a((O.tx + .5) * i, T.height * i - 24, 170, "#a8d0ff", .7);
-            if (C > .02) {
-              a(w, W - 40, 340, "#cfe8ff", .85 * C);
-              a(F, V, 220, "#e8f4ff", C);
+            a((R.tx + .5) * r, T.height * r - 24, 170, "#a8d0ff", .7);
+            if (_ > .02) {
+              a(w, W - 40, 340, "#cfe8ff", .85 * _);
+              a(j, F, 220, "#e8f4ff", _);
             }
           });
           a.save();
           a.globalCompositeOperation = "lighter";
           a.imageSmoothingEnabled = !0;
-          var K = E - o;
-          var Q = W - h;
-          if (K > -340 && K < n + 340 && Q > -340 && Q < p + 340) {
-            for (e(a, [110, 255, 240], K, Q, 170, .12 + .05 * Math.sin(1.4 * x)), P = 0; P < 3; P++) {
-              var U = (.33 * x + P / 3) % 1;
+          var K = E - f;
+          var Q = W - i;
+          if (K > -340 && K < e + 340 && Q > -340 && Q < l + 340) {
+            for (n(a, [110, 255, 240], K, Q, 170, .12 + .05 * Math.sin(1.4 * p)), m = 0; m < 3; m++) {
+              var U = (.33 * p + m / 3) % 1;
               a.globalAlpha = .4 * (1 - U);
               a.strokeStyle = "#8ffff0";
               a.lineWidth = 1.2;
               a.beginPath();
-              a.arc(K, Q, 138 + 130 * U, 0, r);
+              a.arc(K, Q, 138 + 130 * U, 0, h);
               a.stroke();
               a.globalAlpha = .15 * (1 - U);
               a.lineWidth = 4;
               a.stroke();
             }
-            for (P = 0; P < 12; P++) {
-              var Y = P / 12 * r;
-              var Z = M(x, 2.6, .9 * -P, 3);
+            for (m = 0; m < 12; m++) {
+              var Y = m / 12 * h;
+              var Z = v(p, 2.6, .9 * -m, 3);
               if (!(Z < .05)) {
-                e(a, [140, 240, 255], K + 114 * Math.cos(Y), Q + 114 * Math.sin(Y), 14, .6 * Z);
+                n(a, [140, 240, 255], K + 114 * Math.cos(Y), Q + 114 * Math.sin(Y), 14, .6 * Z);
               }
             }
-            var $ = Math.floor(9 * x);
-            for (P = 0; P < (m ? 3 : 1); P++) {
-              var aa = v($, P, 4201) * r;
-              var ta = aa + .35 + .5 * v($, P + 5, 4202);
+            var $ = Math.floor(9 * p);
+            for (m = 0; m < (P ? 3 : 1); m++) {
+              var aa = c($, m, 4201) * h;
+              var ta = aa + .35 + .5 * c($, m + 5, 4202);
               a.globalAlpha = .8;
               a.strokeStyle = "#a8f4ff";
               a.lineWidth = .9;
               a.beginPath();
               a.moveTo(K + 133 * Math.cos(aa), Q + 133 * Math.sin(aa));
-              for (var fa = 1; fa <= 6; fa++) {
-                var oa = aa + (ta - aa) * fa / 6;
-                var ha = 133 + 8 * (v($, fa + 9 * P, 4203) - .5);
-                a.lineTo(K + Math.cos(oa) * ha, Q + Math.sin(oa) * ha);
+              for (var oa = 1; oa <= 6; oa++) {
+                var fa = aa + (ta - aa) * oa / 6;
+                var ia = 133 + 8 * (c($, oa + 9 * m, 4203) - .5);
+                a.lineTo(K + Math.cos(fa) * ia, Q + Math.sin(fa) * ia);
               }
               a.stroke();
             }
-            for (P = 0; P < (m ? 14 : 5); P++) {
-              var ia = 150 + 80 * v(P, 1, 4301);
-              var ra = x * (.12 + .12 * v(P, 2, 4302)) * (1 & P ? -1 : 1) + v(P, 3, 4303) * r;
-              var na = K + Math.cos(ra) * ia;
-              var ea = Q + Math.sin(ra) * ia * .8 - 20 - 14 * Math.sin(.7 * x + P);
-              var la = .5 + .4 * Math.sin(2 * x + 2 * P);
-              var sa = P % 3 == 0 ? "#bfa0ff" : "#8fe6ff";
-              a.globalAlpha = la;
+            for (m = 0; m < (P ? 14 : 5); m++) {
+              var ra = 150 + 80 * c(m, 1, 4301);
+              var ha = p * (.12 + .12 * c(m, 2, 4302)) * (1 & m ? -1 : 1) + c(m, 3, 4303) * h;
+              var ea = K + Math.cos(ha) * ra;
+              var la = Q + Math.sin(ha) * ra * .8 - 20 - 14 * Math.sin(.7 * p + m);
+              var na = .5 + .4 * Math.sin(2 * p + 2 * m);
+              var sa = m % 3 == 0 ? "#bfa0ff" : "#8fe6ff";
+              a.globalAlpha = na;
               a.fillStyle = sa;
               a.save();
-              a.translate(na, ea);
-              a.rotate(.8 * x + P);
+              a.translate(ea, la);
+              a.rotate(.8 * p + m);
               a.beginPath();
               a.moveTo(0, -3.4);
               a.lineTo(1.7, 0);
@@ -336,115 +337,115 @@
               a.closePath();
               a.fill();
               a.restore();
-              e(a, P % 3 == 0 ? [176, 130, 255] : [110, 220, 255], na, ea, 9, .3 * la);
+              n(a, m % 3 == 0 ? [176, 130, 255] : [110, 220, 255], ea, la, 9, .3 * na);
             }
           }
-          if (C > .02) {
-            var Ma = C;
-            for (u(a, w - o, N - h, F - o, V - h, 7 * _ + Math.floor(40 * R), 9, 34, "#9fe8ff", Ma, m ? 3 : 0), e(a, [200, 240, 255], F - o, V - h, 60, .6 * Ma), P = 0; P < 8; P++) {
-              var va = v(_, P, 4401) * r;
-              var ca = 40 * (1 - C) + 14 * v(_, P + 9, 4402);
-              s(a, F - o + Math.cos(va) * ca, V - h + Math.sin(va) * ca * .7, "#e8fbff", Ma, 1);
+          if (_ > .02) {
+            var Ma = _;
+            for (y(a, w - f, L - i, j - f, F - i, 7 * C + Math.floor(40 * O), 9, 34, "#9fe8ff", Ma, P ? 3 : 0), n(a, [200, 240, 255], j - f, F - i, 60, .6 * Ma), m = 0; m < 8; m++) {
+              var va = c(C, m, 4401) * h;
+              var ca = 40 * (1 - _) + 14 * c(C, m + 9, 4402);
+              M(a, j - f + Math.cos(va) * ca, F - i + Math.sin(va) * ca * .7, "#e8fbff", Ma, 1);
             }
           }
           t.tinh.forEach(function (t) {
-            if (b(t.x, t.y, o, h, n, p, 100)) {
-              var f = 1 === t.v ? [176, 120, 255] : 2 === t.v ? [190, 226, 255] : [100, 196, 255];
-              e(a, f, t.x - o, t.y - h, 46, .3 + .14 * Math.sin(1.6 * x + t.k));
-              e(a, f, t.x - o, t.y - h - 6, 22, .24 + .1 * Math.sin(2.4 * x + t.k));
-              var i = M(x, 2.2, c(t.k, 2), 8);
-              if (i > .1) {
-                s(a, t.x - o + 24 * (v(t.k, 3, 4501) - .5), t.y - h - 10 - 26 * v(t.k, 4, 4502), "#ffffff", i, 1);
+            if (d(t.x, t.y, f, i, e, l, 100)) {
+              var o = 1 === t.v ? [176, 120, 255] : 2 === t.v ? [190, 226, 255] : [100, 196, 255];
+              n(a, o, t.x - f, t.y - i, 46, .3 + .14 * Math.sin(1.6 * p + t.k));
+              n(a, o, t.x - f, t.y - i - 6, 22, .24 + .1 * Math.sin(2.4 * p + t.k));
+              var r = v(p, 2.2, g(t.k, 2), 8);
+              if (r > .1) {
+                M(a, t.x - f + 24 * (c(t.k, 3, 4501) - .5), t.y - i - 10 - 26 * c(t.k, 4, 4502), "#ffffff", r, 1);
               }
             }
           });
-          for (var ga = 100, ba = Math.floor((o - 20) / ga), da = Math.floor((o + n + 20) / ga), ua = Math.floor((h - 60) / ga), ya = Math.floor((h + p + 60) / ga), pa = ua; pa <= ya; pa++)
+          for (var ga = 100, ba = Math.floor((f - 20) / ga), da = Math.floor((f + e + 20) / ga), ua = Math.floor((i - 60) / ga), pa = Math.floor((i + l + 60) / ga), ya = ua; ya <= pa; ya++)
             for (var xa = ba; xa <= da; xa++) {
-              var ka = v(xa, pa, 4601);
-              if (!(ka > (m ? .5 : .22))) {
-                var Pa = (x * (.1 + .1 * ka) + 9 * ka) % 1;
-                var ma = xa * ga + v(xa, pa, 4602) * ga + 8 * Math.sin(6 * Pa + 30 * ka);
-                var Sa = pa * ga + v(xa, pa, 4603) * ga - 50 * Pa;
-                var Ta = .7 * Math.sin(Pa * Math.PI);
-                e(a, ka < .2 ? [140, 120, 255] : [90, 230, 200], ma - o, Sa - h, 7, .4 * Ta);
-                s(a, ma - o, Sa - h, "#eafff8", Ta, 1);
+              var ka = c(xa, ya, 4601);
+              if (!(ka > (P ? .5 : .22))) {
+                var ma = (p * (.1 + .1 * ka) + 9 * ka) % 1;
+                var Pa = xa * ga + c(xa, ya, 4602) * ga + 8 * Math.sin(6 * ma + 30 * ka);
+                var Sa = ya * ga + c(xa, ya, 4603) * ga - 50 * ma;
+                var Ta = .7 * Math.sin(ma * Math.PI);
+                n(a, ka < .2 ? [140, 120, 255] : [90, 230, 200], Pa - f, Sa - i, 7, .4 * Ta);
+                M(a, Pa - f, Sa - i, "#eafff8", Ta, 1);
               }
             }
-          (T.htRut || []).forEach(function (t, f) {
-            var l = I.indexOf(f) >= 0;
-            var s = (t.tx + .5) * i - o;
-            var M = (t.ty + .5) * i - h;
-            if (!(s < -120 || s > n + 120 || M < -200 || M > p + 120) && (e(a, [110, 250, 236], s, M, 50, (l ? .4 : .12) + .05 * Math.sin(2 * x + f)), l)) {
-              for (g(a, [130, 255, 240], s, M - 150, 56, 156, 0, .3 + .08 * Math.sin(3 * x)), P = 0; P < (m ? 12 : 4); P++) {
-                var c = (.6 * x + v(P, f, 4701)) % 1;
-                var b = v(P, 3, 4702) * r + x;
-                e(a, [150, 255, 240], s + Math.cos(b) * (1 - c) * 38, M + Math.sin(b) * (1 - c) * 38 - 90 * c, 5, .55 * Math.sin(c * Math.PI));
+          (T.htRut || []).forEach(function (t, o) {
+            var s = I.indexOf(o) >= 0;
+            var M = (t.tx + .5) * r - f;
+            var v = (t.ty + .5) * r - i;
+            if (!(M < -120 || M > e + 120 || v < -200 || v > l + 120) && (n(a, [110, 250, 236], M, v, 50, (s ? .4 : .12) + .05 * Math.sin(2 * p + o)), s)) {
+              for (b(a, [130, 255, 240], M, v - 150, 56, 156, 0, .3 + .08 * Math.sin(3 * p)), m = 0; m < (P ? 12 : 4); m++) {
+                var g = (.6 * p + c(m, o, 4701)) % 1;
+                var d = c(m, 3, 4702) * h + p;
+                n(a, [150, 255, 240], M + Math.cos(d) * (1 - g) * 38, v + Math.sin(d) * (1 - g) * 38 - 90 * g, 5, .55 * Math.sin(g * Math.PI));
               }
             }
           });
-          var Aa = (O.tx + .5) * i - o;
-          var Ea = T.height * i - h;
-          if (Ea > -80 && Ea < p + 300) {
-            for (l(a, [170, 210, 255], Aa, Ea - 10, 130, 80, .2 + .05 * Math.sin(1.5 * x)), P = 0; P < (m ? 8 : 3); P++) {
-              var Wa = (.4 * x + v(P, 1, 4801)) % 1;
-              e(a, [200, 225, 255], Aa + 90 * (v(P, 2, 4802) - .5), Ea - 100 * Wa, 5, .4 * Math.sin(Wa * Math.PI));
+          var Aa = (R.tx + .5) * r - f;
+          var Ea = T.height * r - i;
+          if (Ea > -80 && Ea < l + 300) {
+            for (s(a, [170, 210, 255], Aa, Ea - 10, 130, 80, .2 + .05 * Math.sin(1.5 * p)), m = 0; m < (P ? 8 : 3); m++) {
+              var Wa = (.4 * p + c(m, 1, 4801)) % 1;
+              n(a, [200, 225, 255], Aa + 90 * (c(m, 2, 4802) - .5), Ea - 100 * Wa, 5, .4 * Math.sin(Wa * Math.PI));
             }
           }
-          y("htd_loi_thu").forEach(function (t) {
-            if (b(t.x, t.y, o, h, n, p, 240)) {
-              var f = t.x - o;
-              var i = t.y - h;
-              var s = i - 50;
-              l(a, [140, 170, 255], f, i - 2, 96, 28, .38 + .12 * Math.sin(6 * x));
-              e(a, [150, 140, 255], f, s, 70, .12 + .05 * Math.sin(4.2 * x));
-              var M = Math.floor(12 * x);
-              if (v(M, 1, 4904) < .7) {
-                var c = t.dir < 0 ? -1 : 1;
-                u(a, f + 26 * c, s - 26, f - 40 * c, s - 14, 7 * M, 7, 7, "#b9b4ff", .75, m ? 1 : 0);
+          x("htd_loi_thu").forEach(function (t) {
+            if (d(t.x, t.y, f, i, e, l, 240)) {
+              var o = t.x - f;
+              var r = t.y - i;
+              var M = r - 50;
+              s(a, [140, 170, 255], o, r - 2, 96, 28, .38 + .12 * Math.sin(6 * p));
+              n(a, [150, 140, 255], o, M, 70, .12 + .05 * Math.sin(4.2 * p));
+              var v = Math.floor(12 * p);
+              if (c(v, 1, 4904) < .7) {
+                var g = t.dir < 0 ? -1 : 1;
+                y(a, o + 26 * g, M - 26, o - 40 * g, M - 14, 7 * v, 7, 7, "#b9b4ff", .75, P ? 1 : 0);
               }
-              for (P = 0; P < (m ? 4 : 2); P++)
-                if (!(v(M, P, 4901) > .55)) {
-                  var g = v(M, P + 3, 4902) * r;
-                  var d = 46 + 30 * v(M, P + 6, 4903);
-                  u(a, f + 24 * Math.cos(g), s + 18 * Math.sin(g), f + Math.cos(g) * d, s + Math.sin(g) * d * .8 - 6, 5 * M + P, 5, 9, "#a8f0ff", .85, 0);
+              for (m = 0; m < (P ? 4 : 2); m++)
+                if (!(c(v, m, 4901) > .55)) {
+                  var b = c(v, m + 3, 4902) * h;
+                  var u = 46 + 30 * c(v, m + 6, 4903);
+                  y(a, o + 24 * Math.cos(b), M + 18 * Math.sin(b), o + Math.cos(b) * u, M + Math.sin(b) * u * .8 - 6, 5 * v + m, 5, 9, "#a8f0ff", .85, 0);
                 }
-              var y = Math.floor(x / .6);
-              var k = x - .6 * y;
-              if (m && v(y, 2, 4905) < .35 && k < .18) {
-                var S = f + 120 * (v(y, 3, 4906) - .5);
-                var T = i + 30 * (v(y, 4, 4907) - .5);
-                u(a, S + 8, T - 110, S, T, 11 * y, 8, 12, "#c8c0ff", 1 - k / .18, 1);
-                e(a, [200, 210, 255], S, T, 26, .5 * (1 - k / .18));
+              var x = Math.floor(p / .6);
+              var k = p - .6 * x;
+              if (P && c(x, 2, 4905) < .35 && k < .18) {
+                var S = o + 120 * (c(x, 3, 4906) - .5);
+                var T = r + 30 * (c(x, 4, 4907) - .5);
+                y(a, S + 8, T - 110, S, T, 11 * x, 8, 12, "#c8c0ff", 1 - k / .18, 1);
+                n(a, [200, 210, 255], S, T, 26, .5 * (1 - k / .18));
               }
             }
           });
           a.restore();
-        })(a, o, h, n, p, x, k, P);
+        })(a, f, i, e, l, p, k, m);
       }
     }
   };
-  var p = t.veFx;
-  function x(a, t, f, o, h, i, n, e, l, s) {
-    a.strokeStyle = e;
-    a.globalAlpha = l;
+  var k = t.veFx;
+  function m(a, t, o, f, i, r, e, l, n, s) {
+    a.strokeStyle = l;
+    a.globalAlpha = n;
     a.lineWidth = s || 1;
-    for (var M = 0; M < h; M++) {
-      var v = i + M * r / h;
+    for (var M = 0; M < i; M++) {
+      var v = r + M * h / i;
       a.beginPath();
-      a.arc(t, f, o, v, v + n * r / h);
+      a.arc(t, o, f, v, v + e * h / i);
       a.stroke();
     }
   }
-  function k(a, t, f, o, h, i, n, e) {
-    a.strokeStyle = n;
-    a.globalAlpha = e;
+  function P(a, t, o, f, i, r, e, l) {
+    a.strokeStyle = e;
+    a.globalAlpha = l;
     a.lineWidth = .8;
     a.beginPath();
-    for (var l = 0; l <= h; l++) {
-      var s = 2 * l % h;
-      var M = t + Math.cos(i + s * r / h) * o;
-      var v = f + Math.sin(i + s * r / h) * o;
-      if (0 === l) {
+    for (var n = 0; n <= i; n++) {
+      var s = 2 * n % i;
+      var M = t + Math.cos(r + s * h / i) * f;
+      var v = o + Math.sin(r + s * h / i) * f;
+      if (0 === n) {
         a.moveTo(M, v);
       }
       else {
@@ -454,28 +455,28 @@
     a.closePath();
     a.stroke();
   }
-  t.veFx = function (a, t, f, o, h, i, n, e, M, v) {
-    if (p(a, t, f, o, h, i, n, e, M, v), 1 === t || 2 === t) {
+  t.veFx = function (a, t, o, f, i, r, e, l, n, v) {
+    if (k(a, t, o, f, i, r, e, l, n, v), 1 === t || 2 === t) {
       a.save();
       a.globalCompositeOperation = "lighter";
       a.imageSmoothingEnabled = !0;
       var c = 1 === t ? [150, 255, 210] : [186, 130, 255];
-      (1 === t ? ["htd_thu_ve"] : ["htd_thach_ma"]).forEach(function (f) {
-        y(f).forEach(function (f) {
-          if (b(f.x, f.y, o, h, i, n, 160)) {
-            var M = f.x - o;
-            var v = f.y - h;
-            l(a, c, M, v - 2, 1 === t ? 40 : 66, 1 === t ? 14 : 22, .3 + .1 * Math.sin(2.4 * e + f.x));
+      (1 === t ? ["htd_thu_ve"] : ["htd_thach_ma"]).forEach(function (o) {
+        x(o).forEach(function (o) {
+          if (d(o.x, o.y, f, i, r, e, 160)) {
+            var n = o.x - f;
+            var v = o.y - i;
+            s(a, c, n, v - 2, 1 === t ? 40 : 66, 1 === t ? 14 : 22, .3 + .1 * Math.sin(2.4 * l + o.x));
             a.globalAlpha = .5;
             a.strokeStyle = "rgb(" + c.join(",") + ")";
             a.lineWidth = .8;
             var g = 1 === t ? 22 : 36;
             a.beginPath();
-            a.ellipse(M, v - 1, g, .4 * g, 0, 0, r);
+            a.ellipse(n, v - 1, g, .4 * g, 0, 0, h);
             a.stroke();
-            for (var d = 0; d < 6; d++) {
-              var u = .9 * e + d * r / 6;
-              s(a, M + Math.cos(u) * g, v - 1 + Math.sin(u) * g * .4, "#ffffff", .8, 1);
+            for (var b = 0; b < 6; b++) {
+              var u = .9 * l + b * h / 6;
+              M(a, n + Math.cos(u) * g, v - 1 + Math.sin(u) * g * .4, "#ffffff", .8, 1);
             }
           }
         });
@@ -483,35 +484,35 @@
       a.restore();
     }
   };
-  o.veTran = function (a, t, f, o, h, i, n, l) {
+  f.veTran = function (a, t, o, f, i, r, e, l) {
     a.save();
     a.imageSmoothingEnabled = !0;
-    var M = (null == l ? 2 : l) >= 2;
-    var c = { tranphap: { a: i ? "#ffe08a" : "#b8c8ee", b: i ? "#fff3c4" : "#8ea6d8", g: i ? [255, 214, 120] : [140, 170, 255] }, nhan_bang: { a: "#9fe0ff", b: "#e0f6ff", g: [120, 210, 255] }, nhan_hoa: { a: "#ffa066", b: "#ffe0b0", g: [255, 140, 70] }, rut: { a: i ? "#8ffff0" : "#8a98a6", b: i ? "#e0fffb" : "#6a7684", g: [110, 250, 236] }, xoay: { a: "#c894ff", b: "#f0dcff", g: [176, 120, 255] } }[t] || { a: "#ffffff", b: "#ffffff", g: [255, 255, 255] };
-    var g = i;
-    var b = .5 * n * (g ? 1 : .35);
-    if (a.globalCompositeOperation = "lighter", a.globalAlpha = 1, e(a, c.g, f, o, 1.25 * h, (g ? .3 : .1) + .05 * Math.sin(2 * n)), a.lineWidth = g ? 1.4 : 1, a.strokeStyle = c.a, a.globalAlpha = (g ? .85 : .4) + (g ? .1 * Math.sin(3 * n) : 0), a.beginPath(), a.arc(f, o, h - 1, 0, r), a.stroke(), a.globalAlpha = g ? .25 : .12, a.lineWidth = 3.4, a.beginPath(), a.arc(f, o, h - 1, 0, r), a.stroke(), x(a, f, o, .8 * h, 12, 1.3 * -b, .62, c.b, g ? .7 : .3, 1), function (a, t, f, o, h, i, n, e, l) {
-      a.fillStyle = e;
-      a.globalAlpha = l;
+    var s = (null == l ? 2 : l) >= 2;
+    var v = { tranphap: { a: r ? "#ffe08a" : "#b8c8ee", b: r ? "#fff3c4" : "#8ea6d8", g: r ? [255, 214, 120] : [140, 170, 255] }, nhan_bang: { a: "#9fe0ff", b: "#e0f6ff", g: [120, 210, 255] }, nhan_hoa: { a: "#ffa066", b: "#ffe0b0", g: [255, 140, 70] }, rut: { a: r ? "#8ffff0" : "#8a98a6", b: r ? "#e0fffb" : "#6a7684", g: [110, 250, 236] }, xoay: { a: "#c894ff", b: "#f0dcff", g: [176, 120, 255] } }[t] || { a: "#ffffff", b: "#ffffff", g: [255, 255, 255] };
+    var g = r;
+    var b = .5 * e * (g ? 1 : .35);
+    if (a.globalCompositeOperation = "lighter", a.globalAlpha = 1, n(a, v.g, o, f, 1.25 * i, (g ? .3 : .1) + .05 * Math.sin(2 * e)), a.lineWidth = g ? 1.4 : 1, a.strokeStyle = v.a, a.globalAlpha = (g ? .85 : .4) + (g ? .1 * Math.sin(3 * e) : 0), a.beginPath(), a.arc(o, f, i - 1, 0, h), a.stroke(), a.globalAlpha = g ? .25 : .12, a.lineWidth = 3.4, a.beginPath(), a.arc(o, f, i - 1, 0, h), a.stroke(), m(a, o, f, .8 * i, 12, 1.3 * -b, .62, v.b, g ? .7 : .3, 1), function (a, t, o, f, i, r, e, l, n) {
+      a.fillStyle = l;
+      a.globalAlpha = n;
       for (var s = 0; s < 24; s++) {
-        var M = i + s * r / 24;
-        a.fillRect(Math.round(t + Math.cos(M) * o - .7), Math.round(f + Math.sin(M) * o - .7), n, n);
+        var M = r + s * h / 24;
+        a.fillRect(Math.round(t + Math.cos(M) * f - .7), Math.round(o + Math.sin(M) * f - .7), e, e);
       }
-    }(a, f, o, .9 * h, 0, b, 1.4, c.b, g ? .9 : .35), "tranphap" === t || "xoay" === t) {
-      k(a, f, o, .62 * h, 8, .6 * b, c.a, g ? .7 : .3);
-      k(a, f, o, .42 * h, 6, -b, c.b, g ? .6 : .25);
+    }(a, o, f, .9 * i, 0, b, 1.4, v.b, g ? .9 : .35), "tranphap" === t || "xoay" === t) {
+      P(a, o, f, .62 * i, 8, .6 * b, v.a, g ? .7 : .3);
+      P(a, o, f, .42 * i, 6, -b, v.b, g ? .6 : .25);
     }
     else if ("rut" === t) {
       for (var d = 0; d < 6; d++) {
-        var u = .4 * b + d * r / 6;
-        var y = g ? (.9 * n + d / 6) % 1 : .5;
-        var p = h * (.86 - .5 * y);
-        var P = f + Math.cos(u) * p;
-        var m = o + Math.sin(u) * p;
-        a.globalAlpha = .9 * (g ? Math.sin(y * Math.PI) : .3);
-        a.fillStyle = c.b;
+        var u = .4 * b + d * h / 6;
+        var p = g ? (.9 * e + d / 6) % 1 : .5;
+        var y = i * (.86 - .5 * p);
+        var x = o + Math.cos(u) * y;
+        var k = f + Math.sin(u) * y;
+        a.globalAlpha = .9 * (g ? Math.sin(p * Math.PI) : .3);
+        a.fillStyle = v.b;
         a.save();
-        a.translate(P, m);
+        a.translate(x, k);
         a.rotate(u + Math.PI);
         a.beginPath();
         a.moveTo(3, 0);
@@ -521,62 +522,62 @@
         a.fill();
         a.restore();
       }
-      x(a, f, o, .5 * h, 8, b, .5, c.a, g ? .6 : .25, 1);
+      m(a, o, f, .5 * i, 8, b, .5, v.a, g ? .6 : .25, 1);
     }
     else {
       for (var S = 0; S < 4; S++) {
         var T = 1.4 * b + S * Math.PI / 2;
-        a.strokeStyle = c.b;
+        a.strokeStyle = v.b;
         a.globalAlpha = g ? .6 : .25;
         a.lineWidth = 1;
         a.beginPath();
-        a.arc(f, o, .55 * h, T, T + .9);
+        a.arc(o, f, .55 * i, T, T + .9);
         a.stroke();
         a.beginPath();
-        a.arc(f, o, .32 * h, T + .6, T + 1.3);
+        a.arc(o, f, .32 * i, T + .6, T + 1.3);
         a.stroke();
       }
     }
-    if (e(a, c.g, f, o, .42 * h, (g ? .5 : .16) * (.85 + .15 * Math.sin(3 * n))), g) {
+    if (n(a, v.g, o, f, .42 * i, (g ? .5 : .16) * (.85 + .15 * Math.sin(3 * e))), g) {
       for (var A = 0; A < 2; A++) {
-        var E = (.6 * n + A / 2) % 1;
+        var E = (.6 * e + A / 2) % 1;
         a.globalAlpha = .5 * (1 - E);
-        a.strokeStyle = c.b;
+        a.strokeStyle = v.b;
         a.lineWidth = 1;
         a.beginPath();
-        a.arc(f, o, h * (.5 + .6 * E), 0, r);
+        a.arc(o, f, i * (.5 + .6 * E), 0, h);
         a.stroke();
       }
-      if (M) {
+      if (s) {
         for (var W = 0; W < 10; W++) {
-          var I = (.5 * n + v(W, 1, 5001)) % 1;
-          var O = v(W, 2, 5002) * r + .4 * n;
-          var _ = f + Math.cos(O) * h * .85 * (1 - .5 * I);
-          var R = o + Math.sin(O) * h * .85 * (1 - .5 * I) - 30 * I;
-          e(a, c.g, _, R, 4, .5 * Math.sin(I * Math.PI));
-          s(a, _, R, "#ffffff", Math.sin(I * Math.PI), 1);
+          var I = (.5 * e + c(W, 1, 5001)) % 1;
+          var R = c(W, 2, 5002) * h + .4 * e;
+          var C = o + Math.cos(R) * i * .85 * (1 - .5 * I);
+          var O = f + Math.sin(R) * i * .85 * (1 - .5 * I) - 30 * I;
+          n(a, v.g, C, O, 4, .5 * Math.sin(I * Math.PI));
+          M(a, C, O, "#ffffff", Math.sin(I * Math.PI), 1);
         }
       }
     }
     a.restore();
-    return { x: f, y: o, r: h };
+    return { x: o, y: f, r: i };
   };
-  o.veXoay = function (a, t, f, o, h, i) {
+  f.veXoay = function (a, t, o, f, i, r) {
     a.save();
     a.globalCompositeOperation = "lighter";
     a.imageSmoothingEnabled = !0;
-    e(a, [176, 110, 255], t, f, 1.6 * o, .34 + .1 * Math.sin(3 * h));
-    for (var n = 0; n < 3; n++) {
-      a.strokeStyle = 1 === n ? "#f0dcff" : "#c894ff";
+    n(a, [176, 110, 255], t, o, 1.6 * f, .34 + .1 * Math.sin(3 * i));
+    for (var e = 0; e < 3; e++) {
+      a.strokeStyle = 1 === e ? "#f0dcff" : "#c894ff";
       a.lineWidth = 1.6;
       a.globalAlpha = .85;
       a.beginPath();
       for (var l = 0; l <= 30; l++) {
         var s = l / 30;
-        var M = 2.2 * h + n * r / 3 + 5.4 * s;
-        var c = o * (.08 + .95 * s);
-        var g = t + Math.cos(M) * c;
-        var b = f + Math.sin(M) * c;
+        var M = 2.2 * i + e * h / 3 + 5.4 * s;
+        var v = f * (.08 + .95 * s);
+        var g = t + Math.cos(M) * v;
+        var b = o + Math.sin(M) * v;
         if (0 === l) {
           a.moveTo(g, b);
         }
@@ -586,31 +587,31 @@
       }
       a.stroke();
     }
-    e(a, [240, 220, 255], t, f, .4 * o, .6);
-    for (var d = (null == i ? 2 : i) >= 2 ? 16 : 6, u = 0; u < d; u++) {
-      var y = (.7 * h + v(u, 1, 5101)) % 1;
-      var p = v(u, 2, 5102) * r + 5 * y;
-      var x = 1.5 * o * (1 - y);
-      e(a, [200, 150, 255], t + Math.cos(p) * x, f + Math.sin(p) * x, 5, .6 * Math.sin(y * Math.PI));
+    n(a, [240, 220, 255], t, o, .4 * f, .6);
+    for (var d = (null == r ? 2 : r) >= 2 ? 16 : 6, u = 0; u < d; u++) {
+      var p = (.7 * i + c(u, 1, 5101)) % 1;
+      var y = c(u, 2, 5102) * h + 5 * p;
+      var x = 1.5 * f * (1 - p);
+      n(a, [200, 150, 255], t + Math.cos(y) * x, o + Math.sin(y) * x, 5, .6 * Math.sin(p * Math.PI));
     }
     a.restore();
   };
-  o.veSanh = function (a, t, f, o, h, i) {
+  f.veSanh = function (a, t, o, f, i, r) {
     a.save();
     a.globalCompositeOperation = "lighter";
-    var r = o - t;
-    var n = h - f;
-    a.globalAlpha = .5 + .1 * Math.sin(1.6 * i);
+    var h = f - t;
+    var e = i - o;
+    a.globalAlpha = .5 + .1 * Math.sin(1.6 * r);
     a.strokeStyle = "#8fffc8";
     a.lineWidth = 1;
-    a.strokeRect(t + .5, f + .5, r - 1, n - 1);
+    a.strokeRect(t + .5, o + .5, h - 1, e - 1);
     a.globalAlpha = .14;
     a.lineWidth = 4;
-    a.strokeRect(t + 1, f + 1, r - 2, n - 2);
+    a.strokeRect(t + 1, o + 1, h - 2, e - 2);
     a.globalAlpha = .85;
     a.strokeStyle = "#e8fff4";
     a.lineWidth = 1.4;
-    [[t, f, 1, 1], [o, f, -1, 1], [t, h, 1, -1], [o, h, -1, -1]].forEach(function (t) {
+    [[t, o, 1, 1], [f, o, -1, 1], [t, i, 1, -1], [f, i, -1, -1]].forEach(function (t) {
       a.beginPath();
       a.moveTo(t[0] + 14 * t[2], t[1]);
       a.lineTo(t[0], t[1]);
@@ -619,24 +620,147 @@
     });
     a.restore();
   };
-  o.veBaoVat = function (a, t, f, o, h) {
+  f.veRao = function (a, t, o, f, i, e, g, b, d) {
+    if (!e || g >= 0 && g < 2.2) {
+      var u;
+      var x = (null == d ? 2 : d) >= 2;
+      var k = e ? l(1 - g / 2.2) : 1;
+      var m = t + f / 2;
+      var P = o + i / 2;
+      var S = [[120, 215, 255], [190, 150, 255], [255, 130, 80]];
+      a.save();
+      a.imageSmoothingEnabled = !0;
+      a.globalAlpha = .62 * k;
+      a.fillStyle = "#100a24";
+      a.fillRect(t + 2, o, f - 4, i);
+      a.globalCompositeOperation = "lighter";
+      var T = a.createLinearGradient(0, o, 0, o + i);
+      T.addColorStop(0, "rgba(120,215,255,1)");
+      T.addColorStop(.5, "rgba(190,150,255,1)");
+      T.addColorStop(1, "rgba(255,130,80,1)");
+      a.globalAlpha = (.36 + .08 * Math.sin(2.4 * b)) * k;
+      a.fillStyle = T;
+      a.fillRect(t + 3, o, f - 6, i);
+      var A = Math.max(1, Math.round(i / r));
+      for (u = 0; u < A; u++)
+        s(a, K((u + .5) / A), m, o + (u + .5) * r, .9 * f, 25.6, (.34 + .1 * Math.sin(2 * b + u)) * k);
+      var E = a.createLinearGradient(0, o, 0, o + i);
+      E.addColorStop(0, "rgba(228,248,255,1)");
+      E.addColorStop(.5, "rgba(242,228,255,1)");
+      E.addColorStop(1, "rgba(255,228,205,1)");
+      a.fillStyle = E;
+      a.globalAlpha = .95 * k;
+      a.fillRect(t + 2, o, 3, i);
+      a.fillRect(t + f - 5, o, 3, i);
+      a.globalAlpha = (.75 + .15 * Math.sin(3.3 * b)) * k;
+      a.fillRect(Math.round(m) - 1, o, 2, i);
+      var W = .7 * b % 1;
+      for (u = 0; u <= A; u++) {
+        var I = o + u * r;
+        var R = K(u / A);
+        var C = .45 + .55 * Math.max(0, 1 - 4.5 * Math.abs(1 - u / A - W));
+        a.fillStyle = p(R);
+        a.globalAlpha = .9 * C * k;
+        a.fillRect(t + 2, Math.round(I) - (u === A ? 2 : 0), f - 4, 2);
+        s(a, R, m, I, .75 * f, 7, .45 * C * k);
+      }
+      for (u = 0; u < A; u++) {
+        var O = o + (u + .5) * r;
+        var _ = K((u + .5) / A);
+        var w = .35 + .65 * v(b, 1.6, 1.3 * u, 2);
+        a.strokeStyle = p(_);
+        a.lineWidth = 1.2;
+        for (var L = 0; L < 2; L++) {
+          var N = t + (L + .5) * r;
+          a.globalAlpha = .95 * w * k;
+          a.beginPath();
+          a.moveTo(N, O - 8);
+          a.lineTo(N + 7, O);
+          a.lineTo(N, O + 8);
+          a.lineTo(N - 7, O);
+          a.closePath();
+          a.stroke();
+          if (w > .7) {
+            M(a, N, O, "#ffffff", w * k, 2);
+          }
+        }
+      }
+      for ([[o + 8, 0], [o + i - 4, 1]].forEach(function (t) {
+        var o = m;
+        var f = t[0];
+        var i = t[1] ? S[2] : S[0];
+        var r = t[1] ? "#ffd2b0" : "#e8f8ff";
+        n(a, i, o, f - 8, 46, (.6 + .12 * Math.sin(3 * b + 2 * t[1])) * (.45 + .55 * k));
+        a.globalAlpha = .65 + .35 * k;
+        a.fillStyle = p(i);
+        a.beginPath();
+        a.moveTo(o, f - 28);
+        a.lineTo(o + 11, f - 8);
+        a.lineTo(o, f + 9);
+        a.lineTo(o - 11, f - 8);
+        a.closePath();
+        a.fill();
+        a.fillStyle = r;
+        a.globalAlpha = (.55 + .45 * k) * (.75 + .2 * Math.sin(4 * b + t[1]));
+        a.beginPath();
+        a.moveTo(o, f - 25);
+        a.lineTo(o + 4, f - 8);
+        a.lineTo(o, f + 3);
+        a.lineTo(o - 4, f - 8);
+        a.closePath();
+        a.fill();
+      }), u = 0; u < (x ? 18 : 7); u++) {
+        var j = (.45 * b + c(u, 1, 6101)) % 1;
+        var F = t + 6 + c(u, 2, 6102) * (f - 12) + 3 * Math.sin(9 * j + u);
+        var G = o + i - j * (i + 40);
+        var V = K((G - o) / i);
+        n(a, V, F, G, 6, .65 * Math.sin(j * Math.PI) * k);
+        M(a, F, G, "#ffffff", Math.sin(j * Math.PI) * k, 1);
+      }
+      if (e) {
+        var q = g / 2.2;
+        for (n(a, [235, 235, 255], m, P, 140, .9 * Math.max(0, 1 - g / .55)), a.strokeStyle = "#e6f0ff", a.lineWidth = 1.6, a.globalAlpha = .8 * (1 - q), a.beginPath(), a.ellipse(m, P, 20 + 150 * q, 10 + 80 * q, 0, 0, h), a.stroke(), u = 0; u < (x ? 7 : 4); u++) {
+          var B = c(u, 3, 6103) * h;
+          var D = 30 + 110 * q;
+          y(a, m, P, m + Math.cos(B) * D, P + Math.sin(B) * D * .8, u + 60, 6, 9, u % 2 ? "#ffb48c" : "#9fe0ff", .9 * Math.max(0, 1 - 1.3 * q), 0);
+        }
+        for (u = 0; u < (x ? 26 : 10); u++) {
+          var H = c(u, 4, 6104) * h;
+          var J = 40 + 110 * c(u, 5, 6105);
+          var X = m + Math.cos(H) * J * g * (.6 + .4 * q);
+          var z = P + Math.sin(H) * J * g * .8 + 30 * g * g;
+          a.globalAlpha = .95 * (1 - q);
+          a.fillStyle = p(K((z - o) / i));
+          a.fillRect(Math.round(X), Math.round(z), 2 + u % 3, 2 + u % 2);
+        }
+      }
+      a.restore();
+    }
+    function K(a) {
+      var t = (a = l(a)) < .5 ? S[0] : S[1];
+      var o = a < .5 ? S[1] : S[2];
+      var f = a < .5 ? 2 * a : 2 * (a - .5);
+      return [Math.round(t[0] + (o[0] - t[0]) * f), Math.round(t[1] + (o[1] - t[1]) * f), Math.round(t[2] + (o[2] - t[2]) * f)];
+    }
+  };
+  f.veBaoVat = function (a, t, o, f, i) {
     a.save();
     a.globalCompositeOperation = "lighter";
-    var i = o ? [140, 255, 190] : [255, 220, 110];
-    l(a, i, t, f + 2, 26, 11, .5 + .2 * Math.sin(3 * h));
-    a.strokeStyle = "rgb(" + i.join(",") + ")";
+    var r = f ? [140, 255, 190] : [255, 220, 110];
+    s(a, r, t, o + 2, 26, 11, .5 + .2 * Math.sin(3 * i));
+    a.strokeStyle = "rgb(" + r.join(",") + ")";
     a.lineWidth = .9;
     a.globalAlpha = .6;
     a.beginPath();
-    a.ellipse(t, f + 2, 15, 6, 0, 0, r);
+    a.ellipse(t, o + 2, 15, 6, 0, 0, h);
     a.stroke();
-    for (var n = 0; n < 3; n++) {
-      var M = 1.6 * h + n * r / 3;
-      s(a, t + 15 * Math.cos(M), f + 2 + 6 * Math.sin(M), "#ffffff", .9, 1);
+    for (var e = 0; e < 3; e++) {
+      var l = 1.6 * i + e * h / 3;
+      M(a, t + 15 * Math.cos(l), o + 2 + 6 * Math.sin(l), "#ffffff", .9, 1);
     }
     for (var v = 0; v < 3; v++) {
-      var c = (.6 * h + v / 3) % 1;
-      e(a, i, t + 5 * Math.sin(9 * c + v), f - 26 * c, 4, .6 * Math.sin(c * Math.PI));
+      var c = (.6 * i + v / 3) % 1;
+      n(a, r, t + 5 * Math.sin(9 * c + v), o - 26 * c, 4, .6 * Math.sin(c * Math.PI));
     }
     a.restore();
   };

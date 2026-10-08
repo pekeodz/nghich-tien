@@ -49,16 +49,16 @@
   function x(a, t, e, n) {
     return Math.sqrt((a - e) * (a - e) + 1.7 * (t - n) * (1.7 * (t - n)));
   }
-  function w(a) {
+  function v(a) {
     return l[a] || "down";
   }
-  function v(t) {
+  function k(t) {
     var e = Object.assign({}, a.DEFAULT_CHARACTER, t || {});
     e.weapon = "none";
     e.aura = "none";
     return e;
   }
-  function k(t, e, n, o, r) {
+  function w(t, e, n, o, r) {
     var l = a.SpriteFactory;
     var s = l.keyOf(e);
     var u = l.enqueue(e);
@@ -116,7 +116,7 @@
     var u = a.Renderer;
     r = { params: l, t: 0, phase: "battle", mode: "cine", done: !1, finishing: !1, w: u.w, h: u.h, timers: [], tele: [], fly: [], script: [], si: -1, cur: null, sk: n.SKILLS.map(function () {
         return { cd: 0, unlocked: !1, used: 0 };
-      }), fade: 1, fadeGoal: 1, fadeSpd: 1.6, bars: 0, barsGoal: 0, cfg: l.cfg || t.store.get(e.STORAGE_KEY, null) || a.DEFAULT_CHARACTER, ai: { on: !1, conc: 1, allow: null, lamLash: !1 }, marker: null, lamHits: 0, dodge: null, tutT: 0, idleT: 0, baked: !1, mood: 0, warmed: !1, truc: !1, trucHits: 0, tt: null, kimoT: 1e9, autoLong: !1, longUsed: 0, longArm: 0, sayCd: {} };
+      }), fade: 1, fadeGoal: 1, fadeSpd: 1.6, bars: 0, barsGoal: 0, cfg: l.cfg || t.store.get(e.STORAGE_KEY, null) || a.DEFAULT_CHARACTER, ai: { on: !1, conc: 1, allow: null, lamLash: !1 }, marker: null, lamHits: 0, dodge: null, tutT: 0, idleT: 0, gate: null, ts: 1, baked: !1, mood: 0, warmed: !1, truc: !1, trucHits: 0, tt: null, kimoT: 1e9, autoLong: !1, longUsed: 0, longArm: 0, sayCd: {} };
     if (a.HUD && a.HUD.hide) {
       a.HUD.hide();
     }
@@ -128,13 +128,16 @@
     var S;
     var H;
     var X;
-    var _;
+    var R;
     var V;
     var E = p();
     E.build();
     E.setSkills(n.SKILLS);
     E.setHero(n.CAST.hero);
     E.onSkip = o.skip;
+    E.onSpotTap = function () {
+      f("deny", { gain: .35 });
+    };
     E.anchor = ea;
     E.show();
     E.controls(!1);
@@ -146,11 +149,11 @@
     for (var O = 0; O < n.SKILLS.length; O++)
       E.unlock(O, !1);
     a.VFX.clear();
-    R(!0);
+    _(!0);
     P();
     V = n.CAST;
     H = F("hero");
-    r.hero = k(V.hero, (X = r.cfg, "male" === (_ = Object.assign({}, a.DEFAULT_CHARACTER, X || {}, n.CAST.hero.cfgOver)).gender && Object.assign(_, n.CAST.hero.cfgOverMale), _), H.x, H.y, 2);
+    r.hero = w(V.hero, (X = r.cfg, "male" === (R = Object.assign({}, a.DEFAULT_CHARACTER, X || {}, n.CAST.hero.cfgOver)).gender && Object.assign(R, n.CAST.hero.cfgOverMale), R), H.x, H.y, 2);
     r.hero.hp = 1;
     r.hero.shieldBell = !0;
     r.hero.shieldHp = n.SHIELD;
@@ -167,7 +170,7 @@
     ["huyet", "hacsat", "tuyen", "lam"].forEach(function (t) {
       var e;
       var n = F(t);
-      var o = k(V[t], Object.assign({}, a.DEFAULT_CHARACTER, V[t].cfg), n.x, n.y, n.x < r.L.cx ? 2 : 1);
+      var o = w(V[t], Object.assign({}, a.DEFAULT_CHARACTER, V[t].cfg), n.x, n.y, n.x < r.L.cx ? 2 : 1);
       o.name = V[t].name;
       if (V[t].spear) {
         o.spear = (e = o, { cfg: Object.assign({}, a.DEFAULT_CHARACTER, { weapon: e.def.spear }), x: e.x, y: e.y, dir: e.dir, state: "idle", attackTime: 0, phiKiem: null, flyRise: 0, downed: !1, atkDur: 1 });
@@ -175,7 +178,7 @@
       r.enemies.push(o);
     });
     r.actors = { hero: r.hero, huyet: r.enemies[0], hacsat: r.enemies[1], tuyen: r.enemies[2], lam: r.enemies[3] };
-    a.SpriteFactory.enqueue(v(r.cfg));
+    a.SpriteFactory.enqueue(k(r.cfg));
     (function () {
       var t = a.VFX;
       var e = a.Assets;
@@ -291,7 +294,7 @@
       } }), M.push({ id: void 0, upd: function (a, t) {
         t.t += a;
         return t.t >= .6;
-      } }), M.push(oa("huyet", "huyet1", "dlg1")), M.push(oa("hero", "hero1")), M.push(ra("move", { pulse: null, start: function () {
+      } }), M.push(oa("huyet", "huyet1", "dlg1")), M.push(oa("hero", "hero1")), M.push(la("move", { pulse: null, gate: "move", start: function () {
         r.tutAllowMove = !0;
         r.tutAllowAtk = !1;
         r.ai.on = !1;
@@ -315,7 +318,7 @@
         r.marker = null;
       } })), M.push(na(function () {
       aa("huyet", "huyet2");
-    }, 1.6)), M.push(ra("attack", { pulse: "atk", start: function () {
+    }, 1.6)), M.push(la("attack", { pulse: "atk", gate: "attack", start: function () {
         r.tutAllowAtk = !0;
         p().lockAtk(!1);
         r.ai.on = !0;
@@ -323,7 +326,9 @@
         r.ai.lamLash = !0;
         r.lamHits = 0;
         r.heroFloor = .6;
-        aa("lam", T.lam1, 2.4);
+        m(.6, function () {
+          aa("lam", T.lam1, 2.4);
+        });
         r.onEnemyHit = function (a, t) {
           if ("lam" === a.id && "slash" === t.kind) {
             r.lamHits++;
@@ -338,7 +343,7 @@
         D(t, r.hero.x, r.hero.y, 150);
         t.stunT = .8;
         A(t, "hurt", .5);
-        j(t);
+        Y(t);
         B(t, t.home.x, t.home.y, 80, null);
         aa("lam", T.lam2, 2.6);
         a.VFX.spawnFlash(.18, "#fff2d0");
@@ -348,7 +353,7 @@
         r.actors.lam.engaging = !1;
       } })), M.push(na(function () {
       aa("huyet", T.huyet3, 2.6);
-    }, 1)), M.push(ra("dodge", { pulse: null, start: function (a) {
+    }, 1)), M.push(la("dodge", { pulse: null, start: function (a) {
         r.heroFloor = .6;
         r.ai.on = !1;
         aa("hacsat", T.hac1, 2.6);
@@ -356,15 +361,34 @@
         var t = r.actors.hacsat;
         m(.5, function () {
           if (r) {
-            var a = Q(t, Y.hacsat[0]);
-            a.dur = 1.8;
+            var a = Q(t, j.hacsat[0]);
+            a.dur = 2;
             a.lead = Math.min(a.lead, .72);
             a.lock = .6;
             r.dodge = { tl: a, result: null };
           }
         });
       }, test: function () {
-        return !(!r.dodge || !r.dodge.result);
+        var t = r.dodge;
+        if (t && !t.gated && t.tl.t >= t.tl.lock) {
+          t.gated = !0;
+          ra("dodge", { rect: function () {
+              var e = t.tl;
+              return function (t, e, n, o) {
+                var r = a.Renderer;
+                var i = a.Camera || {};
+                if (!r.display) {
+                  return null;
+                }
+                var l = r.display.getBoundingClientRect();
+                var s = r.zoom || 1;
+                var u = 2 * n * s;
+                var h = 2 * o * s;
+                return { left: l.left + (t + (i.ox || 0)) * s - u / 2, top: l.top + (e + (i.oy || 0)) * s - h / 2, width: u, height: h };
+              }(e.x, e.y, e.pat.r + 5, .55 * e.pat.r + 3.5);
+            } });
+        }
+        return !(!t || !t.result);
       }, done: function () {
         var a = "dodged" === r.dodge.result;
         p().toast(a ? T.dodged : T.hit, !a);
@@ -373,7 +397,7 @@
       } })), M.push(na(function () {
       aa("hero", T.hero2, 2.6);
       r.hero.mp = r.hero.maxMp;
-    }, .8)), M.push(ra("loi", { pulse: 0, unlock: 0, start: function () {
+    }, .8)), M.push(la("loi", { pulse: 0, unlock: 0, gate: "loi", start: function () {
         r.ai.on = !0;
         r.ai.allow = ["hacsat", "huyet"];
         r.ai.conc = 1;
@@ -394,7 +418,7 @@
         return !!r.castedLoi;
       }, after: 2.2 })), M.push(na(function () {
       aa("hacsat", T.hac2, 2.8);
-    }, .8)), M.push(ra("bang", { pulse: 1, unlock: 1, start: function () {
+    }, .8)), M.push(la("bang", { pulse: 1, unlock: 1, gate: "bang", start: function () {
         r.onCast = function (a) {
           if ("bang" === a) {
             r.castedBang = !0;
@@ -410,7 +434,7 @@
         return !!r.castedBang;
       }, after: 2.6 })), M.push(na(function () {
       aa("tuyen", T.tuyen1, 2.8);
-    }, .8)), M.push(ra("kim", { pulse: 2, unlock: 2, start: function () {
+    }, .8)), M.push(la("kim", { pulse: 2, unlock: 2, gate: "kim", start: function () {
         r.onCast = function (a) {
           if ("kim" === a) {
             r.castedKim = !0;
@@ -445,7 +469,7 @@
         aa("hero", T.heroTruc, 2.6);
         m(.7, function () {
           if (r) {
-            W();
+            N();
           }
         });
         m(1.7, function () {
@@ -456,7 +480,7 @@
       }, upd: function (a, t) {
         t.t += a;
         return t.t >= 3.2;
-      } }), M.push(ra("trucfight", { pulse: "atk", start: function () {
+      } }), M.push(la("trucfight", { pulse: "atk", gate: "truc", start: function () {
         r.ai.on = !0;
         r.ai.allow = null;
         r.ai.conc = 2;
@@ -476,7 +500,7 @@
       }, praise: !1, after: 1 })), M.push(na(function () {
       aa("hero", T.hero3, 2.8);
       r.hero.mp = r.hero.maxMp;
-    }, .8)), M.push(ra("van", { pulse: 3, unlock: 3, start: function () {
+    }, .8)), M.push(la("van", { pulse: 3, unlock: 3, gate: "van", start: function () {
         r.onCast = function (a) {
           if ("van" === a) {
             r.castedVan = !0;
@@ -496,6 +520,7 @@
         r.ai.on = !1;
         r.tele.length = 0;
         r.barsGoal = 1;
+        ia(!0);
         t.controls(!1);
         t.hint(null);
         t.pulse(null);
@@ -565,13 +590,13 @@
                   C(a, o.x, o.y);
                 });
                 [{ t: 0, who: "huyet", fn: function (a) {
-                      ia(a);
+                      sa(a);
                     } }, { t: .32, who: "lam", fn: function (a) {
-                      u.spawnLoiTienLash(a.x, a.y, w(a.dir), o, { owner: a, weapon: "bach_loi_tien", crackAt: .22, strikeAt: .1, endAt: .5, sfx: "local", cancel: !1 });
+                      u.spawnLoiTienLash(a.x, a.y, v(a.dir), o, { owner: a, weapon: "bach_loi_tien", crackAt: .22, strikeAt: .1, endAt: .5, sfx: "local", cancel: !1 });
                     } }, { t: .62, who: "hacsat", fn: function (a) {
-                      u.spawnFanAttack(a.x, a.y, w(a.dir), o);
+                      u.spawnFanAttack(a.x, a.y, v(a.dir), o);
                     } }, { t: .92, who: "tuyen", fn: function (a) {
-                      ia(a);
+                      sa(a);
                       if (u.spawnBichNgucTaDao) {
                         u.spawnBichNgucTaDao(o.x, o.y - 12);
                       }
@@ -629,19 +654,19 @@
               if (!e.sub) {
                 e.sub = 1;
                 l.dialogHide();
-                var v = a.TuTuongBanFX;
-                var k = s(.52 * r.L.rx, 84, 132);
+                var k = a.TuTuongBanFX;
+                var w = s(.52 * r.L.rx, 84, 132);
                 o.down = !1;
                 o.hp = Math.max(o.hp, .14);
                 A(o, "seal", .9);
                 o.dir = 0;
                 o.busy = 1;
-                r.tt = v.create(o.x, o.y + 2, k, { sq: .5, tier: y() });
+                r.tt = k.create(o.x, o.y + 2, w, { sq: .5, tier: y() });
                 l.banner(n.AUTO.tran.name, n.AUTO.tran.color);
                 aa("hero", i.heroTran, 3);
                 u.spawnFlash(.22, "#fff0c0");
-                u.spawnRing(o.x, o.y - 4, "#ffe9a8", 1.1 * k, .9);
-                u.spawnRing(o.x, o.y - 4, "#fff6d8", .6 * k, .6);
+                u.spawnRing(o.x, o.y - 4, "#ffe9a8", 1.1 * w, .9);
+                u.spawnRing(o.x, o.y - 4, "#fff6d8", .6 * w, .6);
                 if (r.fx) {
                   d().flash(r.fx, .4, [255, 226, 150]);
                   d().pulseArray(r.fx, 2);
@@ -661,7 +686,7 @@
                   var t = a.x - o.x;
                   var e = (a.y - o.y) / r.tt.sq;
                   var n = Math.sqrt(t * t + e * e) || 1;
-                  var i = 1.22 * k;
+                  var i = 1.22 * w;
                   B(a, o.x + t / n * i, o.y + e / n * i * r.tt.sq, 240, null, !0);
                 });
               }
@@ -723,7 +748,7 @@
                       C(t, o.x, o.y);
                       A(t, "attack", .35);
                       a.TuTuongBanFX.ripple(r.tt, Math.atan2((t.y - o.y) / r.tt.sq, t.x - o.x));
-                      ia(t);
+                      sa(t);
                       if (a.Camera) {
                         a.Camera.shake(3, .2);
                       }
@@ -947,7 +972,7 @@
             if (0 === e) {
               (function () {
                 r.phase = "rebirth";
-                R(!1, 2.5);
+                _(!1, 2.5);
                 a.VFX.clear();
                 r.rebirth = { t: 0, line: 0, orb: { a: 2.3, r: 1 }, stars: [], flash: 0 };
                 for (var t = 0; t < 90; t++)
@@ -986,14 +1011,14 @@
             var t = { id: "mortal", name: r.cfg.name || "phàm nhân", maxHp: 100 };
             var e = Math.round(.42 * r.w);
             var n = Math.round(.7 * r.h);
-            var o = k(t, v(r.cfg), e, n, 2);
+            var o = w(t, k(r.cfg), e, n, 2);
             A(o, "sit", 0);
             o.alpha = 1;
             r.mortal = { t: 0, a: o, bg: null, birds: [], motes: [] };
             r.mortal.hut = {};
             r.mortal.bg = function (a, t, e) {
-              for (var n = c().kit, o = Math.ceil(a / 2), r = Math.ceil(t / 2), l = n.mkCanvas(o, r), u = l.getContext("2d"), h = u.createImageData(o, r), f = new Uint32Array(h.data.buffer), d = n.ramp(["#150c2a", "#24103a", "#3a1646", "#58204e", "#7e2c52", "#a83c52", "#d05a50", "#ee8454", "#fbb065", "#ffd98a"]), p = n.ramp(["#2a1238", "#3a1a46", "#522355", "#72305c"]), m = n.ramp(["#1a0c26", "#26123a", "#341a46"]), g = .56 * r, y = .7 * o, b = g - 4, x = n.tex(), w = new Float32Array(o), v = new Float32Array(o), k = 0; k < o; k++)
-                w[k] = g - 6 - .16 * r * Math.pow(1 - Math.abs(2 * n.vn1(.012 * k, 4) - 1), 1.3) - .05 * r * n.vn1(.05 * k, 5), v[k] = g + 6 - .08 * r * Math.pow(1 - Math.abs(2 * n.vn1(.02 * k + 9, 6) - 1), 1.2) - .03 * r * n.vn1(.09 * k, 7);
+              for (var n = c().kit, o = Math.ceil(a / 2), r = Math.ceil(t / 2), l = n.mkCanvas(o, r), u = l.getContext("2d"), h = u.createImageData(o, r), f = new Uint32Array(h.data.buffer), d = n.ramp(["#150c2a", "#24103a", "#3a1646", "#58204e", "#7e2c52", "#a83c52", "#d05a50", "#ee8454", "#fbb065", "#ffd98a"]), p = n.ramp(["#2a1238", "#3a1a46", "#522355", "#72305c"]), m = n.ramp(["#1a0c26", "#26123a", "#341a46"]), g = .56 * r, y = .7 * o, b = g - 4, x = n.tex(), v = new Float32Array(o), k = new Float32Array(o), w = 0; w < o; w++)
+                v[w] = g - 6 - .16 * r * Math.pow(1 - Math.abs(2 * n.vn1(.012 * w, 4) - 1), 1.3) - .05 * r * n.vn1(.05 * w, 5), k[w] = g + 6 - .08 * r * Math.pow(1 - Math.abs(2 * n.vn1(.02 * w + 9, 6) - 1), 1.2) - .03 * r * n.vn1(.09 * w, 7);
               for (var T = 0; T < r; T++)
                 for (var M = 0; M < o; M++) {
                   var A = s(T / g, 0, 1);
@@ -1002,30 +1027,30 @@
                   var F = S * S + C * C;
                   var L = .06 + .55 * Math.pow(A, 1.5) + .6 * Math.exp(-F / (2 * Math.pow(.34 * r, 2))) + .07 * (n.smp(x.A, .5 * M, 1.4 * T) - .5);
                   var H = n.pick(d, L, M, T);
-                  if (T >= w[M]) {
-                    var X = (T - w[M]) / (.2 * r);
+                  if (T >= v[M]) {
+                    var X = (T - v[M]) / (.2 * r);
                     H = n.pick(p, .25 + .5 * s(X, 0, 1) * .5 + .35 * Math.exp(-F / (2 * Math.pow(.4 * r, 2))), M, T);
                   }
-                  if (T >= v[M]) {
-                    H = n.pick(m, .15 + .4 * s((T - v[M]) / (.2 * r), 0, 1) + .3 * Math.exp(-F / (2 * Math.pow(.5 * r, 2))), M, T);
+                  if (T >= k[M]) {
+                    H = n.pick(m, .15 + .4 * s((T - k[M]) / (.2 * r), 0, 1) + .3 * Math.exp(-F / (2 * Math.pow(.5 * r, 2))), M, T);
                   }
                   f[T * o + M] = H;
                 }
               u.putImageData(h, 0, 0);
-              var R = g + .02 * r;
+              var _ = g + .02 * r;
               u.fillStyle = "#10081a";
-              u.fillRect(0, R, o, r - R);
-              var _ = u.createLinearGradient(0, R, 0, r);
-              _.addColorStop(0, "#2a1a30");
-              _.addColorStop(1, "#0c0612");
-              u.fillStyle = _;
-              u.fillRect(0, R, o, r - R);
+              u.fillRect(0, _, o, r - _);
+              var R = u.createLinearGradient(0, _, 0, r);
+              R.addColorStop(0, "#2a1a30");
+              R.addColorStop(1, "#0c0612");
+              u.fillStyle = R;
+              u.fillRect(0, _, o, r - _);
               u.fillStyle = "#e8a060";
               u.globalAlpha = .18;
-              u.fillRect(0, R, o, 2);
+              u.fillRect(0, _, o, 2);
               u.globalAlpha = 1;
               var P = .14 * o;
-              var V = R + 4;
+              var V = _ + 4;
               var E = .17 * o;
               var D = .13 * r;
               if (e) {
@@ -1052,7 +1077,7 @@
               u.lineWidth = 3;
               u.lineCap = "round";
               var O = .86 * o;
-              var K = R + 6;
+              var K = _ + 6;
               u.beginPath();
               u.moveTo(O, K);
               u.quadraticCurveTo(O - 4, K - .18 * r, O + 2, K - .3 * r);
@@ -1066,14 +1091,14 @@
               u.fillStyle = "#120a1c";
               for (var I = 0; I < 11; I++) {
                 var U = .36 * o + 6 * I;
-                u.fillRect(U, R - 2 - I % 3, 2, 7 + I % 3);
+                u.fillRect(U, _ - 2 - I % 3, 2, 7 + I % 3);
               }
-              u.fillRect(.36 * o, R, 66, 1);
-              u.fillRect(.36 * o, R + 3, 66, 1);
+              u.fillRect(.36 * o, _, 66, 1);
+              u.fillRect(.36 * o, _ + 3, 66, 1);
               u.fillStyle = "#0a0510";
               for (var q = 0; q < o; q += 3) {
-                var W = 2 + 7 * q % 5;
-                u.fillRect(q, r - W - 2 - 13 * q % 6, 2, W + 6);
+                var N = 2 + 7 * q % 5;
+                u.fillRect(q, r - N - 2 - 13 * q % 6, 2, N + 6);
               }
               return l;
             }(r.w, r.h, r.mortal.hut);
@@ -1134,15 +1159,15 @@
       }
       catch (a) {
       }
-      _();
+      R();
     }
   }
-  function R(t, e) {
+  function _(t, e) {
     if (a.Audio && a.Audio.music) {
       a.Audio.music("tientruyen", t, e);
     }
   }
-  function _() {
+  function R() {
     if (r && !r.done) {
       r.done = !0;
       var t = r.params.onDone;
@@ -1318,7 +1343,7 @@
     }
     return !0;
   }
-  function W(t) {
+  function N(t) {
     var e = r.hero;
     var o = a.LucTinhTrucKiem;
     var i = a.VFX;
@@ -1347,7 +1372,7 @@
       }
     }
   }
-  function N(t) {
+  function W(t) {
     var e = n.SKILLS[t];
     var o = r.sk[t];
     var i = r.hero;
@@ -1446,7 +1471,7 @@
                   a.slowT = 5;
                   A(a, "hurt", .2);
                   a.busy = 0;
-                  j(a);
+                  Y(a);
                 }
               });
               f("weapon_frost_sword", { gain: .8 });
@@ -1470,7 +1495,7 @@
               if (r) {
                 if (!(i.fake || null == i.hp)) {
                   U(i, t.dmg, { kind: "kim", stun: 1.2, kb: 46, fromX: n.x, fromY: n.y, big: !0 });
-                  j(i);
+                  Y(i);
                 }
                 o.spawnRing(i.x, i.y, "#ffe28a", 52, .5);
                 if (r.fx) {
@@ -1502,7 +1527,7 @@
                       U(e, t.dmg, { kind: "van", stun: 1.4, kb: 60, fromX: n.x, fromY: n.y, big: !0 });
                       a.VFX.spawnRing(e.x, e.y, "#bff8ee", 46, .45);
                       a.VFX.spawnHitSpark(e.x, e.y - 26, 1, -.4);
-                      j(e);
+                      Y(e);
                     }
                   });
                 });
@@ -1555,10 +1580,11 @@
     }
   };
   o.exit = function () {
-    R(!1, .6);
+    _(!1, .6);
     var t = p();
     if (t.built) {
       t.anchor = null;
+      t.onSpotTap = null;
       t.hide();
       t.hint(null);
       t.dialogHide();
@@ -1585,11 +1611,13 @@
   o.skip = function () {
     if (r && !r.finishing) {
       r.finishing = !0;
-      R(!1, 1.2);
+      _(!1, 1.2);
       r.timers.length = 0;
       r.tele.length = 0;
       r.ai.on = !1;
       r.mode = "cine";
+      ia(!0);
+      r.ts = 1;
       var a = p();
       a.dialogHide();
       a.hint(null);
@@ -1610,7 +1638,7 @@
     return !!r && Z(a);
   };
   o.testAttack = function (a, t) {
-    return r && Y[a] ? Q(r.actors[a], Y[a][t || 0]) : null;
+    return r && j[a] ? Q(r.actors[a], j[a][t || 0]) : null;
   };
   o.update = function (t) {
     if (r) {
@@ -1618,38 +1646,42 @@
         (function (t) {
           if (r) {
             var e = a.Renderer;
-            if (r.t += t, !r.baked || e.w === r.w && e.h === r.h || function () {
-              var t = r.L;
-              var e = a.Renderer;
-              var n = r.fx ? r.fx.moodGoal : 0;
-              if (r.art) {
-                c().release(r.art);
-              }
-              r.art = null;
-              r.fx = null;
-              P();
-              c().pump(r.job, 1e9);
-              r.art = r.job.out;
-              r.job = null;
-              r.fx = d().create(r.art, { tier: y(), onThunder: V });
-              r.fx.mood = r.fx.moodGoal = n;
-              r.baked = !0;
-              var o = [r.hero].concat(r.enemies);
-              var i = r.L;
-              o.forEach(function (a) {
-                a.x = i.cx + (a.x - t.cx) / t.rx * i.rx;
-                a.y = i.cy + (a.y - t.cy) / t.ry * i.ry;
-                a.home.x = i.cx + (a.home.x - t.cx) / t.rx * i.rx;
-                a.home.y = i.cy + (a.home.y - t.cy) / t.ry * i.ry;
-              });
-              if (r.marker) {
-                r.marker.x = i.cx + (r.marker.x - t.cx) / t.rx * i.rx;
-                r.marker.y = i.cy + (r.marker.y - t.cy) / t.ry * i.ry;
-              }
-              if (a.Camera) {
-                a.Camera.snapTo(e.w / 2, e.h / 2, e.w, e.h, e.w, e.h);
-              }
-            }(), function (t) {
+            r.t += t;
+            if (!(!r.baked || e.w === r.w && e.h === r.h)) {
+              (function () {
+                var t = r.L;
+                var e = a.Renderer;
+                var n = r.fx ? r.fx.moodGoal : 0;
+                if (r.art) {
+                  c().release(r.art);
+                }
+                r.art = null;
+                r.fx = null;
+                P();
+                c().pump(r.job, 1e9);
+                r.art = r.job.out;
+                r.job = null;
+                r.fx = d().create(r.art, { tier: y(), onThunder: V });
+                r.fx.mood = r.fx.moodGoal = n;
+                r.baked = !0;
+                var o = [r.hero].concat(r.enemies);
+                var i = r.L;
+                o.forEach(function (a) {
+                  a.x = i.cx + (a.x - t.cx) / t.rx * i.rx;
+                  a.y = i.cy + (a.y - t.cy) / t.ry * i.ry;
+                  a.home.x = i.cx + (a.home.x - t.cx) / t.rx * i.rx;
+                  a.home.y = i.cy + (a.home.y - t.cy) / t.ry * i.ry;
+                });
+                if (r.marker) {
+                  r.marker.x = i.cx + (r.marker.x - t.cx) / t.rx * i.rx;
+                  r.marker.y = i.cy + (r.marker.y - t.cy) / t.ry * i.ry;
+                }
+                if (a.Camera) {
+                  a.Camera.snapTo(e.w / 2, e.h / 2, e.w, e.h, e.w, e.h);
+                }
+              })();
+            }
+            (function (t) {
               for (var e = a.SpriteFactory, n = L(), o = !1, r = 0; r < n.length; r++) {
                 var i = n[r];
                 if (!(i.sheet)) {
@@ -1666,7 +1698,8 @@
               if (o) {
                 e.pump(7);
               }
-            }(t), function () {
+            })(t);
+            (function () {
               if (!r.baked && r.job) {
                 var a = r.fade >= .95 ? 22 : 8;
                 if (c().pump(r.job, a)) {
@@ -1677,7 +1710,70 @@
                   r.baked = !0;
                 }
               }
-            }(), p().update(t), (l = a.Input).consumeMenu() ? o.skip() : "cine" !== r.mode && "battle" === r.phase || ((l.consumeAttack() || l.consumeInteract() || l.consumeTap()) && (p().talking() ? p().advance() : r.cur && r.cur.onTap && r.cur.onTap(r.cur)), l.consumeSlot()), function (a) {
+            })();
+            p().update(t);
+            if ((u = a.Input).consumeMenu()) {
+              o.skip();
+            }
+            else {
+              if (!("cine" !== r.mode && "battle" === r.phase)) {
+                if ((u.consumeAttack() || u.consumeInteract() || u.consumeTap())) {
+                  if (p().talking()) {
+                    p().advance();
+                  }
+                  else {
+                    if (r.cur && r.cur.onTap) {
+                      r.cur.onTap(r.cur);
+                    }
+                  }
+                }
+                u.consumeSlot();
+              }
+            }
+            var l = function (t) {
+              if (r.gate) {
+                (function (t, e) {
+                  var o = a.Input;
+                  var r = p();
+                  var i = n.GATE_T;
+                  t.t += e;
+                  t.idle += e;
+                  var l = t.t >= i.arm;
+                  var s = !1;
+                  if (l) {
+                    s = "move" === t.need ? Math.abs(o.vector.x) + Math.abs(o.vector.y) > .12 || !!o.tap || !(!o.joy || !o.joy.active) : "atk" === t.need ? !!o._attack || r.atkHeld : o._slot === t.slot;
+                  }
+                  if (s) {
+                    ia(!1);
+                  }
+                  else {
+                    if (!(l && "atk" === t.need)) {
+                      o.consumeAttack();
+                    }
+                    if (!(l && "slot" === t.need && o._slot === t.slot)) {
+                      o.consumeSlot();
+                    }
+                    if (!(l && "move" === t.need)) {
+                      o.consumeTap();
+                    }
+                    if (t.idle >= i.nudge) {
+                      t.idle = 0;
+                      r.spotNudge();
+                    }
+                    if (t.t >= i.max) {
+                      ia(!1);
+                    }
+                  }
+                })(r.gate, t);
+              }
+              var e = r.gate ? n.GATE_T.freeze : 1;
+              r.ts += (e - r.ts) * Math.min(1, t * (e < r.ts ? 9 : 6));
+              if (Math.abs(r.ts - e) < .01) {
+                r.ts = e;
+              }
+              return t * r.ts;
+            }(t);
+            if (function (a) {
               for (var t = r.timers.length - 1; t >= 0; t--) {
                 var e = r.timers[t];
                 if (e.t -= a, e.t <= 0) {
@@ -1693,7 +1789,7 @@
                   }
                 }
               }
-            }(t), r && (function (a) {
+            }(l), r && (function (a) {
               if (!r.finishing) {
                 var t = r.cur;
                 if (t && t.upd(a, t.st, t)) {
@@ -1702,15 +1798,15 @@
                   }
                   if (!r.script[r.si + 1]) {
                     r.cur = null;
-                    return void _();
+                    return void R();
                   }
                   J();
                 }
               }
-            }(t), r)) {
+            }(l), r)) {
               if (r.ambT = (null == r.ambT ? 2.5 : r.ambT) - t, r.ambT <= 0 && (r.ambT = 11 + 8 * Math.random(), "battle" === r.phase && r.baked ? f("huyet_hang_ambient", { gain: .38, rate: .9 + .1 * Math.random() }) : "mortal" === r.phase && f("huyet_rung_ambient", { gain: .3, rate: 1.05 + .1 * Math.random() })), r.fade += (r.fadeGoal - r.fade) * Math.min(1, t * r.fadeSpd * 3), Math.abs(r.fade - r.fadeGoal) < .004 && (r.fade = r.fadeGoal), r.bars += (r.barsGoal - r.bars) * Math.min(1, 3.2 * t), r.endAfterFade && r.fade >= .99) {
                 r.endAfterFade = !1;
-                return void _();
+                return void R();
               }
               if ("battle" === r.phase) {
                 if (!r.baked) {
@@ -1802,7 +1898,7 @@
                                   if (r && !n.dead) {
                                     U(n, o.dmg, { kind: "kimo", stun: .6, kb: 28, fromX: t.x, fromY: t.y, big: !0, burn: 5 });
                                     e.spawnKimOImpact(n.x, n.y - 22, u, h);
-                                    j(n);
+                                    Y(n);
                                     f("thunder", { gain: .4, rate: .75 });
                                     f("hit_big", { gain: .5, rate: .8 });
                                     if (a.Camera) {
@@ -1843,15 +1939,15 @@
                     var y = 0 !== d || 0 !== g;
                     var b = o.consumeTap();
                     if (y && (e.goal = null, r.idleT = 0), b && r.tutAllowMove && (e.goal = { x: b.x, y: b.y }, r.idleT = 0, a.VFX.spawnRipple(b.x, b.y, "#ffe8a0")), !y && e.goal) {
-                      var w = e.goal.x - e.x;
-                      var v = e.goal.y - e.y;
-                      var k = Math.sqrt(w * w + v * v);
-                      if (k < 4) {
+                      var v = e.goal.x - e.x;
+                      var k = e.goal.y - e.y;
+                      var w = Math.sqrt(v * v + k * k);
+                      if (w < 4) {
                         e.goal = null;
                       }
                       else {
-                        d = w / k;
-                        g = v / k;
+                        d = v / w;
+                        g = k / w;
                       }
                     }
                     if (e.busy <= 0 && e.stunT <= 0 && (0 !== d || 0 !== g)) {
@@ -1964,7 +2060,7 @@
                       else if (e.busy <= 0 && e.stunT <= 0) {
                         var F = r.slotBuf.n;
                         r.slotBuf = null;
-                        N(F - 1);
+                        W(F - 1);
                       }
                   }
                   else {
@@ -1978,7 +2074,7 @@
                   K(e, t);
                   O(e);
                   a.TuyetMenhFx.clamp(i, e, 3);
-                }(t);
+                }(l);
                 (function (t) {
                   var e = r.hero;
                   var n = r.L;
@@ -2073,7 +2169,7 @@
                           t.lashCd = 2.4;
                           A(t, "attack", .5);
                           t.busy = .55;
-                          a.VFX.spawnLoiTienLash(t.x, t.y, w(t.dir), n, { owner: t, weapon: "bach_loi_tien", crackAt: .26, strikeAt: .12, endAt: .55, sfx: "local", cancel: !1 });
+                          a.VFX.spawnLoiTienLash(t.x, t.y, v(t.dir), n, { owner: t, weapon: "bach_loi_tien", crackAt: .26, strikeAt: .12, endAt: .55, sfx: "local", cancel: !1 });
                           m(.3, function () {
                             if (!(!r || t.dead || t.freezeT > 0)) {
                               if (x(t.x, t.y, n.x, n.y) <= 86) {
@@ -2085,7 +2181,7 @@
                       }
                     })(i, t);
                   }
-                })(t);
+                })(l);
                 (function (t) {
                   for (var e = r.hero, n = r.tele.length - 1; n >= 0; n--) {
                     var o = r.tele[n];
@@ -2134,14 +2230,14 @@
                       r.tele.splice(n, 1);
                     }
                   }
-                })(t);
+                })(l);
                 if (r.tt) {
-                  a.TuTuongBanFX.update(r.tt, t);
+                  a.TuTuongBanFX.update(r.tt, l);
                 }
-                d().update(r.fx, t);
-                a.VFX.update(t);
+                d().update(r.fx, l);
+                a.VFX.update(l);
                 if (a.Camera) {
-                  a.Camera.update(r.w / 2, r.h / 2, r.w, r.h, r.w, r.h, t);
+                  a.Camera.update(r.w / 2, r.h / 2, r.w, r.h, r.w, r.h, l);
                 }
                 (function (a) {
                   var t = r.hero;
@@ -2158,7 +2254,7 @@
                   if (!("play" !== r.mode || t.dead)) {
                     t.mp = Math.min(t.maxMp, t.mp + 3.4 * a);
                   }
-                })(t);
+                })(l);
               }
               else {
                 if ("rebirth" === r.phase) {
@@ -2176,8 +2272,8 @@
                       for (var s = t.parts.length - 1; s >= 0; s--)
                         t.parts[s].t += a, t.parts[s].t >= t.parts[s].dur && t.parts.splice(s, 1);
                     }
-                  })(t);
-                  a.VFX.update(t);
+                  })(l);
+                  a.VFX.update(l);
                 }
                 else {
                   if ("mortal" === r.phase) {
@@ -2201,14 +2297,14 @@
                           o.x = Math.random() * r.w;
                         }
                       }
-                    })(t);
-                    a.VFX.update(t);
+                    })(l);
+                    a.VFX.update(l);
                   }
                 }
               }
             }
           }
-          var l;
+          var u;
         })(t);
         if (r) {
           r.err = 0;
@@ -2219,7 +2315,7 @@
       }
     }
   };
-  var Y = { huyet: [{ id: "cuuhuyet", windup: 1.15, lead: 1, r: 64, dmg: .078, color: "#ff4a6a", start: function (t, e, n) {
+  var j = { huyet: [{ id: "cuuhuyet", windup: 1.15, lead: 1, r: 64, dmg: .078, color: "#ff4a6a", start: function (t, e, n) {
           a.VFX.spawnCuuHuyetTran(e, n, { colors: g("cuu_huyet_kiem_tran"), radius: 64 });
           f("weapon_blood_sword");
         }, hit: function (t, e, n) {
@@ -2298,7 +2394,7 @@
             a.Camera.shake(3, .2);
           }
         } }] };
-  function j(a) {
+  function Y(a) {
     for (var t = r.tele.length - 1; t >= 0; t--)
       r.tele[t].e === a && r.tele.splice(t, 1);
     if ("cast" === a.pose) {
@@ -2310,14 +2406,14 @@
     if (r && "play" === r.mode && !r.hero.dead && !r.hero.down) {
       var e = r.actors[a];
       if (!(!e || e.dead || e.freezeT > 0 || e.stunT > 0 || e.busy > 0)) {
-        Q(e, Y[a][t]);
+        Q(e, j[a][t]);
       }
     }
   }
   function Q(a, t) {
     var e = r.hero;
     t = t || function (a) {
-      var t = Y[a.id];
+      var t = j[a.id];
       return t[Math.floor(Math.random() * t.length)];
     }(a);
     var n = t.windup * (r.ai.windMul || 1);
@@ -2366,6 +2462,8 @@
           catch (a) {
           }
         }
+        ia(!0);
+        r.ts = 1;
         p().cardHide();
         p().dialogHide();
         r.timers.length = 0;
@@ -2389,7 +2487,7 @@
       for (var e = 0; e < Math.min(4, Math.max(0, t - 3)); e++)
         r.sk[e].unlocked = !0, p().unlock(e, !0);
       if (t >= 7) {
-        W(!0);
+        N(!0);
       }
       if (t >= 5) {
         r.autoLong = !0;
@@ -2443,7 +2541,38 @@
         p().advance();
       } };
   }
-  function ra(a, t) {
+  function ra(t, e) {
+    if (r && !r.finishing) {
+      var o = n.GATE[t];
+      if (o) {
+        var i = null != o.skill ? n.SKILLS[o.skill] : null;
+        var l = { target: i ? o.skill : o.target, n: o.n, line: o.line, title: o.title || (i ? i.name : ""), meta: i ? "Tốn " + i.mp + " Linh Lực" : "", icon: i ? { kind: i.kind, icon: i.icon } : null, tip: i ? i.tip : "", keys: o.keys || (i ? { phim: ["~hoặc nhấn", String(i.key)], cham: [] } : null) };
+        if (e) {
+          for (var s in e)
+            l[s] = e[s];
+        }
+        var u = a.Input;
+        u.consumeAttack();
+        u.consumeSlot();
+        u.consumeTap();
+        r.gate = { key: t, need: o.need || "slot", slot: o.slot, t: 0, idle: 0 };
+        p().spot(l);
+        f("quest", { gain: .45 });
+      }
+    }
+  }
+  function ia(a) {
+    if (r && r.gate) {
+      r.gate = null;
+      var t = p();
+      if (t.built) {
+        t.spotOff(!!a);
+      }
+      r.idleT = 0;
+      r.ts = Math.max(r.ts, a ? 1 : .4);
+    }
+  }
+  function la(a, t) {
     return { id: a, start: function (e, o) {
         r.mode = "play";
         r.barsGoal = 0;
@@ -2460,6 +2589,9 @@
         if (t.start) {
           t.start(e, o);
         }
+        if (t.gate) {
+          ra(t.gate);
+        }
       }, upd: function (a, e, o) {
         if (r.tutT += a, e.t += a, r.idleT += a, e.ok) {
           if (e.t2 += a, e.t2 >= (null == t.after ? .9 : t.after)) {
@@ -2475,7 +2607,7 @@
             e.auto = !0;
             r.sk[t.unlock].cd = 0;
             r.hero.mp = Math.max(r.hero.mp, n.SKILLS[t.unlock].mp);
-            N(t.unlock);
+            W(t.unlock);
           }
           if (r.tutT > 90 && void 0 !== t.test) {
             e.force = !0;
@@ -2496,14 +2628,15 @@
         }
         return !1;
       }, end: function () {
+        ia(!0);
         p().hint(null);
         if (t.end) {
           t.end();
         }
       } };
   }
-  function ia(t) {
-    var e = a.WeaponArt && a.WeaponArt.arcOf ? a.WeaponArt.arcOf(t.cfg, w(t.dir)) : null;
+  function sa(t) {
+    var e = a.WeaponArt && a.WeaponArt.arcOf ? a.WeaponArt.arcOf(t.cfg, v(t.dir)) : null;
     if (e) {
       a.VFX.spawnBladeArc(t.x, t.y, e);
     }
@@ -2512,9 +2645,9 @@
     }
     f("swing", { rate: .85 });
   }
-  var la = null;
-  var sa = null;
-  function ua(t, n, o) {
+  var ua = null;
+  var ha = null;
+  function fa(t, n, o) {
     if (!(n.alpha <= .01 || n.hidden) && n.sheet) {
       var l = Math.round(n.x);
       var u = Math.round(n.y);
@@ -2567,28 +2700,28 @@
       var g = u - e.CHAR_ANCHOR_Y + Math.round(n.oy);
       if (n.flash > 0 ? function (t, e, n, o, r, i) {
         var l = e.sheet.ss || 1;
-        if (!(la)) {
-          la = document.createElement("canvas");
+        if (!(ua)) {
+          ua = document.createElement("canvas");
         }
         var s = Math.ceil(96 * l);
         var u = Math.ceil(112 * l);
-        if (!(la.width === s && la.height === u)) {
-          la.width = s;
-          la.height = u;
+        if (!(ua.width === s && ua.height === u)) {
+          ua.width = s;
+          ua.height = u;
         }
-        (sa = la.getContext("2d")).setTransform(1, 0, 0, 1, 0, 0);
-        sa.clearRect(0, 0, s, u);
-        sa.setTransform(l, 0, 0, l, 0, 0);
-        sa.imageSmoothingEnabled = !1;
-        a.SpriteFactory.drawFrame(sa, e.sheet, e.dir, S(e), 32, 40, 1, e.cfg);
-        sa.setTransform(1, 0, 0, 1, 0, 0);
-        sa.globalCompositeOperation = "source-atop";
-        sa.globalAlpha = i;
-        sa.fillStyle = "#ffffff";
-        sa.fillRect(0, 0, s, u);
-        sa.globalAlpha = 1;
-        sa.globalCompositeOperation = "source-over";
-        t.drawImage(la, 0, 0, s, u, n - 48, o - 102, 96, 112);
+        (ha = ua.getContext("2d")).setTransform(1, 0, 0, 1, 0, 0);
+        ha.clearRect(0, 0, s, u);
+        ha.setTransform(l, 0, 0, l, 0, 0);
+        ha.imageSmoothingEnabled = !1;
+        a.SpriteFactory.drawFrame(ha, e.sheet, e.dir, S(e), 32, 40, 1, e.cfg);
+        ha.setTransform(1, 0, 0, 1, 0, 0);
+        ha.globalCompositeOperation = "source-atop";
+        ha.globalAlpha = i;
+        ha.fillStyle = "#ffffff";
+        ha.fillRect(0, 0, s, u);
+        ha.globalAlpha = 1;
+        ha.globalCompositeOperation = "source-over";
+        t.drawImage(ua, 0, 0, s, u, n - 48, o - 102, 96, 112);
       }(t, n, l, u, 0, .75 * s(n.flash / .12, 0, 1)) : a.SpriteFactory.drawFrame(t, n.sheet, n.dir, S(n), m, g, 1, n.cfg), h.drawPlayerStatus && h.drawPlayerStatus(t, l, u, n, f, "front"), p && (c.drawLucTinhKiemAura && c.drawLucTinhKiemAura(t, l, u, n, "front"), d.drawLayer(t, n, 0, 0, "front", c.drawPhiKiem, l, u - 28)), n.spear && c && c.phiKiemPose) {
         var b = c.phiKiemPose(n.spear, f);
         if (b) {
@@ -2601,7 +2734,7 @@
       t.globalAlpha = 1;
     }
   }
-  function ha(t) {
+  function ca(t) {
     if (r) {
       var n = a.Renderer;
       var o = n.w;
@@ -2721,7 +2854,7 @@
         var s = [];
         if ([r.hero].concat(r.enemies).forEach(function (a) {
           s.push({ y: a.y, fn: function (t) {
-              ua(t, a);
+              fa(t, a);
             } });
         }), r.tt) {
           for (var u = 0; u < 4; u++)
@@ -2792,10 +2925,10 @@
         var b = ["#7e5ad6", "#d8a24a", "#e0506a", "#4ab0d8", "#6ac078", "#a0a0b8"];
         for (n = 0; n < 6; n++) {
           var x = y + n * i / 6 + .04;
-          var w = y + (n + 1) * i / 6 - .04;
+          var v = y + (n + 1) * i / 6 - .04;
           a.beginPath();
           a.moveTo(0, 0);
-          a.arc(0, 0, .9 * m, x, w);
+          a.arc(0, 0, .9 * m, x, v);
           a.closePath();
           a.fillStyle = b[n];
           a.globalAlpha = .14 + .05 * Math.sin(1.3 * l + n);
@@ -2807,11 +2940,11 @@
           a.arc(0, 0, m * t, 0, i);
           a.stroke();
         }), a.globalAlpha = 1, a.lineWidth = 1.2, n = 0; n < 48; n++) {
-          var v = -1.4 * y + n * i / 48;
-          var k = n % 6 == 0;
+          var k = -1.4 * y + n * i / 48;
+          var w = n % 6 == 0;
           a.beginPath();
-          a.moveTo(Math.cos(v) * m * (k ? .9 : .94), Math.sin(v) * m * (k ? .9 : .94));
-          a.lineTo(Math.cos(v) * m, Math.sin(v) * m);
+          a.moveTo(Math.cos(k) * m * (w ? .9 : .94), Math.sin(k) * m * (w ? .9 : .94));
+          a.lineTo(Math.cos(k) * m, Math.sin(k) * m);
           a.stroke();
         }
         for (a.strokeStyle = "rgba(255,224,150,0.6)", n = 0; n < 6; n++) {
@@ -2863,16 +2996,16 @@
         var X = a.createRadialGradient(d, p, 0, d, p, .5 * m);
         if (X.addColorStop(0, "rgba(255,240,200," + (.9 * H).toFixed(3) + ")"), X.addColorStop(.3, "rgba(255,170,90," + (.4 * H).toFixed(3) + ")"), X.addColorStop(1, "rgba(255,120,60,0)"), a.globalCompositeOperation = "lighter", a.fillStyle = X, a.beginPath(), a.ellipse(d, p, .5 * m, .5 * m * g * 1.3, 0, 0, i), a.fill(), o.parts) {
           for (n = 0; n < o.parts.length; n++) {
-            var R = o.parts[n];
-            var _ = R.t / R.dur;
-            var P = _ * _;
-            var V = u(R.x, d, P);
-            var E = u(R.y, p, P);
-            a.globalAlpha = .9 * Math.sin(Math.PI * _);
-            a.fillStyle = R.c ? "#ffd9a0" : "#cdb4ff";
+            var _ = o.parts[n];
+            var R = _.t / _.dur;
+            var P = R * R;
+            var V = u(_.x, d, P);
+            var E = u(_.y, p, P);
+            a.globalAlpha = .9 * Math.sin(Math.PI * R);
+            a.fillStyle = _.c ? "#ffd9a0" : "#cdb4ff";
             a.fillRect(0 | V, 0 | E, 2, 2);
             a.globalAlpha = .35;
-            a.fillRect(0 | u(R.x, d, .9 * P), 0 | u(R.y, p, .9 * P), 1, 1);
+            a.fillRect(0 | u(_.x, d, .9 * P), 0 | u(_.y, p, .9 * P), 1, 1);
           }
           a.globalAlpha = 1;
         }
@@ -2889,21 +3022,21 @@
         for (n = 8; n >= 0; n--) {
           var U = Math.max(0, D - .012 * n);
           var q = u(2.4, -.4, U) + 7 * U;
-          var W = u(1.25 * m, 0, U * U);
-          var N = d + Math.cos(q) * W;
-          var Y = p + Math.sin(q) * W * g - 30 * (1 - U);
+          var N = u(1.25 * m, 0, U * U);
+          var W = d + Math.cos(q) * N;
+          var j = p + Math.sin(q) * N * g - 30 * (1 - U);
           a.globalAlpha = .5 * (1 - n / 9);
           a.fillStyle = "#e8f4ff";
           a.beginPath();
-          a.arc(N, Y, 3 - .25 * n, 0, i);
+          a.arc(W, j, 3 - .25 * n, 0, i);
           a.fill();
         }
         a.globalAlpha = 1;
-        var j = a.createRadialGradient(B, G, 0, B, G, 26);
-        j.addColorStop(0, "rgba(255,255,255,1)");
-        j.addColorStop(.3, "rgba(190,230,255,0.7)");
-        j.addColorStop(1, "rgba(120,180,255,0)");
-        a.fillStyle = j;
+        var Y = a.createRadialGradient(B, G, 0, B, G, 26);
+        Y.addColorStop(0, "rgba(255,255,255,1)");
+        Y.addColorStop(.3, "rgba(190,230,255,0.7)");
+        Y.addColorStop(1, "rgba(120,180,255,0)");
+        a.fillStyle = Y;
         a.beginPath();
         a.arc(B, G, 26, 0, i);
         a.fill();
@@ -2958,12 +3091,12 @@
         a.restore();
         var x = n.hut;
         if (x && x.px) {
-          for (var w = 0; w < 8; w++) {
-            var v = (.16 * o + w / 8) % 1;
-            a.globalAlpha = .5 * (1 - v) * Math.min(1, 5 * v);
+          for (var v = 0; v < 8; v++) {
+            var k = (.16 * o + v / 8) % 1;
+            a.globalAlpha = .5 * (1 - k) * Math.min(1, 5 * k);
             a.fillStyle = "#9a7488";
             a.beginPath();
-            a.arc(x.px + 12 + 5 * Math.sin(6 * v + w) + 26 * v, x.py + 10 - 78 * v, 2.5 + 8 * v, 0, i);
+            a.arc(x.px + 12 + 5 * Math.sin(6 * k + v) + 26 * k, x.py + 10 - 78 * k, 2.5 + 8 * k, 0, i);
             a.fill();
           }
           a.globalAlpha = 1;
@@ -2975,8 +3108,8 @@
         a.strokeStyle = "#1a0c24";
         a.lineWidth = 1;
         a.lineCap = "round";
-        for (var k = 0; k < n.birds.length; k++) {
-          var T = n.birds[k];
+        for (var w = 0; w < n.birds.length; w++) {
+          var T = n.birds[w];
           var M = 2.4 * Math.sin(6 * o + T.ph);
           a.beginPath();
           a.moveTo(T.x - 4, T.y - M);
@@ -2984,8 +3117,8 @@
           a.quadraticCurveTo(T.x + 2, T.y - 1 - M, T.x + 4, T.y - M);
           a.stroke();
         }
-        for (ua(a, n.a, !0), a.globalCompositeOperation = "lighter", k = 0; k < n.motes.length; k++) {
-          var A = n.motes[k];
+        for (fa(a, n.a, !0), a.globalCompositeOperation = "lighter", w = 0; w < n.motes.length; w++) {
+          var A = n.motes[w];
           a.globalAlpha = .25 + .25 * Math.sin(1.5 * o + A.ph);
           a.fillStyle = "#ffd9a0";
           a.fillRect(0 | A.x, 0 | A.y, 1, 1);
@@ -3020,7 +3153,7 @@
   o.draw = function (t) {
     if (r) {
       try {
-        ha(t);
+        ca(t);
       }
       catch (e) {
         try {

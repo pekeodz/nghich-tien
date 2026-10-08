@@ -81,7 +81,10 @@
         var e = t.CoChien;
         if (e && n)
           if (n.connected && n.ready)
-            if (n.coDenBuoc) {
+            if (n.vanTieu) {
+              c("Đang áp tải, chưa đổi cờ được.");
+            }
+            else if (n.coDenBuoc) {
               var o = t.LuyenQuy;
               c("Sát Nghiệp còn nặng — dưới " + (o ? o.MOC_THA_CO : 80) + " mới tháo được cờ đen. Cúng ở Miếu Ông Trường Con hoặc uống Tẩy Tâm Đan.");
             }

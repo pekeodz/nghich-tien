@@ -17,9 +17,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Serif:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="styles/main.css?v=529eb7e5c5b2">
+<link rel="stylesheet" href="styles/main.css?v=52f00f5c890a">
 <link rel="stylesheet" href="styles/account.css?v=9f0f7228811c">
-<link rel="stylesheet" href="styles/prologue.css?v=823fb478e1b5">
+<link rel="stylesheet" href="styles/prologue.css?v=ea3b14de8b29">
 </head>
 <body>
 <div id="app">
@@ -85,14 +85,9 @@
       <p class="auth-guest-note" style="display:none">Vào thế giới online ngay bằng tài khoản khách, nhớ trên máy này · đăng ký để giữ nhân vật lâu dài</p>
     </div>
     <nav id="auth-tai" class="auth-tai" style="display:none" aria-label="Tải game về máy">
-      <a id="tai-pc" class="auth-tai-nut" target="_blank" rel="noopener noreferrer"
-         href="https://drive.google.com/drive/folders/1_383i6HantVm5VdxmNAAIdk9Yzp9QDB2?usp=drive_link">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v12H3zM8 20h8M12 16v4"/></svg>
-        <span>Phiên bản PC</span>
-      </a>
-      <a id="tai-android" class="auth-tai-nut" href="tai/Tu-Tien-2D.apk" download="Tu-Tien-2D.apk">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10v20H7zM11 18h2"/></svg>
-        <span>Phiên bản Android</span>
+      <a id="tai-game-hub" class="auth-tai-nut" href="https://thienthuonline.vn/tai-game" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>
+        <span>Tải game</span>
       </a>
     </nav>
     <nav class="auth-community" style="display:none" aria-label="Cộng đồng Nghịch Tiên">
@@ -658,10 +653,10 @@
                 </div>
                 <div id="bag-list" class="bag-list"></div>
                 <p id="bag-empty" class="dim-note">Không có đồ trong mục này.</p>
+          <div id="ht-ngoai-trang" class="ht-tab hidden"></div>
               </section>
             </div>
           </div>
-          <div id="ht-ngoai-trang" class="ht-tab hidden"></div>
           <div id="ht-so" class="ht-tab hidden">
             <div id="skill-list" class="skill-list"></div>
           </div>
@@ -784,6 +779,7 @@
               Xoá tài khoản · Delete Account
             </button>
           </div>
+          <p id="account-login-name" class="account-login-name hidden"></p>
           <div id="account-email-link" class="account-email-link hidden">
             <button id="account-email-open" class="btn-sub account-email-open" type="button">Liên kết email</button>
             <p id="account-email-done" class="account-email-done hidden"></p>
@@ -982,15 +978,15 @@
 <script src="src/gfx/bmfont.js?v=74b7356db3f8"></script>
 <script src="assets/manifest.js?v=c0058b2b6a8bn"></script>
 <script src="src/core/assets.js?v=03850161340fns"></script>
-<script src="src/systems/items.js?v=94a26b405b90"></script>
-<script src="src/systems/quest.js?v=3511a9afe8ae"></script>
+<script src="src/systems/items.js?v=75c007cc6d44"></script>
+<script src="src/systems/quest.js?v=dc7629c3b2a4"></script>
 <script src="src/systems/fishing.js?v=9ca30e71f1e9"></script>
 <script src="src/systems/farm.js?v=b5f207fa8e51"></script>
-<script src="src/systems/targeting.js?v=0aea61883c2b"></script>
-<script src="src/systems/skills.js?v=b984aca73a94hhh"></script>
+<script src="src/systems/targeting.js?v=3363a1e4f22b"></script>
+<script src="src/systems/skills.js?v=fc9f2660abf3hhh"></script>
 <script src="src/systems/luc_tinh_truc_kiem.js?v=0893d8c588b2h"></script>
 <script src="src/systems/breakthrough.js?v=da0eed256b8b"></script>
-<script src="src/systems/loot.js?v=ec8cab97ed41n"></script>
+<script src="src/systems/loot.js?v=3b76d23955ddn"></script>
 <script src="src/systems/loot_rates.js?v=2"></script>
 <script src="src/systems/thu_cuoi.js?v=7"></script>
 <script src="src/systems/phi_phong.js?v=10"></script>
@@ -1001,7 +997,7 @@
 <script src="src/systems/talismans.js?v=0d392969ff55"></script>
 <script src="src/systems/formations.js?v=80db69ba98a0"></script>
 <script src="src/systems/phapbao.js?v=4a7547e9662c"></script>
-<script src="src/systems/forge.js?v=e067fee3841b"></script>
+<script src="src/systems/forge.js?v=07166ba00c8f"></script>
 <script src="src/systems/dosat.js?v=38e0a2b5bdad"></script>
 <script src="src/systems/cochien.js?v=b0324260abe0"></script>
 <script src="src/systems/tournament.js?v=cb96ddb917ab"></script>
@@ -1017,10 +1013,11 @@
 <script src="src/systems/khoi_loi.js?v=7e382bb2721a"></script>
 <script src="src/systems/hac_thi.js?v=6ef24edd7811"></script>
 <script src="src/systems/market.js?v=584f18aa35b0"></script>
-<script src="src/systems/hu_thien.js?v=049b74ca5569"></script>
+<script src="src/systems/hu_thien.js?v=f0b04e9d9b79"></script>
 <script src="src/systems/yen_lang.js?v=abc783ffd93a"></script>
 <script src="src/systems/tran_mach.js?v=01c877a2e9bb"></script>
-<script src="src/gfx/charparts.js?v=275a49ba1d27"></script>
+<script src="src/systems/van_tieu.js?v=c1ab352cfc95"></script>
+<script src="src/gfx/charparts.js?v=61edeb1c666a"></script>
 <script src="src/gfx/weaponart.js?v=3b049f092384"></script>
 <script src="src/gfx/spritefactory.js?v=42cf6a16cd5c"></script>
 <script src="src/gfx/tileset.js?v=7a6eebd57954"></script>
@@ -1043,11 +1040,11 @@
 <script src="src/gfx/art_mieu_truong_con.js?v=4b85ef656f88"></script>
 <script src="src/gfx/art_hac_thi.js?v=69cfcd5ffcba"></script>
 <script src="src/gfx/art_lam_lang.js?v=f2be3f9e03d1"></script>
-<script src="src/world/mapdata.js?v=ef230caf5722n"></script>
+<script src="src/world/mapdata.js?v=3dbc7c8abafcn"></script>
 <script src="src/world/map_tamgioi.js?v=26e78e2dd11c"></script>
-<script src="src/world/map_three_maps.js?v=201bc0c93493"></script>
+<script src="src/world/map_three_maps.js?v=b4f142a51291"></script>
 <script src="src/world/map_thung_lung_v2.js?v=e77771e36bd2"></script>
-<script src="src/world/map_daitan.js?v=4021abf57889"></script>
+<script src="src/world/map_daitan.js?v=ba4ce4cf64e0"></script>
 <script src="src/world/map_dau_truong.js?v=746b23ab4d73"></script>
 <script src="src/world/map_dai_long_uyen.js?v=37722d8759c7"></script>
 <script src="src/world/map_phong_cho.js?v=737fb7593956"></script>
@@ -1055,7 +1052,7 @@
 <script src="src/world/map_mieu_truong_con.js?v=69f2b5317e5c"></script>
 <script src="src/world/map_hac_thi.js?v=9095416379a4"></script>
 <script src="src/world/map_lam_lang.js?v=f51defed1126"></script>
-<script src="src/world/map_hu_thien.js?v=4b81adc4b8d9"></script>
+<script src="src/world/map_hu_thien.js?v=5fac087aa8d0"></script>
 <script src="src/world/map_yen_lang.js?v=6b07f126faf1"></script>
 <script src="src/world/map_tru_tran_mach.js?v=c9932db116c7"></script>
 <script src="src/world/huyet_sac.js?v=d138bd47bd87"></script>
@@ -1066,6 +1063,10 @@
 <script src="src/gfx/art_three_maps.js?v=5e6cc1711fb0"></script>
 <script src="src/gfx/art_huyet_xich.js?v=d2e3aa416dda"></script>
 <script src="src/gfx/art_tan_vien.js?v=2d058481e276"></script>
+<script src="src/gfx/art_tan_vien_fx_tam.js?v=d046cff88259"></script>
+<script src="src/gfx/art_tan_vien_fx.js?v=8db780057dd9"></script>
+<script src="src/gfx/art_tan_vien_nha.js?v=8a0eac27f31a"></script>
+<script src="src/gfx/art_tan_vien_vat.js?v=6ab9492afaec"></script>
 <script src="src/gfx/art_bai_da.js?v=1bad2b2497cf"></script>
 <script src="src/gfx/art_rung_truc.js?v=2186f0d561f8"></script>
 <script src="src/gfx/art_duoc_coc.js?v=2bb77ec1245a"></script>
@@ -1083,8 +1084,8 @@
 <script src="src/gfx/art_hu_thien_4.js?v=d26b91a85c53"></script>
 <script src="src/gfx/art_hu_thien_vat.js?v=f94522f67f13"></script>
 <script src="src/gfx/art_hu_thien_vat2.js?v=67dcfeb4a084"></script>
-<script src="src/gfx/art_hu_thien_fx.js?v=dc619afd05bd"></script>
-<script src="src/gfx/art_hu_thien_fx2.js?v=571c1e996615"></script>
+<script src="src/gfx/art_hu_thien_fx.js?v=896dcfd79470"></script>
+<script src="src/gfx/art_hu_thien_fx2.js?v=302fe8efcbf5"></script>
 <script src="src/gfx/art_yen_lang.js?v=67c21b768420"></script>
 <script src="src/gfx/art_yen_lang_nen.js?v=282b79f05810"></script>
 <script src="src/gfx/art_yen_lang_vat.js?v=96274ca48dee"></script>
@@ -1108,12 +1109,12 @@
 <script src="src/gfx/art_thang_long_vat2.js?v=3efedea18cb8"></script>
 <script src="src/gfx/art_thang_long_cay.js?v=42769314ebc6"></script>
 <script src="src/gfx/art_thang_long_fx.js?v=24a33d0c75a5"></script>
-<script src="src/world/tilemap.js?v=82968eb51719"></script>
+<script src="src/world/tilemap.js?v=f49f85b7f3d2"></script>
 <script src="src/world/pathfinding.js?v=0a319d1610d6"></script>
 <script src="src/core/renderer.js?v=fe552a29a8fb"></script>
 <script src="src/core/camera.js?v=7e17f0d91264"></script>
 <script src="src/core/input.js?v=140c2f67978e"></script>
-<script src="src/fx/audio.js?v=2f55aac9ca05"></script>
+<script src="src/fx/audio.js?v=6abe8adc25d5"></script>
 <script src="src/fx/vfx.js?v=89d598a844f9"></script>
 <script src="src/fx/am_hon.js?v=508f0df95d42"></script>
 <script src="src/fx/khoi_loi.js?v=d98fb63871da"></script>
@@ -1126,25 +1127,25 @@
 <script src="src/fx/quy_an.js?v=b6e23e35817b"></script>
 <script src="src/fx/xuyen_kich.js?v=fbe93166119a"></script>
 <script src="src/fx/huyet_buc_chuong.js?v=d6afdf26e8d8h"></script>
+<script src="src/fx/ma_trao.js?v=399558a39b2d"></script>
+<script src="src/fx/phi_long.js?v=0bdf84189d1ah"></script>
 <script src="src/fx/huyet_liem_tram.js?v=ca5d4fe4b81ch"></script>
 <script src="src/fx/tu_anh_phuoc_tien.js?v=33d2fbc52649h"></script>
 <script src="src/fx/hoang_loi_thuong.js?v=f699c9b7f269"></script>
-<script src="src/fx/ma_trao.js?v=399558a39b2d"></script>
-<script src="src/fx/phi_long.js?v=0bdf84189d1ah"></script>
 <script src="src/fx/huyet_ma_phu.js?v=5a1199fddfd7"></script>
-<script src="src/fx/kim_cuong.js?v=50509e3424fa"></script>
 <script src="src/fx/chuong_ho_than.js?v=d117c6739a45"></script>
 <script src="src/fx/truc_kiem.js?v=fda22a84f0e3"></script>
 <script src="src/fx/xich_ma.js?v=7c493d04298e"></script>
+<script src="src/fx/kim_cuong.js?v=50509e3424fa"></script>
 <script src="src/fx/tu_tuong_ban.js?v=fd929c445252"></script>
 <script src="src/gfx/art_tuyet_menh.js?v=8dcc54a0bd2d"></script>
 <script src="src/gfx/art_tuyet_menh_vat.js?v=4f9ef309c900"></script>
 <script src="src/gfx/art_tuyet_menh_fx.js?v=743fe5fc5596"></script>
-<script src="src/ui/prologue_ui.js?v=17247fdc910f"></script>
+<script src="src/ui/prologue_ui.js?v=46beb8d89229"></script>
 <script src="src/fx/boss_hien.js?v=7ccf2c9d49e7"></script>
 <script src="src/fx/thoi_tiet.js?v=9f1b04571ea2"></script>
-<script src="src/entities/player.js?v=757920ebf74fnh"></script>
-<script src="src/entities/enemy.js?v=63c270385aa6"></script>
+<script src="src/entities/player.js?v=2fc38f9d4755nh"></script>
+<script src="src/entities/enemy.js?v=0dbbfc0559c6"></script>
 <script src="src/entities/critter.js?v=6337d7b67f68"></script>
 <script src="src/entities/pondfish.js?v=2a9163340ed6"></script>
 <script src="src/entities/remote.js?v=4eb4cd3e7b1fnh"></script>
@@ -1153,12 +1154,12 @@
 <script src="src/net/cloudsave.js?v=f8f89b247ab1"></script>
 <script src="src/net/snapdelta.js?v=8b104cbc789e"></script>
 <script src="src/net/formationstate.js?v=679998947197"></script>
-<script src="src/net/gateway.js?v=6393588115fc"></script>
+<script src="src/net/gateway.js?v=a5b7ab32febc"></script>
 <script src="src/ui/uiscale.js?v=f833db096361"></script>
 <script src="src/ui/loading.js?v=9b9a69c6c884"></script>
-<script src="src/ui/hud.js?v=ca4a237c62c7n1"></script>
+<script src="src/ui/hud.js?v=b4a0d57733d5n1"></script>
 <script src="src/ui/xemtudo.js?v=aec9972f080a"></script>
-<script src="src/ui/taytrai.js?v=efac03a21d0a"></script>
+<script src="src/ui/taytrai.js?v=e3bc82f42b07"></script>
 <script src="src/ui/forge.js?v=7047102f507c"></script>
 <script src="src/ui/hong_ty.js?v=aafd45e537cd"></script>
 <script src="src/ui/danlo.js?v=10778995a5c9"></script>
@@ -1182,7 +1183,7 @@
 <script src="src/ui/movelayout.js?v=be8e189c7948"></script>
 <script src="src/ui/skillbook.js?v=6458ffc6b75b"></script>
 <script src="src/ui/gacha.js?v=7a23b5298e9d"></script>
-<script src="src/ui/hop.js?v=033effbc286c"></script>
+<script src="src/ui/hop.js?v=3ea4b9bbe865"></script>
 <script src="src/ui/bitichluc.js?v=1befdbb3b816"></script>
 <script src="src/ui/chiso.js?v=2b73f6b633f5"></script>
 <script src="src/ui/worldmap.js?v=29d3d95aba8a"></script>
@@ -1194,34 +1195,36 @@
 <script src="src/ui/quickslots.js?v=df2ec8544b4an"></script>
 <script src="src/ui/downed.js?v=1e6acd890f89"></script>
 <script src="src/ui/authui.js?v=6a5355efaef9"></script>
-<script src="src/ui/account.js?v=7981c6601585"></script>
+<script src="src/ui/account.js?v=eed2a315f785"></script>
 <script src="src/ui/orientation.js?v=6c2bf5ac6034"></script>
 <script src="src/ui/auth_background.js?v=b423302fd22b"></script>
-<script src="src/ui/tutorial.js?v=30c13da3f093"></script>
+<script src="src/ui/tutorial.js?v=f721dedbabda"></script>
 <script src="src/scenes/charcreate.js?v=5e4354414f13"></script>
-<script src="src/scenes/prologue_data.js?v=e830f8107af2"></script>
-<script src="src/scenes/prologue.js?v=da0754451f4d"></script>
-<script src="src/scenes/world.js?v=39d4623076a1n4b"></script>
+<script src="src/scenes/prologue_data.js?v=3131084c8210"></script>
+<script src="src/scenes/prologue.js?v=19e126bf9f5d"></script>
+<script src="src/scenes/world.js?v=f7f01c8b3ea1n4b"></script>
 <script src="src/systems/huyet_sac.js?v=db8e9540e968"></script>
 <script src="src/ui/huyet_sac.js?v=51aeae78ef50n"></script>
 <script src="src/systems/huyet_sac_solo.js?v=2"></script>
 <script src="src/ui/lamlang.js?v=d8276fea4b0b"></script>
 <script src="src/ui/yen_lang.js?v=51b25b7193c6"></script>
-<script src="src/ui/tran_mach.js?v=556d9ada518a"></script>
+<script src="src/ui/tran_mach.js?v=33e557bd6fbd"></script>
+<script src="src/ui/van_tieu.js?v=89594316271b"></script>
 <script src="src/ui/cong_boss.js?v=78dc30bc1bea"></script>
 <script src="src/ui/pvp_ket.js?v=41beeb3299ec"></script>
-<script src="src/ui/huthien.js?v=7cf27e87b561"></script>
-<script src="src/ui/hoatdong.js?v=b07ea5753982"></script>
+<script src="src/ui/huthien.js?v=986386368f63"></script>
+<script src="src/ui/hoatdong.js?v=d6e829e9e4fc"></script>
 <script src="src/ui/bossboard.js?v=4098c39bf5ea"></script>
 <script src="src/ui/khu.js?v=23a66736cad5"></script>
-<script src="src/ui/xephang.js?v=9e7ab37f2953"></script>
-<script src="src/ui/encyclopedia.js?v=2f6df3e6b8c6"></script>
+<script src="src/ui/xephang.js?v=e716cdf81c03"></script>
+<script src="src/ui/encyclopedia.js?v=6be4bf1b9b94"></script>
 <script src="src/core/game.js?v=ee599baa4209"></script>
 <script src="src/systems/bot.js?v=4"></script>
 <script src="src/systems/huyen_am_tram.js?v=8"></script>
 <script src="src/world/map_bach_ho_duong.js?v=1"></script>
 <script src="src/systems/long_quy.js?v=7"></script>
-<script src="src/systems/bach_ho_duong.js?v=6"></script>
+<script src="src/systems/bach_ho_duong.js?v=7"></script>
+<script src="src/systems/van_tieu_offline.js?v=2"></script>
 <script src="src/systems/mat_na_noel.js?v=7"></script>
 <script src="src/systems/trieu_hoi.js?v=1"></script>
 <script src="src/main.js?v=3a299e936ed3"></script>

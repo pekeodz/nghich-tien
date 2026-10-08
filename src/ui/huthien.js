@@ -1,26 +1,26 @@
 !function (n) {
   "use strict";
-  var a = n.HuThienUI = { st: null, ngoai: null, van: null, choVan: 0, vanNguoi: {}, hs: null, dau: { nong: {} }, baoBay: 0 };
-  var t = 0;
+  var t = n.HuThienUI = { st: null, ngoai: null, van: null, choVan: 0, vanNguoi: {}, hs: null, dau: { nong: {} }, raoMoLuc: 0 };
+  var a = 0;
   var i = null;
-  var e = {};
-  var o = null;
+  var o = {};
+  var e = null;
   function h() {
     return n.HuThien;
   }
-  function d() {
+  function r() {
     return n.HUD;
   }
-  function r() {
+  function d() {
     return n.Gateway;
   }
   function l(n) {
-    if (n && d() && d().setCaption) {
-      d().setCaption(n);
+    if (n && r() && r().setCaption) {
+      r().setCaption(n);
     }
   }
   function c() {
-    return Date.now() + t;
+    return Date.now() + a;
   }
   function u() {
     return n.SceneWorld;
@@ -43,20 +43,20 @@
   function m(n) {
     return Math.round(n || 0).toLocaleString("vi-VN");
   }
-  function v(n, a, t) {
+  function v(n, t, a) {
     var i = document.createElement(n);
-    if (a) {
-      i.className = a;
+    if (t) {
+      i.className = t;
     }
-    if (null != t) {
-      i.textContent = t;
+    if (null != a) {
+      i.textContent = a;
     }
     return i;
   }
-  function b(n, a, t) {
-    var i = r();
+  function b(n, t, a) {
+    var i = d();
     if (i && i.cmd && i.ready) {
-      i.cmd(n, a || {}, function (n) {
+      i.cmd(n, t || {}, function (n) {
         if (n && n.ht) {
           y(n.ht);
         }
@@ -68,8 +68,8 @@
         else {
           l(n && n.why || "Chưa thực hiện được.");
         }
-        if (t) {
-          t(n);
+        if (a) {
+          a(n);
         }
       });
     }
@@ -78,88 +78,99 @@
     }
   }
   function y(n) {
-    a.ngoai = n || null;
+    t.ngoai = n || null;
     if (n && n.serverNow) {
-      t = Number(n.serverNow) - Date.now();
+      a = Number(n.serverNow) - Date.now();
     }
   }
   function x(n) {
     return h().giayDoc(n);
   }
   function C(n) {
-    for (var a = n.pk || h().PK_AI || {}, t = 1; t <= 4; t++)
-      if (a[t]) {
-        return t;
+    for (var t = n.pk || h().PK_AI || {}, a = 1; a <= 4; a++)
+      if (t[a]) {
+        return a;
       }
     return 5;
   }
   function k() {
-    d().openDialog("Chiến Báo Sỹ Sách Điện", "", { content: function (n) {
-        n.innerHTML = "";
-        o = v("div", "htd-cb");
-        n.appendChild(o);
-        S();
-      } });
+    var n = h();
+    var a = g();
+    var i = t.st;
+    if (n && a && a.datRao && a.rao && p() === n.MAP_2) {
+      var o = !!(i && i.ai2 && i.ai2.rao);
+      if (a.rao.mo !== o) {
+        a.datRao(o);
+      }
+    }
   }
   function S() {
-    var n = a.st;
-    if (o.innerHTML = "", n) {
-      var t = c();
-      o.appendChild(v("p", "htd-cb-gio", (n.tenBan || "Bản") + " · hết giờ sau " + (n.ky ? x(n.ky.ketThucLuc - t) : "—")));
-      o.appendChild(v("h4", null, "Tông môn"));
+    r().openDialog("Chiến Báo Sỹ Sách Điện", "", { content: function (n) {
+        n.innerHTML = "";
+        e = v("div", "htd-cb");
+        n.appendChild(e);
+        w();
+      } });
+  }
+  function w() {
+    var n = t.st;
+    if (e.innerHTML = "", n) {
+      var a = c();
+      e.appendChild(v("p", "htd-cb-gio", (n.tenBan || "Bản") + " · hết giờ sau " + (n.ky ? x(n.ky.ketThucLuc - a) : "—")));
+      e.appendChild(v("h4", null, "Tông môn"));
       var i = v("ol", "htd-cb-ds");
-      (n.bang || []).forEach(function (a, t) {
-        var e = v("li", n.doi && n.doi.key === a.key ? "la" : "");
-        e.appendChild(v("span", "htd-hang", String(t + 1)));
-        var o = v("div", "htd-giua");
-        o.appendChild(v("b", null, a.ten));
-        o.appendChild(v("small", null, (a.moAi1 ? "Đã mở cửa Ải 1" : "Chưa mở cửa") + " · " + a.dung + "/" + a.soNguoi + " người còn đứng"));
-        e.appendChild(o);
-        e.appendChild(v("span", "htd-phai", a.haSat + " hạ sát"));
-        i.appendChild(e);
+      (n.bang || []).forEach(function (t, a) {
+        var o = v("li", n.doi && n.doi.key === t.key ? "la" : "");
+        o.appendChild(v("span", "htd-hang", String(a + 1)));
+        var e = v("div", "htd-giua");
+        e.appendChild(v("b", null, t.ten));
+        e.appendChild(v("small", null, (t.moAi1 ? "Đã mở cửa Ải 1" : "Chưa mở cửa") + " · " + t.dung + "/" + t.soNguoi + " người còn đứng"));
+        o.appendChild(e);
+        o.appendChild(v("span", "htd-phai", t.haSat + " hạ sát"));
+        i.appendChild(o);
       });
       if (!((n.bang || []).length)) {
         i.appendChild(v("li", "htd-trong", "Chưa có tông nào trong bản."));
       }
-      o.appendChild(i);
-      var e = n.dinh || {};
-      o.appendChild(v("h4", null, "Sát thương lên Sỹ Sách Đỉnh"));
+      e.appendChild(i);
+      var o = n.dinh || {};
+      e.appendChild(v("h4", null, "Sát thương lên Sỹ Sách Đỉnh"));
       var h = v("ol", "htd-cb-ds");
-      (e.top || []).forEach(function (a, t) {
-        var i = v("li", (n.doiMinh || []).indexOf(a.id) >= 0 ? "la" : "");
-        i.appendChild(v("span", "htd-hang", String(t + 1)));
-        var e = v("div", "htd-giua");
-        e.appendChild(v("b", null, a.ten));
-        if (a.tong) {
-          e.appendChild(v("small", null, a.tong));
+      (o.top || []).forEach(function (t, a) {
+        var i = v("li", (n.doiMinh || []).indexOf(t.id) >= 0 ? "la" : "");
+        i.appendChild(v("span", "htd-hang", String(a + 1)));
+        var o = v("div", "htd-giua");
+        o.appendChild(v("b", null, t.ten));
+        if (t.tong) {
+          o.appendChild(v("small", null, t.tong));
         }
-        i.appendChild(e);
-        i.appendChild(v("span", "htd-phai", m(a.dmg)));
+        i.appendChild(o);
+        i.appendChild(v("span", "htd-phai", m(t.dmg)));
         h.appendChild(i);
       });
-      if (!((e.top || []).length)) {
-        h.appendChild(v("li", "htd-trong", e.song ? "Chưa ai đánh Đỉnh." : "Đỉnh chưa hiện."));
+      if (!((o.top || []).length)) {
+        h.appendChild(v("li", "htd-trong", o.song ? "Chưa ai đánh Đỉnh." : "Đỉnh chưa hiện."));
       }
-      o.appendChild(h);
-      o.appendChild(v("p", "htd-cb-toi", "Đạo hữu: " + m(e.toiDmg) + " sát thương lên Đỉnh · " + (0 | (n.toi && n.toi.haSat)) + " hạ sát · gục " + (0 | (n.toi && n.toi.chet)) + " lần"));
+      e.appendChild(h);
+      e.appendChild(v("p", "htd-cb-toi", "Đạo hữu: " + m(o.toiDmg) + " sát thương lên Đỉnh · " + (0 | (n.toi && n.toi.haSat)) + " hạ sát · gục " + (0 | (n.toi && n.toi.chet)) + " lần"));
     }
     else {
-      o.appendChild(v("p", "htd-trong", "Chưa có số liệu."));
+      e.appendChild(v("p", "htd-trong", "Chưa có số liệu."));
     }
   }
-  function w() {
+  function T() {
     var n = h();
-    var t = a.st && a.st.ky ? n.gioDoc(a.st.ky.dongCuaLuc) : "";
-    d().openDialog("Rời Sỹ Sách Điện", "Rời bây giờ? Ngọc Phù đang mang sẽ rơi tại chỗ." + (t ? " Vào lại được tới " + t + "." : ""), { actionLabel: "Rời", onAction: function () {
+    var a = t.st && t.st.ky ? n.gioDoc(t.st.ky.dongCuaLuc) : "";
+    r().openDialog("Rời Sỹ Sách Điện", "Rời bây giờ? Ngọc Phù đang mang sẽ rơi tại chỗ." + (a ? " Vào lại được tới " + a + "." : ""), { actionLabel: "Rời", onAction: function () {
         b("huthien.roi");
       } });
   }
-  function T(n, a, t) {
-    n.textContent = a;
-    n.className = n.className.replace(/\s*\b(nguy|tot)\b/g, "") + (t ? " " + t : "");
-    n.hidden = !a;
+  function N(n, t, a) {
+    n.textContent = t;
+    n.className = n.className.replace(/\s*\b(nguy|tot)\b/g, "") + (a ? " " + a : "");
+    n.hidden = !t;
   }
-  function N() {
+  function P() {
     if (function () {
       if (!i && document.body) {
         var n = document.createElement("style");
@@ -171,37 +182,37 @@
         i.innerHTML = '<header><span class="htd-ai"></span><span class="htd-gio"></span></header><ul><li class="htd-m1"></li><li class="htd-m2"></li><li class="htd-m3"></li><li class="htd-m4"></li><li class="htd-m5"></li></ul><footer><button type="button" class="htd-nut-cb">Chiến Báo</button><button type="button" class="htd-roi">Rời</button></footer>';
         (document.getElementById && document.getElementById("hud-right") || document.body).appendChild(i);
         ["ai", "gio", "m1", "m2", "m3", "m4", "m5", "roi"].forEach(function (n) {
-          e[n] = i.querySelector(".htd-" + n);
+          o[n] = i.querySelector(".htd-" + n);
         });
-        e.cb = i.querySelector(".htd-nut-cb");
-        e.cb.addEventListener("click", k);
-        e.roi.addEventListener("click", w);
+        o.cb = i.querySelector(".htd-nut-cb");
+        o.cb.addEventListener("click", S);
+        o.roi.addEventListener("click", T);
       }
     }(), i) {
-      var n = a.st;
-      var t = h();
-      var o = !!(n && f() && t);
-      if (i.hidden = !o, o) {
-        var d = c();
-        var r = p();
-        var l = t.ai(r);
+      var n = t.st;
+      var a = h();
+      var e = !!(n && f() && a);
+      if (i.hidden = !e, e) {
+        var r = c();
+        var d = p();
+        var l = a.ai(d);
         var u = n.doi || {};
         var g = n.toi || {};
         var s = n.ai2 || {};
         var v = n.dinh || {};
-        e.ai.textContent = t.TEN_AI[r] || "";
-        e.gio.textContent = n.ky ? x(n.ky.ketThucLuc - d) : "";
-        T(e.m1, (u.ten || "Tán tu") + (n.tenBan ? " · " + n.tenBan : ""));
+        o.ai.textContent = a.TEN_AI[d] || "";
+        o.gio.textContent = n.ky ? x(n.ky.ketThucLuc - r) : "";
+        N(o.m1, (u.ten || "Tán tu") + (n.tenBan ? " · " + n.tenBan : ""));
         var b = "";
         var y = "";
         var C = "";
-        var S = "";
+        var k = "";
         if (1 === l) {
-          var N = 0;
+          var w = 0;
           var P = (n.bang || []).length;
           (n.bang || []).forEach(function (n) {
             if (n.moAi1) {
-              N++;
+              w++;
             }
           });
           if (u.moAi1) {
@@ -209,30 +220,30 @@
             y = "tot";
           }
           else {
-            b = "Ngọc Phù: " + (0 | u.ngocPhu) + "/" + (u.can || n.luat && n.luat.canNgocPhu || t.CAN_NGOC_PHU);
+            b = "Ngọc Phù: " + (0 | u.ngocPhu) + "/" + (u.can || n.luat && n.luat.canNgocPhu || a.CAN_NGOC_PHU);
             if (g.ngocPhu) {
-              b += " · đạo hữu đang mang 1";
+              b += " · đạo hữu mang " + g.ngocPhu + "/" + (n.luat && n.luat.ngocPhuToiDa || a.NGOC_PHU_TOI_DA);
             }
           }
-          var D = n.ai1 && n.ai1.dongLuc ? n.ai1.dongLuc - d : 0;
-          C = n.ai1 && n.ai1.daDong ? "Ải 1 đã đóng" : N + "/" + P + " tông đã mở · đóng sau " + x(D);
+          var D = n.ai1 && n.ai1.dongLuc ? n.ai1.dongLuc - r : 0;
+          C = n.ai1 && n.ai1.daDong ? "Ải 1 đã đóng" : w + "/" + P + " tông đã mở · đóng sau " + x(D);
           if (!u.moAi1 && D > 0 && D < 6e4) {
-            S = "nguy";
+            k = "nguy";
           }
         }
         else if (2 === l) {
           var M = s.tru || [];
-          if (s.vo) {
-            b = "Cấm chế đã vỡ — qua hành lang";
+          if (s.rao) {
+            b = "Hàng rào đã mở — qua hành lang sang Ải 3";
             y = "tot";
           }
           else {
             b = M.map(function (n) {
               return ("xanh" === n.mau ? "Băng " : "Hoả ") + (n.song ? n.hp + "%" : "đã sập");
-            }).join(" · ") || "Hai trụ giữ cấm chế";
+            }).join(" · ") || "Hai trụ giữ hàng rào";
             y = "nguy";
           }
-          C = s.xoay ? "Vòng xoáy tím: " + x(s.xoay.den - d) : "Hành lang cấm bay — đi bộ qua";
+          C = s.xoay ? "Vòng xoáy tím: " + x(s.xoay.den - r) : "Hành lang luôn đốt máu — bay được";
         }
         else {
           if (3 === l) {
@@ -248,194 +259,202 @@
             }
           }
         }
-        T(e.m2, b, y);
-        T(e.m3, C, S);
+        N(o.m2, b, y);
+        N(o.m3, C, k);
         var L = "Hạ sát: tông " + (0 | u.haSat) + " · bạn " + (0 | g.haSat) + " · gục " + (0 | g.chet);
-        if (g.khienDen > d) {
-          L += " · khiên " + x(g.khienDen - d);
+        if (g.khienDen > r) {
+          L += " · khiên " + x(g.khienDen - r);
         }
-        T(e.m4, L);
-        var A = n.luat && n.luat.pk || t.PK_AI;
+        N(o.m4, L);
+        var _ = n.luat && n.luat.pk || a.PK_AI;
         var H = n.luat && null != n.luat.pkDinh ? n.luat.pkDinh : 1;
-        var V = "";
-        if (A && !1 === A[l]) {
-          V = 3 === l && H < 1 ? "Nội Điện: PvE tới khi Đỉnh còn " + Math.round(100 * H) + "% máu, rồi các tông đánh nhau." : "Ải này không PK — đánh nhau từ Ải 3.";
+        var A = "";
+        if (_ && !1 === _[l]) {
+          A = 3 === l && H < 1 ? "Nội Điện: PvE tới khi Đỉnh còn " + Math.round(100 * H) + "% máu, rồi các tông đánh nhau." : "Ải này không PK — đánh nhau từ Ải 3.";
         }
-        T(e.m5, V);
+        N(o.m5, A);
       }
     }
   }
-  function P() {
+  function D() {
     return n.CONFIG && n.CONFIG.TILE || 32;
   }
-  function D(n, a, t, i, e, o, h) {
-    var d = P();
-    var r = (a.tx + .5) * d - t;
-    var l = (a.ty + .5) * d - i;
-    var c = a.r || 40;
+  function M(n, t, a, i, o, e, h) {
+    var r = D();
+    var d = (t.tx + .5) * r - a;
+    var l = (t.ty + .5) * r - i;
+    var c = t.r || 40;
     n.save();
-    n.globalAlpha = o;
-    n.fillStyle = e.nen;
+    n.globalAlpha = e;
+    n.fillStyle = o.nen;
     n.beginPath();
-    n.ellipse(r, l, c, .55 * c, 0, 0, 2 * Math.PI);
+    n.ellipse(d, l, c, .55 * c, 0, 0, 2 * Math.PI);
     n.fill();
-    n.globalAlpha = Math.min(1, o + .35);
-    n.strokeStyle = e.vien;
+    n.globalAlpha = Math.min(1, e + .35);
+    n.strokeStyle = o.vien;
     n.lineWidth = 2;
     if (h) {
       n.setLineDash([6, 4]);
     }
     n.beginPath();
-    n.ellipse(r, l, c, .55 * c, 0, 0, 2 * Math.PI);
+    n.ellipse(d, l, c, .55 * c, 0, 0, 2 * Math.PI);
     n.stroke();
     n.restore();
-    return { x: r, y: l, r: c };
+    return { x: d, y: l, r: c };
   }
-  function M(a, t, i, e, o) {
+  function L(t, a, i, o, e) {
     if (n.Pixel && n.Pixel.text) {
-      n.Pixel.text(a, t, i, e, o, "#140c1e", "400 10px " + n.Pixel.MAP_FONT, "center");
+      n.Pixel.text(t, a, i, o, e, "#140c1e", "400 10px " + n.Pixel.MAP_FONT, "center");
     }
   }
-  a.gio = function () {
-    return Date.now() + t;
+  t.gio = function () {
+    return Date.now() + a;
   };
-  a.moNpc = function (n) {
-    var a = r();
-    var t = n && n.name || "Thủ Điện Sỹ Sách";
-    if (a && a.cmd && a.ready) {
-      a.cmd("huthien.xem", {}, function (n) {
+  t.moNpc = function (n) {
+    var t = d();
+    var a = n && n.name || "Thủ Điện Sỹ Sách";
+    if (t && t.cmd && t.ready) {
+      t.cmd("huthien.xem", {}, function (n) {
         if (n && n.ok && n.ht) {
           y(n.ht);
-          d().openDialog(t, "", { content: function (a) {
-              !function (n, a) {
-                var t = h();
-                var i = a.toi || {};
+          r().openDialog(a, "", { content: function (t) {
+              !function (n, t) {
+                var a = h();
+                var i = t.toi || {};
                 n.innerHTML = "";
-                var e = v("div", "htd-npc");
-                e.appendChild(v("p", "htd-npc-loi", '"Sỹ Sách Điện do Trường Con Chân Nhân dựng để phong tồn bảo vật chấn thế. Chỉ tông môn mới vào được."'));
-                e.appendChild(v("p", "htd-npc-ky", function (n) {
-                  var a = h();
-                  return n.ky ? n.thu && "MO" === n.gd ? "Kỳ thử · mở tới " + a.gioDoc(n.ky.ketThucLuc) + " — ai cũng vào được, người chưa có tông vào như một tông một người." : n.hoan ? "Kỳ này hoãn — chưa đủ " + (a.TONG_TOI_THIEU_KY || 2) + " tông đủ điều kiện." : "MO" === n.gd ? "Đang mở · nhận người tới " + a.gioDoc(n.ky.dongCuaLuc) + " · hết giờ " + a.gioDoc(n.ky.ketThucLuc) + "." : "BAO" === n.gd ? "Bảng chia tông đã chốt · mở cửa " + a.gioDoc(n.ky.batDauLuc) + "." : "Kỳ tới " + a.ngayVN(n.ky.batDauLuc).slice(5).split("-").reverse().join("/") + " lúc " + a.gioDoc(n.ky.batDauLuc) + ". Bảng chia tông chốt " + a.gioDoc(n.ky.baoLuc) + "." : "Chưa có kỳ nào.";
-                }(a) + (a.thu ? " (kỳ thử)" : "")));
-                var o = null;
-                (a.bang || []).forEach(function (n) {
+                var o = v("div", "htd-npc");
+                o.appendChild(v("p", "htd-npc-loi", '"Sỹ Sách Điện do Trường Con Chân Nhân dựng để phong tồn bảo vật chấn thế. Chỉ tông môn mới vào được."'));
+                o.appendChild(v("p", "htd-npc-ky", function (n) {
+                  var t = h();
+                  return n.ky ? n.thu && "MO" === n.gd ? "Kỳ thử · mở tới " + t.gioDoc(n.ky.ketThucLuc) + " — ai cũng vào được, người chưa có tông vào như một tông một người." : n.hoan ? "Kỳ này hoãn — chưa đủ " + (t.TONG_TOI_THIEU_KY || 2) + " tông đủ điều kiện." : "MO" === n.gd ? "Đang mở · nhận người tới " + t.gioDoc(n.ky.dongCuaLuc) + " · hết giờ " + t.gioDoc(n.ky.ketThucLuc) + "." : "BAO" === n.gd ? "Danh sách tông đã chốt · mở cửa " + t.gioDoc(n.ky.batDauLuc) + "." : "Kỳ tới " + t.ngayVN(n.ky.batDauLuc).slice(5).split("-").reverse().join("/") + " lúc " + t.gioDoc(n.ky.batDauLuc) + ". Danh sách tông chốt " + t.gioDoc(n.ky.baoLuc) + "." : "Chưa có kỳ nào.";
+                }(t) + (t.thu ? " (kỳ thử)" : "")));
+                var e = null;
+                (t.bang || []).forEach(function (n) {
                   if (n.id === i.banId) {
-                    o = n;
+                    e = n;
                   }
                 });
-                var r = v("div", "htd-npc-the");
-                function l(n, a, t) {
-                  var i = v("div", "htd-the" + (t ? " " + t : ""));
+                var d = v("div", "htd-npc-the");
+                function l(n, t, a) {
+                  var i = v("div", "htd-the" + (a ? " " + a : ""));
                   i.appendChild(v("small", null, n));
-                  i.appendChild(v("b", null, a));
-                  r.appendChild(i);
+                  i.appendChild(v("b", null, t));
+                  d.appendChild(i);
                 }
                 l("Tông", i.coTong ? i.tongTen : "Chưa vào tông", i.coTong ? "" : "xau");
-                l("Bản", o ? o.ten : a.coBang && !a.hoan ? "Không có tên" : "—", o ? "tot" : "");
+                l("Bản", e ? e.ten : t.coBang && !t.hoan ? "Không có tên" : "—", e ? "tot" : "");
                 l("Tư cách", i.ly ? "Chưa đủ" : "Đủ", i.ly ? "xau" : "tot");
-                e.appendChild(r);
-                var c = "MO" === a.gd && !1 !== a.moCua && !i.ly && (a.daVao || a.conNhan);
-                var u = a.daVao ? "Vào lại Sỹ Sách Điện" : "Vào Sỹ Sách Điện";
-                var g = c ? a.daVao ? "Về Cổng Ngoại Điện" : "Mỗi người tự vào, đều ra Cổng Ngoại Điện" : a.moCua || a.thu ? "MO" !== a.gd ? "Chưa tới giờ" : a.conNhan || a.daVao ? i.lyText || "Chưa vào được" : "Đã qua giờ nhận người mới" : "Cổng đang đóng";
+                o.appendChild(d);
+                var c = "MO" === t.gd && !1 !== t.moCua && !i.ly && (t.daVao || t.conNhan);
+                var u = t.daVao ? "Vào lại Sỹ Sách Điện" : "Vào Sỹ Sách Điện";
+                var g = c ? t.daVao ? "Về Cổng Ngoại Điện" : "Mỗi người tự vào, đều ra Cổng Ngoại Điện" : t.moCua || t.thu ? "MO" !== t.gd ? "Chưa tới giờ" : t.conNhan || t.daVao ? i.lyText || "Chưa vào được" : "Đã qua giờ nhận người mới" : "Cổng đang đóng";
                 var p = v("button", "htd-vao" + (c ? " primary" : ""), u);
                 p.type = "button";
-                p.disabled = !c || !!a.dangTrong;
-                if (a.dangTrong) {
+                p.disabled = !c || !!t.dangTrong;
+                if (t.dangTrong) {
                   g = "Đạo hữu đang ở trong điện";
                 }
                 p.addEventListener("click", function () {
                   p.disabled = !0;
                   b("huthien.vao", {}, function (n) {
                     if (n && n.ok) {
-                      d().closeDialog();
+                      r().closeDialog();
                     }
                     else {
                       p.disabled = !1;
                     }
                   });
                 });
-                e.appendChild(p);
-                e.appendChild(v("small", "htd-vao-ghi", g));
+                o.appendChild(p);
+                o.appendChild(v("small", "htd-vao-ghi", g));
                 var s = v("details", "htd-bang");
-                s.open = !!("BAO" === a.gd || "MO" === a.gd && o);
-                s.appendChild(v("summary", null, a.coBang && !a.hoan ? "Bảng chia tông · " + (a.bang || []).length + " bản" : "Bảng chia tông"));
-                if (a.coBang) {
-                  if (a.hoan || !(a.bang || []).length) {
-                    s.appendChild(v("p", "htd-trong", "Kỳ này không đủ tông để chia bản."));
+                s.open = !!("BAO" === t.gd || "MO" === t.gd && e);
+                var f = 0;
+                (t.bang || []).forEach(function (n) {
+                  f += (n.ds || []).length;
+                });
+                s.appendChild(v("summary", null, t.coBang && !t.hoan ? "Tông môn cùng vào · " + f + " tông" : "Tông môn cùng vào"));
+                if (t.coBang) {
+                  if (t.hoan || !(t.bang || []).length) {
+                    s.appendChild(v("p", "htd-trong", "Kỳ này không đủ tông môn để mở."));
                   }
                   else {
-                    a.bang.forEach(function (n) {
-                      var a = n.ds || [];
-                      var t = v("div", "htd-ban" + (n.id === i.banId ? " la" : ""));
-                      t.appendChild(v("h4", null, n.ten + " · " + a.length + " tông"));
-                      var e = v("ul", "htd-tong");
-                      a.forEach(function (n) {
-                        var a = v("li", n.laToi ? "la" : "");
-                        var t = v("span", "htd-tong-ten", n.ten);
-                        t.title = n.ten;
-                        a.appendChild(t);
-                        a.appendChild(v("small", null, n.so + " người đủ tư cách"));
-                        e.appendChild(a);
+                    t.bang.forEach(function (n) {
+                      var t = n.ds || [];
+                      var a = v("div", "htd-ban" + (n.id === i.banId ? " la" : ""));
+                      a.appendChild(v("h4", null, n.ten + " · " + t.length + " tông"));
+                      var o = v("ul", "htd-tong");
+                      t.forEach(function (n) {
+                        var t = v("li", n.laToi ? "la" : "");
+                        var a = v("span", "htd-tong-ten", n.ten);
+                        a.title = n.ten;
+                        t.appendChild(a);
+                        t.appendChild(v("small", null, n.so + " người đủ tư cách"));
+                        o.appendChild(t);
                       });
-                      t.appendChild(e);
-                      s.appendChild(t);
+                      a.appendChild(o);
+                      s.appendChild(a);
                     });
                   }
                 }
                 else {
-                  s.appendChild(v("p", "htd-trong", "Chốt lúc " + (a.ky ? t.gioDoc(a.ky.baoLuc) : "20:00") + ", trước giờ mở 16 phút."));
+                  s.appendChild(v("p", "htd-trong", "Chốt lúc " + (t.ky ? a.gioDoc(t.ky.baoLuc) : "20:00") + ", trước giờ mở 16 phút."));
                 }
-                e.appendChild(s);
-                var f = v("details", "htd-luat");
-                f.appendChild(v("summary", null, "Luật chơi"));
-                var m = v("ul");
-                [(C(a) > 1 ? "Ải 1–" + (C(a) - 1) + " là PvE, không PK; từ Ải " + C(a) + " mỗi tông một phe, đánh được nhau" + (3 === C(a) && null != a.pkDinh && a.pkDinh < 1 ? " (ở Nội Điện, khi Sỹ Sách Đỉnh còn " + Math.round(100 * a.pkDinh) + "% máu hoặc đã ngã). " : ". ") : "Mỗi tông là một phe, đánh được nhau. ") + "Tông từ " + Math.round((t.TUOI_TONG_MS || 0) / 36e5) + " giờ tuổi, người vào tông từ " + Math.round((t.TUOI_THANH_VIEN_MS || 0) / 36e5) + " giờ, Luyện Khí tầng 7 trở lên; mỗi tông tối đa " + (a.toiDaMoiTong || 20) + " người.", "Ải 1: hạ Thủ Vệ lấy Ngọc Phù. Tông đủ " + t.CAN_NGOC_PHU + " viên là cửa tự mở; Ải 1 đóng sau " + (a.ai1DongPhut || 15) + " phút, tông chưa mở cửa bị đưa ra.", "Ải 2: đánh sập Trụ Băng và Trụ Hoả thì hành lang mới hết đốt máu. Hành lang cấm bay.", "Ải 3: Sỹ Sách Đỉnh 100.000 máu, ngã là không hồi. Còn 10–20% máu thì phun lửa xanh tím.", "Gục càng nhiều thì chờ hồi sinh càng lâu (" + (a.hoiSinh && a.hoiSinh.dau || 10) + " giây, mỗi lần thêm " + (a.hoiSinh && a.hoiSinh.moiLan || 10) + ", tối đa " + (a.hoiSinh && a.hoiSinh.toiDa || 90) + ").", "Đồ quý chỉ rơi từ kho chung của bản, tổng cố định mỗi kỳ. Boss không rơi đồ riêng.", "Phong Vân Bảng có top Hạ Sát và top Sát Thương Đỉnh theo tuần, top 1–2–3 có thưởng."].forEach(function (n) {
-                  m.appendChild(v("li", null, n));
+                o.appendChild(s);
+                var m = v("details", "htd-luat");
+                m.appendChild(v("summary", null, "Luật chơi"));
+                var y = v("ul");
+                ["Mọi tông môn của máy chủ cùng vào MỘT bản. " + (C(t) > 1 ? "Ải 1–" + (C(t) - 1) + " là PvE, không PK; từ Ải " + C(t) + " mỗi tông một phe, đánh được nhau" + (3 === C(t) && null != t.pkDinh && t.pkDinh < 1 ? " (ở Nội Điện, khi Sỹ Sách Đỉnh còn " + Math.round(100 * t.pkDinh) + "% máu hoặc đã ngã). " : ". ") : "Mỗi tông là một phe, đánh được nhau. ") + "Tông từ " + Math.round((a.TUOI_TONG_MS || 0) / 36e5) + " giờ tuổi, người vào tông từ " + Math.round((a.TUOI_THANH_VIEN_MS || 0) / 36e5) + " giờ, Luyện Khí tầng 7 trở lên; mỗi tông tối đa " + (t.toiDaMoiTong || 20) + " người.", "Ải 1: hạ Thủ Vệ, Ngọc Phù tự hút vào người đánh nhiều nhất; mỗi người giữ tối đa " + (a.NGOC_PHU_TOI_DA || 3) + " viên. Tông đủ " + a.CAN_NGOC_PHU + " viên là cửa tự mở (một mình cũng mở được); Ải 1 đóng sau " + (t.ai1DongPhut || 15) + " phút, tông chưa mở cửa bị đưa ra.", "Ải 2: đánh sập Trụ Băng và Trụ Hoả thì hàng rào chắn lối sang Ải 3 mở cho mọi tông. Hành lang sau hàng rào luôn đốt máu, bay được.", "Ải 3: Sỹ Sách Đỉnh, ngã là không hồi (máu theo số người vào bản). Còn 10–20% máu thì phun lửa xanh tím.", "Mỗi boss chỉ có một con, một mạng, cho cả máy chủ.", "Gục càng nhiều thì chờ hồi sinh càng lâu (" + (t.hoiSinh && t.hoiSinh.dau || 10) + " giây, mỗi lần thêm " + (t.hoiSinh && t.hoiSinh.moiLan || 10) + ", tối đa " + (t.hoiSinh && t.hoiSinh.toiDa || 90) + ").", "Đồ quý chỉ rơi từ kho chung của bản, tổng cố định mỗi kỳ. Boss không rơi đồ riêng.", "Phong Vân Bảng có top Hạ Sát và top Sát Thương Đỉnh theo tuần, top 1–2–3 có thưởng."].forEach(function (n) {
+                  y.appendChild(v("li", null, n));
                 });
-                f.appendChild(m);
-                e.appendChild(f);
-                n.appendChild(e);
-              }(a, n.ht);
+                m.appendChild(y);
+                o.appendChild(m);
+                n.appendChild(o);
+              }(t, n.ht);
             } });
         }
         else {
-          d().openDialog(t, n && n.why || "Chưa mở được sổ Sỹ Sách Điện.");
+          r().openDialog(a, n && n.why || "Chưa mở được sổ Sỹ Sách Điện.");
         }
       });
     }
     else {
-      d().openDialog(t, "Sỹ Sách Điện chỉ mở khi đang nối máy chủ.");
+      r().openDialog(a, "Sỹ Sách Điện chỉ mở khi đang nối máy chủ.");
     }
   };
-  a.nhan = function (i) {
+  t.nhan = function (i) {
     if (i) {
-      switch ((i.serverNow && (t = Number(i.serverNow) - Date.now()), i.act)) {
+      switch ((i.serverNow && (a = Number(i.serverNow) - Date.now()), i.act)) {
         case "st":
-          a.st = i;
-          if (i.toi && i.toi.hoiSinhDen > c()) {
-            a.hs = { den: i.toi.hoiSinhDen };
+          if (void 0 === i.bang && t.st && t.st.bang) {
+            i.bang = t.st.bang;
           }
-          if (o && o.isConnected && d() && d().dialogOpen) {
-            S();
+          t.st = i;
+          if (i.toi && i.toi.hoiSinhDen > c()) {
+            t.hs = { den: i.toi.hoiSinhDen };
+          }
+          k();
+          if (e && e.isConnected && r() && r().dialogOpen) {
+            w();
           }
           else {
-            o = null;
+            e = null;
           }
           break;
         case "hs":
-          a.hs = { den: +i.den || 0 };
+          t.hs = { den: +i.den || 0 };
           l("Gục lần " + (0 | i.lan) + " — hồi sinh sau " + Math.round((+i.cho || 0) / 1e3) + " giây.");
           break;
         case "haSat":
-          var e = u() && u().player;
-          if (e && n.VFX && n.VFX.spawnText) {
-            n.VFX.spawnText(e.x, e.y - 60, "Hạ sát!", "#ff8a6a");
+          var o = u() && u().player;
+          if (o && n.VFX && n.VFX.spawnText) {
+            n.VFX.spawnText(o.x, o.y - 60, "Hạ sát!", "#ff8a6a");
           }
           l("Hạ sát " + (i.nan || "") + (i.tong ? " (" + i.tong + ")" : "") + " · tổng " + (0 | i.so));
           break;
         case "nhat":
-          if (i.hiem && d() && d().announce) {
-            d().announce("Bảo vật hiếm!", i.text);
+          if (i.hiem && r() && r().announce) {
+            r().announce("Bảo vật hiếm!", i.text);
           }
           else {
             l(i.text);
@@ -445,30 +464,30 @@
           }
           break;
         case "van":
-          a.van = { bat: Date.now(), ms: +i.ms || 0, loai: i.loai };
-          a.choVan = 0;
+          t.van = { bat: Date.now(), ms: +i.ms || 0, loai: i.loai };
+          t.choVan = 0;
           break;
         case "vanHuy":
-          a.van = null;
-          a.choVan = 0;
+          t.van = null;
+          t.choVan = 0;
           if (i.why) {
             l(i.why);
           }
           break;
         case "vanXong":
-          a.van = null;
-          a.choVan = 0;
+          t.van = null;
+          t.choVan = 0;
           break;
         case "vanNguoi":
           if (+i.ms > 0) {
-            a.vanNguoi[i.id] = { bat: Date.now(), ms: +i.ms };
+            t.vanNguoi[i.id] = { bat: Date.now(), ms: +i.ms };
           }
           else {
-            delete a.vanNguoi[i.id];
+            delete t.vanNguoi[i.id];
           }
           break;
         case "dau":
-          a.dau = { nong: (r = i.nong, g = {}, (r || []).forEach(function (n) {
+          t.dau = { nong: (d = i.nong, g = {}, (d || []).forEach(function (n) {
               g[n] = 1;
             }), g) };
           break;
@@ -493,130 +512,156 @@
           break;
         case "no":
           if (n.VFX && n.VFX.spawnRing) {
-            var h = "xoay" === i.kieu ? "#b77dff" : "#ff6a5a";
+            var h = "xoay" === i.kieu ? "#b77dff" : "rao" === i.kieu ? "#8fe0ff" : "#ff6a5a";
             n.VFX.spawnRing(+i.x || 0, +i.y || 0, h, 60, .7);
             n.VFX.spawnRing(+i.x || 0, +i.y || 0, h, 34, .5);
           }
+          if ("rao" === i.kieu) {
+            t.raoMoLuc = Date.now();
+          }
           break;
         case "roi":
-          a.st = null;
-          a.van = null;
-          a.choVan = 0;
-          a.vanNguoi = {};
-          a.hs = null;
-          a.dau = { nong: {} };
+          t.st = null;
+          t.van = null;
+          t.choVan = 0;
+          t.vanNguoi = {};
+          t.hs = null;
+          t.dau = { nong: {} };
       }
-      var r;
+      var d;
       var g;
-      N();
+      P();
     }
   };
-  a.hoiSinhConLai = function (n) {
-    if (!(f() && n && n.downed && a.hs && a.hs.den)) {
+  t.hoiSinhConLai = function (n) {
+    if (!(f() && n && n.downed && t.hs && t.hs.den)) {
       return null;
     }
-    var t = a.hs.den - c();
-    return t < -12e4 ? null : Math.max(0, t / 1e3);
+    var a = t.hs.den - c();
+    return a < -12e4 ? null : Math.max(0, a / 1e3);
   };
-  var L = { tat: { nen: "rgba(160,160,180,.10)", vien: "rgba(170,170,200,.6)" }, bang: { nen: "rgba(80,180,255,.28)", vien: "rgba(150,220,255,1)" }, hoa: { nen: "rgba(255,90,60,.28)", vien: "rgba(255,170,120,1)" }, tran: { nen: "rgba(255,210,90,.22)", vien: "rgba(255,225,140,1)" } };
-  function A() {
+  var _ = { tat: { nen: "rgba(160,160,180,.10)", vien: "rgba(170,170,200,.6)" }, bang: { nen: "rgba(80,180,255,.28)", vien: "rgba(150,220,255,1)" }, hoa: { nen: "rgba(255,90,60,.28)", vien: "rgba(255,170,120,1)" }, tran: { nen: "rgba(255,210,90,.22)", vien: "rgba(255,225,140,1)" } };
+  function H() {
     return n.Quality ? n.Quality.tier : 2;
   }
-  function H(n, a, t, i, e) {
+  function A(n, t, a, i, o) {
     n.fillStyle = "rgba(10,8,18,.8)";
-    n.fillRect(a - 21, t - 1, 42, 6);
-    n.fillStyle = e;
-    n.fillRect(a - 20, t, Math.round(40 * Math.max(0, Math.min(1, i))), 4);
+    n.fillRect(t - 21, a - 1, 42, 6);
+    n.fillStyle = o;
+    n.fillRect(t - 20, a, Math.round(40 * Math.max(0, Math.min(1, i))), 4);
   }
-  a.drawGround = function (t, i, e, o) {
+  t.drawGround = function (a, i, o, e) {
     if (f()) {
-      var d = s();
-      var r = a.st;
+      var r = s();
+      var d = t.st;
       var l = c();
-      var g = P();
-      if (d) {
+      var g = D();
+      if (r) {
         var m;
         var v = (m = n.HuThienArt) && m.fx && m.fx.veTran ? m.fx : null;
-        var b = .5 + .5 * Math.sin(3 * (o || 0));
-        if (d.htSanh) {
-          var y = d.htSanh;
+        var b = .5 + .5 * Math.sin(3 * (e || 0));
+        if (r.htSanh) {
+          var y = r.htSanh;
           if (v) {
-            v.veSanh(t, y.tx0 * g - i, y.ty0 * g - e, (y.tx1 + 1) * g - i, (y.ty1 + 1) * g - e, o || 0);
+            v.veSanh(a, y.tx0 * g - i, y.ty0 * g - o, (y.tx1 + 1) * g - i, (y.ty1 + 1) * g - o, e || 0);
           }
           else {
-            t.save();
-            t.strokeStyle = "rgba(120,240,170,.55)";
-            t.setLineDash([8, 5]);
-            t.lineWidth = 2;
-            t.strokeRect(y.tx0 * g - i, y.ty0 * g - e, (y.tx1 - y.tx0 + 1) * g, (y.ty1 - y.ty0 + 1) * g);
-            t.restore();
+            a.save();
+            a.strokeStyle = "rgba(120,240,170,.55)";
+            a.setLineDash([8, 5]);
+            a.lineWidth = 2;
+            a.strokeRect(y.tx0 * g - i, y.ty0 * g - o, (y.tx1 - y.tx0 + 1) * g, (y.ty1 - y.ty0 + 1) * g);
+            a.restore();
           }
         }
-        if (d.htTranPhap) {
-          var C = !!(r && r.doi && r.doi.moAi1);
-          var k = v ? v.veTran(t, "tranphap", (d.htTranPhap.tx + .5) * g - i, (d.htTranPhap.ty + .5) * g - e, d.htTranPhap.r || 40, C, o || 0, A()) : D(t, d.htTranPhap, i, e, C ? L.tran : L.tat, C ? .25 + .2 * b : .25, !C);
-          var S = r && r.doi && r.doi.can || r && r.luat && r.luat.canNgocPhu || h().CAN_NGOC_PHU;
-          M(t, k.x, k.y - k.r * (v ? 1 : .55) - 6, C ? "Cửa đã mở" : "Ngọc Phù " + (0 | (r && r.doi && r.doi.ngocPhu)) + "/" + S, C ? "#ffe7a0" : "#d8d2ee");
+        if (r.htTranPhap) {
+          var C = !!(d && d.doi && d.doi.moAi1);
+          var k = v ? v.veTran(a, "tranphap", (r.htTranPhap.tx + .5) * g - i, (r.htTranPhap.ty + .5) * g - o, r.htTranPhap.r || 40, C, e || 0, H()) : M(a, r.htTranPhap, i, o, C ? _.tran : _.tat, C ? .25 + .2 * b : .25, !C);
+          var S = d && d.doi && d.doi.can || d && d.luat && d.luat.canNgocPhu || h().CAN_NGOC_PHU;
+          L(a, k.x, k.y - k.r * (v ? 1 : .55) - 6, C ? "Cửa đã mở" : "Ngọc Phù " + (0 | (d && d.doi && d.doi.ngocPhu)) + "/" + S, C ? "#ffe7a0" : "#d8d2ee");
         }
-        if (d.htCamChe) {
-          var w = d.htCamChe;
-          var T = !!(r && r.ai2 && r.ai2.vo);
-          var N = w.tx0 * g - i;
-          var H = w.ty0 * g - e;
-          var V = (w.tx1 - w.tx0 + 1) * g;
-          var B = (w.ty1 - w.ty0 + 1) * g;
+        if (r.htCamChe) {
+          var w = r.htCamChe;
+          var T = w.tx0 * g - i;
+          var N = w.ty0 * g - o;
+          var P = (w.tx1 - w.tx0 + 1) * g;
+          var A = (w.ty1 - w.ty0 + 1) * g;
           if (v && v.veCamChe) {
-            v.veCamChe(t, N, H, V, B, T, o || 0, A() >= 2);
+            v.veCamChe(a, T, N, P, A, !1, e || 0, H() >= 2);
           }
           else {
-            t.save();
-            t.globalAlpha = T ? .12 : .18 + .12 * b;
-            var I = t.createLinearGradient(N, H, N, H + B);
-            I.addColorStop(0, T ? "#8aa0c0" : "#6ec8ff");
-            I.addColorStop(1, T ? "#8aa0c0" : "#ff6a4a");
-            t.fillStyle = I;
-            t.fillRect(N, H, V, B);
-            t.restore();
+            a.save();
+            a.globalAlpha = .18 + .12 * b;
+            var V = a.createLinearGradient(T, N, T, N + A);
+            V.addColorStop(0, "#6ec8ff");
+            V.addColorStop(1, "#ff6a4a");
+            a.fillStyle = V;
+            a.fillRect(T, N, P, A);
+            a.restore();
           }
-          if (d.htTranNhan) {
-            d.htTranNhan.forEach(function (n, a) {
-              var h = r && r.ai2 && r.ai2.tru && r.ai2.tru[a];
-              var d = !(!h || !h.song);
-              var l = v ? v.veTran(t, 0 === a ? "nhan_bang" : "nhan_hoa", (n.tx + .5) * g - i, (n.ty + .5) * g - e, n.r || 30, d, o || 0, A()) : D(t, n, i, e, 0 === a ? L.bang : L.hoa, d ? .35 + .25 * b : .18, !d);
-              M(t, l.x, l.y - l.r * (v ? 1 : .55) - 6, (0 === a ? "Trụ Băng" : "Trụ Hoả") + (h ? d ? " " + h.hp + "%" : " · đã sập" : ""), d ? "#fff3c8" : "#9a96b2");
+          if (r.htRao) {
+            var I = r.htRao;
+            var O = !!(d && d.ai2 && d.ai2.rao);
+            var B = I.tx0 * g - i;
+            var E = I.ty0 * g - o;
+            var R = (I.tx1 - I.tx0 + 1) * g;
+            var G = (I.ty1 - I.ty0 + 1) * g;
+            var U = O ? (Date.now() - t.raoMoLuc) / 1e3 : 0;
+            if (v && v.veRao) {
+              v.veRao(a, B, E, R, G, O, U, e || 0, H());
+            }
+            else {
+              if (!(O)) {
+                a.save();
+                a.globalAlpha = .5 + .2 * b;
+                a.fillStyle = "#9fd8ff";
+                a.fillRect(B, E, R, G);
+                a.restore();
+              }
+            }
+            if (!(O)) {
+              L(a, B + R / 2, E - 8, "Hàng rào Băng Hỏa", "#cfeaff");
+            }
+          }
+          if (r.htTranNhan) {
+            r.htTranNhan.forEach(function (n, t) {
+              var h = d && d.ai2 && d.ai2.tru && d.ai2.tru[t];
+              var r = !(!h || !h.song);
+              var l = v ? v.veTran(a, 0 === t ? "nhan_bang" : "nhan_hoa", (n.tx + .5) * g - i, (n.ty + .5) * g - o, n.r || 30, r, e || 0, H()) : M(a, n, i, o, 0 === t ? _.bang : _.hoa, r ? .35 + .25 * b : .18, !r);
+              L(a, l.x, l.y - l.r * (v ? 1 : .55) - 6, (0 === t ? "Trụ Băng" : "Trụ Hoả") + (h ? r ? " " + h.hp + "%" : " · đã sập" : ""), r ? "#fff3c8" : "#9a96b2");
             });
           }
         }
-        if (r && r.ai2 && r.ai2.xoay && p() === h().MAP_2) {
-          var _ = (r.ai2.xoay.tx + .5) * g - i;
-          var E = (r.ai2.xoay.ty + .5) * g - e;
+        if (d && d.ai2 && d.ai2.xoay && p() === h().MAP_2) {
+          var K = (d.ai2.xoay.tx + .5) * g - i;
+          var F = (d.ai2.xoay.ty + .5) * g - o;
           if (v && v.veXoay) {
-            v.veXoay(t, _, E, 40, o || 0, A());
+            v.veXoay(a, K, F, 40, e || 0, H());
           }
           else {
-            t.save();
-            for (var O = 0; O < 4; O++)
-              t.strokeStyle = "rgba(190,120,255," + (.8 - .15 * O) + ")", t.lineWidth = 3, t.beginPath(), t.ellipse(_, E, 40 - 8 * O, .55 * (40 - 8 * O), (o || 0) * (1.5 + .4 * O), .3, 1.6 * Math.PI), t.stroke();
-            t.restore();
+            a.save();
+            for (var X = 0; X < 4; X++)
+              a.strokeStyle = "rgba(190,120,255," + (.8 - .15 * X) + ")", a.lineWidth = 3, a.beginPath(), a.ellipse(K, F, 40 - 8 * X, .55 * (40 - 8 * X), (e || 0) * (1.5 + .4 * X), .3, 1.6 * Math.PI), a.stroke();
+            a.restore();
           }
-          M(t, _, E - 34 - (v ? 14 : 0), "Vòng xoáy · " + x(r.ai2.xoay.den - l), "#e3c8ff");
+          L(a, K, F - 34 - (v ? 14 : 0), "Vòng xoáy · " + x(d.ai2.xoay.den - l), "#e3c8ff");
         }
-        var G = u() && u().drops;
-        if (G) {
-          for (var U = 0; U < G.length; U++) {
-            var K = G[U];
-            if (K.ht && "ground" === K.state) {
+        var q = u() && u().drops;
+        if (q) {
+          for (var j = 0; j < q.length; j++) {
+            var z = q[j];
+            if (z.ht && "ground" === z.state) {
               if (v && v.veBaoVat) {
-                v.veBaoVat(t, K.x - i, K.y - e, K.itemId === h().NGOC_PHU, o || 0);
+                v.veBaoVat(a, z.x - i, z.y - o, z.itemId === h().NGOC_PHU, e || 0);
               }
               else {
-                t.save();
-                t.globalAlpha = .35 + .25 * b;
-                t.fillStyle = K.itemId === h().NGOC_PHU ? "rgba(140,255,190,.6)" : "rgba(255,220,110,.55)";
-                t.beginPath();
-                t.ellipse(K.x - i, K.y - e + 2, 16, 7, 0, 0, 2 * Math.PI);
-                t.fill();
-                t.restore();
+                a.save();
+                a.globalAlpha = .35 + .25 * b;
+                a.fillStyle = z.itemId === h().NGOC_PHU ? "rgba(140,255,190,.6)" : "rgba(255,220,110,.55)";
+                a.beginPath();
+                a.ellipse(z.x - i, z.y - o + 2, 16, 7, 0, 0, 2 * Math.PI);
+                a.fill();
+                a.restore();
               }
             }
           }
@@ -624,20 +669,20 @@
       }
     }
   };
-  a.drawFront = function (n, t, i) {
+  t.drawFront = function (n, a, i) {
     if (f()) {
-      var e = u();
-      var o = e && e.player;
-      var h = r();
-      var d = h && h.selfId;
-      if (a.van && Date.now() - a.van.bat > a.van.ms + 2e3 && (a.van = null), o) {
-        if (a.van) {
-          var l = (Date.now() - a.van.bat) / Math.max(1, a.van.ms);
-          H(n, o.x - t, o.y - i - 70, l, "#ffd36a");
-          M(n, o.x - t, o.y - i - 76, "Đang vận…", "#fff1c8");
+      var o = u();
+      var e = o && o.player;
+      var h = d();
+      var r = h && h.selfId;
+      if (t.van && Date.now() - t.van.bat > t.van.ms + 2e3 && (t.van = null), e) {
+        if (t.van) {
+          var l = (Date.now() - t.van.bat) / Math.max(1, t.van.ms);
+          A(n, e.x - a, e.y - i - 70, l, "#ffd36a");
+          L(n, e.x - a, e.y - i - 76, "Đang vận…", "#fff1c8");
         }
-        if (d) {
-          v(d, o.x - t, o.y - i - 88);
+        if (r) {
+          v(r, e.x - a, e.y - i - 88);
         }
       }
       var c = h && h.remotes;
@@ -645,61 +690,61 @@
         for (var g in c) {
           var p = c[g];
           if (p) {
-            var s = a.vanNguoi[g];
+            var s = t.vanNguoi[g];
             if (s) {
               var m = (Date.now() - s.bat) / Math.max(1, s.ms);
               if (m > 1.5) {
-                delete a.vanNguoi[g];
+                delete t.vanNguoi[g];
                 continue;
               }
-              H(n, p.x - t, p.y - i - 70, m, "#ff9a6a");
+              A(n, p.x - a, p.y - i - 70, m, "#ff9a6a");
             }
-            v(g, p.x - t, p.y - i - 88);
+            v(g, p.x - a, p.y - i - 88);
           }
         }
       }
     }
-    function v(t, i, e) {
-      if (a.dau.nong[t]) {
-        M(n, i, e, "◆ Ngọc Phù", "#8dffb8");
+    function v(a, i, o) {
+      if (t.dau.nong[a]) {
+        L(n, i, o, "◆ Ngọc Phù", "#8dffb8");
       }
     }
   };
-  a.dungTrenBaoVat = function (n, t, i) {
-    if (i && !a.van && t && !t.downed && (!t.state || "idle" === t.state)) {
-      var e = Date.now();
-      if (!(n.htHoi && e < n.htHoi || a.choVan > e)) {
-        n.htHoi = e + 1500;
-        var o = r();
-        if (o && o.cmd && o.ready) {
-          a.choVan = e + 1500;
-          o.cmd("huthien.nhat", { id: n.lootId }, function (t) {
-            if (!(t && t.ok)) {
-              a.choVan = 0;
+  t.dungTrenBaoVat = function (n, a, i) {
+    if (i && !t.van && a && !a.downed && (!a.state || "idle" === a.state)) {
+      var o = Date.now();
+      if (!(n.htHoi && o < n.htHoi || t.choVan > o)) {
+        n.htHoi = o + 1500;
+        var e = d();
+        if (e && e.cmd && e.ready) {
+          t.choVan = o + 1500;
+          e.cmd("huthien.nhat", { id: n.lootId }, function (a) {
+            if (!(a && a.ok)) {
+              t.choVan = 0;
               n.htHoi = n.htBo = Date.now() + 6e3;
-              l(t && t.why || "Chưa vận được.");
+              l(a && a.why || "Chưa vận được.");
             }
           });
         }
       }
     }
   };
-  a.giuYen = function (t) {
-    if (!f() || !t || t.downed) {
+  t.giuYen = function (a) {
+    if (!f() || !a || a.downed) {
       return !1;
     }
     var i = Date.now();
-    if (a.van || a.choVan > i) {
+    if (t.van || t.choVan > i) {
       return !0;
     }
-    if (t.path && t.path.length) {
+    if (a.path && a.path.length) {
       return !1;
     }
-    for (var e = u(), o = e && e.drops || [], h = n.Loot && n.Loot.PICK_R || 40, d = 0; d < o.length; d++) {
-      var r = o[d];
-      if (r.ht && r.vanMs > 0 && "ground" === r.state && !(r.htBo && i < r.htBo)) {
-        var l = r.x - t.x;
-        var c = r.y - t.y;
+    for (var o = u(), e = o && o.drops || [], h = n.Loot && n.Loot.PICK_R || 40, r = 0; r < e.length; r++) {
+      var d = e[r];
+      if (d.ht && d.vanMs > 0 && "ground" === d.state && !(d.htBo && i < d.htBo)) {
+        var l = d.x - a.x;
+        var c = d.y - a.y;
         if (l * l + c * c <= h * h) {
           return !0;
         }
@@ -707,50 +752,34 @@
     }
     return !1;
   };
-  a.chanCua = function (n) {
-    var t = h();
-    var i = a.st;
-    if (!(t && f() && i && i.doi)) {
+  t.chanCua = function (n) {
+    var a = h();
+    var i = t.st;
+    if (!(a && f() && i && i.doi)) {
       return null;
     }
-    var e = i.doi.can || i.luat && i.luat.canNgocPhu || t.CAN_NGOC_PHU;
-    return p() === t.MAP_1 && n === t.MAP_2 && !i.doi.moAi1 && (0 | i.doi.ngocPhu) < e ? "Tông môn mới có " + (0 | i.doi.ngocPhu) + "/" + e + " Ngọc Phù." : null;
+    var o = i.doi.can || i.luat && i.luat.canNgocPhu || a.CAN_NGOC_PHU;
+    return p() === a.MAP_1 && n === a.MAP_2 && !i.doi.moAi1 && (0 | i.doi.ngocPhu) < o ? "Tông môn mới có " + (0 | i.doi.ngocPhu) + "/" + o + " Ngọc Phù." : n !== a.MAP_3 || i.ai2 && i.ai2.rao ? null : a.viLoi("rao_dong");
   };
-  a.khongDich = function (n, t) {
+  t.khongDich = function (n, a) {
     var i = h();
-    var e = a.st;
+    var o = t.st;
     if (!i || !f()) {
       return !1;
     }
-    var o = s();
-    var d = u() && u().player;
-    if (d && i.trongSanh(o, d.x, d.y)) {
+    var e = s();
+    var r = u() && u().player;
+    if (r && i.trongSanh(e, r.x, r.y)) {
       return !0;
     }
-    if (t && i.trongSanh(o, t.x, t.y)) {
+    if (a && i.trongSanh(e, a.x, a.y)) {
       return !0;
     }
-    var r = e && e.luat && e.luat.pk || i.PK_AI;
-    return !(!r || !1 !== r[i.ai(p())]) || !!e && !!(e.doiMinh && e.doiMinh.indexOf(n) >= 0);
+    var d = o && o.luat && o.luat.pk || i.PK_AI;
+    return !(!d || !1 !== d[i.ai(p())]) || !!o && !!(o.doiMinh && o.doiMinh.indexOf(n) >= 0);
   };
   setInterval(function () {
-    N();
-    (function () {
-      var t = h();
-      if (f() && p() === t.MAP_2) {
-        var i = u();
-        var e = i && i.player;
-        if (e && e.flying && !e.downed && !(t.cachHanhLang(s(), e.x, e.y) > 96)) {
-          var o = Date.now();
-          if (!(o - a.baoBay < 5e3)) {
-            a.baoBay = o;
-            l("Hành lang cấm bay — hạ Phi Hành rồi đi bộ qua.");
-            if (n.Audio && n.Audio.play) {
-              n.Audio.play("deny");
-            }
-          }
-        }
-      }
-    })();
+    P();
+    k();
   }, 400);
 }(window.PNTT);
