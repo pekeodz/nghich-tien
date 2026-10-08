@@ -48,7 +48,10 @@
   }
   function dongBoCfg(cfg) {
     var id = matNaDangDeo();
-    if (id) cfg.ntMatNa = id; else if ("ntMatNa" in cfg) delete cfg.ntMatNa;
+    // để ẩn (không liệt kê): các bảng xem trước như Hồng Tỷ · Tủ Ngoại Hình chép cfg bằng Object.assign
+    // sẽ không chép theo mặt nạ → vẫn thấy đúng ngoại hình thật để chọn áo, tóc…
+    if (id) Object.defineProperty(cfg, "ntMatNa", { value: id, enumerable: false, writable: true, configurable: true });
+    else if ("ntMatNa" in cfg) delete cfg.ntMatNa;
   }
   function W() { return P.SceneWorld; }
   function matNaCua(cfg) {
