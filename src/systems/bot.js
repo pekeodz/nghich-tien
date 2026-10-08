@@ -555,16 +555,34 @@
     }
     return false;
   }
+  /* Mở đúng bảng "Xem Thông Tin" của game (InspectUI) với dữ liệu của bot */
+  B.xemThongTin = function (hs) {
+    var eqGoc = hs.equip || {}, equipment = {}, bonus = { atkBonus: 0, hpBonus: 0, mpBonus: 0, spBonus: 0, bpBonus: 0, resist: 0 }, vuKhi = null;
+    Object.keys(eqGoc).forEach(function (k) {
+      var id = eqGoc[k], it = id && P.ITEMS && P.ITEMS[id];
+      if (!it) return;
+      var o = it.slot || k;
+      if (equipment[o]) return;
+      equipment[o] = id;
+      bonus.atkBonus += it.atkBonus | 0; bonus.hpBonus += it.hpBonus | 0; bonus.mpBonus += it.mpBonus | 0;
+      bonus.spBonus += it.spBonus | 0; bonus.bpBonus += it.bpBonus | 0; bonus.resist += +it.resistBonus || 0;
+      if (o === "vu_khi") vuKhi = it;
+    });
+    var r = (P.realmById && P.realmById(hs.realm)) || {};
+    var atk = (P.baseAttack ? P.baseAttack(hs.realm) : 0) + (vuKhi && typeof vuKhi.damage === "number" ? Math.max(0, vuKhi.damage) : bonus.atkBonus);
+    var duLieu = {
+      name: hs.name, realm: hs.realm, cfg: hs.cfg, equipment: equipment, bonus: bonus,
+      stats: { hpMax: (r.hpMax | 0) + bonus.hpBonus, mpMax: (r.mpMax | 0) + bonus.mpBonus, spMax: (r.spMax | 0) + bonus.spBonus, bpMax: (r.bpMax | 0) + bonus.bpBonus, atk: atk }
+    };
+    if (P.InspectUI && P.InspectUI.show) P.InspectUI.show(duLieu);
+    else hop(hs.name, "Cảnh giới: " + realmName(hs.realm));
+  };
   function menuDaoHuu(b) {
     var p = pl(), xa = p && dist(b, p) > 170;
     var ch = [
       { label: "Mời tỉ thí", disabled: xa, note: xa ? "Đứng gần lại rồi hãy mời" : "Thua không mất gì", onChoose: function () { noi(b, "Được, ra chiêu đi!"); tiThi(b); } },
       { label: "Bắt chuyện", onChoose: function () { noi(b, pick(CAU_NOI)); } },
-      { label: "Xem thông tin", onChoose: function () {
-        var eq = b.hs.equip || {}, dong = [];
-        ["vu_khi", "ao", "giap", "mu", "giay", "nhan", "phap_boi"].forEach(function (k) { if (eq[k] && P.ITEMS[eq[k]]) dong.push("• " + P.ITEMS[eq[k]].name); });
-        hop(b.hs.name, "Cảnh giới: " + realmName(b.hs.realm) + "\n\nTrang bị:\n" + (dong.join("\n") || "• (không rõ)"));
-      } }
+      { label: "Xem Thông Tin", note: "Trang bị và chỉ số", onChoose: function () { B.xemThongTin(b.hs); } }
     ];
     if (P.HUD && P.HUD.openMateMenu) P.HUD.openMateMenu(b.hs.name, "Cảnh giới: " + realmName(b.hs.realm), ch, P.Input && P.Input.tapClient);
     else hop(b.hs.name, "", { choices: ch });
