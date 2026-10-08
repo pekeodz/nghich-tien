@@ -197,7 +197,7 @@
 
   /* vẽ một lớp phi phong. c: ctx; ox,oy: góc trái trên khung 32x64 (pixel thật); s: tỉ lệ;
    * lop: "sau" (trước khi vẽ thân) hoặc "truoc" (sau khi vẽ thân) */
-  PP.ve = function (c, ox, oy, s, dir, buoc, t, idx, lop) {
+  PP.ve = function (c, ox, oy, s, dir, buoc, t, idx, lop, ngoi) {
     var C = CAP[idx]; if (!C) return;
     var cap = C.mau, hd = hinhDang(dir, buoc, t, cap);
     var b = new But(c, ox, oy, s || 1);
@@ -239,7 +239,8 @@
         for (var x4 = 8; x4 <= 23; x4++) { b.px(x4, 23, cap.co); if (x4 > 9 && x4 < 22) b.px(x4, 24, toiDi(cap.co, 0.8)); }
         if (dir === 0 && cap.khoa) { b.px(15, 25, cap.co); b.px(16, 25, cap.co); b.px(15, 26, cap.khoa); b.px(16, 26, cap.khoa); b.px(15, 27, cap.co); b.px(16, 27, cap.co); }
       } else if (cap.co) { var xc = hd.ben === 1 ? 17 : 14; b.px(xc, 23, cap.co); b.px(xc + 1, 23, cap.co); b.px(xc, 24, cap.co); }
-      veVai(b, cap, t, hd.ben);
+      // lúc ngồi (thiền, cưỡi thú) bỏ gai/sừng vai: thân ngồi thấp nên chúng dựng lên quanh mặt
+      if (!ngoi) veVai(b, cap, t, hd.ben);
       if (cap.lap) for (var i = 0; i < (idx >= 9 ? 9 : 6); i++) {
         var pha = (t * 0.7 + hash(i, idx)) % 1, yy = Math.round(lerp(y0 + 2, y1, hash(i, 7))), rr = hang(hd.diem, yy);
         if (!rr) continue;
@@ -318,9 +319,17 @@
       var k = capCuaCfg(cfg);
       if (k < 0 || col === 22 || col === 23) return gocFrame.apply(this, arguments);
       var s = scale || 1, t = gio(), b = nhipBuoc(col), dir = row & 3;
-      try { PP.ve(ctx, x | 0, y | 0, s, dir, b, t, k, "sau"); } catch (e) {}
+      // tư thế ngồi (thiền, cưỡi thú: cột 8/9) thân hạ xuống 9–10 px → hạ phi phong theo, thêm 3 px
+      // cho cổ áo nằm dưới cằm; cắt phần gấu thừa dưới mặt đất để không lòi ra dưới chân
+      var ha = col === 8 ? 12 : col === 9 ? 13 : 0, oy = (y | 0) + Math.round(ha * s);
+      function lop(ten) {
+        if (!ha) { PP.ve(ctx, x | 0, oy, s, dir, b, t, k, ten); return; }
+        ctx.save(); ctx.beginPath(); ctx.rect((x | 0) - 16 * s, y | 0, 64 * s, 63 * s); ctx.clip();
+        try { PP.ve(ctx, x | 0, oy, s, dir, b, t, k, ten, true); } finally { ctx.restore(); }
+      }
+      try { lop("sau"); } catch (e) {}
       var kq = gocFrame.apply(this, arguments);
-      try { PP.ve(ctx, x | 0, y | 0, s, dir, b, t, k, "truoc"); } catch (e) {}
+      try { lop("truoc"); } catch (e) {}
       return kq;
     };
     if (gocBody) SF.drawBody = function (ctx, sheet, dir, col, x, y, cfg) {
