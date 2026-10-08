@@ -10,7 +10,7 @@
  *    - tên, danh hiệu, vòng sáng phi phong dưới chân vẫn giữ.
  *  Hiện chỉ admin phát (không rơi, không bán).
  *
- *  Sprite: 4 hàng theo hướng game (xuống, trái, phải, lên), khung 64x80, chân ở (32,68).
+ *  Sprite: 4 hàng theo hướng game (xuống, trái, phải, lên), khung 140x174 (độ phân giải gốc, vẽ thu 0.46), chân ở (70,148).
  *  Cột 0-7 đi, 8-15 đánh, 16-17 ngồi. Cắt bằng tools/noel/cat.py.
  *  Thêm mặt nạ khác: thêm một mục vào MAT_NA với ảnh cùng bố cục.
  * ==========================================================================*/
@@ -19,11 +19,11 @@
   if (!P || !P.ITEMS) return;
   var MN = P.MatNa = {};
   var MAT_NA = MN.DS = {
-    mat_na_noel: { hinh: "noel", anh: "assets/sprites/ngoai_trang/noel.png", fw: 64, fh: 80, ax: 32, ay: 68,
+    mat_na_noel: { hinh: "noel", anh: "assets/sprites/ngoai_trang/noel.png", fw: 140, fh: 174, ax: 70, ay: 148, tiLe: 0.46,
       di: [0, 8], danh: [8, 8], ngoi: [16, 2], fpsDi: 11, fpsDanh: 14, fpsNgoi: 1.1 }
   };
   var ICON = "assets/items/icon_mat_na_noel.png";
-  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON] = 6881; P.ASSET_MANIFEST[MAT_NA.mat_na_noel.anh] = 73665; }
+  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON] = 6881; P.ASSET_MANIFEST[MAT_NA.mat_na_noel.anh] = 284552; }
 
   /* ---------------- vật phẩm + ô Mặt Nạ ---------------- */
   P.ITEMS.mat_na_noel = {
@@ -67,7 +67,7 @@
   function layAnh(m) {
     var a = anh[m.anh];
     if (a) return a.complete && a.naturalWidth ? a : null;
-    a = anh[m.anh] = new Image(); a.src = m.anh + "?v=2";
+    a = anh[m.anh] = new Image(); a.src = m.anh + "?v=3";
     return null;
   }
 
@@ -110,7 +110,9 @@
     var w = W(), e = w && w.player && cfg && w.player.cfg === cfg ? w.player : null;
     var f = khungCua(m, col, e), hang = dir & 3;
     var sm = ctx.imageSmoothingEnabled; ctx.imageSmoothingEnabled = true;
-    ctx.drawImage(img, f * m.fw, hang * m.fh, m.fw, m.fh, Math.round(chanX - m.ax * s), Math.round(chanY - m.ay * s), m.fw * s, m.fh * s);
+    // ảnh giữ độ phân giải gốc, chỉ thu nhỏ lúc vẽ (tiLe) → lên màn hình phóng to vẫn nét
+    var k = (m.tiLe || 1) * s;
+    ctx.drawImage(img, f * m.fw, hang * m.fh, m.fw, m.fh, chanX - m.ax * k, chanY - m.ay * k, m.fw * k, m.fh * k);
     ctx.imageSmoothingEnabled = sm;
     return true;
   }
@@ -174,8 +176,18 @@
     }
   }
 
+  /* đang là Noel thì mọi thứ tính theo độ cao bay (kiếm Vạn Kiếm Quy Tông, hào quang, hiệu ứng chiêu…)
+   * cũng nằm sát đất như Noel, không lơ lửng ngang chỗ người cưỡi thú */
+  function bocBayCao() {
+    var g = window.NTBayCao;
+    if (typeof g !== "function" || g.__matNa) return !!(g && g.__matNa);
+    window.NTBayCao = function (v) { if (v && matNaCua(v.cfg)) return 0; return g.apply(this, arguments); };
+    window.NTBayCao.__matNa = true;
+    return true;
+  }
+
   function caiDat() {
-    var a = bocSprite(), b = bocVeNguoi(), c = moONgoaiTrang();
+    var a = bocSprite(), b = bocVeNguoi(), c = moONgoaiTrang() && bocBayCao();
     bocDongBo(); MN.dongBo();
     return a && b && c;
   }

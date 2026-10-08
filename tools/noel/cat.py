@@ -5,7 +5,7 @@ import json, sys
 from PIL import Image
 import numpy as np
 K = float(sys.argv[1]) if len(sys.argv) > 1 else 0.46
-FW, FH, AX, AY = 64, 80, 32, 68
+FW, FH, AX, AY = 140, 174, 70, 148
 HANG_DI = [(0, 150), (150, 292), (292, 435), (435, 572)]
 HANG_DANH = [(0, 150), (150, 292), (292, 435), (435, 572)]
 GAME_TO_SHEET = [1, 2, 3, 0]
@@ -29,7 +29,7 @@ for g in range(4):
     for i in range(8): dat(o(DI, s, i, HANG_DI), ref_di, i, g)
     for i in range(8): dat(o(DANH, s, i, HANG_DANH), ref_danh, 8 + i, g)
 # ngồi: 2 khung lớn, quay mặt; hạ tỉ lệ cho cao ~44 điểm
-KS = 0.14
+KS = 0.304
 for j, (x0, x1) in enumerate([(0, 512), (512, 1024)]):
     cell = NGOI.crop((x0, 0, x1, NGOI.height))
     for g in range(4): dat(cell, cell, 16 + j, g, KS)
