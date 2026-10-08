@@ -3142,7 +3142,10 @@
                                         n.HuThienUI.moNpc(a);
                                       }
                                       else {
-                                        if (n.DiemDanh && a.id === n.DiemDanh.NPC) {
+                                        if (n.BachHoDuong && a.id === n.BachHoDuong.NPC) {
+                                          n.BachHoDuong.moNpc(a);   // Nghịch Tiên: báo danh Bạch Hổ Đường
+                                        }
+                                        else if (n.DiemDanh && a.id === n.DiemDanh.NPC) {
                                           fn(a);
                                         }
                                         else {
