@@ -14,9 +14,10 @@
   "use strict";
   var B = P.NTBot = {};
   var CAU_HINH = B.CAU_HINH = {
-    DON_DE_HA: 20,            // số đòn thường để hạ bot cùng cảnh giới
-    SAT_THUONG_DON: 0.055,    // đòn cận chiến của bot = % Khí Huyết tối đa người chơi
-    SAT_THUONG_CHIEU: 0.13,   // chiêu của bot
+    DON_DE_HA: 28,            // số đòn thường để hạ bot cùng cảnh giới
+    SAT_THUONG_DON: 0.065,    // đòn cận chiến của bot = % Khí Huyết tối đa người chơi
+    SAT_THUONG_CHIEU: 1.5,    // hệ số nhân sát thương chiêu (mỗi chiêu có % riêng trong bảng CHIEU)
+    HOI_CHIEU: [6.5, 2.8],    // giây giữa hai chiêu: Luyện Khí tầng 1 → Trúc Cơ (giảm dần theo cảnh giới)
     MOI_CANH_GIOI: 0.12,      // mỗi tầng cảnh giới chênh lệch → ±12% sức mạnh
     TRAN_GIAY: 90,            // một trận võ đài tối đa 90 giây
     DAO_HUU_MOI_MAP: 3,       // số đạo hữu ảo mỗi bản đồ
@@ -89,21 +90,101 @@
     return {
       hp: Math.max(60, Math.round(dmg * CAU_HINH.DON_DE_HA * f)),
       dmg: Math.max(3, Math.round(hpMax * CAU_HINH.SAT_THUONG_DON * f)),
-      chieu: Math.max(6, Math.round(hpMax * CAU_HINH.SAT_THUONG_CHIEU * f)),
+      f: f, hpMax: hpMax,
       speed: Math.round(60 + Math.max(-6, Math.min(10, cl * 2)))
     };
   };
 
   /* ================= bot chiến đấu (Enemy hình người) ================= */
   var demLoai = 0;
-  var MAU_CHIEU = { hoa: ["#ff7a2a", "Hỏa Cầu"], loi: ["#9fd0ff", "Lôi Kích"], bang: ["#b8f0ff", "Băng Trùy"], phong: ["#bff3c8", "Phong Nhận"], kiem: ["#ffe08a", "Kiếm Khí"] };
-  function heChieu(hs) {
-    var w = String(hs.cfg.weapon || "");
-    if (/hoa|viem|xich/.test(w)) return "hoa";
-    if (/loi/.test(w)) return "loi";
-    if (/bang|han/.test(w)) return "bang";
-    if (/phien|quat|phong/.test(w)) return "phong";
-    return pick(["kiem", "hoa", "loi", "bang", "phong"]);
+  /* ---------- bộ chiêu của bot ----------
+   * Lấy theo bộ chiêu kẻ địch ở màn mở đầu (prologue.js) — dùng đúng hiệu ứng kỹ năng thật.
+   * Mỗi chiêu: windup = giây báo trước (vòng dưới đất), lead = giây hiệu ứng bắt đầu trước khi nổ,
+   * r = bán kính trúng, dmg = % Khí Huyết tối đa người chơi (nhân CAU_HINH.SAT_THUONG_CHIEU và độ chênh cảnh giới). */
+  function V() { return P.VFX || {}; }
+  function mauKN(id) { var d = P.Skills && P.Skills.DEFS && P.Skills.DEFS[id]; return d ? d.colors : undefined; }
+  function am(id, o) { try { if (P.Audio && P.Audio.play) P.Audio.play(id, o); } catch (e) {} }
+  var CHIEU = {
+    // —— chiêu cơ bản (Luyện Khí) ——
+    hoa_cau: { ten: "Hỏa Cầu Thuật", windup: 0.9, lead: 0.05, r: 40, dmg: 0.07, color: "#ff7a2a",
+      hit: function (e, x, y) { V().spawnFireBurst && V().spawnFireBurst(x, y, { core: "#fff3c4", mid: "#ff9a3c", edge: "#d63b1f", glow: "#ffd27a" }); am("hit_big", { gain: 0.6 }); } },
+    phong_nhan: { ten: "Phong Nhận", windup: 0.75, lead: 0.05, r: 44, dmg: 0.06, color: "#9ff3b0",
+      hit: function (e, x, y) { V().spawnWindBurst && V().spawnWindBurst(x, y, { glow: "#d8ffe0", core: "#f2fff4", mid: "#7fe39a", edge: "#2f9a55" }); } },
+    bang_truy: { ten: "Băng Trùy", windup: 0.9, lead: 0.05, r: 40, dmg: 0.065, color: "#a8dcf5",
+      hit: function (e, x, y) { V().spawnIceBurst && V().spawnIceBurst(x, y, { glow: "#a8dcf5", core: "#eaf8ff", mid: "#7fc4e8", edge: "#3d7ea6" }); am("weapon_frost_sword", { gain: 0.6 }); } },
+    loi_kich: { ten: "Lôi Kích", windup: 0.85, lead: 0.05, r: 38, dmg: 0.07, color: "#9fd0ff",
+      hit: function (e, x, y) { V().spawnLightning && V().spawnLightning(x, y); am("thunder", { gain: 0.45 }); } },
+    dia_thu: { ten: "Địa Thứ", windup: 1.0, lead: 0.05, r: 46, dmg: 0.072, color: "#d8a060",
+      hit: function (e, x, y) { V().spawnEarthSpikes && V().spawnEarthSpikes(x, y, 42, { glow: "#ffd8a0", core: "#e8c08a", mid: "#9a6a3a", edge: "#5a3a1a" }); am("hit_big", { gain: 0.6 }); } },
+    // —— Huyết đạo ——
+    cuuhuyet: { ten: "Cửu Huyết Kiếm Trận", windup: 1.15, lead: 1, r: 64, dmg: 0.078, color: "#ff4a6a",
+      start: function (e, x, y) { V().spawnCuuHuyetTran && V().spawnCuuHuyetTran(x, y, { colors: mauKN("cuu_huyet_kiem_tran"), radius: 64 }); am("weapon_blood_sword"); },
+      hit: function (e, x, y) { V().spawnHuyetKiemImpact && V().spawnHuyetKiemImpact(x, y - 16, 0, -1); am("hit_big", { gain: 0.8 }); } },
+    liem: { ten: "Huyết Liêm Trảm", windup: 0.95, lead: 0.22, r: 48, dmg: 0.068, color: "#ff3b52",
+      start: function (e, x, y) { V().spawnHuyetLiem && V().spawnHuyetLiem(e, { x: x, y: y }, { hitDelay: 0.17 }); },
+      hit: function () { am("hit_big", { gain: 0.8 }); } },
+    buc: { ten: "Huyết Bức Chưởng", windup: 0.8, lead: 0.34, r: 44, dmg: 0.062, color: "#ff5a4a",
+      start: function (e, x, y) { V().spawnHuyetBuc && V().spawnHuyetBuc(e, { x: x, y: y }, { hitDelay: 0.34 }); },
+      hit: function () { am("hit_big", { gain: 0.8 }); } },
+    // —— Hắc Sát ——
+    baoan: { ten: "Ma Bạo Ấn", windup: 0.9, lead: 0.72, r: 66, dmg: 0.08, color: "#c27bff",
+      start: function (e, x, y) { V().spawnMaBaoAn && V().spawnMaBaoAn(x, y, { colors: mauKN("ma_bao_an"), radius: 66 }); },
+      hit: function (e, x, y) { V().spawnMaBaoAnImpact && V().spawnMaBaoAnImpact(x, y, { colors: mauKN("ma_bao_an"), radius: 66 }); am("hit_big", { gain: 0.8 }); } },
+    hon: { ten: "Ma Hồn Phệ", windup: 1.15, lead: 1.05, r: 44, dmg: 0.065, color: "#a85cff",
+      start: function (e, x, y) { V().spawnMaHonPhe && V().spawnMaHonPhe(e, { x: x, y: y }, { colors: mauKN("ma_hon_phe"), range: 200, hitDelay: 1.05 }); },
+      hit: function () { am("hit_big", { gain: 0.8 }); } },
+    anhky: { ten: "Ảnh Ký Phù", windup: 0.95, lead: 0.62, r: 42, dmg: 0.07, color: "#55cfff",
+      start: function (e, x, y) { V().spawnAnhKyPhu && V().spawnAnhKyPhu(e.x, e.y - 8, { x: x, y: y }, { duration: 0.56, hitU: 0.9, range: 360, layers: 3 }); },
+      hit: function (e, x, y) { V().spawnAnhKyPhuImpact && V().spawnAnhKyPhuImpact(x, y - 16); am("hit_big", { gain: 0.8 }); } },
+    // —— Tuyền Cơ ——
+    tramma: { ten: "Trảm Ma", windup: 0.85, lead: 0.62, r: 62, dmg: 0.074, color: "#b77dff",
+      start: function (e, x, y) { V().spawnTramMa && V().spawnTramMa(x, y); },
+      hit: function () { am("hit_big", { gain: 0.8 }); } },
+    tienvu: { ten: "Tiên Vũ", windup: 1, lead: 0.44, r: 78, dmg: 0.075, color: "#ffd24a",
+      start: function (e, x, y) { V().spawnTienVu && V().spawnTienVu(x, y, { colors: mauKN("tien_vu"), radius: 78 }); },
+      hit: function () { am("hit_big", { gain: 0.8 }); } },
+    luan: { ten: "Băng Kiếm Luân", windup: 1.25, lead: 1.25, r: 50, dmg: 0.07, color: "#8deaff",
+      start: function (e, x, y) { V().spawnBangKiemLuan && V().spawnBangKiemLuan(e.x, e.y, { colors: mauKN("bang_kiem_luan"), radius: 120, aim: Math.atan2(y - e.y, x - e.x), dir: e.dir, targets: [{ x: x, y: y + 18 }] }); },
+      hit: function () { am("weapon_frost_sword", { gain: 0.7 }); } },
+    // —— Lôi Lâm ——
+    loi: { ten: "Loạn Lôi Bạo", windup: 0.95, lead: 0.5, r: 58, dmg: 0.07, color: "#7fd6ff",
+      start: function (e, x, y) { V().spawnLoanLoiBao && V().spawnLoanLoiBao(x, y); },
+      hit: function (e, x, y) { am("thunder", { gain: 0.5 }); V().spawnLightning && V().spawnLightning(x, y); } },
+    thuongvu: { ten: "Hoàng Lôi Thương Vũ", windup: 1.4, lead: 1.05, r: 84, dmg: 0.085, color: "#ffe680",
+      start: function (e, x, y) { P.HoangLoiFX && P.HoangLoiFX.spawnThuongVu && P.HoangLoiFX.spawnThuongVu(e, { x: x, y: y }, { hitDelay: 1, radius: 84 }); },
+      hit: function () { am("thunder", { gain: 0.55 }); } },
+    kimthuong: { ten: "Kim Thương Giáng Thế", windup: 1.45, lead: 1.2, r: 78, dmg: 0.09, color: "#ff9a3a",
+      start: function (e, x, y) { V().spawnKimThuongGiangThe && V().spawnKimThuongGiangThe(x, y); },
+      hit: function () { am("hit_big", { gain: 0.8 }); if (P.Camera && P.Camera.shake) P.Camera.shake(3, 0.2); } }
+  };
+  B.CHIEU = CHIEU;
+  var CO_BAN = ["hoa_cau", "phong_nhan", "bang_truy", "loi_kich", "dia_thu"];
+  var PHAI = { huyet: ["liem", "buc", "cuuhuyet"], hacsat: ["anhky", "hon", "baoan"], tuyen: ["tramma", "luan", "tienvu"], lam: ["loi", "thuongvu", "kimthuong"] };
+  var TEN_PHAI = { huyet: "Huyết đạo", hacsat: "Hắc Sát", tuyen: "Tuyền Cơ", lam: "Lôi Lâm" };
+  // số chiêu theo cảnh giới: LK1-3: 1 · LK4-6: 2 · LK7-9: 2 (1 chiêu môn phái) · LK10-13: 3 · Trúc Cơ: 4
+  function boChieu(hs) {
+    var h = hash(hs.name + "|" + hs.ma), k = ri(hs.realm);
+    var phai = ["huyet", "hacsat", "tuyen", "lam"][h % 4], cb = CO_BAN[(h >>> 3) % CO_BAN.length], cb2 = CO_BAN[((h >>> 3) + 2) % CO_BAN.length];
+    var ds = [cb];
+    if (k >= 4 && k <= 6) ds.push(cb2);
+    if (k >= 7) ds.push(PHAI[phai][0]);
+    if (k >= 10) ds.push(PHAI[phai][1]);
+    if (k >= 14) ds.push(PHAI[phai][2]);
+    return { phai: phai, ds: ds };
+  }
+  B.boChieu = boChieu;
+  B.moTaChieu = function (hs) {
+    var b = boChieu(hs);
+    return (ri(hs.realm) >= 7 ? TEN_PHAI[b.phai] + ": " : "") + b.ds.map(function (id) { return CHIEU[id].ten; }).join(", ");
+  };
+  var daMoi = false;
+  function moiHieuUng() {   // nạp sẵn ảnh hiệu ứng nặng một lần
+    if (daMoi) return; daMoi = true;
+    try {
+      ["NguyetQuangFX", "ThanChuongFX", "KimKiemFX", "HuyetBucFX", "HuyetLiemFX", "HoangLoiFX", "TuTuongBanFX"].forEach(function (k) { if (P[k] && P[k].prime) { try { P[k].prime(); } catch (e) {} } });
+      if (V().primeMaHonPhe) V().primeMaHonPhe();
+      if (V().HEAVY && P.Assets && P.Assets.loadFx) ["ma_bao_an", "tram_ma", "tien_vu", "bang_kiem_luan"].forEach(function (k) { if (V().HEAVY[k]) P.Assets.loadFx(V().HEAVY[k]); });
+    } catch (e) {}
   }
   B.taoChienBot = function (hs, x, y, opt) {
     opt = opt || {};
@@ -120,14 +201,15 @@
       speed: cs.speed, aggro: taTu ? 280 : 1200, leashRange: taTu ? 760 : 5000,
       contactDmg: cs.dmg, hitCooldown: 0.85, hitRadius: 26, bodyRadius: 10,
       wanderRadius: 40, wanderPause: 1.2, respawnSec: 0, khongNhan: true, human: false, isBoss: false,
-      ntBot: { kieu: opt.kieu || "tithi", chieu: cs.chieu, he: heChieu(hs) }
+      ntBot: { kieu: opt.kieu || "tithi", f: cs.f, bo: boChieu(hs) }
     });
     if (lunge) def.pounce = lunge; else delete def.pounce;
     P.ENEMY_DEFS[type] = def;
     var e = P.Enemy.create({ id: type, type: type, x: x, y: y });
     e.ntBot = def.ntBot;
     e.ntHs = hs;
-    e.ntCast = tg() + rnd(2.5, 4);
+    e.ntCast = tg() + rnd(2, 3.5);
+    moiHieuUng();
     e.aggroUntil = tg() + 999;
     W().enemies.push(e);
     if (P.VFX && P.VFX.spawnRing) P.VFX.spawnRing(x, y - 10, "#e9d5ff", 26, 0.5);
@@ -140,41 +222,67 @@
     var i = ds.indexOf(e); if (i >= 0) ds.splice(i, 1);
   }
 
-  // chiêu của bot: vòng cảnh báo dưới chân người chơi, 0.8 giây sau nổ (né được)
-  var no = [];
+  // chiêu: vòng báo dưới chân người chơi bám theo nửa đầu thời gian báo, sau đó đứng yên → chạy ra là né được
+  var tele = [];
+  B._tele = tele;
   function nhipChieu() {
     var w = W(), p = pl(); if (!w || !p || !w.enemies) return;
-    var t = tg();
+    var t = tg(), dt = Math.min(0.1, Math.max(0, t - (nhipChieu.truoc || t))); nhipChieu.truoc = t;
     for (var i = 0; i < w.enemies.length; i++) {
       var e = w.enemies[i];
       if (!e.ntBot || e.dead || p.downed) continue;
       if (e.ntBot.kieu !== "tatu" && !(tran && tran.bot === e && tran.dangDau)) continue;
-      var d = dist(e, p);
-      if (d > 300 || t < e.ntCast) continue;
-      e.ntCast = t + rnd(4.5, 7.5);
-      var he = MAU_CHIEU[e.ntBot.he] || MAU_CHIEU.kiem;
-      if (P.VFX) {
-        P.VFX.spawnText && P.VFX.spawnText(e.x, e.y - 60, he[1] + "!", he[0]);
-        P.VFX.spawnRing && P.VFX.spawnRing(p.x, p.y, "#ff4a3a", 44, 0.8);
-        P.VFX.spawnRing && P.VFX.spawnRing(e.x, e.y - 12, he[0], 22, 0.4);
-      }
-      if (P.Audio && P.Audio.atPoint) P.Audio.atPoint("cast", e.x, e.y);
-      no.push({ x: p.x, y: p.y, t: t + 0.8, dmg: e.ntBot.chieu, mau: he[0], bot: e });
+      if (dist(e, p) > 320 || t < e.ntCast || e.ntDangNiem > t) continue;
+      var bo = e.ntBot.bo, id = bo.ds[Math.floor(Math.random() * bo.ds.length)], c = CHIEU[id];
+      var k = ri(e.ntHs && e.ntHs.realm), hc = CAU_HINH.HOI_CHIEU, cd = Math.max(hc[1], hc[0] - (hc[0] - hc[1]) * Math.min(1, k / 15));
+      e.ntCast = t + c.windup + cd * rnd(0.8, 1.2);
+      e.ntDangNiem = t + c.windup;
+      if (P.VFX && P.VFX.spawnText) P.VFX.spawnText(e.x, e.y - 62, c.ten, c.color);
+      if (P.VFX && P.VFX.spawnRing) P.VFX.spawnRing(e.x, e.y - 12, c.color, 22, 0.45);
+      am("whisper", { gain: 0.5 });
+      tele.push({ e: e, c: c, x: p.x, y: p.y, t: 0, dur: c.windup, lead: Math.min(c.lead, c.windup), khoa: 0.5 * c.windup, batDau: false,
+                  dmg: Math.round((p.hpMax || 100) * c.dmg * CAU_HINH.SAT_THUONG_CHIEU * (e.ntBot.f || 1)) });
     }
-    for (var k = no.length - 1; k >= 0; k--) {
-      var b = no[k];
-      if (t < b.t) continue;
-      no.splice(k, 1);
-      if (b.bot.dead) continue;
-      if (P.VFX) {
-        P.VFX.spawnRing && P.VFX.spawnRing(b.x, b.y, b.mau, 50, 0.45);
-        P.VFX.spawnRing && P.VFX.spawnRing(b.x, b.y - 10, "#ffffff", 26, 0.3);
+    for (var n = tele.length - 1; n >= 0; n--) {
+      var o = tele[n];
+      if (o.e.dead) { tele.splice(n, 1); continue; }
+      o.t += dt;
+      if (o.t < o.khoa) { var q = Math.min(1, 5 * dt); o.x += (p.x - o.x) * q; o.y += (p.y - o.y) * q; }
+      if (!o.batDau && o.t >= o.dur - o.lead) { o.batDau = true; try { o.c.start && o.c.start(o.e, o.x, o.y); } catch (er) {} }
+      if (o.t < o.dur) continue;
+      tele.splice(n, 1);
+      try { o.c.hit && o.c.hit(o.e, o.x, o.y); } catch (er) {}
+      var rx = o.c.r, ry = 0.55 * o.c.r;
+      if (!p.downed && Math.pow((p.x - o.x) / rx, 2) + Math.pow((p.y - o.y) / ry, 2) <= 1) {
+        p.hurtTimer = 0;   // chiêu không bị chặn bởi thời gian miễn thương sau đòn thường
+        P.Player.takeDamage(p, o.dmg, { fromX: o.x, fromY: o.y, kb: 50 });
       }
-      if (P.Camera && P.Camera.shake) P.Camera.shake(2.5, 0.15);
-      if (!p.downed && Math.hypot(p.x - b.x, p.y - b.y) <= 46) P.Player.takeDamage(p, b.dmg);
     }
   }
-
+  // vẽ vòng báo chiêu (lớp dưới nhân vật)
+  function veTele(ctx, camX, camY) {
+    if (!tele.length) return;
+    var now = tg();
+    for (var i = 0; i < tele.length; i++) {
+      var o = tele[i], k = Math.min(1, o.t / o.dur), rx = o.c.r, ry = 0.55 * rx;
+      ctx.save();
+      ctx.translate(Math.round(o.x - camX), Math.round(o.y - camY));
+      ctx.globalAlpha = 0.1 + 0.22 * k; ctx.fillStyle = o.c.color;
+      ctx.beginPath(); ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 0.85; ctx.strokeStyle = o.c.color; ctx.lineWidth = 1.6;
+      ctx.setLineDash([5, 4]); ctx.lineDashOffset = -18 * now;
+      ctx.beginPath(); ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+      ctx.globalAlpha = 0.95; ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.ellipse(0, 0, rx * (1 - k), ry * (1 - k), 0, 0, Math.PI * 2); ctx.stroke();
+      ctx.restore();
+    }
+  }
+  function ganVeTele() {
+    var X = P.VFX; if (!X || !X.draw || X.draw.__ntTele) return;
+    var g = X.draw;
+    X.draw = function (ctx, camX, camY, lop) { if (lop === "back") { try { veTele(ctx, camX, camY); } catch (e) {} } return g.apply(this, arguments); };
+    X.draw.__ntTele = true;
+  }
   /* ================= trận đấu (tỉ thí, võ đài) ================= */
   var tran = null;
   B.dangDau = function () { return !!tran; };
@@ -222,7 +330,7 @@
       if (P.VFX && P.VFX.spawnText) P.VFX.spawnText(t.bot.x, t.bot.y - 56, thang ? "Chịu thua!" : "Đa tạ chỉ giáo!", "#ffe08a");
       goChienBot(t.bot);
     }
-    no.length = 0;
+    tele.length = 0;
     if (p) { p.hp = Math.max(p.hp, Math.round(p.hpMax * (thang ? 0.5 : 0.3))); }
     if (P.HUD && P.HUD.announce) P.HUD.announce(thang ? "THẮNG" : "THUA");
     if (P.Audio && P.Audio.play) P.Audio.play(thang ? "victory" : "defeat");
@@ -351,7 +459,7 @@
     for (var n = 1; n <= so; n++) if (C && C.danhDuoc ? C.danhDuoc(toi, n) : (toi ? n < toi && toi - n <= 5 : n > so - 5)) ds.push(n);
     var ch = ds.slice(0, 5).map(function (n) {
       var hs = B.hoSo(n - 1);
-      return { label: "Hạng " + n + " · " + hs.name, note: realmName(hs.realm), onChoose: function () { danhCB(n, hs); } };
+      return { label: "Hạng " + n + " · " + hs.name, note: realmName(hs.realm) + " · " + B.moTaChieu(hs), onChoose: function () { danhCB(n, hs); } };
     });
     if (!ch.length) return hop("Tán Tu Chiến Bảng", "Ngươi đã đứng đầu bảng — không còn ai để khiêu chiến.");
     hop("Tán Tu Chiến Bảng", "Chọn đối thủ trên bảng rồi vào Chiến Bảng Đài.\nThắng người hạng cao hơn thì đổi hạng với họ.", { choices: ch });
@@ -652,6 +760,7 @@
       if (online()) return;
       // lỡ kẹt ở võ đài sau khi tải lại trang
       if (!tran && (mapId() === "chien_bang_dai" || mapId() === "dai_hoi_dau")) { B.veLang(); return; }
+      ganVeTele();
       nhipTran();
       nhipChieu();
       nhipDaoHuu(dt);

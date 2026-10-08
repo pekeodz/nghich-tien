@@ -1216,7 +1216,7 @@
       var o = {};
       for (var i in a)
         o[i] = a[i];
-      if (!("burn" !== o.kind && "wound" !== o.kind)) {
+      if (!("burn" !== o.kind && "wound" !== o.kind && "poison" !== o.kind)) {   // Nghịch Tiên: thêm poison
         if ("number" == typeof o.dpsCoef) {
           o.dps = t.powerDmg(o.dpsCoef, e);
         }
@@ -1374,6 +1374,9 @@
           var R = g ? g.x : e.x + Math.cos(c) * K;
           var H = g ? g.y : e.y + Math.sin(c) * K;
           n.VFX.spawnThanhLamKiemTru(R, H, { target: g, angle: Math.atan2(H - e.y, R - e.x), colors: a.colors });
+        }
+        if ("huyen_am_tram" === a.id && n.HuyenAmTramFX) {
+          n.HuyenAmTramFX.phat(e.x, e.y - h, c);   // Nghịch Tiên: Huyền Âm Trảm
         }
         if ("anh_ky_phu" === a.vfx && n.VFX.spawnAnhKyPhu) {
           n.VFX.spawnAnhKyPhu(C, O, g || { x: o.x, y: o.y }, { duration: Math.max(.34, Math.min(.68, l / a.speed)), hitU: .9, range: a.range, layers: a.vfxLayers });
@@ -1547,7 +1550,10 @@
       }
   }
   function V(t, e, a, o, i) {
-    if ("anh_ky_phu" === t.id && n.VFX.spawnAnhKyPhuImpact) {
+    if ("huyen_am_tram" === t.id && n.HuyenAmTramFX) {
+      n.HuyenAmTramFX.trung(e, a);   // Nghịch Tiên: Huyền Âm Trảm
+    }
+    else if ("anh_ky_phu" === t.id && n.VFX.spawnAnhKyPhuImpact) {
       n.VFX.spawnAnhKyPhuImpact(e, a);
     }
     else {
@@ -1911,7 +1917,10 @@
         var s = Math.round(u.x - a);
         var l = Math.round(u.y - o);
         var c = u.def.colors;
-        if ("anh_ky_phu" !== u.def.id && "thanh_lam_kiem_tru" !== u.def.id)
+        if ("huyen_am_tram" === u.def.id && n.HuyenAmTramFX) {
+          n.HuyenAmTramFX.veDan(e, u, s, l);   // Nghịch Tiên: Huyền Âm Trảm
+        }
+        else if ("anh_ky_phu" !== u.def.id && "thanh_lam_kiem_tru" !== u.def.id)
           if ("hoa_cau" === u.def.id) {
             var g = 1 + .14 * Math.sin(u.spin);
             var _ = 1 + .1 * Math.sin(.72 * u.spin + .8);
