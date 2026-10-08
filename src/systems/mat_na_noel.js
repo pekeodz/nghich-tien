@@ -21,12 +21,12 @@
   var MAT_NA = MN.DS = {
     mat_na_noel: { hinh: "noel", anh: "assets/sprites/ngoai_trang/noel.png", fw: 140, fh: 174, ax: 70, ay: 148, tiLe: 0.46,
       di: [0, 8], danh: [8, 8], ngoi: [16, 2], dung: 18, fpsDi: 11, fpsDanh: 14, fpsNgoi: 1.1 },
-    // Liễu Như Yên: hàng xuống/lên 12 khung, trái/phải 10 khung (soDi/soDanh theo hướng game: xuống, trái, phải, lên)
-    mat_na_lieu_nhu_yen: { hinh: "lieu_nhu_yen", anh: "assets/sprites/ngoai_trang/lieu_nhu_yen.png", fw: 150, fh: 180, ax: 75, ay: 160, tiLe: 0.42,
-      di: [0, 12], danh: [12, 12], soDi: [12, 10, 10, 12], soDanh: [12, 10, 10, 12], ngoi: [24, 2], dung: 26, fpsDi: 12, fpsDanh: 16, fpsNgoi: 1.1 }
+    // Liễu Như Yên: 8 khung đi, 8 khung đánh mỗi hướng; ngồi 2 khung; đứng 1 khung (cắt bằng tools/lieu_nhu_yen/cat.py)
+    mat_na_lieu_nhu_yen: { hinh: "lieu_nhu_yen", anh: "assets/sprites/ngoai_trang/lieu_nhu_yen.png", fw: 150, fh: 180, ax: 75, ay: 160, tiLe: 0.5,
+      di: [0, 8], danh: [8, 8], ngoi: [16, 2], dung: 18, fpsDi: 10, fpsDanh: 14, fpsNgoi: 1.1 }
   };
   var ICON_LNY = "assets/items/icon_mat_na_lieu_nhu_yen.png";
-  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON_LNY] = 8730; P.ASSET_MANIFEST[MAT_NA.mat_na_lieu_nhu_yen.anh] = 416173; }
+  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON_LNY] = 8730; P.ASSET_MANIFEST[MAT_NA.mat_na_lieu_nhu_yen.anh] = 256920; }
   var ICON = "assets/items/icon_mat_na_noel.png";
   if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON] = 6881; P.ASSET_MANIFEST[MAT_NA.mat_na_noel.anh] = 286997; }
 
@@ -80,7 +80,7 @@
   function layAnh(m) {
     var a = anh[m.anh];
     if (a) return a.complete && a.naturalWidth ? a : null;
-    a = anh[m.anh] = new Image(); a.src = m.anh + "?v=7";
+    a = anh[m.anh] = new Image(); a.src = m.anh + "?v=8";
     return null;
   }
 
