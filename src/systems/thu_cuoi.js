@@ -6,14 +6,24 @@
  *  8 khung chạy + 2 khung đứng; mỗi khung 128x112, vẽ ra 64x56; chân đặt cùng mặt đất với Hắc Thổ Linh Mã).
  *  Tỉ lệ rơi chỉnh trong loot_rates.js (KY_LAN_CHANCE).
  * ==========================================================================*/
+/* Độ cao người cưỡi khi phi hành (Nghịch Tiên): mặc định CONFIG.FLY.HOVER, thú cưỡi cao
+ * (mount.hover) nâng người lên ngang yên. Mọi chỗ trước đây tính FLY.HOVER * flyRise gọi hàm này. */
+window.NTBayCao = function (v) {
+  var P = window.PNTT || {}, C = P.CONFIG, r = (v && v.flyRise) || 0;
+  if (!r) return 0;
+  var h = C && C.FLY ? C.FLY.HOVER : 10, cfg = v.cfg, it = cfg && cfg.fly && P.ITEMS && P.ITEMS[cfg.fly];
+  var m = it && it.fly && it.fly.art === "ngua" && it.mount;
+  var hh = m && m.hoverHuong && m.hoverHuong[v.dir | 0];
+  return (hh || (m && m.hover) || h) * r;
+};
 (function (P) {
   "use strict";
   var SPRITE = "assets/sprites/mount/ky_lan_xich_diem.png";
   var ICON = "assets/items/icon_ky_lan_xich_diem.png";
 
   // Khai báo ảnh với bộ nạp (manifest.js sinh tự động nên thêm ở đây)
-  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[SPRITE] = 82898; P.ASSET_MANIFEST[ICON] = 1720; }
-  if (P.ASSET_VERSIONS) { P.ASSET_VERSIONS[SPRITE] = "kylan07"; P.ASSET_VERSIONS[ICON] = "kylan03"; }
+  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[SPRITE] = 103381; P.ASSET_MANIFEST[ICON] = 7440; }
+  if (P.ASSET_VERSIONS) { P.ASSET_VERSIONS[SPRITE] = "kylan11"; P.ASSET_VERSIONS[ICON] = "kylan10"; }
 
   P.ITEMS.ky_lan_xich_diem = {
     id: "ky_lan_xich_diem",
@@ -21,18 +31,24 @@
     type: "vat_pham",
     slot: "phi_hanh",
     grade: "Địa phẩm thượng",
-    fly: { art: "ngua", speed: 1.85, realmMin: "luyen_khi_7", name: "Cưỡi Xích Diễm Kỳ Lân" },
-    mount: { path: SPRITE, frameW: 128, frameH: 112, frames: 8, idleFrames: 2, rows: 4,
-             fps: 11, idleFps: 2.5, drawW: 64, drawH: 56, anchorX: 32, anchorY: 35 },
+    requireRealm: "truc_co_1",   // Nghịch Tiên: thú cưỡi quý — Trúc Cơ mới trang bị và cưỡi được
+    fly: { art: "ngua", speed: 1.85, realmMin: "truc_co_1", name: "Cưỡi Xích Diễm Kỳ Lân" },
+    // Sprite mới (Nghịch Tiên): khung 120x88, 8 chạy + 2 đứng; dựng lại bằng tools/ky_lan/ (xem DOC.txt).
+    // Khung đã căn: tâm yên ở x=60, chân chạm đất ở y=84 (hàng hướng xuống: y=98, hạ thêm 14).
+    // hover = người cưỡi được nâng lên ngang yên; hoverHuong[0] nâng thêm 14 khi quay mặt xuống
+    // để mặt người cưỡi ló lên trên đầu kỳ lân (đầu kỳ lân vẽ đè lên người).
+    mount: { path: SPRITE, frameW: 120, frameH: 102, frames: 8, idleFrames: 2, rows: 4,
+             fps: 10, idleFps: 1, drawW: 120, drawH: 102, anchorX: 60, anchorY: 56, hover: 28, hoverHuong: { 0: 42 } },
     mpRegen: 2,
     desc: "Kỳ lân lửa sinh ra từ máu rồng nhỏ xuống Long Uyên. Bờm và chóp đuôi cháy rực không tắt, " +
-          "bốn vó giẫm lên linh khí mà chạy. Chỉ chịu theo người từng góp sức hạ Thần Thú Xích Long.",
+          "bốn vó giẫm lên linh khí mà chạy. Chỉ chịu theo người từng góp sức hạ Thần Thú Xích Long, " +
+          "và phải đạt Trúc Cơ mới đủ tu vi điều khiển.",
     icon: "ky_lan_xich_diem"
   };
 
   // Lớp trước: khi quay mặt xuống, đầu thú nằm trước người cưỡi nên phải vẽ lại
   // phần đầu SAU khi vẽ người. mount.front = { hướng: số pixel tính từ đỉnh khung, hoặc [từ, đến] }.
-  P.ITEMS.ky_lan_xich_diem.mount.front = { 0: 54, 3: [40, 72] };   // 3 = hướng lên: nửa dưới đuôi lửa + mông
+  P.ITEMS.ky_lan_xich_diem.mount.front = { 0: [29, 102], 3: [42, 102] };   // 0 xuống: đầu (từ dưới chóp sừng) + ngực vẽ trước người cưỡi; 3 lên: mông + đuôi
 
   function khungHienTai(o, n) {                // giống cách player.js chọn khung
     var h = (n && n.animTime) || 0, s;
@@ -78,7 +94,7 @@
   // điểm sau đuôi theo hướng đi: 0 xuống, 1 trái, 2 phải, 3 lên
   function sauLung(pl) {
     var d = pl.dir | 0;
-    return d === 1 ? { x: pl.x + 12, y: pl.y - 1 } : d === 2 ? { x: pl.x - 12, y: pl.y - 1 }
+    return d === 1 ? { x: pl.x + 26, y: pl.y - 1 } : d === 2 ? { x: pl.x - 26, y: pl.y - 1 }
          : d === 0 ? { x: pl.x, y: pl.y - 6 } : { x: pl.x, y: pl.y + 3 };
   }
   function them(o) { if (hat.length < MAX_HAT) hat.push(o); }

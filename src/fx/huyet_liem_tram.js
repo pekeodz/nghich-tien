@@ -239,7 +239,7 @@
     if (t && isFinite(t.x) && isFinite(t.y)) {
       var e = 0;
       if (a.CONFIG && a.CONFIG.FLY) {
-        e = a.CONFIG.FLY.HOVER * (t.flyRise || 0);
+        e = window.NTBayCao(t);
       }
       return { x: t.x, y: t.y - 18 - e };
     }

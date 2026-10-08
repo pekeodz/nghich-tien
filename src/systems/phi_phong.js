@@ -344,7 +344,7 @@
         try {
           var k = capCuaCfg(ent.cfg);
           if (k >= 0 && CAP[k].aura) {
-            var bay = ent.flyRise > 0 ? (P.CONFIG.FLY.HOVER || 10) * ent.flyRise + 1.2 * Math.sin(3 * (ent.animTime || 0)) * ent.flyRise : 0;
+            var bay = ent.flyRise > 0 ? (window.NTBayCao ? window.NTBayCao(ent) : 10 * ent.flyRise) + 1.2 * Math.sin(3 * (ent.animTime || 0)) * ent.flyRise : 0;
             var a0 = ctx.globalAlpha;
             if (bay > 0) ctx.globalAlpha = a0 * (1 - 0.3 * Math.min(1, ent.flyRise));
             PP.veVong(ctx, x, Math.round(y + bay) - 1, k, gio(), 1);

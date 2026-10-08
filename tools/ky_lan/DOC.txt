@@ -1,0 +1,5 @@
+Dựng lại sprite Xích Diễm Kỳ Lân từ tấm ảnh gốc (nền trắng, 4 hàng: lên, xuống, trái, phải; 8 khung/hàng):
+  python3 tach.py <anh_goc.png> .     -> sach.png (đã tách nền, xoá chữ tiêu đề)
+  python3 cat.py                      -> khung_*.png + frames.json (hàng trái trong ảnh gốc có khung bị ngược nên dùng hàng phải lật lại)
+  python3 dung.py 0.75 14             -> sheet.png (hàng hướng xuống hạ 14px, khung 120x102) (10 cột: 8 chạy + 2 đứng; 4 hàng: xuống, trái, phải, lên)
+Chép sheet.png thành assets/sprites/mount/ky_lan_xich_diem.png, sửa kích thước trong src/systems/thu_cuoi.js.

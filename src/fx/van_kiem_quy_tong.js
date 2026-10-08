@@ -63,7 +63,7 @@
     var c = h(t, i);
     var s = c.u;
     var y = c.spin;
-    var g = a.CONFIG.FLY.HOVER * (f.flyRise || 0);
+    var g = window.NTBayCao(f);
     var u = f.x;
     var d = f.y - g - 30;
     var m = n % 4;

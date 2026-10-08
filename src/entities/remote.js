@@ -117,7 +117,7 @@
   }
   function f(i, n, r, t) {
     if (e.VFX.spawnChamBay) {
-      var l = i.flyRise > 0 ? a.FLY.HOVER * i.flyRise : 0;
+      var l = i.flyRise > 0 ? window.NTBayCao(i) : 0;
       e.VFX.spawnChamBay(i.x, i.y - 12 - l, n, r, t);
     }
   }
@@ -423,7 +423,7 @@
         i.trailT -= n;
         if (i.trailT <= 0) {
           i.trailT = a.FLY.TRAIL_EVERY;
-          e.VFX.spawnFlyTrail(i.x, i.y - a.FLY.HOVER * i.flyRise - 2, 1 === i.dir ? -1 : 2 === i.dir ? 1 : 0);
+          e.VFX.spawnFlyTrail(i.x, i.y - window.NTBayCao(i) - 2, 1 === i.dir ? -1 : 2 === i.dir ? 1 : 0);
         }
       }
     }
@@ -432,7 +432,7 @@
   i.draw = function (n, r, t, l, o) {
     if (n.veCham) {
       !function (n, r, t, l) {
-        var o = n.flyRise > 0 ? a.FLY.HOVER * n.flyRise : 0;
+        var o = n.flyRise > 0 ? window.NTBayCao(n) : 0;
         var d = Math.round(n.x - t);
         var s = Math.round(n.y - l - o);
         var f = i.tagStyle(n);
@@ -447,7 +447,7 @@
     }
     else if (n.sheet) {
       var d = !!n.veGian;
-      var f = n.flyRise > 0 ? a.FLY.HOVER * n.flyRise + 1.2 * Math.sin(3 * n.animTime) * n.flyRise : 0;
+      var f = n.flyRise > 0 ? window.NTBayCao(n) + 1.2 * Math.sin(3 * n.animTime) * n.flyRise : 0;
       var h = Math.round(n.x - a.CHAR_ANCHOR_X - t);
       var c = Math.round(n.y - a.CHAR_ANCHOR_Y - l - f);
       var u = Math.round(n.x - t);

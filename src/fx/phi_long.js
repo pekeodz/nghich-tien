@@ -327,7 +327,7 @@
     if (e && isFinite(e.x) && isFinite(e.y)) {
       var r = 0;
       if (t.CONFIG && t.CONFIG.FLY) {
-        r = t.CONFIG.FLY.HOVER * (e.flyRise || 0);
+        r = window.NTBayCao(e);
       }
       a.fx = e.x;
       a.fy = e.y;

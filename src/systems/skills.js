@@ -1317,7 +1317,7 @@
     }
     else {
       var h = function (t) {
-        return n.CONFIG.FLY.HOVER * (t.flyRise || 0);
+        return window.NTBayCao(t);
       }(e);
       var u = o.x - e.x;
       var s = o.y - 10 - (e.y - 18 - h);

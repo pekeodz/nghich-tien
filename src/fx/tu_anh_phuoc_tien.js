@@ -368,7 +368,7 @@
   function H(a) {
     var e = a.owner;
     if (e && isFinite(e.x) && isFinite(e.y)) {
-      var r = e.flyRise > 0 && t.CONFIG && t.CONFIG.FLY ? t.CONFIG.FLY.HOVER * e.flyRise : 0;
+      var r = e.flyRise > 0 && t.CONFIG && t.CONFIG.FLY ? window.NTBayCao(e) : 0;
       a.lastOwner = { x: e.x, y: e.y - r };
     }
     return a.lastOwner || { x: a.cx, y: a.cy };

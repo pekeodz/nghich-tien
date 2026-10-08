@@ -53,7 +53,7 @@
     }
   }
   function s(e) {
-    var t = e && e.flyRise > 0 && n.CONFIG && n.CONFIG.FLY ? n.CONFIG.FLY.HOVER * e.flyRise : 0;
+    var t = e && e.flyRise > 0 && n.CONFIG && n.CONFIG.FLY ? window.NTBayCao(e) : 0;
     return { x: e.x, y: e.y - t - 28 };
   }
   function m(n, i, a, r) {

@@ -124,7 +124,7 @@
     if (e && isFinite(e.x) && isFinite(e.y)) {
       var i = 0;
       if (a.CONFIG && a.CONFIG.FLY) {
-        i = a.CONFIG.FLY.HOVER * (e.flyRise || 0);
+        i = window.NTBayCao(e);
       }
       t.lastHand = { x: e.x, y: e.y - 18 - i };
     }

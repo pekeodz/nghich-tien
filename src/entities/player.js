@@ -188,7 +188,7 @@
               t.flyTrailTimer -= i;
               if (t.flyTrailTimer <= 0) {
                 t.flyTrailTimer = a.FLY.TRAIL_EVERY;
-                e.VFX.spawnFlyTrail(t.x, t.y - a.FLY.HOVER * t.flyRise - 2, o);
+                e.VFX.spawnFlyTrail(t.x, t.y - window.NTBayCao(t) - 2, o);
               }
             }
           }(t, n, h, l) : void (t.attackFired ? p(t, n, h * a.PLAYER.CAST_MOVE_MULT, l) : t.poseWalking = !1));
@@ -231,7 +231,7 @@
             t.flyTrailTimer -= n;
             if (t.flyTrailTimer <= 0) {
               t.flyTrailTimer = a.FLY.TRAIL_EVERY;
-              e.VFX.spawnFlyTrail(t.x, t.y - a.FLY.HOVER * t.flyRise - 2, o);
+              e.VFX.spawnFlyTrail(t.x, t.y - window.NTBayCao(t) - 2, o);
             }
           }
           else {
@@ -258,7 +258,7 @@
       !function (t, n, l, r) {
         var o = 0;
         if (t.flyRise > 0) {
-          o = a.FLY.HOVER * t.flyRise + 1.2 * Math.sin(3 * t.animTime) * t.flyRise;
+          o = window.NTBayCao(t) + 1.2 * Math.sin(3 * t.animTime) * t.flyRise;
         }
         var f = i.viewX(t);
         var s = i.viewY(t);
@@ -652,7 +652,7 @@
         t.flyTrailTimer -= n;
         if (t.flyTrailTimer <= 0) {
           t.flyTrailTimer = a.FLY.TRAIL_EVERY;
-          e.VFX.spawnFlyTrail(t.x, t.y - a.FLY.HOVER * t.flyRise - 2, f);
+          e.VFX.spawnFlyTrail(t.x, t.y - window.NTBayCao(t) - 2, f);
         }
       }
     }
@@ -846,7 +846,7 @@
     return !o || !o[t] || 1 !== r && 3 !== r ? i : o[t][1 === r ? 0 : 1];
   }
   function b(t, i) {
-    var n = a.FLY.HOVER * (t.flyRise || 0);
+    var n = window.NTBayCao(t);
     var l = e.WeaponArt && e.WeaponArt.defOf ? e.WeaponArt.defOf(t.cfg) : null;
     var r = l && l.restOffset || null;
     return { x: t.x + 22 + (r ? r.x : 0), y: t.y + -24 + (r ? r.y : 0) - n + 2 * Math.sin(2.3 * i) };
