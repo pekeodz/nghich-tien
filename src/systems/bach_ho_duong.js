@@ -57,6 +57,20 @@
 
   /* ---------------- hộp thoại ---------------- */
   function hop(t, nd, o) { if (P.HUD && P.HUD.openDialog) P.HUD.openDialog(t, nd, o || {}); }
+  // hộp thoại chữ canh trái (luật lệ có đánh số); hộp thoại khác mở sau sẽ trở lại canh giữa
+  function hopTrai(t, nd, o) {
+    ganCanhTrai(); hop(t, nd, o);
+    var d = document.getElementById("dialog"); if (d) d.classList.add("nt-canh-trai");
+  }
+  function ganCanhTrai() {
+    var H = P.HUD; if (!H || !H.openDialog || H.openDialog.__ntTrai) return;
+    var g = H.openDialog;
+    H.openDialog = function () { var d = document.getElementById("dialog"); if (d) d.classList.remove("nt-canh-trai"); return g.apply(this, arguments); };
+    H.openDialog.__ntTrai = true;
+    var st = document.createElement("style");
+    st.textContent = "#dialog.nt-canh-trai #dialog-text{text-align:left;max-width:52ch}";
+    document.head.appendChild(st);
+  }
   function flags() { var Q = P.Quest; if (!Q) return {}; Q.flags = Q.flags || {}; return Q.flags; }
   function homNay() { return new Date(Date.now() + 252e5).toISOString().slice(0, 10); }
   function soDo() { var f = flags(), d = f.ntBachHo || (f.ntBachHo = {}); if (d.ngay !== homNay()) { d.ngay = homNay(); d.luot = 0; } return d; }
@@ -94,7 +108,7 @@
     caption("Vào Bạch Hổ Đường — " + CAU_HINH.PHUT + " phút. Lượt " + d.luot + "/" + CAU_HINH.LUOT_NGAY + " hôm nay.");
   }
   function gioiThieu(npc) {
-    hop(TEN + " · Luật lệ", "• Báo danh xong là vào thẳng Bạch Hổ Đường, mỗi lượt " + CAU_HINH.PHUT + " phút.\n• Môn Đồ Canh Giữ đứng ở 4 đầu cầu; hạ hết thì Đường Chủ Long Quy hiện trên đài giữa.\n• Long Quy biết lao tới cắn, gầm gây choáng và rụt vào mai để giảm sát thương, hồi máu.\n• Hạ Đường Chủ, " + CAU_HINH.SO_CHUOT + " Thử Bảo trong kho chạy tán loạn, " + CAU_HINH.CHUOT_GIAY + " giây sau là thoát hết. Thử Bảo rất lì: đòn nào trúng cũng chỉ mất 1 máu — chiêu đánh nhiều phát như Huyền Âm Trảm bắt được nhiều nhất.\n• Hết giờ, bị hạ hoặc đi ra cổng thì lượt kết thúc.\n• Cần " + tenCG(CAU_HINH.CANH_GIOI) + " trở lên, mỗi ngày " + CAU_HINH.LUOT_NGAY + " lượt.",
+    hopTrai(TEN + " · Luật lệ", "Bạch Hổ Đường mỗi ngày mở cửa " + CAU_HINH.LUOT_NGAY + " lượt, chỉ nhận đạo hữu từ " + tenCG(CAU_HINH.CANH_GIOI) + " trở lên. Mỗi lượt có " + CAU_HINH.PHUT + " phút.\n\n1. Vào đường, hạ hết Môn Đồ Canh Giữ ở bốn đầu cầu.\n2. Đường Chủ Long Quy sẽ xuất hiện trên đài giữa. Coi chừng cú lao tới cắn, tiếng gầm làm choáng và lúc nó rụt vào mai hồi máu.\n3. Long Quy ngã xuống, " + CAU_HINH.SO_CHUOT + " con Thử Bảo trong kho sẽ chạy tán loạn. Bắt được con nào thì được thưởng con đó. Sau " + CAU_HINH.CHUOT_GIAY + " giây chúng sẽ trốn mất.\n\nHết giờ, bị hạ gục hoặc tự ra khỏi cổng thì lượt đó kết thúc.",
       { choices: [{ label: "Quay lại", onChoose: function () { B.moNpc(npc); } }], oneCol: true });
   }
   function phanThuong(npc) {
