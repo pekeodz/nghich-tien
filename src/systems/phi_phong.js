@@ -295,7 +295,7 @@
     var k = PP.capDangMac(); if (k >= 0 && CAP[k].aura) layAura(CAP[k].aura);
   };
   function capCuaCfg(cfg) {
-    if (!cfg) return -1;
+    if (!cfg || cfg.__khongPhong) return -1;
     var W = P.SceneWorld;
     if (W && W.player && cfg === W.player.cfg) dongBoCfg(cfg);
     return typeof cfg.phiPhong === "number" && CAP[cfg.phiPhong] ? cfg.phiPhong : -1;
@@ -325,11 +325,109 @@
     };
     if (gocBody) SF.drawBody = function (ctx, sheet, dir, col, x, y, cfg) {
       var k = capCuaCfg(cfg);
-      if (k >= 0 && CAP[k].aura && col !== 22 && col !== 23) PP.veVong(ctx, x + 16, y + 61, k, gio(), 1);
+      thanVuaVe = cfg || null;   // tên vẽ ngay sau thân → biết gắn danh hiệu nào
       trongThan++;
       try { return gocBody.apply(this, arguments); } finally { trongThan--; }
     };
     return true;
+  }
+
+  /* ------------------------------------------------------------------ vòng sáng dưới đất
+   * Vẽ ở lớp "back" của VFX.drawPlayerStatus (trước thú cưỡi / mây / thân) tại đúng mặt đất:
+   * khi phi hành nhân vật bay lên nhưng vòng sáng vẫn nằm dưới đất chỗ cái bóng. */
+  function bocVong() {
+    var V = P.VFX;
+    if (!V || !V.drawPlayerStatus || V.drawPlayerStatus.__phiPhong) return;
+    var goc = V.drawPlayerStatus;
+    V.drawPlayerStatus = function (ctx, x, y, ent, t, lop) {
+      if (lop === "back" && ent && !ent.downed) {
+        try {
+          var k = capCuaCfg(ent.cfg);
+          if (k >= 0 && CAP[k].aura) {
+            var bay = ent.flyRise > 0 ? (P.CONFIG.FLY.HOVER || 10) * ent.flyRise + 1.2 * Math.sin(3 * (ent.animTime || 0)) * ent.flyRise : 0;
+            var a0 = ctx.globalAlpha;
+            if (bay > 0) ctx.globalAlpha = a0 * (1 - 0.3 * Math.min(1, ent.flyRise));
+            PP.veVong(ctx, x, Math.round(y + bay) - 1, k, gio(), 1);
+            ctx.globalAlpha = a0;
+          }
+        } catch (e) {}
+      }
+      return goc.apply(this, arguments);
+    };
+    V.drawPlayerStatus.__phiPhong = true;
+  }
+
+  /* ------------------------------------------------------------------ danh hiệu cạnh tên
+   * Ảnh dải khung assets/sprites/fx/danh_hieu/<key>.png (đã cắt sát chữ + quầng sáng).
+   * Vẽ bên trái tên qua lớp chữ nét cao (Pixel.mapImage), cao bằng chữ tên. */
+  var DANH_HIEU = PP.DANH_HIEU = [
+    { key: "sieupham", w: 60, h: 24, n: 15, iv: 80 }, { key: "xuattran", w: 59, h: 22, n: 15, iv: 80 },
+    { key: "langtuyet", w: 79, h: 24, n: 10, iv: 80 }, { key: "kinhthe", w: 64, h: 26, n: 15, iv: 80 },
+    { key: "ngukhong", w: 61, h: 27, n: 15, iv: 80 }, { key: "honthien", w: 59, h: 27, n: 15, iv: 80 },
+    { key: "sophuong", w: 58, h: 24, n: 15, iv: 80 }, { key: "tiemlong", w: 61, h: 27, n: 15, iv: 80 },
+    { key: "chiton", w: 59, h: 26, n: 15, iv: 80 }, { key: "vosong", w: 65, h: 23, n: 10, iv: 80 },
+    { key: "daithanh", w: 79, h: 33, n: 14, iv: 55 }
+  ];
+  var DH_TI_LE = 0.72, DH_VER = "1", khungDH = {};
+  var thanVuaVe = null;
+  function layKhungDH(idx) {
+    var M = DANH_HIEU[idx]; if (!M) return null;
+    var o = khungDH[M.key];
+    if (o) return o.xong ? o.khung : null;
+    if (typeof Image === "undefined") return null;
+    o = khungDH[M.key] = { xong: false, khung: [] };
+    var img = new Image();
+    img.onload = function () {
+      for (var i = 0; i < M.n; i++) {
+        var c = document.createElement("canvas"); c.width = M.w; c.height = M.h;
+        c.getContext("2d").drawImage(img, i * M.w, 0, M.w, M.h, 0, 0, M.w, M.h);
+        o.khung.push(c);
+      }
+      o.xong = true;
+    };
+    img.src = "assets/sprites/fx/danh_hieu/" + M.key + ".png?v=" + DH_VER;
+    return null;
+  }
+  // vẽ danh hiệu cấp idx; (phaiX, giuaY) = mép phải và giữa theo chiều cao (toạ độ thế giới)
+  PP.veDanhHieu = function (ctx, phaiX, giuaY, idx, tiLe) {
+    var M = DANH_HIEU[idx], k = layKhungDH(idx); if (!M || !k) return 0;
+    tiLe = tiLe || DH_TI_LE;
+    var f = k[Math.floor(gio() * 1000 / M.iv) % M.n], w = M.w * tiLe, h = M.h * tiLe;
+    if (P.Pixel && P.Pixel.mapImage) P.Pixel.mapImage(ctx, phaiX - w, giuaY - h / 2, f, w, h);
+    else ctx.drawImage(f, phaiX - w, giuaY - h / 2, w, h);
+    return w;
+  };
+  function bocTen() {
+    var R = P.RemotePlayer;
+    if (!R || !R.veTenCoDau || R.veTenCoDau.__phiPhong) return;
+    var goc = R.veTenCoDau;
+    R.veTenCoDau = function (ctx, x, y, ten, mau, font, tong, coChien) {
+      var kq = goc.apply(this, arguments);
+      var cfg = thanVuaVe; thanVuaVe = null;
+      try {
+        var k = capCuaCfg(cfg);
+        if (k >= 0 && (!cfg.name || String(cfg.name).toLowerCase() === String(ten))) {
+          var rong = P.Pixel && P.Pixel.textWidthFor ? P.Pixel.textWidthFor(ctx, ten, font) : 6 * String(ten).length;
+          var lech = tong && P.Sect ? 17 : 0;
+          PP.veDanhHieu(ctx, x - rong / 2 - 2 - lech, y - 3, k);
+        }
+      } catch (e) {}
+      return kq;
+    };
+    R.veTenCoDau.__phiPhong = true;
+  }
+  // dạng biến hình (cfgHinh) sao chép cả cfg — không khoác phi phong khi đã hoá hình
+  function bocBienHinh() {
+    var PL = P.Player;
+    if (!PL || !PL.cfgHinh || PL.cfgHinh.__phiPhong) return;
+    var goc = PL.cfgHinh;
+    PL.cfgHinh = function () {
+      var c = goc.apply(this, arguments);
+      if (c && "phiPhong" in c) delete c.phiPhong;
+      if (c) c.__khongPhong = true;
+      return c;
+    };
+    PL.cfgHinh.__phiPhong = true;
   }
 
   /* ------------------------------------------------------------------ biểu tượng vật phẩm */
@@ -512,7 +610,7 @@
 
   /* ------------------------------------------------------------------ khởi động */
   function caiDat() {
-    bocSprite(); bocAssets(); bocLoot(); bocBot();
+    bocSprite(); bocAssets(); bocLoot(); bocBot(); bocTen(); bocBienHinh(); bocVong();
     if (P.ITEMS && P.clearItemIcons) { /* biểu tượng tự vẽ lần đầu khi cần */ }
   }
   caiDat();

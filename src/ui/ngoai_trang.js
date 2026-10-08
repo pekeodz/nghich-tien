@@ -80,6 +80,10 @@
       c.imageSmoothingEnabled = false;
       var col = Math.floor(t * 6) % 4;
       try { P.SpriteFactory.drawFrame(c, pl.sheet, st.huong, col, 68, 38, 2, cfg); } catch (e) {}
+      if (k >= 0 && P.PhiPhong.veDanhHieu && P.PhiPhong.DANH_HIEU[k]) {
+        c.imageSmoothingEnabled = true;
+        P.PhiPhong.veDanhHieu(c, 100 + P.PhiPhong.DANH_HIEU[k].w / 2, 22, k, 1);
+      }
     }
     st.raf = requestAnimationFrame(veSan);
   }
