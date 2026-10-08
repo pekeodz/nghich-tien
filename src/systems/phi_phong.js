@@ -374,10 +374,10 @@
     { key: "langtuyet", w: 90, h: 27, n: 15, iv: 80 }, { key: "kinhthe", w: 64, h: 26, n: 15, iv: 80 },
     { key: "ngukhong", w: 61, h: 27, n: 15, iv: 80 }, { key: "honthien", w: 59, h: 27, n: 15, iv: 80 },
     { key: "sophuong", w: 58, h: 24, n: 15, iv: 80 }, { key: "tiemlong", w: 61, h: 27, n: 15, iv: 80 },
-    { key: "chiton", w: 59, h: 26, n: 15, iv: 80 }, { key: "vosong", w: 77, h: 34, n: 15, iv: 80 },
+    { key: "chiton", w: 59, h: 26, n: 15, iv: 80 }, { key: "vosong", w: 61, h: 29, n: 15, iv: 80 },
     { key: "daithanh", w: 79, h: 33, n: 14, iv: 55 }
   ];
-  var DH_TI_LE = 0.72, DH_VER = "2", khungDH = {};
+  var DH_TI_LE = 0.72, DH_VER = "3", khungDH = {};
   var thanVuaVe = null;
   function layKhungDH(idx) {
     var M = DANH_HIEU[idx]; if (!M) return null;
