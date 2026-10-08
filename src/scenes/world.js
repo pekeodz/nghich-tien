@@ -4034,7 +4034,7 @@
             vn(a, "tieu_su", 0);
           } }, { label: mn.nguoi_lam.tieuDe, note: "Mạnh ShopT1 là ai", onChoose: function () {
             vn(a, "nguoi_lam", 0);
-          } }] });
+          } }].concat(n.PhiPhong && n.PhiPhong.luaChonRem ? [n.PhiPhong.luaChonRem(a)] : []) });   // Nghịch Tiên: phi phong ở chỗ Rem
   }
   function vn(a, t, e) {
     var i = mn[t];

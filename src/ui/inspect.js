@@ -65,6 +65,9 @@
       a.slots.innerHTML = "";
       a.item.classList.add("hidden");
       e.Inventory.slots.forEach(function (n) {
+        if (n.ngoaiTrang) {
+          return;   // Nghịch Tiên: Ngoại Trang hiện ở hàng riêng (src/ui/ngoai_trang.js)
+        }
         var s;
         var i = t.equipment && t.equipment[n.id];
         var o = i && e.ITEMS[i];

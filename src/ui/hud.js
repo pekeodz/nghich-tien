@@ -100,7 +100,7 @@
     a.btnBag = t.$("#btn-bag");
     a.bagTitle = t.$("#bag-title");
     a.htRail = t.$("#ht-rail");
-    a.htTabs = { "trang-bi": t.$("#ht-trang-bi"), "bi-tich": t.$("#ht-so"), "tu-dong": t.$("#ht-tu-dong"), "dot-pha": t.$("#ht-dot-pha"), "hoat-dong": t.$("#ht-hoat-dong") };
+    a.htTabs = { "trang-bi": t.$("#ht-trang-bi"), "bi-tich": t.$("#ht-so"), "tu-dong": t.$("#ht-tu-dong"), "dot-pha": t.$("#ht-dot-pha"), "hoat-dong": t.$("#ht-hoat-dong"), "ngoai-trang": t.$("#ht-ngoai-trang") };   // Nghịch Tiên: mục Ngoại Trang
     a.caption = t.$("#ritual-caption");
     a.stones = t.$("#bag-wallet");
     a.stoneCount = t.$("#stone-count");
@@ -1228,7 +1228,7 @@
       n.openDialog(e.info ? e.info.name : "Việc đang làm", t || "Chưa có việc nào.");
     }
   };
-  var E = { "trang-bi": { kicker: "", ten: "Hành Trang" }, "bi-tich": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Bí Tịch" }, "tu-dong": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Tự Động Đánh" }, "dot-pha": { kicker: "PHÁ QUAN LỤC", ten: "Tiến Độ Đột Phá" }, "hoat-dong": { kicker: "THIÊN HẠ SỰ", ten: "Hoạt Động" } };
+  var E = { "trang-bi": { kicker: "", ten: "Hành Trang" }, "bi-tich": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Bí Tịch" }, "tu-dong": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Tự Động Đánh" }, "dot-pha": { kicker: "PHÁ QUAN LỤC", ten: "Tiến Độ Đột Phá" }, "hoat-dong": { kicker: "THIÊN HẠ SỰ", ten: "Hoạt Động" }, "ngoai-trang": { kicker: "Y QUAN CHỈNH TỀ", ten: "Ngoại Trang" } };
   function _(t) {
     return "grade-" + e.Loot.gradeKey(t);
   }
@@ -1642,6 +1642,11 @@
     if ("trang-bi" === t) {
       n.renderBag();
     }
+    else if ("ngoai-trang" === t) {
+      if (e.NgoaiTrang && e.NgoaiTrang.render) {
+        e.NgoaiTrang.render(i[t]);   // Nghịch Tiên
+      }
+    }
     else {
       if ("tu-dong" === t) {
         if (e.Hotbar && e.Hotbar.renderAuto) {
@@ -1684,6 +1689,9 @@
   };
   n.renderBag = function () {
     var t = e.Inventory.list().filter(function (t) {
+      if (t.def && t.def.ngoaiTrang) {
+        return !1;   // Nghịch Tiên: đồ Ngoại Trang nằm ở mục Ngoại Trang
+      }
       a = t.def;
       return (e.Market && e.Market.group ? e.Market.group(a) : a.slot ? "trang-bi" : "bi_tich" === a.type || "phu_chu" === a.type ? "dao-thuat" : "vat-pham") === n.bagFilter;
       var a;
@@ -1702,6 +1710,9 @@
     (function () {
       a.equipSlots.innerHTML = "";
       e.Inventory.slots.forEach(function (t) {
+        if (t.ngoaiTrang) {
+          return;   // Nghịch Tiên: ô Ngoại Trang không nằm trên bảng Trang Bị
+        }
         var n = e.Inventory.equipped(t.id);
         var i = document.createElement("button");
         if (i.type = "button", i.className = "equip-slot equip-" + t.id + (n ? " filled " + _(n.grade) : " empty"), i.setAttribute("aria-label", n ? t.name + ": " + n.name : t.name + ": đang trống"), n) {
