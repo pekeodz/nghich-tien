@@ -34,12 +34,21 @@ ANIM=[
  ('shield',[S1[1],S1[2],S1[3],S1[2]]),
  ('emerge',[S2[0],S2[1],S2[2]]),
 ]
+# dáng đi mới (walk.png: 2 hàng x 3 khung, nền trong suốt, quay phải)
+WALK=Image.open('walk.png').convert('RGBA')
+K_WALK=0.6
+def khung_di(box):
+    im=WALK.crop(box); im=im.crop(im.getchannel('A').point(lambda v:255 if v>20 else 0).getbbox())
+    return im.resize((round(im.width*K_WALK),round(im.height*K_WALK)),Image.LANCZOS)
+DI=[khung_di((x0,y0,x1,y1)) for (y0,y1) in [(0,450),(450,896)] for (x0,x1) in [(0,400),(400,800),(800,1199)]]
 frames=[];anims={};i=0
 for name,lst in ANIM:
     anims[name]=[i,len(lst)]
     for sheet,box in lst:
         sc=K_B2 if (sheet=='bite' and box[1]==515) else (1.28 if sheet=='roar' else 1.0)
         frames.append(frame(sheet,box,scale=sc)); i+=1
+anims['walk']=[i,len(DI)]
+for f in DI: frames.append(f); i+=1
 K=0.56
 FW=330; FH=260; AX=160; AY=252
 strip=Image.new('RGBA',(round(FW*K)*len(frames),round(FH*K)))

@@ -25,7 +25,7 @@
   var LQ = P.LongQuy = { CAU_HINH: CAU_HINH };
   // ảnh mới phải có trong danh mục tài nguyên thì Assets mới chịu tải
   if (P.ASSET_MANIFEST) {
-    P.ASSET_MANIFEST["assets/sprites/mob/long_quy.png"] = 171467;
+    P.ASSET_MANIFEST["assets/sprites/mob/long_quy.png"] = 210248;
     P.ASSET_MANIFEST["assets/sprites/mob/thu_bao.png"] = 7664;
     P.ASSET_MANIFEST["assets/sprites/fx/long_quy/song.png"] = 21148;
   }
@@ -37,7 +37,7 @@
     D.long_quy = {
       name: "Long Quy · Đường Chủ Bạch Hổ Đường", level: 13, anhMob: "long_quy",
       sprite: { w: 148, h: 117, ax: 72, ay: 113 }, barY: 104, barW: 64, shadow: { rx: 46, ry: 9 },
-      sheet: { cols: 32, fw: 185, fh: 146, anims: { idle: [0, 2], run: [2, 4], attack: [6, 7] }, animFps: { idle: 2, run: 7, attack: 10 }, fps: 8 },
+      sheet: { cols: 38, fw: 185, fh: 146, anims: { idle: [0, 2], run: [32, 6], attack: [6, 7] }, animFps: { idle: 2, run: 9, attack: 10 }, fps: 8 },
       hp: CAU_HINH.BOSS_HP, exp: 300, speed: 46, aggro: 280, leashRange: 1400, wanderRadius: 24, wanderPause: 3,
       contactDmg: CAU_HINH.BOSS_DMG, hitCooldown: 1.3, hitRadius: 60, bodyRadius: 44, respawnSec: 0, isBoss: !0
     };
