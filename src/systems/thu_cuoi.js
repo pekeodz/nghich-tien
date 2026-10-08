@@ -78,6 +78,27 @@ window.NTBayCao = function (v) {
     ctx.restore();
   };
 
+  /* ---------------- HOÀNG KIM SƯ TỬ ----------------
+   * Sprite nền trong suốt (4 hàng: lên, xuống, trái, phải x 8 khung), cắt bằng tools/thu_cuoi/cat_sprite.py:
+   *   python3 cat_sprite.py <anh.png> 0.75 0 <ra.png>   (hàng trái trong ảnh gốc có khung ngược nên lật hàng phải)
+   * Khung 127x86, tâm yên x=63, chân chạm đất y=83; hover nâng người cưỡi ngang yên. */
+  (function () {
+    var SP = "assets/sprites/mount/su_tu_hoang_kim.png", IC = "assets/items/icon_su_tu_hoang_kim.png";
+    if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[SP] = 84827; P.ASSET_MANIFEST[IC] = 6615; }
+    if (P.ASSET_VERSIONS) { P.ASSET_VERSIONS[SP] = "sutu01"; P.ASSET_VERSIONS[IC] = "sutu01"; }
+    P.ITEMS.su_tu_hoang_kim = {
+      id: "su_tu_hoang_kim", name: "Hoàng Kim Sư Tử", type: "vat_pham", slot: "phi_hanh", grade: "Linh phẩm thượng",
+      requireRealm: "luyen_khi_10",
+      fly: { art: "ngua", speed: 1.8, realmMin: "luyen_khi_10", name: "Cưỡi Hoàng Kim Sư Tử" },
+      mount: { path: SP, frameW: 127, frameH: 86, frames: 8, idleFrames: 2, rows: 4, fps: 10, idleFps: 1,
+               drawW: 127, drawH: 86, anchorX: 63, anchorY: 56, hover: 27,
+               front: { 0: [30, 86], 3: [40, 86] } },   // xuống: bờm + mặt che chân người; lên: mông + đuôi
+      bpBonus: 15, spRegen: 1,
+      desc: "Sư tử bờm vàng của Tây Vực, khoác yên gấm đỏ dát vàng. Gầm một tiếng, yêu thú quanh đó đều cụp đuôi. Cần Luyện Khí Tầng 10 mới trị nổi.",
+      icon: "su_tu_hoang_kim"
+    };
+  })();
+
   /* ---------------- VỆT LỬA khi cưỡi Xích Diễm Kỳ Lân ----------------
    * Ba loại hạt, vẽ theo kiểu pixel cho hợp với game:
    *   chay  — vết cháy đỏ cam trên mặt đất, mờ dần (lớp "back", dưới nhân vật)
