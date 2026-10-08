@@ -11,7 +11,7 @@
  *  Hiện chỉ admin phát (không rơi, không bán).
  *
  *  Sprite: 4 hàng theo hướng game (xuống, trái, phải, lên), khung 140x174 (độ phân giải gốc, vẽ thu 0.46), chân ở (70,148).
- *  Cột 0-7 đi, 8-15 đánh, 16-17 ngồi. Cắt bằng tools/noel/cat.py.
+ *  Cột 0-7 đi, 8-15 đánh, 16-17 ngồi, 18 đứng yên. Cắt bằng tools/noel/cat.py.
  *  Thêm mặt nạ khác: thêm một mục vào MAT_NA với ảnh cùng bố cục.
  * ==========================================================================*/
 (function (P) {
@@ -20,10 +20,10 @@
   var MN = P.MatNa = {};
   var MAT_NA = MN.DS = {
     mat_na_noel: { hinh: "noel", anh: "assets/sprites/ngoai_trang/noel.png", fw: 140, fh: 174, ax: 70, ay: 148, tiLe: 0.46,
-      di: [0, 8], danh: [8, 8], ngoi: [16, 2], fpsDi: 11, fpsDanh: 14, fpsNgoi: 1.1 }
+      di: [0, 8], danh: [8, 8], ngoi: [16, 2], dung: 18, fpsDi: 11, fpsDanh: 14, fpsNgoi: 1.1 }
   };
   var ICON = "assets/items/icon_mat_na_noel.png";
-  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON] = 6881; P.ASSET_MANIFEST[MAT_NA.mat_na_noel.anh] = 284552; }
+  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON] = 6881; P.ASSET_MANIFEST[MAT_NA.mat_na_noel.anh] = 286997; }
 
   /* ---------------- vật phẩm + ô Mặt Nạ ---------------- */
   P.ITEMS.mat_na_noel = {
@@ -67,7 +67,7 @@
   function layAnh(m) {
     var a = anh[m.anh];
     if (a) return a.complete && a.naturalWidth ? a : null;
-    a = anh[m.anh] = new Image(); a.src = m.anh + "?v=3";
+    a = anh[m.anh] = new Image(); a.src = m.anh + "?v=5";
     return null;
   }
 
@@ -100,7 +100,7 @@
       return m.danh[0] + dau + Math.floor(t * m.fpsDanh) % nua;
     }
     if (col === 8 || col === 9 || col === 22 || col === 23) return m.ngoi[0] + (col & 1);    // ngồi thiền / ngã
-    return m.di[0];                                                                           // đứng, bị đánh
+    return m.dung != null ? m.dung : m.di[0];                                                 // đứng yên (hai chân thẳng), bị đánh
   }
   // (x,y) = góc trái trên ô nhân vật 32x64 như SpriteFactory; chân ở (x+16, y+62)
   function veNoel(ctx, m, dir, col, x, y, s, cfg) {

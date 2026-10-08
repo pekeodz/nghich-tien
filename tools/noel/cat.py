@@ -35,3 +35,27 @@ for j, (x0, x1) in enumerate([(0, 512), (512, 1024)]):
     for g in range(4): dat(cell, cell, 16 + j, g, KS)
 out.save('noel.png', optimize=True)
 print(json.dumps(dict(fw=FW, fh=FH, ax=AX, ay=AY, cols=18, K=K)))
+
+# ---- cột 18: dáng đứng yên, hai chân thẳng hàng ----
+# xuống: khung đi 7 (tư thế đứng sẵn trong tấm gốc)
+# lên: lấy khung đi 0, soi gương chân đặt đất (chân thấp hơn) sang bên kia
+# trái / phải: lấy khung đi có hai chân khép sát nhất
+def chan_doi_xung(f, leg_y=128):
+    a = np.array(f); al = a[..., 3] > 40
+    cols = np.nonzero(al[leg_y:150].any(axis=0))[0]; ci = int(round((cols.min() + cols.max()) / 2))
+    L, R = al[leg_y:, :ci], al[leg_y:, ci:]
+    lowL = np.nonzero(L.any(axis=1))[0].max(); lowR = np.nonzero(R.any(axis=1))[0].max()
+    b = a.copy()
+    if lowL >= lowR:
+        m = a[leg_y:, :ci][:, ::-1]; w = min(m.shape[1], f.width - ci); b[leg_y:, ci:] = 0; b[leg_y:, ci:ci + w] = m[:, :w]
+    else:
+        m = a[leg_y:, ci:][:, ::-1]; w = min(m.shape[1], ci); b[leg_y:, :ci] = 0; b[leg_y:, ci - w:ci] = m[:, -w:]
+    return Image.fromarray(b)
+KHEP = {0: 7, 1: 3, 2: 0}   # hàng xuống: khung 7, trái: khung 3, phải: khung 0
+full = Image.new('RGBA', (FW * 19, FH * 4)); full.alpha_composite(out, (0, 0))
+for g in range(4):
+    f = out.crop((0, g * FH, FW, g * FH + FH)) if g == 3 else out.crop((KHEP[g] * FW, g * FH, KHEP[g] * FW + FW, g * FH + FH))
+    if g == 3: f = chan_doi_xung(f)
+    full.alpha_composite(f, (18 * FW, g * FH))
+full.save('noel.png', optimize=True)
+print('them cot dung 18')
