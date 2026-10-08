@@ -317,7 +317,7 @@
     var gocFrame = SF.drawFrame, gocBody = SF.drawBody;
     SF.drawFrame = function (ctx, sheet, row, col, x, y, scale, cfg) {
       var k = capCuaCfg(cfg);
-      if (k < 0 || col === 22 || col === 23) return gocFrame.apply(this, arguments);
+      if (k < 0 || col === 22 || col === 23 || (P.MatNa && P.MatNa.dangDeo(cfg))) return gocFrame.apply(this, arguments);
       var s = scale || 1, t = gio(), b = nhipBuoc(col), dir = row & 3;
       // tư thế ngồi (thiền, cưỡi thú: cột 8/9) thân hạ xuống 9–10 px → hạ phi phong theo, thêm 3 px
       // cho cổ áo nằm dưới cằm; cắt phần gấu thừa dưới mặt đất để không lòi ra dưới chân
