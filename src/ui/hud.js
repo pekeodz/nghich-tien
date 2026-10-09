@@ -107,7 +107,7 @@
     a.btnBag = t.$("#btn-bag");
     a.bagTitle = t.$("#bag-title");
     a.htRail = t.$("#ht-rail");
-    a.htTabs = { "trang-bi": t.$("#ht-trang-bi"), "bi-tich": t.$("#ht-so"), "tu-dong": t.$("#ht-tu-dong"), "dot-pha": t.$("#ht-dot-pha"), "hoat-dong": t.$("#ht-hoat-dong"), "ngoai-trang": t.$("#ht-ngoai-trang") };   // Nghịch Tiên: mục Ngoại Trang
+    a.htTabs = { "trang-bi": t.$("#ht-trang-bi"), "bi-tich": t.$("#ht-so"), "tu-dong": t.$("#ht-tu-dong"), "dot-pha": t.$("#ht-dot-pha"), "hoat-dong": t.$("#ht-hoat-dong"), "ngoai-trang": t.$("#ht-ngoai-trang"), "sung-vat": t.$("#ht-sung-vat") };   // Nghịch Tiên: mục Ngoại Trang
     a.caption = t.$("#ritual-caption");
     a.stones = t.$("#bag-wallet");
     a.stoneCount = t.$("#stone-count");
@@ -1263,7 +1263,7 @@
       n.openDialog(e.info ? e.info.name : "Việc đang làm", t || "Chưa có việc nào.");
     }
   };
-  var w = { "trang-bi": { kicker: "", ten: "Hành Trang" }, "bi-tich": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Bí Tịch" }, "tu-dong": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Tự Động Đánh" }, "dot-pha": { kicker: "PHÁ QUAN LỤC", ten: "Tiến Độ Đột Phá" }, "hoat-dong": { kicker: "THIÊN HẠ SỰ", ten: "Hoạt Động" }, "ngoai-trang": { kicker: "Y QUAN CHỈNH TỀ", ten: "Ngoại Trang" } };
+  var w = { "trang-bi": { kicker: "", ten: "Hành Trang" }, "bi-tich": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Bí Tịch" }, "tu-dong": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Tự Động Đánh" }, "dot-pha": { kicker: "PHÁ QUAN LỤC", ten: "Tiến Độ Đột Phá" }, "hoat-dong": { kicker: "THIÊN HẠ SỰ", ten: "Hoạt Động" }, "ngoai-trang": { kicker: "Y QUAN CHỈNH TỀ", ten: "Ngoại Trang" }, "sung-vat": { kicker: "LINH SỦNG BẦU BẠN", ten: "Sủng Vật" } };
   function B(t) {
     return "grade-" + e.Loot.gradeKey(t);
   }
@@ -1680,6 +1680,11 @@
     else if ("ngoai-trang" === t) {
       if (e.NgoaiTrang && e.NgoaiTrang.render) {
         e.NgoaiTrang.render(i[t]);   // Nghịch Tiên
+      }
+    }
+    else if ("sung-vat" === t) {
+      if (e.SungVatUI && e.SungVatUI.render) {
+        e.SungVatUI.render(i[t]);   // Nghịch Tiên: mục Sủng Vật
       }
     }
     else {
