@@ -214,9 +214,9 @@
       if (void 0 !== n.d && (i.dir = 0 | n.d), !(e.Quality && e.Quality.anNguoi && e.Quality.anNguoi(i))) {
         switch (n.k) {
           case "swing":
-            var c = !1;
+            var h = !1;
             if (i.state = "attack", i.pose = "", i.actTime = 0, i.veCham) {
-              var u = h[0 | i.dir] || h[0];
+              var u = c[0 | i.dir] || c[0];
               f(i, i.x + 30 * u[0], i.y - 12 + 18 * u[1], "#ffe08a");
               break;
             }
@@ -250,9 +250,15 @@
             else if (i.cfg && "xich_viem_song_kich" === i.cfg.weapon && e.VFX.spawnSongKichFlurry) {
               e.VFX.spawnSongKichFlurry(r, s, a.DIRS[i.dir] || "down");
             }
+            else if (i.cfg && "ma_tri_mac" === i.cfg.weapon && e.VFX.spawnMaTriMac) {
+              e.VFX.spawnMaTriMac({ x: r, y: s, dir: i.dir, flyRise: i.flyRise }, { kind: "stroke", ghost: !0 });
+            }
+            else if (i.cfg && "tu_van_phien" === i.cfg.weapon && e.VFX.spawnTuVanPhien) {
+              e.VFX.spawnTuVanPhien({ x: r, y: s, dir: i.dir, flyRise: i.flyRise }, { kind: "cloud", basic: !0, ghost: !0 });
+            }
             else if (i.cfg && e.ITEMS && e.ITEMS[i.cfg.weapon] && e.ITEMS[i.cfg.weapon].roi && e.VFX.spawnLoiTienLash) {
               e.VFX.spawnLoiTienLash(r, s, a.DIRS[i.dir] || "down", null, { owner: i, sfx: "remote", weapon: i.cfg.weapon, crackAt: e.ITEMS[i.cfg.weapon].attackTime * e.ITEMS[i.cfg.weapon].hitAt, strikeAt: .35 * e.ITEMS[i.cfg.weapon].attackTime, endAt: e.ITEMS[i.cfg.weapon].attackTime });
-              c = !0;
+              h = !0;
             }
             else if (e.WeaponArt && e.WeaponArt.defOf && e.WeaponArt.defOf(i.cfg) && "huyet_ma_liem" === e.WeaponArt.defOf(i.cfg).id && e.VFX.spawnHuyetMaLiemSwing) {
               var m = e.ITEMS && e.ITEMS.huyet_ma_liem;
@@ -268,7 +274,7 @@
               }
             }
             var p = e.Audio.weaponAttackSfx ? e.Audio.weaponAttackSfx(i.cfg && i.cfg.weapon) : "swing";
-            if (!(c)) {
+            if (!(h)) {
               e.Audio.atPoint(p, r, s, { gain: .7, rate: .9 + .2 * Math.random() });
             }
             o(r, s, 2.4, .12);
@@ -302,7 +308,7 @@
             }
             if ("cham" === P) {
               var x = "aura" === T.shape || "self" === T.shape ? null : g.target || g;
-              var v = h[0 | i.dir] || h[0];
+              var v = c[0 | i.dir] || c[0];
               if (!(x && Number.isFinite(x.x) && Number.isFinite(x.y))) {
                 x = { x: r + 30 * v[0], y: s + 18 * v[1] };
               }
@@ -436,9 +442,9 @@
         var d = Math.round(n.x - t);
         var s = Math.round(n.y - l - o);
         var f = i.tagStyle(n);
-        var h = n.downed ? "#7a7a7a" : f.nameColor || "#e8e0c8";
+        var c = n.downed ? "#7a7a7a" : f.nameColor || "#e8e0c8";
         e.Pixel.ellipse(r, d, Math.round(n.y - l) - 1, 4, 2, e.Palette.WORLD.shadow, null);
-        e.Pixel.ellipse(r, d, s - 12, 3, 3, h, "#000000");
+        e.Pixel.ellipse(r, d, s - 12, 3, 3, c, "#000000");
         if (n.hurtT > 0) {
           e.Pixel.ellipse(r, d, s - 12, 5, 5, null, "#ffd9d0");
         }
@@ -448,8 +454,8 @@
     else if (n.sheet) {
       var d = !!n.veGian;
       var f = n.flyRise > 0 ? window.NTBayCao(n) + 1.2 * Math.sin(3 * n.animTime) * n.flyRise : 0;
-      var h = Math.round(n.x - a.CHAR_ANCHOR_X - t);
-      var c = Math.round(n.y - a.CHAR_ANCHOR_Y - l - f);
+      var c = Math.round(n.x - a.CHAR_ANCHOR_X - t);
+      var h = Math.round(n.y - a.CHAR_ANCHOR_Y - l - f);
       var u = Math.round(n.x - t);
       var m = Math.round(n.y - l);
       var w = !(!n.hinhId || n.downed || !e.Player || !e.Player.sheetHinh);
@@ -479,11 +485,11 @@
       }
       var v = !d && e.LucTinhTrucKiem && e.LucTinhTrucKiem.enabled(n);
       if (v && e.Player && e.Player.drawPhiKiem && (e.Player.drawLucTinhKiemAura && e.Player.drawLucTinhKiemAura(r, u, m - f, n, "back"), e.LucTinhTrucKiem.drawLayer(r, n, t, l, "back", e.Player.drawPhiKiem, n.x, n.y - f - 28)), p) {
-        e.SpriteFactory.drawBody(r, p, n.dir, s(n), h, c, e.Player.cfgHinh(n, n.hinhId));
+        e.SpriteFactory.drawBody(r, p, n.dir, s(n), c, h, e.Player.cfgHinh(n, n.hinhId));
       }
       else {
         var S = n.downed && !n.sheetPending ? e.SpriteFactory.getPale(n.cfg) : n.sheet;
-        e.SpriteFactory.drawBody(r, S, n.dir, s(n), h, c, n.cfg);
+        e.SpriteFactory.drawBody(r, S, n.dir, s(n), c, h, n.cfg);
       }
       if (n.flyRise > 0 && e.ThuCuoi && e.ThuCuoi.drawFront) {
         e.ThuCuoi.drawFront(r, u, m - f, n);   // Nghịch Tiên: lớp trước của thú cưỡi
@@ -501,17 +507,17 @@
         }
       }
       if (n.fishing) {
-        var A = Math.round(n.x - t + (1 === n.dir ? -5 : 5));
-        var R = Math.round(n.y - l - 22);
-        var V = Math.round(n.fishX - t);
+        var R = Math.round(n.x - t + (1 === n.dir ? -5 : 5));
+        var V = Math.round(n.y - l - 22);
+        var A = Math.round(n.fishX - t);
         var M = Math.round(n.fishY - l + 1.5 * Math.sin(5 * (o || n.animTime || 0)));
-        var k = Math.round(A + .55 * (V - A));
-        var X = Math.round(Math.min(R - 13, R + .35 * (M - R)));
-        e.Pixel.line(r, A, R, k, X, "#6a4322");
-        e.Pixel.line(r, A + 1, R, k + 1, X, "#b07a42");
-        e.Pixel.line(r, k, X, V, M, "#e9f3ec");
-        e.Pixel.ellipse(r, V, M, 3, 2, "#f2f0df", "#3c3025");
-        e.Pixel.r(r, V - 2, M - 1, 5, 1, "#c94f3f");
+        var k = Math.round(R + .55 * (A - R));
+        var X = Math.round(Math.min(V - 13, V + .35 * (M - V)));
+        e.Pixel.line(r, R, V, k, X, "#6a4322");
+        e.Pixel.line(r, R + 1, V, k + 1, X, "#b07a42");
+        e.Pixel.line(r, k, X, A, M, "#e9f3ec");
+        e.Pixel.ellipse(r, A, M, 3, 2, "#f2f0df", "#3c3025");
+        e.Pixel.r(r, A - 2, M - 1, 5, 1, "#c94f3f");
       }
       if (!d && e.VFX && e.VFX.drawPlayerStatus) {
         e.VFX.drawPlayerStatus(r, u, m - f, n, n.animTime, "front");
@@ -522,7 +528,7 @@
       y(n, r, u, m - f);
     }
   };
-  var h = [[0, 1], [-1, 0], [1, 0], [0, -1]];
+  var c = [[0, 1], [-1, 0], [1, 0], [0, -1]];
   i.offscreen = function (a) {
     if (a.sheet && e.Player && e.Player.phiKiemPose) {
       e.Player.phiKiemPose(a);
@@ -538,7 +544,7 @@
     var d = !!(o && e.Targeting && e.Targeting.daoDich && e.Targeting.daoDich(a));
     return { doiThu: n, doSat: r, coDich: l || d, bar: n || r || l || d || a.hp < 1 || a.downed, barW: n || r ? 24 : 18, frame: r ? "#4a0806" : n ? "#3a0f0c" : "#1a1410", nameColor: r ? "#ff2d1a" : n ? "#ff5b4d" : a.downed ? "#9aa3ad" : t ? "#a8323c" : "chinh" === o ? "#ffd86b" : "ma" === o ? "#c88cff" : "#bfe0ff" };
   };
-  var c = {};
+  var h = {};
   i.veDauTong = function (a, i, n, r) {
     if (!(r && e.Sect && e.SectEmblem && e.Utils)) {
       return 0;
@@ -548,8 +554,8 @@
     l = Math.max(1, Math.round(100 * l) / 100);
     e.Pixel.mapImage(a, i, t, function (a, i, n) {
       var r = a + "|" + (i || "-") + "|" + n;
-      if (c[r]) {
-        return c[r];
+      if (h[r]) {
+        return h[r];
       }
       var t = Math.max(1, Math.round(16 * n));
       var l = e.Utils.canvas(t, t);
@@ -561,7 +567,7 @@
         l.ctx.fillRect(0, 0, o, t);
         l.ctx.fillRect(t - o, 0, o, t);
       }
-      c[r] = l.canvas;
+      h[r] = l.canvas;
       return l.canvas;
     }(r.dau, function (a) {
       if (!e.Sect.CHUC) {
@@ -579,12 +585,12 @@
     e.Pixel.text(a, n, r, t, l, "#000000", o, "center");
     var f = s && e.CoChien ? e.CoChien.def(s) : null;
     if ((d && e.Sect || f) && e.Pixel.textWidthFor) {
-      var h = e.Pixel.textWidthFor(a, t, o);
+      var c = e.Pixel.textWidthFor(a, t, o);
       if (d && e.Sect) {
-        i.veDauTong(a, n - h / 2 - 1 - 16, r, d);
+        i.veDauTong(a, n - c / 2 - 1 - 16, r, d);
       }
       if (f) {
-        i.veCoChien(a, n + h / 2 + 2, r, f);
+        i.veCoChien(a, n + c / 2 + 2, r, f);
       }
     }
   };
@@ -600,33 +606,33 @@
     var d = o - 10;
     var s = "500 7px " + e.Pixel.MAP_FONT;
     var f = "500 8.4px " + e.Pixel.MAP_FONT;
-    var h = i.tagStyle(n);
-    var c = n.duelResult && n.duelResult.until > Date.now() ? n.duelResult : null;
-    if (!c && n.duelResult && (n.duelResult = null), c) {
-      var u = "win" === c.result ? "THẮNG" : "lose" === c.result ? "THUA" : "champ" === c.result ? "VÔ ĐỊCH" : "HOÀ";
-      var y = "win" === c.result ? "#ffe08a" : "lose" === c.result ? "#ff8a7a" : "champ" === c.result ? "#ffd23a" : "#d9e4f2";
+    var c = i.tagStyle(n);
+    var h = n.duelResult && n.duelResult.until > Date.now() ? n.duelResult : null;
+    if (!h && n.duelResult && (n.duelResult = null), h) {
+      var u = "win" === h.result ? "THẮNG" : "lose" === h.result ? "THUA" : "champ" === h.result ? "VÔ ĐỊCH" : "HOÀ";
+      var y = "win" === h.result ? "#ffe08a" : "lose" === h.result ? "#ff8a7a" : "champ" === h.result ? "#ffd23a" : "#d9e4f2";
       e.Pixel.text(r, t, d - 17, u, y, "#000000", "700 10px " + e.Pixel.MAP_FONT, "center");
     }
-    if (h.bar) {
-      var m = h.barW;
+    if (c.bar) {
+      var m = c.barW;
       var w = t - m / 2;
       var p = d - 11;
-      e.Pixel.r(r, w - 1, p - 1, m + 2, 4, h.frame);
+      e.Pixel.r(r, w - 1, p - 1, m + 2, 4, c.frame);
       e.Pixel.r(r, w, p, m, 2, "#5a1c16");
       e.Pixel.r(r, w, p, Math.max(0, Math.round(m * n.hp)), 2, n.hurtT > 0 ? "#ffd9d0" : "#e0604a");
-      if (h.doiThu && n.bp > 0) {
+      if (c.doiThu && n.bp > 0) {
         e.Pixel.r(r, w, p + 2, m, 1, "#3a2a12");
         e.Pixel.r(r, w, p + 2, Math.max(0, Math.round(m * n.bp)), 1, "#f59e42");
       }
     }
     if (n.name) {
-      i.veTenCoDau(r, t, d, String(n.name).toLowerCase(), h.nameColor, f, n.tong, n.coChien);
+      i.veTenCoDau(r, t, d, String(n.name).toLowerCase(), c.nameColor, f, n.tong, n.coChien);
       if (i.laAdmin(n.name)) {
-        i.veNhanAdmin(r, t, h.bar ? d - 15 : d - 9);
+        i.veNhanAdmin(r, t, c.bar ? d - 15 : d - 9);
       }
       else {
         if (n.phanThan) {
-          i.veNhanPhanThan(r, t, h.bar ? d - 15 : d - 9);
+          i.veNhanPhanThan(r, t, c.bar ? d - 15 : d - 9);
         }
       }
     }

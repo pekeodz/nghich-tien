@@ -3,9 +3,9 @@
   var n = e.Utils;
   var t = "pntt_gfx_quality";
   var r = [{ id: "binh_thuong", name: "Bình thường", tier: 2, fps: 0, maxDpr: 3, density: 0, vfx: 1 }, { id: "thap", name: "Thấp", tier: 1, fps: 60, maxDpr: 2, density: 0, vfx: .5 }, { id: "sieu_lo", name: "Siêu lỏ", tier: 0, fps: 30, maxDpr: 1, density: 1, vfx: 0 }];
-  var i = { dust: 1, mote: 1, qiwisp: 1, chip: 1, blood: 1, bloodpool: 1, leaf: 1, flytrail: 1, smoke: 1, gather: 1, spark: 1, ember: 1, firepuff: 1, shard: 1, boltdust: 1, boltflash: 1, ripple: 1, hitspark: 1, springaura: 1 };
-  var o = { flash: 1, vignette: 1 };
-  var a = e.Quality = { levels: r, level: r[0], tier: 2 };
+  var i = { dust: 1, mote: 1, qiwisp: 1, chip: 1, blood: 1, bloodpool: 1, leaf: 1, flytrail: 1, smoke: 1, gather: 1, spark: 1, ember: 1, firepuff: 1, shard: 1, boltdust: 1, boltflash: 1, ripple: 1, hitspark: 1, springaura: 1, tieuxa: 1 };
+  var a = { flash: 1, vignette: 1 };
+  var o = e.Quality = { levels: r, level: r[0], tier: 2 };
   function u(e) {
     for (var n = 0; n < r.length; n++)
       if (r[n].id === e) {
@@ -14,9 +14,9 @@
     return null;
   }
   function l(n) {
-    var t = a.tier >= 1 != n.tier >= 1;
-    a.level = n;
-    a.tier = n.tier;
+    var t = o.tier >= 1 != n.tier >= 1;
+    o.level = n;
+    o.tier = n.tier;
     if (t && e.TanVienArt) {
       e.TanVienArt.nha(null);
     }
@@ -41,18 +41,18 @@
       r.classList.toggle("gfx-sieu-lo", 0 === n.tier);
     }
   }
-  a.get = function () {
-    return a.level;
+  o.get = function () {
+    return o.level;
   };
-  a.set = function (r) {
+  o.set = function (r) {
     var i = u(r);
-    return i ? (l(i), n.store.set(t, i.id), e.Renderer && e.Renderer.display && e.Renderer.resize(), i) : a.level;
+    return i ? (l(i), n.store.set(t, i.id), e.Renderer && e.Renderer.display && e.Renderer.resize(), i) : o.level;
   };
-  a.next = function () {
-    var e = r.indexOf(a.level);
-    return a.set(r[(e + 1) % r.length].id);
+  o.next = function () {
+    var e = r.indexOf(o.level);
+    return o.set(r[(e + 1) % r.length].id);
   };
-  a.phone = function () {
+  o.phone = function () {
     try {
       var e = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
       var n = window.screen || {};
@@ -63,13 +63,13 @@
       return !1;
     }
   }();
-  a.PHONE_MAX_DPR = 2;
-  a.maxDpr = function () {
-    var e = a.level.maxDpr || 3;
-    return a.phone ? Math.min(e, a.PHONE_MAX_DPR) : e;
+  o.PHONE_MAX_DPR = 2;
+  o.maxDpr = function () {
+    var e = o.level.maxDpr || 3;
+    return o.phone ? Math.min(e, o.PHONE_MAX_DPR) : e;
   };
-  a.IDLE_FPS = 30;
-  a.IDLE_MS = 45e3;
+  o.IDLE_FPS = 30;
+  o.IDLE_MS = 45e3;
   var c = h();
   function h() {
     return "undefined" != typeof performance && performance.now ? performance.now() : Date.now();
@@ -82,9 +82,9 @@
       window.addEventListener(e, f, { passive: !0, capture: !0 });
     });
   }
-  a.markInput = f;
-  a.AUTO_IDLE_MS = 8e3;
-  a.idle = function (n) {
+  o.markInput = f;
+  o.AUTO_IDLE_MS = 8e3;
+  o.idle = function (n) {
     if (s()) {
       return !1;
     }
@@ -97,26 +97,26 @@
       return !1;
     }
     var r = (null == n ? h() : n) - c;
-    return !!(e.SceneWorld && e.SceneWorld.autoOn && r >= a.AUTO_IDLE_MS) || r >= a.IDLE_MS;
+    return !!(e.SceneWorld && e.SceneWorld.autoOn && r >= o.AUTO_IDLE_MS) || r >= o.IDLE_MS;
   };
-  a.LOWPOWER_MS = 18e4;
-  a.LOWPOWER_FPS = 10;
+  o.LOWPOWER_MS = 18e4;
+  o.LOWPOWER_FPS = 10;
   var d = "pntt_tiet_kiem_pin";
   function s() {
     var n = e.SceneWorld && e.SceneWorld.map;
     return !(!n || !n.data || "dai_hoi_dau" !== n.data.id);
   }
-  a.lowPowerOn = 0 !== +n.store.get(d, 1);
-  a.setLowPower = function (e) {
-    a.lowPowerOn = !!e;
+  o.lowPowerOn = 0 !== +n.store.get(d, 1);
+  o.setLowPower = function (e) {
+    o.lowPowerOn = !!e;
     n.store.set(d, e ? 1 : 0);
-    return a.lowPowerOn;
+    return o.lowPowerOn;
   };
-  a.lowPower = function (n) {
-    return !(!a.lowPowerOn || s()) && !(e.Input && e.Input.hasManualMove && e.Input.hasManualMove()) && (null == n ? h() : n) - c >= a.LOWPOWER_MS;
+  o.lowPower = function (n) {
+    return !(!o.lowPowerOn || s()) && !(e.Input && e.Input.hasManualMove && e.Input.hasManualMove()) && (null == n ? h() : n) - c >= o.LOWPOWER_MS;
   };
-  a.TOUCH_FPS = 60;
-  a.touch = function () {
+  o.TOUCH_FPS = 60;
+  o.touch = function () {
     try {
       return !(!window.matchMedia || !window.matchMedia("(pointer: coarse)").matches);
     }
@@ -124,56 +124,56 @@
       return !1;
     }
   }();
-  a.CROWD_ON = 15;
-  a.CROWD_OFF = 10;
-  a.CROWD_FPS = 30;
-  a.crowd = !1;
-  a.setCrowd = function (e, n) {
+  o.CROWD_ON = 15;
+  o.CROWD_OFF = 10;
+  o.CROWD_FPS = 30;
+  o.crowd = !1;
+  o.setCrowd = function (e, n) {
     if (!1 === n) {
-      a.crowd = !1;
+      o.crowd = !1;
     }
     else {
-      if (a.crowd) {
-        if (e < a.CROWD_OFF) {
-          a.crowd = !1;
+      if (o.crowd) {
+        if (e < o.CROWD_OFF) {
+          o.crowd = !1;
         }
       }
       else {
-        if (e >= a.CROWD_ON) {
-          a.crowd = !0;
+        if (e >= o.CROWD_ON) {
+          o.crowd = !0;
         }
       }
     }
   };
-  a.remoteTier = function () {
-    return a.crowd && !s() ? Math.max(0, a.tier - 1) : a.tier;
+  o.remoteTier = function () {
+    return o.crowd && !s() ? Math.max(0, o.tier - 1) : o.tier;
   };
-  a.fpsCap = function (e) {
-    var n = a.level.fps;
-    if (!(n > 0 || !a.touch)) {
-      n = a.TOUCH_FPS;
+  o.fpsCap = function (e) {
+    var n = o.level.fps;
+    if (!(n > 0 || !o.touch)) {
+      n = o.TOUCH_FPS;
     }
-    if (a.lowPower(e)) {
-      n = n > 0 ? Math.min(n, a.LOWPOWER_FPS) : a.LOWPOWER_FPS;
+    if (o.lowPower(e)) {
+      n = n > 0 ? Math.min(n, o.LOWPOWER_FPS) : o.LOWPOWER_FPS;
     }
     else {
-      if (a.idle(e)) {
-        n = n > 0 ? Math.min(n, a.IDLE_FPS) : a.IDLE_FPS;
+      if (o.idle(e)) {
+        n = n > 0 ? Math.min(n, o.IDLE_FPS) : o.IDLE_FPS;
       }
     }
-    if (a.crowd && 1 === a.tier && !s()) {
-      n = n > 0 ? Math.min(n, a.CROWD_FPS) : a.CROWD_FPS;
+    if (o.crowd && 1 === o.tier && !s()) {
+      n = n > 0 ? Math.min(n, o.CROWD_FPS) : o.CROWD_FPS;
     }
     return n;
   };
-  a.isDecor = function (e) {
+  o.isDecor = function (e) {
     return !!i[e];
   };
-  a.vfxCap = function () {
-    return a.tier >= 2 ? 320 : 1 === a.tier ? 200 : 100;
+  o.vfxCap = function () {
+    return o.tier >= 2 ? 320 : 1 === o.tier ? 200 : 100;
   };
-  a.keepVfx = function (e) {
-    return !!(a.tier >= 2 || !e || s()) || (i[e.type] ? 0 !== a.tier && Math.random() < a.level.vfx : !o[e.type] || a.tier > 0);
+  o.keepVfx = function (e) {
+    return !!(o.tier >= 2 || !e || s()) || (i[e.type] ? 0 !== o.tier && Math.random() < o.level.vfx : !a[e.type] || o.tier > 0);
   };
   var p = { 2: 6, 1: 0, 0: 0 };
   var w = [];
@@ -190,7 +190,7 @@
     var i = e.Renderer;
     return !(r && i && i.w > 0 && i.h > 0) || n >= r.x - 64 && n <= r.x + i.w + 64 && t >= r.y - 64 && t <= r.y + i.h + 64;
   }
-  a.remoteSpell = function (n, t, r) {
+  o.remoteSpell = function (n, t, r) {
     if (!n) {
       return "full";
     }
@@ -198,12 +198,12 @@
     if (!i || s()) {
       return "full";
     }
-    var o = "aura" === n.shape || "self" === n.shape ? t : r && r.target ? r.target : r;
-    var u = r && r.target === i || m(t, i, Math.max(200, (n.range || 0) + 40)) || m(o, i, 200);
-    if (!(u || o && g(o.x, o.y) || t && g(t.x, t.y))) {
+    var a = "aura" === n.shape || "self" === n.shape ? t : r && r.target ? r.target : r;
+    var u = r && r.target === i || m(t, i, Math.max(200, (n.range || 0) + 40)) || m(a, i, 200);
+    if (!(u || a && g(a.x, a.y) || t && g(t.x, t.y))) {
       return "skip";
     }
-    var l = a.remoteTier();
+    var l = o.remoteTier();
     if (0 === l && !u) {
       return "cham";
     }
@@ -216,25 +216,25 @@
       return Math.min(4, (e.delay || 0) + (e.hitDelay || 0) + 1.2);
     }(n)), "full");
   };
-  a.chamNguoi = function () {
-    return 0 === a.remoteTier() && !s();
+  o.chamNguoi = function () {
+    return 0 === o.remoteTier() && !s();
   };
   var v;
   var _ = "pntt_an_nguoi";
   var D = [{ id: 0, name: "Hiện tất cả" }, { id: 1, name: "Chỉ đồng đội" }, { id: 2, name: "Ẩn hết" }];
   var M = 1 === (v = +n.store.get(_, 0)) || 2 === v ? v : 0;
-  a.nguoiMode = function () {
+  o.nguoiMode = function () {
     return M;
   };
-  a.nguoiLabel = function () {
+  o.nguoiLabel = function () {
     return D[M].name;
   };
-  a.nguoiNext = function () {
+  o.nguoiNext = function () {
     M = (M + 1) % D.length;
     n.store.set(_, M);
     return M;
   };
-  a.anNguoi = function (n) {
+  o.anNguoi = function (n) {
     if (0 === M || !n || s()) {
       return !1;
     }
@@ -242,11 +242,11 @@
     var r = e.Gateway;
     return !(t && t.thuDich && t.thuDich(n) || 1 === M && r && r.partyMember && r.partyMember(n.id));
   };
-  a.boDonXa = function (n) {
-    return !(!a.crowd || s() || m(n, e.SceneWorld && e.SceneWorld.player, 200));
+  o.boDonXa = function (n) {
+    return !(!o.crowd || s() || m(n, e.SceneWorld && e.SceneWorld.player, 200));
   };
-  a.resetSpellBudget = function () {
+  o.resetSpellBudget = function () {
     w.length = 0;
   };
-  l(u(n.store.get(t, a.phone ? "thap" : "binh_thuong")) || u("binh_thuong"));
+  l(u(n.store.get(t, o.phone ? "thap" : "binh_thuong")) || u("binh_thuong"));
 }(window.PNTT);

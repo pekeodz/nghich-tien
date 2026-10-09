@@ -37,9 +37,12 @@
   a.LT_MOI_PHIEU = 20;
   a.TRAN_PHIEU_NGAY = 600;
   a.TIEU_SU_THUONG = .1;
+  a.lamTronPhieu = function (n) {
+    return Math.round(100 * (Number(n) || 0) + 1e-7) / 100;
+  };
   a.tachCong = function (n) {
     var t = Math.max(0, Math.floor(Number(n) || 0));
-    return { phieu: Math.floor(t * a.TY_LE_PHIEU / a.LT_MOI_PHIEU + 1e-9), lt: Math.floor(t * (1 - a.TY_LE_PHIEU) + 1e-9) };
+    return { phieu: Math.floor(t * a.TY_LE_PHIEU / a.LT_MOI_PHIEU * 100 + 1e-7) / 100, lt: Math.floor(t * (1 - a.TY_LE_PHIEU) + 1e-9) };
   };
   a.TAY_NAI_O = 6;
   a.TAY_NAI_MON = 40;
@@ -73,58 +76,59 @@
   a.KHAM_BAO_TRUOC_GIAY = 60;
   a.KHAM_PHUT = 10;
   a.soMoi = function () {
-    return { tayNai: {}, danh: 0, phieuNgay: { ngay: 0, n: 0 }, giamDen: 0, soChuyen: 0, ho: {} };
+    return { tayNai: {}, danh: 0, phieuNgay: { ngay: 0, n: 0 }, giamDen: 0, soChuyen: 0, ho: {}, le: 0 };
   };
   a.chuanHoa = function (n) {
     var t = a.soMoi();
     if (!n || "object" != typeof n) {
       return t;
     }
-    var _ = n.tayNai && "object" == typeof n.tayNai ? n.tayNai : {};
-    Object.keys(_).forEach(function (n) {
-      var a = Math.max(0, Math.floor(Number(_[n]) || 0));
+    var h = n.tayNai && "object" == typeof n.tayNai ? n.tayNai : {};
+    Object.keys(h).forEach(function (n) {
+      var a = Math.max(0, Math.floor(Number(h[n]) || 0));
       if (a > 0 && /^[a-z0-9_]{1,48}$/.test(n)) {
         t.tayNai[n] = a;
       }
     });
-    t.danh = Math.max(0, Math.floor(Number(n.danh) || 0));
-    var h = n.phieuNgay || {};
-    t.phieuNgay = { ngay: Math.max(0, Math.floor(Number(h.ngay) || 0)), n: Math.max(0, Math.floor(Number(h.n) || 0)) };
+    t.danh = Math.max(0, a.lamTronPhieu(n.danh));
+    t.le = Math.max(0, Math.min(99, Math.floor(Number(n.le) || 0)));
+    var r = n.phieuNgay || {};
+    t.phieuNgay = { ngay: Math.max(0, Math.floor(Number(r.ngay) || 0)), n: Math.max(0, a.lamTronPhieu(r.n)) };
     t.giamDen = Math.max(0, Number(n.giamDen) || 0);
     t.soChuyen = Math.max(0, Math.floor(Number(n.soChuyen) || 0));
     var o = n.ho && "object" == typeof n.ho ? n.ho : {};
     Object.keys(o).forEach(function (n) {
-      var _ = o[n];
-      if (_ && a.dongThuMua(n)) {
-        var h = Number(_.con);
-        var r = Number(_.at);
-        if (isFinite(h) && h >= 0 && isFinite(r) && r >= 0) {
-          t.ho[n] = { con: h, at: r };
+      var h = o[n];
+      if (h && a.dongThuMua(n)) {
+        var r = Number(h.con);
+        var _ = Number(h.at);
+        if (isFinite(r) && r >= 0 && isFinite(_) && _ >= 0) {
+          t.ho[n] = { con: r, at: _ };
         }
       }
     });
     return t;
   };
   a.so = function (t) {
-    var _ = (t = t || n).Progress;
-    return _ ? (_.hacThi && "object" == typeof _.hacThi || (_.hacThi = a.soMoi()), _.hacThi.tayNai || (_.hacThi.tayNai = {}), _.hacThi.phieuNgay || (_.hacThi.phieuNgay = { ngay: 0, n: 0 }), _.hacThi.ho && "object" == typeof _.hacThi.ho || (_.hacThi.ho = {}), _.hacThi) : a.soMoi();
+    var h = (t = t || n).Progress;
+    return h ? (h.hacThi && "object" == typeof h.hacThi || (h.hacThi = a.soMoi()), h.hacThi.tayNai || (h.hacThi.tayNai = {}), h.hacThi.phieuNgay || (h.hacThi.phieuNgay = { ngay: 0, n: 0 }), h.hacThi.ho && "object" == typeof h.hacThi.ho || (h.hacThi.ho = {}), h.hacThi) : a.soMoi();
   };
   a.tayNai = function (n) {
     return a.so(n).tayNai;
   };
   a.demTayNai = function (n) {
     var t = a.tayNai(n);
-    var _ = 0;
     var h = 0;
+    var r = 0;
     for (var o in t)
       if (Object.prototype.hasOwnProperty.call(t, o)) {
-        var r = 0 | t[o];
-        if (r > 0) {
-          _++;
-          h += r;
+        var _ = 0 | t[o];
+        if (_ > 0) {
+          h++;
+          r += _;
         }
       }
-    return { o: _, mon: h };
+    return { o: h, mon: r };
   };
   a.coHangLau = function (n) {
     return a.demTayNai(n).mon > 0;
@@ -136,138 +140,138 @@
     return n === a.MAP_HPL || n === a.MAP_CHO || n === a.MAP_TAM;
   };
   a.whyNotHang = function (a, t) {
-    var _ = a && a.ITEMS || n.ITEMS || {};
-    var h = Object.prototype.hasOwnProperty.call(_, t) ? _[t] : null;
-    return h ? "tien_te" === h.type ? "tiền tệ không đóng vào tay nải" : String(h.type || "").indexOf("nhiem_vu") >= 0 ? "đồ nhiệm vụ không phải hàng" : h.slot ? "trang bị không phải hàng lậu" : "bi_tich" === h.type ? "bí tịch không phải hàng lậu" : n.Market && n.Market.KHOA_TIEN_TRINH && n.Market.KHOA_TIEN_TRINH[t] ? h.name + " là vật dẫn đường tu luyện, không đem buôn" : null : "vật phẩm không có thật";
+    var h = a && a.ITEMS || n.ITEMS || {};
+    var r = Object.prototype.hasOwnProperty.call(h, t) ? h[t] : null;
+    return r ? "tien_te" === r.type ? "tiền tệ không đóng vào tay nải" : String(r.type || "").indexOf("nhiem_vu") >= 0 ? "đồ nhiệm vụ không phải hàng" : r.slot ? "trang bị không phải hàng lậu" : "bi_tich" === r.type ? "bí tịch không phải hàng lậu" : n.Market && n.Market.KHOA_TIEN_TRINH && n.Market.KHOA_TIEN_TRINH[t] ? r.name + " là vật dẫn đường tu luyện, không đem buôn" : null : "vật phẩm không có thật";
   };
-  a.xetDongGoi = function (n, t, _, h) {
-    if (!((_ = Math.floor(Number(_) || 0)) >= 1 && _ <= 9999)) {
+  a.xetDongGoi = function (n, t, h, r) {
+    if (!((h = Math.floor(Number(h) || 0)) >= 1 && h <= 9999)) {
       return "số lượng không hợp lệ";
     }
-    if (a.camDongGoi(h)) {
+    if (a.camDongGoi(r)) {
       return "chỉ đóng hàng ở ngoài đèo";
     }
     var o = a.whyNotHang(n, t);
     if (o) {
       return o;
     }
-    var r = n.Inventory;
-    if (!r.canTrade(t, _)) {
-      var i = r.tradableCount ? r.tradableCount(t) : r.count(t);
-      return i > 0 ? "chỉ còn " + i + " món đóng được" : "không có món này trong túi";
+    var _ = n.Inventory;
+    if (!_.canTrade(t, h)) {
+      var u = _.tradableCount ? _.tradableCount(t) : _.count(t);
+      return u > 0 ? "chỉ còn " + u + " món đóng được" : "không có món này trong túi";
     }
-    var u = a.demTayNai(n);
-    return !(a.soTrongTayNai(n, t) > 0) && u.o >= a.TAY_NAI_O ? "tay nải chỉ chứa " + a.TAY_NAI_O + " loại hàng" : u.mon + _ > a.TAY_NAI_MON ? "tay nải chỉ còn chỗ cho " + Math.max(0, a.TAY_NAI_MON - u.mon) + " món" : null;
+    var i = a.demTayNai(n);
+    return !(a.soTrongTayNai(n, t) > 0) && i.o >= a.TAY_NAI_O ? "tay nải chỉ chứa " + a.TAY_NAI_O + " loại hàng" : i.mon + h > a.TAY_NAI_MON ? "tay nải chỉ còn chỗ cho " + Math.max(0, a.TAY_NAI_MON - i.mon) + " món" : null;
   };
-  a.dongGoi = function (n, _, h, o) {
-    var r = a.xetDongGoi(n, _, h, o);
-    if (r) {
-      return { ok: !1, why: r };
+  a.dongGoi = function (n, h, r, o) {
+    var _ = a.xetDongGoi(n, h, r, o);
+    if (_) {
+      return { ok: !1, why: _ };
     }
-    if (h = Math.floor(Number(h)), !n.Inventory.remove(_, h)) {
+    if (r = Math.floor(Number(r)), !n.Inventory.remove(h, r)) {
       return { ok: !1, why: "không có đủ món này trong túi" };
     }
-    var i = a.tayNai(n);
-    i[_] = (0 | i[_]) + h;
+    var u = a.tayNai(n);
+    u[h] = (0 | u[h]) + r;
     t(n);
-    return { ok: !0, n: h };
+    return { ok: !0, n: r };
   };
-  a.xetGoRa = function (n, t, _, h) {
-    if (!((_ = Math.floor(Number(_) || 0)) >= 1 && _ <= 9999)) {
+  a.xetGoRa = function (n, t, h, r) {
+    if (!((h = Math.floor(Number(h) || 0)) >= 1 && h <= 9999)) {
       return "số lượng không hợp lệ";
     }
-    if (a.camDongGoi(h)) {
+    if (a.camDongGoi(r)) {
       return "không gỡ hàng trong đèo hay trong chợ";
     }
-    if (a.soTrongTayNai(n, t) < _) {
+    if (a.soTrongTayNai(n, t) < h) {
       return "trong tay nải không có đủ món này";
     }
     var o = n.Inventory && n.Inventory.MAX_STACK || 9999;
-    return n.Inventory.count(t) + _ > o ? "túi không chứa thêm được" : null;
+    return n.Inventory.count(t) + h > o ? "túi không chứa thêm được" : null;
   };
-  a.goRa = function (n, _, h, o) {
-    var r = a.xetGoRa(n, _, h, o);
-    return r ? { ok: !1, why: r } : (h = Math.floor(Number(h)), a.botTayNai(n, _, h), n.Inventory.add(_, h), t(n), { ok: !0, n: h });
+  a.goRa = function (n, h, r, o) {
+    var _ = a.xetGoRa(n, h, r, o);
+    return _ ? { ok: !1, why: _ } : (r = Math.floor(Number(r)), a.botTayNai(n, h, r), n.Inventory.add(h, r), t(n), { ok: !0, n: r });
   };
-  a.botTayNai = function (n, t, _) {
-    var h = a.tayNai(n);
-    var o = 0 | h[t];
-    var r = Math.max(0, Math.min(o, Math.floor(Number(_) || 0)));
-    if (o - r > 0) {
-      h[t] = o - r;
+  a.botTayNai = function (n, t, h) {
+    var r = a.tayNai(n);
+    var o = 0 | r[t];
+    var _ = Math.max(0, Math.min(o, Math.floor(Number(h) || 0)));
+    if (o - _ > 0) {
+      r[t] = o - _;
     }
     else {
-      delete h[t];
+      delete r[t];
     }
-    return r;
+    return _;
   };
-  a.nhetTayNai = function (n, t, _) {
+  a.nhetTayNai = function (n, t, h) {
     if (a.whyNotHang(n, t)) {
       return 0;
     }
-    var h = a.demTayNai(n);
-    if (!(a.soTrongTayNai(n, t) > 0) && h.o >= a.TAY_NAI_O) {
+    var r = a.demTayNai(n);
+    if (!(a.soTrongTayNai(n, t) > 0) && r.o >= a.TAY_NAI_O) {
       return 0;
     }
-    var o = Math.max(0, Math.min(Math.floor(Number(_) || 0), a.TAY_NAI_MON - h.mon));
+    var o = Math.max(0, Math.min(Math.floor(Number(h) || 0), a.TAY_NAI_MON - r.mon));
     if (o <= 0) {
       return 0;
     }
-    var r = a.tayNai(n);
-    r[t] = (0 | r[t]) + o;
+    var _ = a.tayNai(n);
+    _[t] = (0 | _[t]) + o;
     return o;
   };
   a.trutTayNai = function (n) {
     var t = a.tayNai(n);
-    var _ = [];
+    var h = [];
     Object.keys(t).forEach(function (n) {
       var a = 0 | t[n];
       if (a > 0) {
-        _.push([n, a]);
+        h.push([n, a]);
       }
     });
     a.so(n).tayNai = {};
-    return _;
+    return h;
   };
   a.tichThuNua = function (n) {
     var t = a.tayNai(n);
-    var _ = [];
-    Object.keys(t).forEach(function (h) {
-      var o = 0 | t[h];
-      var r = Math.ceil(o / 2);
-      if (r > 0) {
-        a.botTayNai(n, h, r);
-        _.push([h, r]);
+    var h = [];
+    Object.keys(t).forEach(function (r) {
+      var o = 0 | t[r];
+      var _ = Math.ceil(o / 2);
+      if (_ > 0) {
+        a.botTayNai(n, r, _);
+        h.push([r, _]);
       }
     });
-    return _;
+    return h;
   };
   a.danh = function (n) {
-    return 0 | a.so(n).danh;
+    return Number(a.so(n).danh) || 0;
   };
   a.bacDanh = function (n) {
-    for (var t = a.danh(n), _ = 0, h = 0; h < a.BAC_DANH.length; h++)
-      t >= a.BAC_DANH[h].tu && (_ = h);
-    return _;
+    for (var t = a.danh(n), h = 0, r = 0; r < a.BAC_DANH.length; r++)
+      t >= a.BAC_DANH[r].tu && (h = r);
+    return h;
   };
   a.tenBac = function (n) {
     return (a.BAC_DANH[n] || a.BAC_DANH[0]).ten;
   };
   a.congDanh = function (n, t) {
-    var _ = a.so(n);
-    _.danh = Math.max(0, (0 | _.danh) + Math.floor(Number(t) || 0));
-    return _.danh;
+    var h = a.so(n);
+    h.danh = Math.max(0, a.lamTronPhieu((Number(h.danh) || 0) + (Number(t) || 0)));
+    return h.danh;
   };
   a.lenBac = function (n, t) {
-    var _ = (a.BAC_DANH[t] || {}).tu;
-    if (null == _) {
+    var h = (a.BAC_DANH[t] || {}).tu;
+    if (null == h) {
       return a.danh(n);
     }
-    var h = a.so(n);
-    if ((0 | h.danh) < _) {
-      h.danh = _;
+    var r = a.so(n);
+    if ((Number(r.danh) || 0) < h) {
+      r.danh = h;
     }
-    return h.danh;
+    return r.danh;
   };
   a.mocKe = function (n) {
     var t = a.BAC_DANH[a.bacDanh(n) + 1];
@@ -280,20 +284,34 @@
     return Math.floor(((null == n ? Date.now() : n) + 252e5) / 864e5);
   };
   a.phieuHomNay = function (n, t) {
-    var _ = a.so(n).phieuNgay || {};
-    var h = a.ngayVN(t);
-    var o = _.ngay === h ? 0 | _.n : 0;
-    return { ngay: h, da: o, tran: a.TRAN_PHIEU_NGAY, con: Math.max(0, a.TRAN_PHIEU_NGAY - o) };
+    var h = a.so(n).phieuNgay || {};
+    var r = a.ngayVN(t);
+    var o = h.ngay === r ? a.lamTronPhieu(h.n) : 0;
+    return { ngay: r, da: o, tran: a.TRAN_PHIEU_NGAY, con: Math.max(0, a.lamTronPhieu(a.TRAN_PHIEU_NGAY - o)) };
   };
-  a.ghiPhieuNgay = function (n, t, _) {
-    var h = a.phieuHomNay(n, _);
-    var o = Math.max(0, Math.min(Math.floor(Number(t) || 0), h.con));
-    a.so(n).phieuNgay = { ngay: h.ngay, n: h.da + o };
+  a.ghiPhieuNgay = function (n, t, h) {
+    var r = a.phieuHomNay(n, h);
+    var o = Math.max(0, Math.min(a.lamTronPhieu(t), r.con));
+    a.so(n).phieuNgay = { ngay: r.ngay, n: a.lamTronPhieu(r.da + o) };
+    return o;
+  };
+  a.soPhieu = function (t) {
+    t = t || n;
+    return a.lamTronPhieu(t.Inventory.count(a.HAC_PHIEU) + (0 | a.so(t).le) / 100);
+  };
+  a.nhanPhieu = function (n, t) {
+    var h = a.so(n);
+    var r = (0 | h.le) + Math.round(100 * (Number(t) || 0) + 1e-7);
+    var o = Math.max(0, Math.floor(r / 100));
+    h.le = r - 100 * o;
+    if (o > 0) {
+      n.Inventory.add(a.HAC_PHIEU, o);
+    }
     return o;
   };
   a.giamConMs = function (n, t) {
-    var _ = Number(a.so(n).giamDen) || 0;
-    return Math.max(0, _ - (null == t ? Date.now() : t));
+    var h = Number(a.so(n).giamDen) || 0;
+    return Math.max(0, h - (null == t ? Date.now() : t));
   };
   a.dangGiam = function (n, t) {
     return a.giamConMs(n, t) > 0;
@@ -303,18 +321,18 @@
     var t = a % 60;
     return Math.floor(a / 60) + ":" + (t < 10 ? "0" : "") + t;
   };
-  a.chanCua = function (t, _, h) {
-    if (h = h || {}, a.dangGiam(t, h.now)) {
+  a.chanCua = function (t, h, r) {
+    if (r = r || {}, a.dangGiam(t, r.now)) {
       return "Đang bị giam.";
     }
-    if (_ === a.MAP_HPL && n.realmReached && t.Progress && !n.realmReached(t.Progress.realmId, "truc_co_1")) {
+    if (h === a.MAP_HPL && n.realmReached && t.Progress && !n.realmReached(t.Progress.realmId, "truc_co_1")) {
       return "Cần Trúc Cơ mới vào được.";
     }
-    if (_ === a.MAP_CHO) {
+    if (h === a.MAP_CHO) {
       if (!t.Inventory || !t.Inventory.has(a.QUY_DIEN)) {
         return "Cần Quỷ Diện mới vào được.";
       }
-      if (h.dangKham) {
+      if (r.dangKham) {
         return "Chấp Pháp đang khám chợ — cửa đóng.";
       }
     }
@@ -327,34 +345,34 @@
     return n === a.MAP_HPL;
   };
   a.tenAn = function (n) {
-    for (var a = String(n || ""), t = 2166136261, _ = 0; _ < a.length; _++)
-      t ^= a.charCodeAt(_), t = Math.imul(t, 16777619) >>> 0;
+    for (var a = String(n || ""), t = 2166136261, h = 0; h < a.length; h++)
+      t ^= a.charCodeAt(h), t = Math.imul(t, 16777619) >>> 0;
     return "Khách Vô Danh #" + (10 + t % 90);
   };
   a.giaDoi = function (n, t) {
     if (!t) {
       return 0;
     }
-    var _ = 0 | t.gia;
+    var h = 0 | t.gia;
     if (t.id === a.HUYET_NGOC_CHI && n && n.Quest && n.Quest.flags && "B" === n.Quest.flags[a.CO.NHANH]) {
-      _ *= 2;
+      h *= 2;
     }
-    return _;
+    return h;
   };
   a.xetDoi = function (n, t) {
-    var _ = a.dongDoi(t);
-    if (!_) {
+    var h = a.dongDoi(t);
+    if (!h) {
       return "quầy không có món ấy";
     }
-    if (a.bacDanh(n) < (0 | _.bac)) {
-      return "cần Hắc Danh " + a.tenBac(_.bac);
+    if (a.bacDanh(n) < (0 | h.bac)) {
+      return "cần Hắc Danh " + a.tenBac(h.bac);
     }
-    var h = a.giaDoi(n, _);
-    if (!n.Inventory.has(a.HAC_PHIEU, h)) {
-      return "cần " + h + " Hắc Phiếu";
+    var r = a.giaDoi(n, h);
+    if (!n.Inventory.has(a.HAC_PHIEU, r)) {
+      return "cần " + r + " Hắc Phiếu";
     }
     var o = n.Inventory.MAX_STACK || 9999;
-    return n.Inventory.count(_.id) + _.n > o ? "túi không chứa thêm được" : null;
+    return n.Inventory.count(h.id) + h.n > o ? "túi không chứa thêm được" : null;
   };
   a.fmt = function (n) {
     return (Number(n) || 0).toLocaleString("vi-VN");

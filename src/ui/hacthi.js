@@ -329,12 +329,12 @@
           return t;
         }
         var h = a.phieuHomNay(n);
-        return { bac: a.bacDanh(n), tenBac: a.tenBac(a.bacDanh(n)), danh: a.danh(n), mocKe: a.mocKe(n), phieu: n.Inventory.count(a.HAC_PHIEU), phieuNgay: h.da, tranNgay: h.tran, tayNai: Object.assign({}, a.tayNai(n)), kham: null, cho: null };
+        return { bac: a.bacDanh(n), tenBac: a.tenBac(a.bacDanh(n)), danh: a.danh(n), mocKe: a.mocKe(n), phieu: a.soPhieu(n), phieuNgay: h.da, tranNgay: h.tran, tayNai: Object.assign({}, a.tayNai(n)), kham: null, cho: null };
       }();
       var v = A("div", "hct-the");
       var m = A("div", "hct-so");
       m.appendChild(A("div", "hct-so-n", g.tenBac));
-      m.appendChild(A("div", "hct-so-l", "Hắc Danh " + d(g.danh) + (null != g.mocKe ? "/" + d(g.mocKe) : "")));
+      m.appendChild(A("div", "hct-so-l", "Hắc Danh " + d(Math.floor(g.danh)) + (null != g.mocKe ? "/" + d(g.mocKe) : "")));
       v.appendChild(m);
       var s = A("div", "hct-so");
       s.appendChild(A("div", "hct-so-n", d(g.phieu)));
@@ -342,21 +342,21 @@
       v.appendChild(s);
       var _ = A("div", "hct-so");
       if (_.appendChild(A("div", "hct-so-n", d(g.phieuNgay) + "/" + d(g.tranNgay))), _.appendChild(A("div", "hct-so-l", "Phiếu hôm nay")), v.appendChild(_), c.appendChild(v), t().stage === h.GD.SO_THU_MUA && !t().coHuyetNgocChi()) {
-        var M = h.giaDoi(n, h.dongDoi("huyet_ngoc_chi"));
-        c.appendChild(A("p", "hct-ghi muc-tieu", "Mục tiêu: " + d(Math.min(g.phieu, M)) + "/" + d(M) + " Hắc Phiếu → đổi Huyết Ngọc Chi"));
+        var G = h.giaDoi(n, h.dongDoi("huyet_ngoc_chi"));
+        c.appendChild(A("p", "hct-ghi muc-tieu", "Mục tiêu: " + d(Math.min(g.phieu, G)) + "/" + d(G) + " Hắc Phiếu → đổi Huyết Ngọc Chi"));
       }
       if (C(c), o()) {
         if (g.kham && c.appendChild(A("p", "hct-bao", g.kham.bao > 0 ? "Chấp Pháp sắp khám chợ — tạm ngừng thu!" : "Chấp Pháp đang khám chợ.")), g.cho && (g.cho.phieu || g.cho.items && g.cho.items.length)) {
-          var G = A("button", "hct-nut phu", "Nhận đồ đang chờ");
-          G.type = "button";
-          G.addEventListener("click", function () {
+          var I = A("button", "hct-nut phu", "Nhận đồ đang chờ");
+          I.type = "button";
+          I.addEventListener("click", function () {
             f("hacthi.nhan", {}, function () {
               D();
             });
           });
-          c.appendChild(G);
+          c.appendChild(I);
         }
-        var P = A("div", "hct-tabs");
+        var k = A("div", "hct-tabs");
         [["thu_mua", "Bán"], ["doi", "Quầy Đổi"], ["tay_nai", "Tay Nải"]].forEach(function (n) {
           var a = A("button", "hct-tab" + (N === n[0] ? " on" : ""), n[1]);
           a.type = "button";
@@ -365,11 +365,11 @@
             U();
             D();
           });
-          P.appendChild(a);
+          k.appendChild(a);
         });
-        c.appendChild(P);
-        var k = A("div", "hct-than");
         c.appendChild(k);
+        var P = A("div", "hct-than");
+        c.appendChild(P);
         if ("thu_mua" === N) {
           (function (a, t) {
             var h = i();
@@ -387,13 +387,13 @@
                       e.appendChild(o);
                       return void a.appendChild(e);
                     }
-                    var c = i.gia * h.TY_LE_PHIEU / h.LT_MOI_PHIEU;
+                    var c = h.tachCong(i.gia).phieu;
                     var d = Math.floor(i.gia * (1 - h.TY_LE_PHIEU) + 1e-9);
-                    o.appendChild(A("div", "hct-hang-phu", c.toLocaleString("vi-VN", { maximumFractionDigits: 1 }) + " phiếu + " + d + " LT/món · còn nhận " + i.con));
+                    o.appendChild(A("div", "hct-hang-phu", c.toLocaleString("vi-VN", { maximumFractionDigits: 2 }) + " phiếu + " + d + " LT/món · còn nhận " + i.con));
                     e.appendChild(o);
                     var r = 0 | i.co;
                     var l = Math.min(r, i.con);
-                    var g = I(l, l);
+                    var g = M(l, l);
                     var C = A("button", "hct-nut", r ? "Bán" : "Hết hàng");
                     C.type = "button";
                     C.disabled = !(l > 0 && !t.kham);
@@ -432,7 +432,7 @@
             else {
               a.appendChild(A("p", "hct-ghi", "Bảng ở quầy Quỷ Nha, trong Hắc Thị."));
             }
-          })(k, g);
+          })(P, g);
         }
         else {
           if ("doi" === N) {
@@ -471,7 +471,7 @@
               else {
                 a.appendChild(A("p", "hct-ghi", "Quầy đổi ở chỗ Quỷ Nha."));
               }
-            })(k);
+            })(P);
           }
           else {
             (function (a, t) {
@@ -492,7 +492,7 @@
                 var i = A("div", "hct-giua");
                 i.appendChild(A("div", "hct-hang-ten", u(n) + " x" + o[n]));
                 a.appendChild(i);
-                var t = I(0 | o[n], 0 | o[n]);
+                var t = M(0 | o[n], 0 | o[n]);
                 var h = A("button", "hct-nut phu", "Gỡ ra");
                 h.type = "button";
                 h.disabled = r;
@@ -541,7 +541,7 @@
                 o.appendChild(A("div", "hct-hang-phu", h.dongThuMua(t) ? "Quỷ Nha thu" : "Quỷ Nha không thu"));
                 e.appendChild(o);
                 var c = n.Inventory.tradableCount(t);
-                var u = I(c, c);
+                var u = M(c, c);
                 var d = A("button", "hct-nut", "Đóng vào");
                 d.type = "button";
                 d.disabled = r;
@@ -557,7 +557,7 @@
                 e.appendChild(p);
                 a.appendChild(e);
               });
-            })(k, g);
+            })(P, g);
           }
         }
       }
@@ -566,7 +566,7 @@
       }
     }
   }
-  function I(n, a) {
+  function M(n, a) {
     var i = A("input", "hct-sl");
     i.type = "number";
     i.min = 1;
@@ -598,28 +598,28 @@
   a.dangMo = function () {
     return _;
   };
-  var M = null;
-  var G = !1;
-  var P = null;
-  var k = 0;
+  var G = null;
+  var I = !1;
+  var k = null;
+  var P = 0;
   var E = null;
   var L = 0;
   function w(n) {
-    var a = P;
+    var a = k;
     return "Chốt sau " + i().chuGiam(n) + " · " + (a ? a.soPhieu : 0) + " phiếu";
   }
   function Y() {
-    if (M) {
-      M.innerHTML = "";
+    if (G) {
+      G.innerHTML = "";
       var n = A("div", "hct-hop");
-      M.appendChild(n);
+      G.appendChild(n);
       var i = A("div", "hct-dau");
       i.appendChild(A("div", "hct-ten", "Đấu Giá Kín"));
       var t = A("button", "hct-dong", "✕");
       if (t.type = "button", t.addEventListener("click", a.dongDauGia), i.appendChild(t), n.appendChild(i), C(n), o()) {
-        var h = P;
+        var h = k;
         if (h) {
-          var e = Math.max(0, h.conMs - (Date.now() - k));
+          var e = Math.max(0, h.conMs - (Date.now() - P));
           var c = A("div", "hct-hang lon");
           c.appendChild(b(h.id, 48));
           var r = A("div", "hct-giua");
@@ -629,7 +629,7 @@
           else {
             n.appendChild(A("p", "hct-ghi", "Tối thiểu " + h.toiThieu + " · đang có " + d(h.phieu) + " Hắc Phiếu."));
             var l = A("div", "hct-phai");
-            var g = I(Math.max(h.toiThieu, h.phieu), h.toiThieu);
+            var g = M(Math.max(h.toiThieu, h.phieu), h.toiThieu);
             g.min = h.toiThieu;
             var v = A("button", "hct-nut", "Bỏ phiếu");
             v.type = "button";
@@ -637,8 +637,8 @@
             v.addEventListener("click", function () {
               f("hacthi.boPhieu", { gia: Math.floor(Number(g.value) || 0), requestId: p() }, function (n) {
                 if (n && n.ok && n.dauGia) {
-                  P = n.dauGia;
-                  k = Date.now();
+                  k = n.dauGia;
+                  P = Date.now();
                 }
                 Y();
               });
@@ -658,23 +658,23 @@
     }
   }
   a.moDauGia = function () {
-    if (!(M)) {
-      (M = A("div", "hct-lop")).addEventListener("click", function (n) {
-        if (n.target === M) {
+    if (!(G)) {
+      (G = A("div", "hct-lop")).addEventListener("click", function (n) {
+        if (n.target === G) {
           a.dongDauGia();
         }
       });
-      document.body.appendChild(M);
+      document.body.appendChild(G);
     }
-    G = !0;
+    I = !0;
     l = null;
-    M.style.display = "flex";
+    G.style.display = "flex";
     Y();
     if (o()) {
       n.Gateway.cmd("hacthi.dauGia", {}, function (n) {
         if (n && n.ok) {
-          P = n.dauGia;
-          k = Date.now();
+          k = n.dauGia;
+          P = Date.now();
           Y();
         }
         else {
@@ -684,10 +684,10 @@
     }
   };
   a.dongDauGia = function () {
-    G = !1;
+    I = !1;
     E = null;
-    if (M) {
-      M.style.display = "none";
+    if (G) {
+      G.style.display = "none";
     }
   };
   var O = 0;
@@ -750,15 +750,15 @@
         }
       }
       (function () {
-        if (G && P && E) {
-          var a = Math.max(0, P.conMs - (Date.now() - k));
+        if (I && k && E) {
+          var a = Math.max(0, k.conMs - (Date.now() - P));
           E.textContent = w(a);
           if (a <= 0 && o() && Date.now() - L > 5e3) {
             L = Date.now();
             n.Gateway.cmd("hacthi.dauGia", {}, function (n) {
               if (n && n.ok) {
-                P = n.dauGia;
-                k = Date.now();
+                k = n.dauGia;
+                P = Date.now();
                 Y();
               }
             });

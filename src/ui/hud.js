@@ -250,7 +250,7 @@
                                 a.partyKick(t);
                               } }];
                           n.openMateMenu(l, "Thành viên", d, null);
-                          T();
+                          S();
                         }
                       }(a.id);
                     } });
@@ -258,7 +258,7 @@
               });
             }
             n.openMateMenu("Tổ Đội", o ? "Đội trưởng" : "Thành viên", d, null);
-            T();
+            S();
           }
         }();
       });
@@ -314,21 +314,21 @@
     });
     a.bagDetail.addEventListener("click", function (e) {
       if (e.target === a.bagDetail) {
-        A(null);
+        $(null);
       }
     });
     a.bag.addEventListener("keydown", function (e) {
       if (!("Escape" !== e.key || a.bagDetail.classList.contains("hidden"))) {
         e.preventDefault();
         e.stopPropagation();
-        A(null);
+        $(null);
       }
     });
     a.bag.addEventListener("keydown", function (e) {
       if (!("Escape" !== e.key || a.bagDetail.classList.contains("hidden"))) {
         e.preventDefault();
         e.stopPropagation();
-        A(null);
+        $(null);
       }
     });
     a.bagFilters.addEventListener("click", function (e) {
@@ -347,7 +347,7 @@
     }
     var o = t.$("#hud-right");
     if (o && o.addEventListener) {
-      o.addEventListener("click", $);
+      o.addEventListener("click", D);
     }
     return n;
   };
@@ -432,51 +432,51 @@
         }
       }
     }();
-    var u = n.player;
-    if (u) {
-      var s = "sit" === u.state;
-      if (s !== n._ngoi) {
-        n._ngoi = s;
-        var h = t.$("#btn-meditate-touch");
-        if (h) {
-          h.classList.toggle("active", s);
-          h.setAttribute("aria-pressed", s ? "true" : "false");
+    var d = n.player;
+    if (d) {
+      var p = "sit" === d.state;
+      if (p !== n._ngoi) {
+        n._ngoi = p;
+        var m = t.$("#btn-meditate-touch");
+        if (m) {
+          m.classList.toggle("active", p);
+          m.setAttribute("aria-pressed", p ? "true" : "false");
         }
       }
-      o(a.hp, Math.round(u.hp / u.hpMax * 100) + "%");
-      o(a.mp, (u.mpMax > 0 ? Math.round(u.mp / u.mpMax * 100) : 0) + "%");
-      o(a.sp, (u.spMax > 0 ? Math.round(u.sp / u.spMax * 100) : 0) + "%");
-      o(a.bp, (u.bpMax > 0 ? Math.round(u.bp / u.bpMax * 100) : 0) + "%");
-      var p = u.expMax > 0 ? Math.max(0, Math.min(100, u.exp / u.expMax * 100)) : 0;
-      o(a.xp, p.toFixed(1) + "%");
-      var m = 0 | e.Progress.stones;
-      if (a.stoneCount && i(a.stoneCount, m), a.hudStoneCount && i(a.hudStoneCount, m), a.hudWallet) {
-        var g = e.Loot && e.Loot.stoneToday ? e.Loot.stoneToday(e) : null;
-        var f = "Linh Thạch hiện có: " + m + (g ? " · Hôm nay từ quái: " + g.da + "/" + g.tran : "");
-        if (a.hudWallet.getAttribute("aria-label") !== f) {
-          a.hudWallet.setAttribute("aria-label", f);
-          a.hudWallet.setAttribute("title", f);
+      o(a.hp, Math.round(d.hp / d.hpMax * 100) + "%");
+      o(a.mp, (d.mpMax > 0 ? Math.round(d.mp / d.mpMax * 100) : 0) + "%");
+      o(a.sp, (d.spMax > 0 ? Math.round(d.sp / d.spMax * 100) : 0) + "%");
+      o(a.bp, (d.bpMax > 0 ? Math.round(d.bp / d.bpMax * 100) : 0) + "%");
+      var g = d.expMax > 0 ? Math.max(0, Math.min(100, d.exp / d.expMax * 100)) : 0;
+      o(a.xp, g.toFixed(1) + "%");
+      var f = 0 | e.Progress.stones;
+      if (a.stoneCount && i(a.stoneCount, f), a.hudStoneCount && i(a.hudStoneCount, f), a.hudWallet) {
+        var b = e.Loot && e.Loot.stoneToday ? e.Loot.stoneToday(e) : null;
+        var v = "Linh Thạch hiện có: " + f + (b ? " · Hôm nay từ quái: " + b.da + "/" + b.tran : "");
+        if (a.hudWallet.getAttribute("aria-label") !== v) {
+          a.hudWallet.setAttribute("aria-label", v);
+          a.hudWallet.setAttribute("title", v);
         }
       }
-      i(a.hpValue, Math.ceil(u.hp) + " / " + u.hpMax);
-      i(a.mpValue, Math.ceil(u.mp) + " / " + u.mpMax);
-      i(a.spValue, Math.ceil(u.sp) + " / " + u.spMax);
-      i(a.bpValue, Math.floor(u.bp) + " / " + u.bpMax);
-      var b = e.Player.isFull(u);
-      if (n._lastXpFull !== b) {
-        n._lastXpFull = b;
+      i(a.hpValue, Math.ceil(d.hp) + " / " + d.hpMax);
+      i(a.mpValue, Math.ceil(d.mp) + " / " + d.mpMax);
+      i(a.spValue, Math.ceil(d.sp) + " / " + d.spMax);
+      i(a.bpValue, Math.floor(d.bp) + " / " + d.bpMax);
+      var y = e.Player.isFull(d);
+      if (n._lastXpFull !== y) {
+        n._lastXpFull = y;
         if (a.rowXp) {
-          a.rowXp.classList.toggle("full", b);
+          a.rowXp.classList.toggle("full", y);
         }
       }
       if (a.xpLabel) {
-        i(a.xpLabel, b ? "Đỉnh Phong · 100%" : (Math.floor(10 * p) / 10).toFixed(1) + "%");
+        i(a.xpLabel, y ? "Đỉnh Phong · 100%" : (Math.floor(10 * g) / 10).toFixed(1) + "%");
       }
-      var v = e.CONFIG.TILE;
+      var C = e.CONFIG.TILE;
       n._posAcc += r;
       if ((null === n._lastPos || n._posAcc >= .1)) {
         n._posAcc = 0;
-        i(a.pos, "( " + Math.floor(u.x / v) + " , " + Math.floor(u.y / v) + " )");
+        i(a.pos, "( " + Math.floor(d.x / C) + " , " + Math.floor(d.y / C) + " )");
         n._lastPos = a.pos ? a.pos.textContent : null;
       }
       n._fpsAcc += r;
@@ -490,7 +490,7 @@
       (function (n) {
         var r = e.SceneWorld && e.SceneWorld.map;
         var d = r && r.data && r.data.id;
-        if ("dai_hoi_cho" === d || "dai_hoi_dau" === d) {
+        if ("dai_hoi_cho" === d || "dai_hoi_dau" === d || "chien_truong" === d) {
           l("hidden", !0);
           l("doi-thu", !1);
           return void l("dao-huu", !1);
@@ -535,7 +535,7 @@
         else {
           l("hidden", !0);
         }
-      })(u);
+      })(d);
       n._buffAcc = (n._buffAcc || 0) + r;
       if (n._buffAcc >= 1) {
         n._buffAcc = 0;
@@ -546,12 +546,12 @@
         n._breakthroughAcc = 0;
         n.updateBreakthrough();
         if (n.bagOpen && "dot-pha" === n.bagTab && e.ChiSo) {
-          e.ChiSo.update(u);
+          e.ChiSo.update(d);
         }
       }
       n._miniAcc += r;
-      var y = e.Quality && 0 === e.Quality.tier ? .5 : .2;
-      if (n._miniAcc >= y) {
+      var x = e.Quality && 0 === e.Quality.tier ? .5 : .2;
+      if (n._miniAcc >= x) {
         n._miniAcc = 0;
         (function (t) {
           var n = e.SceneWorld && e.SceneWorld.map;
@@ -560,38 +560,48 @@
           var r = a.minimap && a.minimap.parentElement;
           if (r && r.classList.toggle("hidden", o), !o) {
             var l = e.TileMap;
-            var u = a.miniCtx;
+            var d = a.miniCtx;
             if (l && l.width) {
-              var s = a.minimap.width;
-              var h = a.minimap.height;
-              var p = Math.min(s / l.width, h / l.height);
-              var m = p;
-              var g = p;
-              var f = (s - l.width * p) / 2;
-              var b = (h - l.height * p) / 2;
-              var v = e.CONFIG.TILE;
-              u.clearRect(0, 0, s, h);
-              u.save();
-              u.translate(f, b);
-              for (var y = 0; y < l.height; y++)
-                for (var C = 0; C < l.width; C++)
-                  if (!l.outside || !l.outside[y * l.width + C]) {
-                    var x = l.groundName && l.groundName[y * l.width + C];
-                    u.fillStyle = d[x] ? d[x] : "water" === x ? "#31607a" : l.isBlockedTile(C, y) ? "#28331f" : "#4c6e39";
-                    u.fillRect(C * m, y * g, Math.ceil(m), Math.ceil(g));
+              var p = a.minimap.width;
+              var m = a.minimap.height;
+              var g = Math.min(p / l.width, m / l.height);
+              var f = g;
+              var b = g;
+              var v = (p - l.width * g) / 2;
+              var y = (m - l.height * g) / 2;
+              var C = e.CONFIG.TILE;
+              if (d.clearRect(0, 0, p, m), d.save(), d.translate(v, y), "chien_truong" === i) {
+                var x = e.ChienTruongArt;
+                var k = !!(x && x.ct && x.ct.S && x.ct.S.lod);
+                var L = i + ":" + l.width + "x" + l.height + ":" + Math.round(1e3 * g) + (k ? ":a" : ":t");
+                if (!(c && u === L)) {
+                  (c = document.createElement("canvas")).width = Math.ceil(l.width * g);
+                  c.height = Math.ceil(l.height * g);
+                  if (!(k && x.ct.veMini(c.getContext("2d"), g, l.width, l.height))) {
+                    s(c.getContext("2d"), l, f, b);
                   }
-              for (var k = l.props.concat(l.flatProps), L = 0; L < k.length; L++)
-                k[L].hidden || c(u, k[L].x / v * m, k[L].y / v * g, "#e8dfa0");
-              for (var M = e.SceneWorld && e.SceneWorld.enemies || [], I = 0; I < M.length; I++)
-                M[I].dead || c(u, M[I].x / v * m, M[I].y / v * g, "#e0604a");
-              var T = t.x / v * m;
-              var E = t.y / v * g;
-              c(u, T, E, "#080b08", 3);
-              c(u, T, E, "#ffffff", 1);
-              u.restore();
+                  u = L;
+                }
+                d.drawImage(c, 0, 0);
+              }
+              else {
+                s(d, l, f, b);
+              }
+              if (e.ChienTruongUI && e.ChienTruongUI.veMini) {
+                e.ChienTruongUI.veMini(d, g);
+              }
+              for (var M = l.props.concat(l.flatProps), I = 0; I < M.length; I++)
+                M[I].hidden || h(d, M[I].x / C * f, M[I].y / C * b, "#e8dfa0");
+              for (var T = e.SceneWorld && e.SceneWorld.enemies || [], E = 0; E < T.length; E++)
+                T[E].dead || h(d, T[E].x / C * f, T[E].y / C * b, "#e0604a");
+              var _ = t.x / C * f;
+              var S = t.y / C * b;
+              h(d, _, S, "#080b08", 3);
+              h(d, _, S, "#ffffff", 1);
+              d.restore();
             }
           }
-        })(u);
+        })(d);
       }
     }
   };
@@ -672,7 +682,18 @@
     }
   }
   var d = { water: "#31607a", water_white: "#4aa8d8", water_green: "#2f9b76", water_purple: "#6d36b5", lava_purple: "#7b2fa8", jade_floor: "#d5dde6", rift_stone: "#6c7c90", tgt_cauxich: "#b07a33", tgt_may: "#aab6c8", wind_pad: "#38bdf8", tgt_davoi: "#8d96a1", stone_floor: "#9a8f78", dirt: "#7a6242", dirt_pebble: "#8a7350", bridge: "#8a6740", bridge_v: "#8a6740", tgt_caotreo: "#6b5533", abyss_stone: "#232329", cave_floor: "#3b3227", cave_floor2: "#40342d", cave_floor3: "#353a35", cave_void: "#11131d", cave_void2: "#121925", cave_void3: "#161526", tgt_vachden: "#111114", co_nui: "#6f8a4e", co_nui_hoa: "#7c9558", co_nui_cao: "#657f47", duong_cat: "#cdb489", bac_da_nui: "#9a968b", thac_nui: "#9ddcea", hang_toi: "#0b0a09", hang_mieng: "#241f1a", mo_san: "#6b6459", mo_san_soi: "#746c60", mo_ray: "#7d8590", mo_mep_nam: "#5c554b", mo_mep_bac: "#5c554b", mo_mep_canh: "#5c554b", mo_vuc: "#070a10", mo_da_dac: "#2f3640" };
-  function c(e, t, n, a, i) {
+  var c = null;
+  var u = "";
+  function s(e, t, n, a) {
+    for (var i = 0; i < t.height; i++)
+      for (var o = 0; o < t.width; o++)
+        if (!t.outside || !t.outside[i * t.width + o]) {
+          var r = t.groundName && t.groundName[i * t.width + o];
+          e.fillStyle = d[r] ? d[r] : "water" === r ? "#31607a" : t.isBlockedTile(o, i) ? "#28331f" : "#4c6e39";
+          e.fillRect(o * n, i * a, Math.ceil(n), Math.ceil(a));
+        }
+  }
+  function h(e, t, n, a, i) {
     var o = i || 1.5;
     e.fillStyle = a;
     e.fillRect(Math.round(t - o / 2), Math.round(n - o / 2), Math.ceil(o), Math.ceil(o));
@@ -861,8 +882,8 @@
     n.dialogOpen = !1;
     n._action = null;
   };
-  var u = null;
-  var s = null;
+  var p = null;
+  var m = null;
   n.updateQuest = function () {
     var t = e.Quest;
     var i = t && t.trackerInfo ? t.trackerInfo() : t ? t.stageInfo() : null;
@@ -871,7 +892,7 @@
     if (r && (o = (o || []).concat([r])), !t || !i && !o.length) {
       a.tracker.classList.add("hidden");
       a.tracker.classList.remove("q-alert");
-      return void (u = null);
+      return void (p = null);
     }
     a.tracker.classList.remove("hidden");
     var l = t.trackerAlert ? t.trackerAlert() : null;
@@ -885,18 +906,18 @@
     n.toggleQuestCollapsed(n.questCollapsed);
     var d;
     var c;
-    var h = i ? i.name : "";
+    var u = i ? i.name : "";
     if (a.qStageFull && a.qStageShort) {
-      a.qStageFull.textContent = h;
-      a.qStageShort.textContent = (c = (d = String(h || "").trim()).match(/^(Giai đoạn\s+\d+)/i)) ? c[1] : d.split(/\s+—\s+/)[0].trim();
+      a.qStageFull.textContent = u;
+      a.qStageShort.textContent = (c = (d = String(u || "").trim()).match(/^(Giai đoạn\s+\d+)/i)) ? c[1] : d.split(/\s+—\s+/)[0].trim();
     }
     else {
-      a.qStage.textContent = h;
+      a.qStage.textContent = u;
     }
     a.qHint.textContent = i ? i.hint : "";
-    s = { info: i, objs: o };
+    m = { info: i, objs: o };
     a.qObjs.innerHTML = "";
-    var p = (i ? i.name : "") + "|" + o.map(function (e) {
+    var s = (i ? i.name : "") + "|" + o.map(function (e) {
       return void 0 !== e.max ? e.cur + "/" + e.max : e.done ? 1 : 0;
     }).join(",");
     o.forEach(function (e) {
@@ -914,12 +935,12 @@
       t.textContent = o ? "➜ " + String(e.text).slice(2) + i : (n ? "✔ " : e.sub ? "· " : "○ ") + e.text + i;
       a.qObjs.appendChild(t);
     });
-    if (null !== u && u !== p) {
+    if (null !== p && p !== s) {
       a.tracker.classList.remove("pulse");
       a.tracker.offsetWidth;
       a.tracker.classList.add("pulse");
     }
-    u = p;
+    p = s;
   };
   n.toggleQuestCollapsed = function (e) {
     var t = void 0 === e ? !n.questCollapsed : !!e;
@@ -983,9 +1004,9 @@
       n.mateMenuOpen = !1;
     }
   };
-  var h = {};
-  var p = "";
-  function m(e) {
+  var g = {};
+  var f = "";
+  function b(e) {
     e = Math.round(Number(e));
     return Number.isFinite(e) ? e : 0;
   }
@@ -995,8 +1016,8 @@
         a.party.classList.add("hidden");
         a.party.classList.remove("active-run");
         a.partyMembers.textContent = "";
-        h = {};
-        return void (p = "");
+        g = {};
+        return void (f = "");
       }
       var i = n.members.slice().sort(function (e, t) {
         return e.id === n.leaderId ? -1 : t.id === n.leaderId ? 1 : (0 | e.order) - (0 | t.order);
@@ -1004,9 +1025,9 @@
       var o = n.partyId + "|" + n.leaderId + "|" + i.map(function (e) {
         return e.id;
       }).join(",");
-      if (o !== p) {
+      if (o !== f) {
         a.partyMembers.textContent = "";
-        h = {};
+        g = {};
         i.forEach(function (e) {
           var t = function (e) {
             var t = document.createElement("div");
@@ -1030,10 +1051,10 @@
             t.appendChild(o);
             return { root: t, mark: a, name: i, fill: r };
           }(e.id);
-          h[e.id] = t;
+          g[e.id] = t;
           a.partyMembers.appendChild(t.root);
         });
-        p = o;
+        f = o;
       }
       a.partyCount.textContent = i.length + "/" + (n.maxMembers || 6);
       a.party.classList.remove("hidden");
@@ -1071,7 +1092,7 @@
             t.name.textContent = n.name || "Đạo hữu";
             var r;
             var l;
-            var d = (r = m(n.hp) + m(n.bp), l = m(n.hpMax) + m(n.bpMax), r = Math.max(0, r), (l = Math.max(0, l)) > 0 ? Math.max(0, Math.min(100, r / l * 100)) : 0);
+            var d = (r = b(n.hp) + b(n.bp), l = b(n.hpMax) + b(n.bpMax), r = Math.max(0, r), (l = Math.max(0, l)) > 0 ? Math.max(0, Math.min(100, r / l * 100)) : 0);
             t.fill.style.width = d + "%";
             t.fill.classList.toggle("low", d <= 30);
             t.fill.classList.toggle("mid", d > 30 && d <= 60);
@@ -1079,83 +1100,83 @@
             t.root.title = c;
             t.root.setAttribute("aria-label", c);
           }
-        }(h[t.id], t, n);
+        }(g[t.id], t, n);
       });
     }
   };
-  var g = null;
-  var f = Object.create(null);
-  var b = [];
-  var v = Object.create(null);
-  var y = !1;
-  var C = { duel: "Lời mời tỉ thí", party: "Lời mời vào nhóm", trade: "Lời mời giao dịch", lamlang: "Bí Cảnh Lãm Làng" };
-  function x(e, t, n) {
+  var v = null;
+  var y = Object.create(null);
+  var C = [];
+  var x = Object.create(null);
+  var k = !1;
+  var L = { duel: "Lời mời tỉ thí", party: "Lời mời vào nhóm", trade: "Lời mời giao dịch", lamlang: "Bí Cảnh Lãm Làng" };
+  function M(e, t, n) {
     var a = t || n && (n.inviteId || n.id) || "default";
     return String(e || "") + ":" + String(a);
   }
-  function k() {
-    for (; b.length && !f[b[0]];)
-      b.shift();
-    return b[0] || null;
+  function I() {
+    for (; C.length && !y[C[0]];)
+      C.shift();
+    return C[0] || null;
   }
-  function L(e) {
-    var t = f[e];
+  function T(e) {
+    var t = y[e];
     if (!t) {
       return null;
     }
-    delete f[e];
-    if (v[e]) {
-      clearTimeout(v[e]);
-      delete v[e];
+    delete y[e];
+    if (x[e]) {
+      clearTimeout(x[e]);
+      delete x[e];
     }
-    var n = b.indexOf(e);
+    var n = C.indexOf(e);
     if (n >= 0) {
-      b.splice(n, 1);
+      C.splice(n, 1);
     }
     return t;
   }
-  function M() {
-    if (g) {
-      var e = k();
-      var t = e && f[e];
+  function E() {
+    if (v) {
+      var e = I();
+      var t = e && y[e];
       if (!t) {
-        g.root.classList.add("hidden");
-        return void g.root.setAttribute("aria-hidden", "true");
+        v.root.classList.add("hidden");
+        return void v.root.setAttribute("aria-hidden", "true");
       }
       var n = t.data || {};
-      g.title.textContent = C[t.kind] || "Lời mời";
-      g.from.textContent = n.name ? "· " + n.name : "";
-      g.text.textContent = n.text || (n.name || "Đạo hữu") + " vừa gửi lời mời.";
-      g.root.classList.remove("hidden");
-      g.root.setAttribute("aria-hidden", "false");
+      v.title.textContent = L[t.kind] || "Lời mời";
+      v.from.textContent = n.name ? "· " + n.name : "";
+      v.text.textContent = n.text || (n.name || "Đạo hữu") + " vừa gửi lời mời.";
+      v.root.classList.remove("hidden");
+      v.root.setAttribute("aria-hidden", "false");
     }
   }
-  function I(t) {
-    var n = k();
-    var a = n && f[n];
+  function _(t) {
+    var n = I();
+    var a = n && y[n];
     if (a) {
       var i = a.data || {};
       if (i.expiresAt && Date.now() >= Number(i.expiresAt)) {
-        L(n);
+        T(n);
         if (e.Chat && e.Chat.setInvite) {
           e.Chat.setInvite(a.kind, null, a.id, "expired");
         }
-        return void M();
+        return void E();
       }
       var o = i.viec || [];
       var r = i[t ? "accept" : "decline"];
       var l = "function" == typeof r ? r : o[t ? 0 : 1];
-      L(n);
+      T(n);
       if (e.Chat && e.Chat.setInvite) {
         e.Chat.setInvite(a.kind, null, a.id, "answered");
       }
-      M();
+      E();
       if (l && "function" == typeof l.onChoose) {
         l.onChoose();
       }
     }
   }
-  function T() {
+  function S() {
     var t = a.mateMenu;
     var n = a.party && a.party.getBoundingClientRect();
     if (t && n) {
@@ -1176,38 +1197,38 @@
   }
   n.setInvite = function (a, i, o) {
     if (function () {
-      if (!y) {
+      if (!k) {
         var e = t.$("#invite-hud");
         var n = t.$("#invite-accept");
         var a = t.$("#invite-decline");
         if (e && n && a) {
-          g = { root: e, title: t.$("#invite-title"), from: t.$("#invite-from"), text: t.$("#invite-text"), accept: n, decline: a };
+          v = { root: e, title: t.$("#invite-title"), from: t.$("#invite-from"), text: t.$("#invite-text"), accept: n, decline: a };
           n.addEventListener("click", function () {
-            I(!0);
+            _(!0);
           });
           a.addEventListener("click", function () {
-            I(!1);
+            _(!1);
           });
-          y = !0;
+          k = !0;
         }
       }
     }(), a = String(a || "")) {
       if (i) {
-        var r = x(a, o, i);
-        var l = f[r];
+        var r = M(a, o, i);
+        var l = y[r];
         if (l) {
           l.data = i;
         }
         else {
           l = { kind: a, id: o || i.inviteId || i.id || "default", data: i };
-          f[r] = l;
-          b.push(r);
+          y[r] = l;
+          C.push(r);
         }
-        if (v[r]) {
-          clearTimeout(v[r]);
+        if (x[r]) {
+          clearTimeout(x[r]);
         }
         if (i.expiresAt) {
-          v[r] = setTimeout(function () {
+          x[r] = setTimeout(function () {
             if (e.Chat && e.Chat.setInvite) {
               e.Chat.setInvite(a, null, l.id, "expired");
             }
@@ -1215,22 +1236,22 @@
               n.setInvite(a, null, l.id);
             }
           }, Math.max(0, Number(i.expiresAt) - Date.now()));
-          if (v[r] && v[r].unref) {
-            v[r].unref();
+          if (x[r] && x[r].unref) {
+            x[r].unref();
           }
         }
       }
       else {
-        for (var d = o ? [x(a, o)] : Object.keys(f).filter(function (e) {
-          return f[e].kind === a;
+        for (var d = o ? [M(a, o)] : Object.keys(y).filter(function (e) {
+          return y[e].kind === a;
         }), c = 0; c < d.length; c++)
-          L(d[c]);
+          T(d[c]);
       }
-      M();
+      E();
     }
   };
   n.openQuestDetail = function () {
-    var e = s;
+    var e = m;
     if (e && (e.info || e.objs.length)) {
       var t = e.objs.map(function (e) {
         var t = void 0 !== e.max ? e.cur >= e.max : !!e.done;
@@ -1242,11 +1263,11 @@
       n.openDialog(e.info ? e.info.name : "Việc đang làm", t || "Chưa có việc nào.");
     }
   };
-  var E = { "trang-bi": { kicker: "", ten: "Hành Trang" }, "bi-tich": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Bí Tịch" }, "tu-dong": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Tự Động Đánh" }, "dot-pha": { kicker: "PHÁ QUAN LỤC", ten: "Tiến Độ Đột Phá" }, "hoat-dong": { kicker: "THIÊN HẠ SỰ", ten: "Hoạt Động" }, "ngoai-trang": { kicker: "Y QUAN CHỈNH TỀ", ten: "Ngoại Trang" } };
-  function _(t) {
+  var w = { "trang-bi": { kicker: "", ten: "Hành Trang" }, "bi-tich": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Bí Tịch" }, "tu-dong": { kicker: "PHÁP QUYẾT TRONG THÂN", ten: "Tự Động Đánh" }, "dot-pha": { kicker: "PHÁ QUAN LỤC", ten: "Tiến Độ Đột Phá" }, "hoat-dong": { kicker: "THIÊN HẠ SỰ", ten: "Hoạt Động" }, "ngoai-trang": { kicker: "Y QUAN CHỈNH TỀ", ten: "Ngoại Trang" } };
+  function B(t) {
     return "grade-" + e.Loot.gradeKey(t);
   }
-  function S(e) {
+  function A(e) {
     var t = [];
     if (e.atkBonus) {
       t.push("Công +" + e.atkBonus);
@@ -1277,7 +1298,7 @@
     }
     return t;
   }
-  function w(t) {
+  function q(t) {
     if ("vu_khi" !== t.type && "vu_khi" !== t.slot) {
       return [];
     }
@@ -1301,7 +1322,7 @@
     }
     return o;
   }
-  function B(t) {
+  function N(t) {
     if (!t || !t.fly || "number" != typeof t.fly.speed) {
       return [];
     }
@@ -1312,7 +1333,7 @@
     var r = o * i;
     return ["Tốc độ bay " + Math.round(o) + " px/s", "Khi chạy " + Math.round(r) + " px/s"];
   }
-  function A(t) {
+  function $(t) {
     if (a.bagDetail.innerHTML = "", a.bagDetail.classList.toggle("hidden", !t), !t) {
       a.bagList.querySelectorAll(".bag-slot.selected").forEach(function (e) {
         e.classList.remove("selected");
@@ -1330,13 +1351,13 @@
     r.setAttribute("aria-label", "Đóng chi tiết vật phẩm");
     r.textContent = "✕";
     r.addEventListener("click", function () {
-      A(null);
+      $(null);
     });
     o.appendChild(r);
     var l = document.createElement("div");
     if (l.className = "bag-detail-head", !t.emptySlot) {
       var d = document.createElement("div");
-      d.className = "bag-detail-icon " + _(t.def.grade);
+      d.className = "bag-detail-icon " + B(t.def.grade);
       var c = document.createElement("canvas");
       var u = "phong_linh" === t.def.icon || "co_bich_moc" === t.def.icon;
       var s = u ? 48 : 32;
@@ -1354,7 +1375,7 @@
     h.appendChild(p);
     var m = document.createElement("div");
     if (m.className = "bag-detail-meta", m.textContent = t.emptySlot ? "Ô trang bị đang trống" : t.def.grade + " · " + (t.equipped ? "Đang trang bị" : "Trong túi x" + t.qty), h.appendChild(m), l.appendChild(h), o.appendChild(l), !t.emptySlot) {
-      var g = S(t.def).concat(w(t.def)).concat(B(t.def));
+      var g = A(t.def).concat(q(t.def)).concat(N(t.def));
       if (g.length) {
         var f = document.createElement("div");
         f.className = "item-bonuses";
@@ -1399,8 +1420,8 @@
     if (E && e.QuickSlots.valid(E)) {
       o.appendChild(e.QuickSlots.chipRow(E));
     }
-    var q = document.createElement("div");
-    function N(e, t, n, a) {
+    var _ = document.createElement("div");
+    function S(e, t, n, a) {
       var i = document.createElement("button");
       i.type = "button";
       i.className = "equip-action" + (t ? " " + t : "");
@@ -1413,9 +1434,9 @@
           n();
         }
       });
-      q.appendChild(i);
+      _.appendChild(i);
     }
-    if (q.className = "bag-detail-actions", o.appendChild(q), !t.emptySlot && t.def.slot && N(t.equipped ? "Tháo Trang Bị" : "Trang Bị", "", function () {
+    if (_.className = "bag-detail-actions", o.appendChild(_), !t.emptySlot && t.def.slot && S(t.equipped ? "Tháo Trang Bị" : "Trang Bị", "", function () {
       var a = t.equipped ? e.Inventory.unequip(t.slotId) : e.Inventory.equip(t.def.id);
       if (a.ok) {
         e.Player.refreshEquipment(n.player);
@@ -1439,30 +1460,30 @@
         }
       }
     }), !t.emptySlot && t.def.food) {
-      var $ = e.Food && e.Food.list ? e.Food.list(e).filter(function (e) {
+      var w = e.Food && e.Food.list ? e.Food.list(e).filter(function (e) {
         return e.id !== t.def.id;
       }) : [];
       if (e.Food && e.Food.betterActive && e.Food.betterActive(t.def.id, e)) {
-        $ = [];
+        w = [];
       }
-      N(t.def.food.buttonLabel || "Ăn", "", function () {
+      S(t.def.food.buttonLabel || "Ăn", "", function () {
         if (e.SceneWorld && e.SceneWorld.eatFood) {
           e.SceneWorld.eatFood(t.def.id);
         }
         n.renderBag();
         n.updateBuffs();
-      }, $.length ? "Thay " + $[0].def.name + "?" : void 0);
+      }, w.length ? "Thay " + w[0].def.name + "?" : void 0);
     }
     if (!t.emptySlot && t.def.talismanId) {
-      N("Dùng Phù", "", function () {
-        A(null);
+      S("Dùng Phù", "", function () {
+        $(null);
         if (e.TalismanBar && e.TalismanBar.use) {
           e.TalismanBar.use(t.def.talismanId);
         }
       });
       var H = e.TalismanBar;
       if (H && H.toggleOnBar) {
-        N(H.onBar(t.def.talismanId) ? "Ẩn khỏi thanh phù" : "Hiện trên thanh phù (" + H.barIds().length + "/" + H.MAX + ")", "secondary", function () {
+        S(H.onBar(t.def.talismanId) ? "Ẩn khỏi thanh phù" : "Hiện trên thanh phù (" + H.barIds().length + "/" + H.MAX + ")", "secondary", function () {
           if (null === H.toggleOnBar(t.def.talismanId)) {
             if (e.Audio) {
               e.Audio.play("deny");
@@ -1473,49 +1494,49 @@
             e.Audio.play("ui");
           }
           H.update(n.player);
-          A(t);
+          $(t);
         });
       }
     }
     if (!t.emptySlot && t.def.moTui > 0) {
-      N("Dùng", "", function () {
+      S("Dùng", "", function () {
         var a = e.Inventory.useBagItem(t.def.id);
         if (e.Audio) {
           e.Audio.play(a.ok ? "ui" : "deny");
         }
         n.setCaption(a.ok ? "Túi đồ mở thêm " + a.slots + " ô (" + a.capacity + " ô)" : a.reason);
-        A(null);
+        $(null);
         n.renderBag();
       });
     }
     if (!t.emptySlot && e.HopUI && e.Inventory.HOP && e.Inventory.HOP[t.def.id]) {
-      N(t.def.moNhan || "Mở Hộp", "", function () {
-        A(null);
+      S(t.def.moNhan || "Mở Hộp", "", function () {
+        $(null);
         n.closeBag();
         e.HopUI.mo(t.def.id);
       });
     }
     if (!(t.emptySlot || "bi_tich" !== t.def.type)) {
-      N("Xem Pháp Quyết", "", function () {
+      S("Xem Pháp Quyết", "", function () {
         n.setBagTab("bi-tich");
       });
     }
     if (!t.emptySlot && t.def.khoiLoi && e.KhoiLoiUI) {
-      N(e.KhoiLoiUI.nhanNut(t.def.id), "", function () {
+      S(e.KhoiLoiUI.nhanNut(t.def.id), "", function () {
         e.KhoiLoiUI.batTat(t.def.id, function () {
-          A(t);
+          $(t);
         });
       });
     }
     if (!t.emptySlot && e.LuyenQuy && t.def.id === e.LuyenQuy.PHIEN && e.HonPhienUI) {
-      N("Mở Hồn Phiên", "", function () {
-        A(null);
+      S("Mở Hồn Phiên", "", function () {
+        $(null);
         n.closeBag();
         e.HonPhienUI.mo();
       });
     }
     if (!t.emptySlot && e.LuyenQuy && t.def.id === e.LuyenQuy.TAY_TAM_DAN) {
-      N("Uống", "", function () {
+      S("Uống", "", function () {
         var t = e.SceneWorld && e.SceneWorld.player;
         var a = function (n, a) {
           if (t && e.VFX) {
@@ -1543,23 +1564,23 @@
       });
     }
     if (!t.emptySlot && e.ChinhDao && t.def.id === e.ChinhDao.HAP && e.HonPhienUI) {
-      N("Mở Kiếm Hạp", "", function () {
-        A(null);
+      S("Mở Kiếm Hạp", "", function () {
+        $(null);
         n.closeBag();
         e.HonPhienUI.mo();
       });
     }
     if (e.HacThiUI && e.HacThiUI.nutTrongTui) {
-      e.HacThiUI.nutTrongTui(t, N, function () {
-        A(null);
+      e.HacThiUI.nutTrongTui(t, S, function () {
+        $(null);
         n.closeBag();
       });
     }
     var P = !t.emptySlot && e.DaoHuongDanUI ? e.DaoHuongDanUI.daoCua(t.def.id) : null;
     var D = !t.emptySlot && (e.LuyenQuy && t.def.id === e.LuyenQuy.PHIEN || e.ChinhDao && t.def.id === e.ChinhDao.HAP);
     if (P) {
-      N("Hướng Dẫn", "secondary", function () {
-        A(null);
+      S("Hướng Dẫn", "secondary", function () {
+        $(null);
         n.closeBag();
         e.DaoHuongDanUI.mo(P);
       });
@@ -1567,37 +1588,37 @@
     var R = t.emptySlot || D ? 0 : e.Inventory.salePrice(t.def.id);
     if (t.emptySlot || t.equipped || !e.Inventory.canDispose(t.def.id)) {
       if (!t.emptySlot && !t.equipped && e.Inventory.canDiscard && e.Inventory.canDiscard(t.def.id)) {
-        N("Vứt Bỏ", "danger", function () {
+        S("Vứt Bỏ", "danger", function () {
           if (e.Inventory.discard(t.def.id, t.qty).ok) {
             n.renderBag();
           }
         }, "Vứt là quên chiêu này");
       }
     }
-    else if (R > 0 && N("Bán · " + R + " Linh Thạch", "secondary", function () {
+    else if (R > 0 && S("Bán · " + R + " Linh Thạch", "secondary", function () {
       if (e.Inventory.sell(t.def.id).ok) {
         n.renderBag();
       }
-    }, "Xác nhận bán 1"), N("Vứt Bỏ", "danger", function () {
+    }, "Xác nhận bán 1"), S("Vứt Bỏ", "danger", function () {
       if (e.Inventory.discard(t.def.id).ok) {
         n.renderBag();
       }
     }, "Xác nhận vứt 1"), t.qty > 1) {
       var F = t.qty;
-      N("Vứt tất cả · x" + F, "danger", function () {
+      S("Vứt tất cả · x" + F, "danger", function () {
         if (e.Inventory.discard(t.def.id, F).ok) {
           n.renderBag();
         }
       }, "Xác nhận vứt hết x" + F);
     }
-    N("Đóng", "secondary", function () {
-      A(null);
+    S("Đóng", "secondary", function () {
+      $(null);
     });
     a.bagDetail.appendChild(o);
     a.bagDetail.classList.remove("hidden");
     r.focus({ preventScroll: !0 });
   }
-  function q(e) {
+  function H(e) {
     var t = Math.max(0, Math.ceil(e / 1e3));
     var n = Math.floor(t / 3600);
     var a = Math.floor(t / 60) % 60;
@@ -1628,11 +1649,11 @@
     if ("ky-nang" === t) {
       t = "bi-tich";
     }
-    if (!(E[t])) {
+    if (!(w[t])) {
       t = "trang-bi";
     }
     n.bagTab = t;
-    A(null);
+    $(null);
     if ("dot-pha" !== t && a.breakthroughPanel && !a.breakthroughPanel.classList.contains("hidden")) {
       n.toggleBreakthrough(!1);
     }
@@ -1645,7 +1666,7 @@
         e.classList.toggle("on", e.dataset.tab === t);
       });
     }
-    var l = E[t];
+    var l = w[t];
     if (a.bagTitle) {
       a.bagTitle.textContent = l.ten;
       var d = a.bagTitle.previousElementSibling;
@@ -1720,7 +1741,7 @@
       a.bagExpand.disabled = l;
       a.bagExpand.title = l ? "Túi đã mở tối đa" : "Mở thêm 1 ô: " + i.nextSlotPrice() + " Linh Thạch";
     }
-    A(null);
+    $(null);
     (function () {
       a.equipSlots.innerHTML = "";
       e.Inventory.slots.forEach(function (t) {
@@ -1729,7 +1750,7 @@
         }
         var n = e.Inventory.equipped(t.id);
         var i = document.createElement("button");
-        if (i.type = "button", i.className = "equip-slot equip-" + t.id + (n ? " filled " + _(n.grade) : " empty"), i.setAttribute("aria-label", n ? t.name + ": " + n.name : t.name + ": đang trống"), n) {
+        if (i.type = "button", i.className = "equip-slot equip-" + t.id + (n ? " filled " + B(n.grade) : " empty"), i.setAttribute("aria-label", n ? t.name + ": " + n.name : t.name + ": đang trống"), n) {
           var o = document.createElement("canvas");
           o.width = o.height = 32;
           e.drawItemIcon(o.getContext("2d"), n.icon, 0, 0, 32);
@@ -1751,7 +1772,7 @@
           a.bagList.querySelectorAll(".bag-slot.selected").forEach(function (e) {
             e.classList.remove("selected");
           });
-          A(n ? { def: n, qty: 1, equipped: !0, slotId: t.id } : { emptySlot: t });
+          $(n ? { def: n, qty: 1, equipped: !0, slotId: t.id } : { emptySlot: t });
         });
         a.equipSlots.appendChild(i);
       });
@@ -1767,7 +1788,7 @@
     t.forEach(function (t, n) {
       var i = document.createElement("button");
       i.type = "button";
-      i.className = "bag-slot " + _(t.def.grade);
+      i.className = "bag-slot " + B(t.def.grade);
       i.dataset.item = t.def.id;
       i.setAttribute("aria-label", t.def.name + ", số lượng " + t.qty);
       var o = document.createElement("canvas");
@@ -1786,7 +1807,7 @@
           e.classList.remove("selected");
         });
         i.classList.add("selected");
-        A(t);
+        $(t);
       });
       a.bagList.appendChild(i);
     });
@@ -1798,12 +1819,12 @@
     }
   };
   n.itemStatLabels = function (e) {
-    return e ? S(e).concat(w(e)).concat(B(e)) : [];
+    return e ? A(e).concat(q(e)).concat(N(e)) : [];
   };
   n.updateBuffs = function () {
     if (a.buffs && e.Food) {
       var t = e.Food.list(e).map(function (t) {
-        return { key: t.id, icon: t.def.icon, clock: q(t.left), tip: t.def.name + " — còn " + e.Food.fmtLeft(t.left) + " · mỗi giây hồi " + t.def.food.hpPct + "% Khí Huyết, " + t.def.food.mp + " Linh Lực và " + t.def.food.bp + " Giáp" };
+        return { key: t.id, icon: t.def.icon, clock: H(t.left), tip: t.def.name + " — còn " + e.Food.fmtLeft(t.left) + " · mỗi giây hồi " + t.def.food.hpPct + "% Khí Huyết, " + t.def.food.mp + " Linh Lực và " + t.def.food.bp + " Giáp" };
       }).concat(function (t) {
         var n = [];
         if (!t) {
@@ -1816,19 +1837,19 @@
         if (i) {
           var o = e.Skills && e.Skills.DEFS ? e.Skills.DEFS[t.hinhId] : null;
           var r = i.lifesteal;
-          n.push({ key: "hinh", icon: o && o.icon, clock: q(a(t.hinhT)), tip: (o ? o.name : "Hoá thân") + " — đánh nhanh gấp " + i.speed + (r ? ", hút " + Math.round(1e3 * r.pct) / 10 + "% Khí Huyết mỗi nhát" : "") + (t.hinhGiap > 0 ? " · " + (i.giapTen || "Ma Giáp") + " còn " + Math.round(t.hinhGiap) : "") });
+          n.push({ key: "hinh", icon: o && o.icon, clock: H(a(t.hinhT)), tip: (o ? o.name : "Hoá thân") + " — đánh nhanh gấp " + i.speed + (r ? ", hút " + Math.round(1e3 * r.pct) / 10 + "% Khí Huyết mỗi nhát" : "") + (t.hinhGiap > 0 ? " · " + (i.giapTen || "Ma Giáp") + " còn " + Math.round(t.hinhGiap) : "") });
         }
         if (t.shieldT > 0 && t.shieldHp > 0) {
-          n.push(t.shieldBell ? { key: "chuong", icon: "dong_hoang_chung", clock: q(a(t.shieldT)), tip: "Đông Hoàng Chung — hộ thuẫn còn " + Math.round(t.shieldHp) + " giáp · nuốt sát thương trước Giáp" } : { key: "kim_giap", icon: "phu_kim_giap", clock: q(a(t.shieldT)), tip: "Hộ thuẫn — còn " + Math.round(t.shieldHp) + " giáp · hộ thuẫn nuốt sát thương trước Giáp" });
+          n.push(t.shieldBell ? { key: "chuong", icon: "dong_hoang_chung", clock: H(a(t.shieldT)), tip: "Đông Hoàng Chung — hộ thuẫn còn " + Math.round(t.shieldHp) + " giáp · nuốt sát thương trước Giáp" } : { key: "kim_giap", icon: "phu_kim_giap", clock: H(a(t.shieldT)), tip: "Hộ thuẫn — còn " + Math.round(t.shieldHp) + " giáp · hộ thuẫn nuốt sát thương trước Giáp" });
         }
         if (t.hasteT > 0) {
-          n.push({ key: "toc_hanh", icon: "phu_toc_hanh", clock: q(a(t.hasteT)), tip: "Tốc Hành — nhanh thêm " + Math.round(100 * (t.hasteMult - 1)) + "% · chưa áp khi đang ngự kiếm" });
+          n.push({ key: "toc_hanh", icon: "phu_toc_hanh", clock: H(a(t.hasteT)), tip: "Tốc Hành — nhanh thêm " + Math.round(100 * (t.hasteMult - 1)) + "% · chưa áp khi đang ngự kiếm" });
         }
         if (t.slowT > 0) {
-          n.push({ key: "han_bang", icon: "phu_han_bang", clock: q(a(t.slowT)), tip: "Hàn Băng — chậm " + Math.round(100 * (1 - t.slowMult)) + "%" });
+          n.push({ key: "han_bang", icon: "phu_han_bang", clock: H(a(t.slowT)), tip: "Hàn Băng — chậm " + Math.round(100 * (1 - t.slowMult)) + "%" });
         }
         if (t.stunT > 0) {
-          n.push({ key: "loi_dong", icon: "phu_loi_dong", clock: q(a(t.stunT)), tip: "Choáng — không đi, không đánh, không phát chiêu, không dùng phù" });
+          n.push({ key: "loi_dong", icon: "phu_loi_dong", clock: H(a(t.stunT)), tip: "Choáng — không đi, không đánh, không phát chiêu, không dùng phù" });
         }
         return n;
       }(n.player));
@@ -1912,11 +1933,11 @@
   n.announce = function (e, t) {
     n.setCaption(e + (t ? "\n" + t : ""));
   };
-  var N = "#hu-thien-hud, #yen-lang-hud, #lam-lang-hud";
-  function $(e) {
+  var P = "#hu-thien-hud, #yen-lang-hud, #lam-lang-hud";
+  function D(e) {
     var t = e.target && e.target.closest && e.target.closest("header");
     var a = t && t.parentElement;
-    if (a && a.matches && a.matches(N)) {
+    if (a && a.matches && a.matches(P)) {
       n.moTheBiCanh(a);
     }
   }

@@ -58,9 +58,9 @@
     e.fatLine(r, h.x, h.y, x.x, x.y, i.hiltThick || 3, s.grip);
     var w = d(h, x, 2);
     if (e.dot(r, w.x, w.y, s.wrap), e.dot(r, x.x, x.y, s.guard), t.held && f && a.Palette) {
-      var m = a.Palette.pick("SKIN", f.skin, "light");
-      e.blk(r, h.x - 1, h.y - 1, 2, 2, t.far ? m.shade : m.base, m.line);
-      e.dot(r, h.x, h.y - 1, t.far ? m.base : m.hi);
+      var k = a.Palette.pick("SKIN", f.skin, "light");
+      e.blk(r, h.x - 1, h.y - 1, 2, 2, t.far ? k.shade : k.base, k.line);
+      e.dot(r, h.x, h.y - 1, t.far ? k.base : k.hi);
     }
   }
   t.xichViem = { line: "#2b0d0a", deep: "#8f2012", shade: "#b52f1c", base: "#d93b22", hi: "#ffd08a", spark: "#fff6de", guard: "#c99c52", grip: "#141620", wrap: "#f8dc94", hollow: "#0c0d12", edge: "#d93b22", edgeHi: "#ff7a3c", face: "#171922", faceHi: "#565d78", ridge: "#f7ddb0", goldDeep: "#7a5521", gem: "#ffa51c", gemHi: "#fff4b0", shaftHi: "#4f5876", glow: "#ff7a2a", dim: { line: "#1d0907", deep: "#5f150c", shade: "#7a2013", base: "#9a2a17", hi: "#c49a62", spark: "#d9cdb5", guard: "#8c6b38", grip: "#0d0f16", wrap: "#b89a62", hollow: "#08090d", edge: "#9a2a17", edgeHi: "#b8532a", face: "#101218", faceHi: "#3b4157", ridge: "#b89f7a", goldDeep: "#53381a", gem: "#b87414", gemHi: "#c9b878", shaftHi: "#363d57", glow: "#b3501c" } };
@@ -111,9 +111,9 @@
     var b;
     var x;
     var w;
-    var m;
-    var v;
     var k;
+    var v;
+    var m;
     var M;
     var I;
     var _;
@@ -124,24 +124,24 @@
     var H = r + t;
     for (y = 0; y < P; y++)
       for (g = 0; g < P; g++)
-        if (A = (k = g + .5 - H) * h + (M = y + .5 - H) * c, !((_ = k * f + M * s) < n - 1 || _ > d + 1 || A > l + 1 || A < -l - 1)) {
+        if (A = (m = g + .5 - H) * h + (M = y + .5 - H) * c, !((_ = m * f + M * s) < n - 1 || _ > d + 1 || A > l + 1 || A < -l - 1)) {
           for (x = 0; x < G.length; x++)
             G[x] = 0;
           for (v = 0, b = 0; b < 4; b++)
             for (p = 0; p < 4; p++)
-              (x = i((k = g + (p + .5) / 4 - H) * f + (M = y + (b + .5) / 4 - H) * s, k * h + M * c)) ? G[x]++ : v++;
+              (x = i((m = g + (p + .5) / 4 - H) * f + (M = y + (b + .5) / 4 - H) * s, m * h + M * c)) ? G[x]++ : v++;
           if (!(v > 8)) {
-            for (w = 0, m = 0, x = 1; x < G.length; x++)
-              G[x] && G[x] >= m && (w = x, m = G[x]);
+            for (w = 0, k = 0, x = 1; x < G.length; x++)
+              G[x] && G[x] >= k && (w = x, k = G[x]);
             S[y * P + g] = w;
           }
         }
-    var W = [];
+    var N = [];
     for (y = 0; y < P; y++)
       for (g = 0; g < P; g++)
-        S[y * P + g] || (g > 0 && S[y * P + g - 1] || g < P - 1 && S[y * P + g + 1] || y > 0 && S[(y - 1) * P + g] || y < P - 1 && S[(y + 1) * P + g]) && W.push(y * P + g);
-    for (I = 0; I < W.length; I++)
-      S[W[I]] = 18;
+        S[y * P + g] || (g > 0 && S[y * P + g - 1] || g < P - 1 && S[y * P + g + 1] || y > 0 && S[(y - 1) * P + g] || y < P - 1 && S[(y + 1) * P + g]) && N.push(y * P + g);
+    for (I = 0; I < N.length; I++)
+      S[N[I]] = 18;
     return { grid: S, n: P, pad: r };
   }
   function g(a, r, t, i, n) {
@@ -286,7 +286,7 @@
       var o = null == t.renderAngle ? t.angle : t.renderAngle;
       var f = null == t.renderW ? M.w : t.renderW;
       var s = null == t.renderH ? M.h : t.renderH;
-      var h = (o - k) * Math.PI / 180;
+      var h = (o - m) * Math.PI / 180;
       var u = !!t.mirror;
       if (t.flip && (u = !u), r.save(), r.translate(d.x, d.y), r.rotate(h), u && r.scale(1, -1), function (e) {
         if (e && e.beginPath && e.quadraticCurveTo && e.arc && e.fillRect) {
@@ -423,10 +423,10 @@
               x += 1;
             }
             var w = c * (.12 + .78 * x) - g;
-            var m = Math.sin(2.8 * y + 2.1 * b) * (.5 * u + 3);
+            var k = Math.sin(2.8 * y + 2.1 * b) * (.5 * u + 3);
             r.globalAlpha = .45 + .35 * p;
             r.fillStyle = 1 === b ? "#d5ffe5" : "#63f99d";
-            r.fillRect(Math.round(m), Math.round(w), 3, 3);
+            r.fillRect(Math.round(k), Math.round(w), 3, 3);
           }
           r.restore();
         }
@@ -451,13 +451,13 @@
       var d = t.grip;
       var f = a.Assets && a.Assets.get(i.artPath || x);
       var s = null == t.renderAngle ? t.angle : t.renderAngle;
-      var h = null == t.renderW ? m.w : t.renderW;
-      var u = null == t.renderH ? m.h : t.renderH;
+      var h = null == t.renderW ? k.w : t.renderW;
+      var u = null == t.renderH ? k.h : t.renderH;
       var c = (s - w) * Math.PI / 180;
       var g = !!t.mirror;
       if (t.flip && (g = !g), r.save(), r.translate(d.x, d.y), r.rotate(c), g && r.scale(1, -1), f) {
         r.imageSmoothingEnabled = !1;
-        r.drawImage(f, 0, 0, f.width || 320, f.height || 320, m.x, m.y, h, u);
+        r.drawImage(f, 0, 0, f.width || 320, f.height || 320, k.x, k.y, h, u);
       }
       else {
         var y = t.far && i.art.dim || i.art;
@@ -496,9 +496,9 @@
     }, tuning: { down: { carry: { angle: 6, x: 4, y: 6, w: 34, h: 22, size: 70, layer: "front", flip: !1 }, windup: { angle: 90, x: -7, y: 7, w: 34, h: 22, size: 70, layer: "front", flip: !1 }, strike: { angle: 90, x: -6, y: 5, w: 34, h: 22, size: 70, layer: "front", flip: !1 } }, left: { carry: { angle: 0, x: -9, y: 7, w: 34, h: 22, size: 70, layer: "front", flip: !1 }, windup: { angle: 0, x: -6, y: 21, w: 34, h: 22, size: 70, layer: "front", flip: !1 }, strike: { angle: 0, x: 3, y: 15, w: 34, h: 22, size: 70, layer: "front", flip: !1 } }, right: { carry: { angle: 0, x: 0, y: 7, w: 34, h: 22, size: 70, layer: "front", flip: !1 }, windup: { angle: 0, x: 8, y: 21, w: 34, h: 22, size: 70, layer: "front", flip: !1 }, strike: { angle: 0, x: -1, y: 15, w: 34, h: 22, size: 70, layer: "front", flip: !1 } }, up: { carry: { angle: -90, x: -1, y: -6, w: 34, h: 22, size: 70, layer: "back", flip: !1 }, windup: { angle: -90, x: -2, y: -5, w: 34, h: 22, size: 70, layer: "back", flip: !1 }, strike: { angle: -90, x: 1, y: 0, w: 34, h: 22, size: 70, layer: "back", flip: !1 } } }, trail: { core: "#f4ffff", glow: "#72d8d0", radius: 19, lift: 23, life: .3 } });
   var x = "assets/weapons/huyet-ma-liem.png";
   var w = -68;
-  var m = { x: -1, y: -26, w: 41, h: 41 };
+  var k = { x: -1, y: -26, w: 41, h: 41 };
   var v = "assets/weapons/truc-con.png";
-  var k = -52;
+  var m = -52;
   var M = { x: -7, y: -34, w: 40, h: 40 };
   var I = "assets/weapons/luc-tinh-kiem.png";
   var _ = { w: 18, h: 82, gripY: 12 };
@@ -524,32 +524,32 @@
     }
     return { mx: t, my: i, bx: n, by: d, cx: t + .5, cy: i + .5, n: f, ux: s, uy: h, px: u, py: c };
   }
-  function W(a, e) {
+  function N(a, e) {
     return { x: Math.round(a.mx + a.ux * e), y: Math.round(a.my + a.uy * e) };
   }
-  function N(a, e, r) {
+  function W(a, e, r) {
     return [a.cx + a.ux * e + a.px * r, a.cy + a.uy * e + a.py * r];
   }
-  function C(a, r, t, i, n, d, l, o, f) {
-    e.polygon(a, [N(r, t, n), N(r, i, l), N(r, i, o), N(r, t, d)], f);
+  function L(a, r, t, i, n, d, l, o, f) {
+    e.polygon(a, [W(r, t, n), W(r, i, l), W(r, i, o), W(r, t, d)], f);
   }
-  function L(a, r, t, i) {
+  function C(a, r, t, i) {
     var n;
     var d;
     var l;
     var o = r.n;
     var f = .875;
     if (i) {
-      for (C(a, r, -.8, o + .8, -(f = .65) - 1.2, f + 1.2, -f - 1.2, f + 1.2, t.line), C(a, r, -.2, o + .2, -f, f, -f, f, t.base), C(a, r, .5, o - .3, f - 1, f, f - 1, f, t.hi), C(a, r, -.2, o + .2, -f, 1 - f, -f, 1 - f, t.shade), d = W(r, .9), e.dot(a, d.x, d.y, t.hollow), n = 0; n < G.length; n++)
-        d = W(r, o * G[n]), e.dot(a, d.x, d.y, t.hollow);
-      C(a, r, -.2, 1, -f - .9, f + .9, -f - .9, f + .9, t.line);
-      C(a, r, 0, .7, -f - .45, f + .45, -f - .45, f + .45, t.guard);
-      C(a, r, o - 1, o + .2, -f - .9, f + .9, -f - .9, f + .9, t.line);
-      C(a, r, o - .7, o, -f - .45, f + .45, -f - .45, f + .45, t.guard);
+      for (L(a, r, -.8, o + .8, -(f = .65) - 1.2, f + 1.2, -f - 1.2, f + 1.2, t.line), L(a, r, -.2, o + .2, -f, f, -f, f, t.base), L(a, r, .5, o - .3, f - 1, f, f - 1, f, t.hi), L(a, r, -.2, o + .2, -f, 1 - f, -f, 1 - f, t.shade), d = N(r, .9), e.dot(a, d.x, d.y, t.hollow), n = 0; n < G.length; n++)
+        d = N(r, o * G[n]), e.dot(a, d.x, d.y, t.hollow);
+      L(a, r, -.2, 1, -f - .9, f + .9, -f - .9, f + .9, t.line);
+      L(a, r, 0, .7, -f - .45, f + .45, -f - .45, f + .45, t.guard);
+      L(a, r, o - 1, o + .2, -f - .9, f + .9, -f - .9, f + .9, t.line);
+      L(a, r, o - .7, o, -f - .45, f + .45, -f - .45, f + .45, t.guard);
       var s = [.34, .72];
       for (n = 0; n < s.length; n++)
-        C(a, r, (l = o * s[n]) - .55, l + .55, -f - .45, f + .45, -f - .45, f + .45, t.line), C(a, r, l - .35, l + .35, -f - .18, f + .18, -f - .18, f + .18, t.guard);
-      d = W(r, .2 * o);
+        L(a, r, (l = o * s[n]) - .55, l + .55, -f - .45, f + .45, -f - .45, f + .45, t.line), L(a, r, l - .35, l + .35, -f - .18, f + .18, -f - .18, f + .18, t.guard);
+      d = N(r, .2 * o);
       e.line(a, d.x, d.y, d.x + 1, d.y + 1, t.tasselDeep);
       e.dot(a, d.x + 1, d.y + 1, t.tasselGold);
       e.line(a, d.x, d.y + 2, d.x - 1, d.y + 5, t.tasselDeep);
@@ -560,10 +560,10 @@
       var h = Math.max(4, Math.round(.2 * o));
       var u = Math.max(2, Math.round(.1 * o));
       var c = o - h;
-      for (C(a, r, -.9, c, -f - 1, f + 1, -f - 1, f + 1, t.line), C(a, r, c, o + .9, -f - 1, f + 1, -f - 2.4, f + 2.4, t.line), C(a, r, -.2, c, -f, f, -f, f, t.base), C(a, r, u, c, f - 1, f, f - 1, f, t.hi), C(a, r, -.2, c, -f, 1 - f, -f, 1 - f, t.shade), C(a, r, -.2, u, -f - .2, f + .2, -f - .2, f + .2, t.hi), C(a, r, -.2, u, -f - .2, .8 - f, -f - .2, .8 - f, t.base), d = W(r, .9), e.dot(a, d.x, d.y, t.hollow), n = 0; n < G.length; n++)
-        d = W(r, o * G[n]), e.dot(a, d.x, d.y, t.hollow);
-      for (C(a, r, c, o, -f, f, -f - 1.4, f + 1.4, t.deep), C(a, r, c, o - .4, .6 - f, f - .2, -f - .4, f + .4, t.base), C(a, r, o - 1.3, o, -f - 1.6, f + 1.6, -f - 1.6, f + 1.6, t.guard), d = W(r, o - .2), e.dot(a, d.x, d.y, t.hollow), d = W(r, o + 1), e.dot(a, d.x, d.y, t.glow || t.hi), n = 0; n < S.length; n++)
-        C(a, r, (l = o * S[n]) - .8, l + .8, -f - .9, f + .9, -f - .9, f + .9, t.guard), C(a, r, l - .8, l + .8, -f - .9, .1 - f, -f - .9, .1 - f, t.grip);
+      for (L(a, r, -.9, c, -f - 1, f + 1, -f - 1, f + 1, t.line), L(a, r, c, o + .9, -f - 1, f + 1, -f - 2.4, f + 2.4, t.line), L(a, r, -.2, c, -f, f, -f, f, t.base), L(a, r, u, c, f - 1, f, f - 1, f, t.hi), L(a, r, -.2, c, -f, 1 - f, -f, 1 - f, t.shade), L(a, r, -.2, u, -f - .2, f + .2, -f - .2, f + .2, t.hi), L(a, r, -.2, u, -f - .2, .8 - f, -f - .2, .8 - f, t.base), d = N(r, .9), e.dot(a, d.x, d.y, t.hollow), n = 0; n < G.length; n++)
+        d = N(r, o * G[n]), e.dot(a, d.x, d.y, t.hollow);
+      for (L(a, r, c, o, -f, f, -f - 1.4, f + 1.4, t.deep), L(a, r, c, o - .4, .6 - f, f - .2, -f - .4, f + .4, t.base), L(a, r, o - 1.3, o, -f - 1.6, f + 1.6, -f - 1.6, f + 1.6, t.guard), d = N(r, o - .2), e.dot(a, d.x, d.y, t.hollow), d = N(r, o + 1), e.dot(a, d.x, d.y, t.glow || t.hi), n = 0; n < S.length; n++)
+        L(a, r, (l = o * S[n]) - .8, l + .8, -f - .9, f + .9, -f - .9, f + .9, t.guard), L(a, r, l - .8, l + .8, -f - .9, .1 - f, -f - .9, .1 - f, t.grip);
     }
   }
   var R = {};
@@ -594,7 +594,7 @@
     var w = H(s, h, r.mirror);
     for (n = 0; n < f.length; n++)
       f[n].behind && o && a.CharArt.drawHandBlock(e, f[n].x, f[n].y, o, !0);
-    var m = e.drawImage ? function (e, r, t, i, n) {
+    var k = e.drawImage ? function (e, r, t, i, n) {
       if ("undefined" == typeof document || !a.Utils || !a.Utils.canvas) {
         return null;
       }
@@ -608,10 +608,10 @@
       var s = 6 + (d < 0 ? -d : 0);
       var h = 6 + (l < 0 ? -l : 0);
       var u = a.Utils.canvas(Math.abs(d) + 12 + 1, Math.abs(l) + 12 + 1);
-      L(u.ctx, H({ x: s, y: h }, { x: s + d, y: h + l }, i), r, n);
+      C(u.ctx, H({ x: s, y: h }, { x: s + d, y: h + l }, i), r, n);
       return R[o] = { canvas: u.canvas, ox: s, oy: h };
     }(w, l, !!r.far, !!r.mirror, u) : null;
-    for (m ? e.drawImage(m.canvas, w.mx - m.ox, w.my - m.oy) : L(e, w, l, u), n = 0; n < f.length; n++)
+    for (k ? e.drawImage(k.canvas, w.mx - k.ox, w.my - k.oy) : C(e, w, l, u), n = 0; n < f.length; n++)
       !(d = f[n]).behind && o && a.CharArt.drawHandBlock(e, d.x, d.y, o, !!d.far);
     !function (e, r, t, i) {
       if (e.save && (!a.Quality || 0 !== a.Quality.tier)) {
@@ -750,6 +750,105 @@
   t.hoangLoi = { line: "#2a2108", deep: "#7a5a10", shade: "#c8962a", base: "#f6c640", hi: "#fff6c4", spark: "#fffbe0", guard: "#d8402a", grip: "#3a2c22", wrap: "#f6c640", hollow: "#0d0a08", dim: { line: "#1c1606", deep: "#59420c", shade: "#96701d", base: "#b8923a", hi: "#d9cf9a", spark: "#e8e2c0", guard: "#9a2e1f", grip: "#291f18", wrap: "#b8923a", hollow: "#090705" } };
   r.define({ id: "hoang_loi_thuong", kind: "thuong", flying: !0, art: t.hoangLoi, shaft: { line: "#2a2108", base: "#c9ccd8", hi: "#ffffff" }, shaftDim: { line: "#1c1606", base: "#8f93a3", hi: "#c8cad6" }, head: 9, hilt: 6, swing: r.SWING.spear, render: b, flyArt: "hoang_loi_thuong", smear: "rgba(255,214,60,.34)", trail: { core: "#fffbe0", glow: "#ffd23a", radius: 20, lift: 24, life: .24 } });
   r.define({ id: "huyet_ma_phu", kind: "phu", flying: !0, flyArt: "huyet_ma_phu", art: t.steel, swing: r.SWING.saber, smear: "rgba(214,38,66,.40)", trail: { core: "#ffe4e8", glow: "#d3203f", radius: 24, lift: 26, life: .34 } });
+  r.define({ id: "ma_tri_mac", kind: "but", art: t.steel, overlay: !0, render: function (r, t, i, n) {
+      var d = t.angle * Math.PI / 180;
+      var l = t.grip;
+      var o = !!t.far;
+      function f(a, e) {
+        e = e || 0;
+        return [Math.round(l.x + Math.cos(d) * a - Math.sin(d) * e), Math.round(l.y + Math.sin(d) * a + Math.cos(d) * e)];
+      }
+      function s(a, t, i, n, d) {
+        var l = f(a, i);
+        var o = f(t, i);
+        e.fatLine(r, l[0], l[1], o[0], o[1], n, d);
+      }
+      s(-12, 25, 0, 4, o ? "#405151" : "#4b6260");
+      s(-11, 25, 0, 2, o ? "#a4b5a5" : "#dce8d7");
+      s(-10, 24, -.7, 1, o ? "#c2cabb" : "#f7f8e9");
+      s(-13, -10, 0, 4, o ? "#62716e" : "#829591");
+      s(22, 27, 0, 5, o ? "#24383c" : "#304b52");
+      s(22, 23, -1, 1, "#b2c6bd");
+      s(26, 27, -1, 1, "#a4b7b2");
+      var h = [f(27, -2), f(31, -5), f(37, -4), f(43, -1), f(47, 0), f(40, 2), f(34, 5), f(28, 3)];
+      e.polygon(r, h, o ? "#111b1e" : "#111e21", "#0c1317");
+      for (var u = -2; u <= 2; u++) {
+        var c = f(29, u);
+        var g = f(43, .3 * u);
+        e.line(r, c[0], c[1], g[0], g[1], -1 === u ? "#64777a" : "#344b4e");
+      }
+      var y = f(-13, 1);
+      var p = f(-17, 4);
+      if (e.line(r, y[0], y[1], p[0], p[1], "#263f46"), e.blk(r, p[0] - 1, p[1], 2, 4, "#27454b", "#172c33"), t.held && n && a.Palette) {
+        var b = a.Palette.pick("SKIN", n.skin, "light");
+        e.blk(r, l.x - 1, l.y - 1, 2, 2, o ? b.shade : b.base, b.line);
+        e.dot(r, l.x, l.y - 1, o ? b.base : b.hi);
+      }
+    }, swing: { down: { carry: [-42, 47], windup: [-105, 47], strike: [30, 47] }, up: { carry: [-120, 47], windup: [-75, 47], strike: [150, 47] }, right: { carry: [-48, 47], windup: [-132, 47], strike: [0, 47] } }, tuning: { up: { carry: { layer: "back" }, windup: { layer: "back" }, strike: { layer: "back" } } }, trail: { core: "#d8e8dc", glow: "#2a4a40", radius: 17, lift: 22, life: .2 } });
+  r.define({ id: "tu_van_phien", kind: "phien", art: t.steel, overlay: !0, render: function (r, t, i, n) {
+      var d = t.angle * Math.PI / 180;
+      var l = t.grip;
+      var o = t.mirror ? -1 : 1;
+      var f = "left" === t.dir || "right" === t.dir ? .76 : 1;
+      var s = null == t.time ? Number(a.Game && a.Game.time) || 0 : t.time;
+      var h = "strike" === t.state ? 2.2 : "windup" === t.state ? 1.7 : 1;
+      var u = !!t.far;
+      function c(a, e, r) {
+        e = ((e || 0) * f + (r ? function (a) {
+          return 1.3 * Math.sin(4.8 * s + .23 * (40 - a)) * h * ((40 - a) / 30);
+        }(a) : 0)) * o;
+        return [Math.round(l.x + Math.cos(d) * a - Math.sin(d) * e), Math.round(l.y + Math.sin(d) * a + Math.cos(d) * e)];
+      }
+      function g(a, t, i, n, d, l, o) {
+        var f = c(a, t, o);
+        var s = c(i, n, o);
+        e.fatLine(r, f[0], f[1], s[0], s[1], l || 1, d);
+      }
+      function y(a, t, i, n) {
+        e.polygon(r, a.map(function (a) {
+          return c(a[0], a[1], n);
+        }), t, i);
+      }
+      var p;
+      var b;
+      var x;
+      var w;
+      var k = { ink: "#130d24", deep: u ? "#24113d" : "#32134e", violet: u ? "#472269" : "#652b96", light: u ? "#774797" : "#a664d0", edge: u ? "#8b6c3d" : "#c9a250" };
+      for (y([[40, -11], [40, 11], [29, 10], [19, 7], [9, 0], [20, -7], [31, -11]], k.deep, k.ink, !0), p = 38; p >= 10; p--) {
+        var v = Math.max(1, Math.floor(11 * (p - 9) / 29));
+        for (b = 1 - v; b < v; b++) {
+          x = c(p, b, !0);
+          var m = Math.sin(.55 * b + 4.8 * s + .2 * (40 - p));
+          if (m > .55) {
+            e.dot(r, x[0], x[1], k.violet);
+          }
+          if (m < -.82) {
+            e.dot(r, x[0], x[1], u ? "#1f1035" : "#26103c");
+          }
+        }
+      }
+      g(39, -10, 10, 0, k.edge, 1, !0);
+      g(39, 10, 10, 0, k.edge, 1, !0);
+      g(38, -8, 38, 8, k.edge, 1, !0);
+      y([[31, 0], [27, 3], [23, 0], [27, -3]], k.light, k.violet, !0);
+      g(25, 0, 16, 0, k.light, 1, !0);
+      for (var M = -1; M <= 1; M += 2)
+        g(33, 2 * M, 31, 5 * M, k.light, 1, !0), g(31, 5 * M, 28, 5 * M, k.light, 1, !0), g(28, 5 * M, 29, 3 * M, k.light, 1, !0), g(23, 2 * M, 21, 4 * M, k.violet, 1, !0), g(38, 13 * M, 22, 12 * M, k.violet, 2, !0), g(22, 12 * M, 19, 12 * M, k.light, 1, !0), w = c(18, 12 * M, !0), e.blk(r, w[0] - 1, w[1] - 1, 3, 3, k.violet, k.ink), e.dot(r, w[0], w[1], k.light);
+      g(-20, 0, 57, 0, k.ink, 4);
+      g(-19, 0, 55, 0, "#493050", 2);
+      g(-18, -.6, 54, -.6, u ? "#66516c" : "#9b74ae");
+      for (var I = [-15, -10, 3, 40, 47], _ = 0; _ < I.length; _++)
+        g(I[_], -1.5, I[_], 1.5, u ? "#655077" : "#b093c5", 2);
+      for (g(40, -14, 40, 14, k.ink, 4), g(40, -13, 40, 13, k.violet, 2), g(40, -12, 40, 12, k.light), M = -1; M <= 1; M += 2)
+        y([[40, 13 * M], [44, 15 * M], [47, 14 * M], [45, 18 * M], [42, 19 * M], [39, 17 * M], [38, 14 * M]], "#34203f", "#130d24"), g(44, 15 * M, 42, 17 * M, k.light);
+      y([[48, -3], [51, -3], [55, 0], [51, 3], [48, 3], [46, 0]], "#53306b", k.ink);
+      var A = c(50, 0);
+      if (e.blk(r, A[0] - 1, A[1] - 1, 3, 3, "#c82c65", "#481337"), e.dot(r, A[0], A[1] - 1, "#ff87b5"), y([[53, -1], [58, -3], [57, -1], [61, 0], [57, 1], [58, 3], [53, 1]], "#745180", k.ink), y([[-18, -2], [-23, 0], [-18, 2]], "#735080", k.ink), t.held && n && a.Palette) {
+        var P = a.Palette.pick("SKIN", n.skin, "light");
+        e.blk(r, l.x - 1, l.y - 1, 2, 2, u ? P.shade : P.base, P.line);
+        e.dot(r, l.x, l.y - 1, u ? P.base : P.hi);
+      }
+    }, swing: { down: { carry: [-55, 61], windup: [-126, 61], strike: [36, 61] }, up: { carry: [-125, 61], windup: [-62, 61], strike: [-150, 61] }, right: { carry: [-58, 61], windup: [-143, 61], strike: [-8, 61] } }, tuning: { up: { carry: { layer: "back" }, windup: { layer: "back" }, strike: { layer: "back" } } } });
   var j = 64;
   var U = 129;
   var z = [null, "grip", "shaftHi", "guard", "wrap", "edge", "edgeHi", "face", "faceHi", "ridge", "guard", "goldDeep", "wrap", "gem", "gemHi", "spark", "line"];
@@ -862,23 +961,23 @@
     var b;
     var x;
     var w;
-    var m;
-    var v;
     var k;
+    var v;
+    var m;
     var M;
     var I = U;
     var _ = new Uint8Array(I * I);
     var A = new Uint8Array(z.length + 1);
     for (b = 0; b < I; b++)
       for (p = 0; p < I; p++) {
-        for (m = 0; m < A.length; m++)
-          A[m] = 0;
+        for (k = 0; k < A.length; k++)
+          A[k] = 0;
         for (M = 0, w = 0; w < 4; w++)
           for (x = 0; x < 4; x++)
-            (m = l[(4 * b + w) * d + 4 * p + x]) ? A[m]++ : M++;
+            (k = l[(4 * b + w) * d + 4 * p + x]) ? A[k]++ : M++;
         if (!(M > 8)) {
-          for (v = 0, k = 0, m = 1; m < z.length; m++)
-            A[m] && A[m] >= k && (v = m, k = A[m]);
+          for (v = 0, m = 0, k = 1; k < z.length; k++)
+            A[k] && A[k] >= m && (v = k, m = A[k]);
           _[b * I + p] = v;
         }
       }
@@ -1020,7 +1119,7 @@
     var b = da["left" === r.dir ? "right" : r.dir] || da.down;
     var x = b[r.state] || b.carry;
     var w = [];
-    var m = 0;
+    var k = 0;
     var v = 1;
     if (!f) {
       if (x.coil) {
@@ -1040,11 +1139,11 @@
           w.push({ x: l.x + x[c][0] * p, y: l.y + x[c][1] });
         oa(a, g = la(w), t);
         y = g[g.length - 1];
-        var k = g[Math.max(0, g.length - 3)];
-        var M = y.x - k.x;
-        var I = y.y - k.y;
+        var m = g[Math.max(0, g.length - 3)];
+        var M = y.x - m.x;
+        var I = y.y - m.y;
         var _ = Math.sqrt(M * M + I * I) || 1;
-        m = M / _;
+        k = M / _;
         v = I / _;
       }
       if ("strike" !== r.state) {
@@ -1057,7 +1156,7 @@
           e.line(a, r.x + Math.round(t), r.y + Math.round(i), o - d, f - l, n.base);
           e.line(a, r.x + Math.round(t), r.y + Math.round(i), o + d, f + l, n.shade);
           e.dot(a, o, f, n.bead);
-        })(a, y, m, v, t);
+        })(a, y, k, v, t);
       }
     }
     var A = { x: Math.round(i.x - 3 * s.x), y: Math.round(i.y - 3 * s.y) };
@@ -1138,19 +1237,19 @@
       var b;
       var x;
       var w;
-      var m = a.CharArt.dualRig(e, t, n || {});
+      var k = a.CharArt.dualRig(e, t, n || {});
       var v = "left" === e || "right" === e;
-      var k = [];
-      if ("sit" === m.key) {
+      var m = [];
+      if ("sit" === k.key) {
         var M = ya["left" === e ? "right" : e] || ya.down;
         for (b = 0; b < M.length; b++)
-          w = M[b], k.push({ grip: ga({ x: w.x, y: w.y }, l, o), angle: l ? 180 - w.a : w.a, arm: b, far: !1, hand: !1, phase: "up" === e ? "front" : "back" });
+          w = M[b], m.push({ grip: ga({ x: w.x, y: w.y }, l, o), angle: l ? 180 - w.a : w.a, arm: b, far: !1, hand: !1, phase: "up" === e ? "front" : "back" });
       }
       else {
-        for (b = 0; b < m.hands.length; b++)
-          x = m.hands[b], k.push({ grip: { x: x.x, y: x.y }, angle: x.a, arm: x.arm, hand: !0, far: v && 0 === x.arm, phase: "up" === e || v && 0 === x.arm ? "back" : "front" });
+        for (b = 0; b < k.hands.length; b++)
+          x = k.hands[b], m.push({ grip: { x: x.x, y: x.y }, angle: x.a, arm: x.arm, hand: !0, far: v && 0 === x.arm, phase: "up" === e || v && 0 === x.arm ? "back" : "front" });
       }
-      u.sword = { dual: !0, glaives: k, mirror: l, dir: e, state: m.key, bob: o, held: "sit" !== m.key, phase: "split" };
+      u.sword = { dual: !0, glaives: m, mirror: l, dir: e, state: k.key, bob: o, held: "sit" !== k.key, phase: "split" };
       return u;
     }
     if (d.backCarry) {

@@ -54,7 +54,7 @@
     i.autoTargetId = null;
     i.tuChiDuong = !1;
     i.autoNghiDen = n.Game.time + 2;
-    ma();
+    fa();
     n.HUD.closeDialog();
     n.HUD.setCaption(null);
     if (i.player) {
@@ -63,7 +63,7 @@
   }
   function l(a, e) {
     n.Skills.update(a, i.enemies, function (n) {
-      k(n, e);
+      H(n, e);
     });
     n.VFX.update(a);
   }
@@ -141,14 +141,14 @@
             }
             i.approach = null;
             t.stop();
-            q(t, h, c);
-            return void pn(o.obj);
+            Q(t, h, c);
+            return void dn(o.obj);
           }
           var u = n.Targeting.current();
           if (u && u.key === o.key) {
             if (u.dist <= u.r) {
               i.approach = null;
-              tn(t);
+              on(t);
             }
           }
           else {
@@ -160,14 +160,14 @@
       if (h) {
         var c = h.prop;
         if (c.hidden || n.HUD.dialogOpen || n.Input.hasManualMove() || t.dist(o.x, o.y, c.x, c.y - e / 2) > (c.r || 40) + 16) {
-          ca();
+          ra();
         }
-        else if (h.t += a, !(h.t < ia)) {
+        else if (h.t += a, !(h.t < oa)) {
           h.t = 0;
           h.swing++;
           var r = !!c.chopTask;
-          var u = ea(c.seedTask || c.chopTask);
-          q(o, c.x - o.x, c.y - o.y);
+          var u = ta(c.seedTask || c.chopTask);
+          Q(o, c.x - o.x, c.y - o.y);
           n.Player.attack(o);
           c.shakeDur = r ? .5 : .26;
           c.shakeUntil = n.Game.time + c.shakeDur;
@@ -176,7 +176,7 @@
           if (r) {
             n.VFX.spawnLeaves(c.x, c.y - 130, 6, 62, c.y);
           }
-          if (h.swing >= ta) {
+          if (h.swing >= ia) {
             i.chopping = null;
             n.VFX.spawnChips(c.x, c.y - (r ? 28 : 12), r ? 12 : 9, u[2], u[3], c.y);
             n.VFX.spawnDust(c.x, c.y);
@@ -199,7 +199,7 @@
                 })(c);
               }
               else {
-                if (ha()) {
+                if (ca()) {
                   n.Gateway.cmd("sect.nv.chatCay", {}, function (a) {
                     if (a && !a.ok && a.why && n.HUD.setCaption) {
                       n.HUD.setCaption(a.why);
@@ -213,7 +213,7 @@
                 var e = n.Quest;
                 if (e.collectSeedMaterial(a.seedTask, a.id)) {
                   var t = e.seedTaskInfo();
-                  var o = ea(a.seedTask);
+                  var o = ta(a.seedTask);
                   a.hidden = !0;
                   if (a.block) {
                     i.map.blocked[a.ty * i.map.width + a.tx] = 0;
@@ -223,7 +223,7 @@
                   if (e.seedQuestComplete()) {
                     n.VFX.spawnText(i.player.x, i.player.y - 58, "Đã đủ — về giao Đại Phu", "#f0d27a");
                   }
-                  dn(!1);
+                  yn(!1);
                 }
               })(c);
             }
@@ -231,9 +231,9 @@
         }
       }
     }(o, c), function (a, e) {
-      if (ra && !i.transitioning) {
-        var o = ra;
-        ra = null;
+      if (ua && !i.transitioning) {
+        var o = ua;
+        ua = null;
         i.onServerLoot(o);
       }
       for (var c = i.drops.length - 1; c >= 0; c--) {
@@ -250,24 +250,24 @@
                 r.sortY = r.y + 20;
                 if ((t.dist(r.x, r.y, u, l) < 6 || r.t > 1.2)) {
                   i.drops.splice(c, 1);
-                  fa(r);
+                  Ta(r);
                 }
               }
               else {
-                if (r.t < sa) {
+                if (r.t < ga) {
                   continue;
                 }
                 if (r.ht && r.vanMs > 0) {
                   if (h() && n.HuThienUI && n.HuThienUI.dungTrenBaoVat) {
-                    n.HuThienUI.dungTrenBaoVat(r, e, t.dist(e.x, e.y, r.x, r.y) <= la);
+                    n.HuThienUI.dungTrenBaoVat(r, e, t.dist(e.x, e.y, r.x, r.y) <= sa);
                   }
                   continue;
                 }
-                var s = la + (!r.ht || r.vanMs > 0 || !n.HuThien ? 0 : n.HuThien.HUT_PHU_THEM || 0);
-                if (!ya(r) && t.dist(e.x, e.y, r.x, r.y) > s) {
+                var s = sa + (!r.ht || r.vanMs > 0 || !n.HuThien ? 0 : n.HuThien.HUT_PHU_THEM || 0);
+                if (!ma(r) && t.dist(e.x, e.y, r.x, r.y) > s) {
                   continue;
                 }
-                if (!da(r)) {
+                if (!ya(r)) {
                   continue;
                 }
                 if ("item" === r.kind && !r.ht && !n.Inventory.canFit(r.itemId)) {
@@ -331,8 +331,8 @@
         }
       }
     }(o, c), n.Skills.update(o, i.enemies, function (n) {
-      k(n, c);
-    }), n.Hotbar.update(c), n.TalismanBar && n.TalismanBar.update(c), n.FormationUI && n.FormationUI.update(o), n.TruyenTongUI && n.TruyenTongUI.update(o, c), n.BangNhanhUI && n.BangNhanhUI.update(), n.PhongChoUI && n.PhongChoUI.update(), n.QuickSlots && n.QuickSlots.update(c), an(o), !i.transitioning && r && r.checkPortal) {
+      H(n, c);
+    }), n.Hotbar.update(c), n.TalismanBar && n.TalismanBar.update(c), n.FormationUI && n.FormationUI.update(o), n.TruyenTongUI && n.TruyenTongUI.update(o, c), n.BangNhanhUI && n.BangNhanhUI.update(), n.PhongChoUI && n.PhongChoUI.update(), n.QuickSlots && n.QuickSlots.update(c), en(o), !i.transitioning && r && r.checkPortal) {
       var u = r.checkPortal(c.x, c.y);
       if (u && u.cooldownSec > 0) {
         var l = u.cooldownGroup || u.kind || u.toMap;
@@ -401,7 +401,7 @@
       }
       var c = h.x - e.x;
       var r = h.y - a.TILE / 2 - e.y;
-      return !(Math.sqrt(c * c + r * r) > (h.r || 40) || (i.transitioning || (o.flags.hang_dong_da_lay_ruong || o.enterHangDong(), e.flying && (n.Player.landFly(e, t), E()), i.switchMap("hang_dong_co", { tx: 14, ty: 16 })), 0));
+      return !(Math.sqrt(c * c + r * r) > (h.r || 40) || (i.transitioning || (o.flags.hang_dong_da_lay_ruong || o.enterHangDong(), e.flying && (n.Player.landFly(e, t), X()), i.switchMap("hang_dong_co", { tx: 14, ty: 16 })), 0));
     }(c, r)) {
       if (!i.transitioning && r && r.checkWarp) {
         var D = r.checkWarp(c.x, c.y);
@@ -519,7 +519,7 @@
     }
   }
   function v(a) {
-    if (0 !== Bn()) {
+    if (0 !== Xn()) {
       for (var e = 0; e < i.critters.length; e++)
         n.Critter.update(i.critters[e], a, i.map);
     }
@@ -572,8 +572,8 @@
         }
       }
     }
-    if (Ra && n.MapData.get) {
-      var i = n.MapData.get(Ra.mapId);
+    if (Ka && n.MapData.get) {
+      var i = n.MapData.get(Ka.mapId);
       if (i) {
         return i;
       }
@@ -644,8 +644,8 @@
     n.Camera.snapTo(i.player.x, i.player.y, n.Renderer.w, n.Renderer.h, i.map.pxWidth, i.map.pxHeight);
     u();
     n.Farm.syncProps(i.map);
-    var T = Ra;
-    Ra = null;
+    var T = Ka;
+    Ka = null;
     if (T) {
       i.enterServerMap(T);
       if (i.map.data.id === T.mapId && T.e && n.Gateway && n.Gateway.buildMobs) {
@@ -663,7 +663,7 @@
     n.Chat.showPanel();
     if (!(i.menuBuilt)) {
       (function () {
-        t.$("#menu-resume").addEventListener("click", Yn);
+        t.$("#menu-resume").addEventListener("click", $n);
         t.$("#menu-touch").addEventListener("click", function () {
           var a = "touch" === n.Input.mode ? "keyboard" : "touch";
           n.Input.setMode(a, !0);
@@ -684,22 +684,22 @@
         });
         t.$("#menu-zoom").addEventListener("click", function () {
           n.Renderer.nextView();
-          this.textContent = qn();
+          this.textContent = Qn();
         });
         var e = t.$("#menu-gfx");
         if (e && n.Quality) {
           e.addEventListener("click", function () {
             n.Quality.next();
-            this.textContent = On();
-            t.$("#menu-zoom").textContent = qn();
-            Kn();
+            this.textContent = qn();
+            t.$("#menu-zoom").textContent = Qn();
+            On();
           });
         }
         var o = t.$("#menu-weather");
         if (o && n.Weather) {
           o.addEventListener("click", function () {
             n.Weather.nextMode();
-            Kn();
+            On();
           });
         }
         var c = t.$("#menu-nguoi");
@@ -714,7 +714,7 @@
           this.textContent = "Lưới gỡ lỗi: " + (a.DEBUG ? "Bật" : "Tắt");
         });
         t.$("#menu-feedback").addEventListener("click", function () {
-          Yn();
+          $n();
           (function () {
             var e;
             var t;
@@ -722,7 +722,7 @@
             var o;
             var c = a.GOP_Y || { TOI_THIEU: 5, TOI_DA: 500 };
             function r() {
-              var n = $n.trim().length;
+              var n = Wn.trim().length;
               t.textContent = n + " / " + c.TOI_DA;
               t.classList.toggle("gopy-dem-day", n >= c.TOI_DA);
               i.disabled = n < c.TOI_THIEU;
@@ -737,10 +737,10 @@
                   (e = document.createElement("textarea")).className = "tm-input gopy-vung";
                   e.rows = 5;
                   e.maxLength = c.TOI_DA;
-                  e.value = $n;
+                  e.value = Wn;
                   e.placeholder = 'Ví dụ: đánh boss Linh Hổ ở khu 1 thì bảng giờ boss đứng mãi ở "Sắp xuất hiện"…';
                   e.addEventListener("input", function () {
-                    $n = e.value;
+                    Wn = e.value;
                     u("");
                     r();
                   });
@@ -755,14 +755,14 @@
                   i.className = "btn-choice gopy-gui";
                   i.textContent = "Gửi";
                   i.addEventListener("click", function () {
-                    var a = $n.trim();
+                    var a = Wn.trim();
                     if (!(a.length < c.TOI_THIEU)) {
                       i.disabled = !0;
                       i.textContent = "Đang gửi…";
                       u("");
                       n.Gateway.cmd("gopy", { noiDung: a }, function (a) {
                         if (a && a.ok) {
-                          $n = "";
+                          Wn = "";
                           return void n.HUD.openDialog("Góp Ý", (a.toast || "Đã gửi góp ý.") + "\n\nLời của đạo hữu đã tới bàn của người giữ máy chủ.");
                         }
                         i.disabled = !1;
@@ -787,14 +787,14 @@
           })();
         });
         t.$("#menu-move-layout").addEventListener("click", function () {
-          Yn();
+          $n();
           if (n.MoveLayout) {
             n.MoveLayout.mo();
           }
         });
         t.$("#menu-thoat-ket").addEventListener("click", function () {
           var a;
-          Yn();
+          $n();
           if ((a = n.Gateway) && a.connected && a.ready && a.cmd) {
             a.cmd("thoatKet", {}, function (a) {
               if (a && a.ok) {
@@ -804,15 +804,15 @@
                   var o = e.y;
                   var h = e.hp;
                   var c = Date.now() + 1e3 * (a.giay || 10);
-                  if (Qn) {
-                    clearInterval(Qn);
+                  if (Yn) {
+                    clearInterval(Yn);
                   }
-                  Qn = setInterval(function () {
+                  Yn = setInterval(function () {
                     var a = i.player;
                     var r = Math.ceil((c - Date.now()) / 1e3);
                     if (!a || a !== e || Math.abs(a.x - t) > 4 || Math.abs(a.y - o) > 4 || a.hp < h || a.downed || r <= 0) {
-                      clearInterval(Qn);
-                      return void (Qn = null);
+                      clearInterval(Yn);
+                      return void (Yn = null);
                     }
                     n.HUD.setCaption("Thoát kẹt sau " + r + " giây — đứng yên, bị đánh là huỷ.");
                   }, 250);
@@ -862,12 +862,12 @@
         t.$("#menu-logout").addEventListener("click", function () {
           var a = this;
           if (!n.Auth || !n.Auth.user) {
-            Yn();
+            $n();
             return void (n.Net && n.Net.online && window.location.reload());
           }
           a.disabled = !0;
           a.textContent = "Đang đăng xuất…";
-          Yn();
+          $n();
           n.Auth.signOut().then(function (n) {
             if (!n || !n.ok) {
               throw new Error("Đăng xuất không thành công.");
@@ -876,7 +876,7 @@
           }).catch(function (e) {
             a.disabled = !1;
             a.textContent = "Đăng xuất";
-            Rn();
+            Kn();
             n.HUD.toast(n.Net && n.Net.viError ? n.Net.viError(e) : "Đăng xuất thất bại.");
           });
         });
@@ -885,7 +885,7 @@
         });
         var d = t.$("#btn-fishing-stop");
         if (d) {
-          d.addEventListener("click", In);
+          d.addEventListener("click", Un);
         }
         var y = t.$("#ht-menu");
         if (y) {
@@ -893,22 +893,22 @@
             if (n.HUD && n.HUD.bagOpen) {
               n.HUD.closeBag();
             }
-            Rn();
+            Kn();
           });
         }
         var m = t.$("#btn-sect");
         if (m) {
-          m.addEventListener("click", Gn);
+          m.addEventListener("click", Rn);
         }
         t.$("#menu").addEventListener("click", function (n) {
           if ("menu" === n.target.id) {
-            Yn();
+            $n();
           }
         });
         i.menuBuilt = !0;
       })();
     }
-    Yn();
+    $n();
     n.VFX.spawnText(i.player.x, i.player.y - 54, i.player.realm, "#cfe0b8");
     r(i.map.data);
     var v = n.Net && n.Net.online && !(n.Auth && n.Auth.user);
@@ -930,12 +930,12 @@
     }
     n.Chat.hidePanel();
     n.HUD.setCaption(null);
-    Yn();
+    $n();
   };
   i.update = function (e) {
     var o = i.player;
     var r = i.map;
-    if (n.Gateway.update(e, o), n.ThreeMapsAtmosphere && r && n.ThreeMapsAtmosphere.update(e, o, r), n.DaiHoiUI && n.DaiHoiUI.update(), n.TongMonChienUI && n.TongMonChienUI.update(), n.Chat && n.Chat.updateBubbles && n.Chat.updateBubbles(e), n.NpcChatter && n.NpcChatter.update(e, i.player), n.AmHon && n.AmHon.update(n.Gateway.honBay || [], e), n.KhoiLoiFX && n.KhoiLoiFX.update(n.Gateway.khoiLoiBay || [], e), function (a, e) {
+    if (n.Gateway.update(e, o), n.ThreeMapsAtmosphere && r && n.ThreeMapsAtmosphere.update(e, o, r), n.DaiHoiUI && n.DaiHoiUI.update(), n.TongMonChienUI && n.TongMonChienUI.update(), n.ChienTruongUI && (n.ChienTruongUI.update(e), i.autoOn && n.ChienTruongUI.dangTrongTran() && P("Chiến Trường chỉ đánh thường")), n.Chat && n.Chat.updateBubbles && n.Chat.updateBubbles(e), n.NpcChatter && n.NpcChatter.update(e, i.player), n.AmHon && n.AmHon.update(n.Gateway.honBay || [], e), n.KhoiLoiFX && n.KhoiLoiFX.update(n.Gateway.khoiLoiBay || [], e), function (a, e) {
       if (n.LuyenQuy && e && e.mp > 0) {
         var t = n.Gateway.honBay;
         if (t && t.length) {
@@ -946,7 +946,7 @@
           }
         }
       }
-    }(e, o), i.waterTime += e, n.PondFish && Bn() > 0 && n.PondFish.update(e, r), n.Weather && (n.Weather.update(e, r), n.Weather.rev !== En && function () {
+    }(e, o), i.waterTime += e, n.PondFish && Xn() > 0 && n.PondFish.update(e, r), n.Weather && (n.Weather.update(e, r), n.Weather.rev !== En && function () {
       En = n.Weather.rev;
       var a = t.$("#hud-weather");
       if (a) {
@@ -962,13 +962,13 @@
       if (o && o.downed && n.DownedUI) {
         n.DownedUI.update(o);
       }
-      an(e);
+      en(e);
       return void (n.Input.consumeTap && n.Input.consumeTap());
     }
-    if (nn()) {
+    if (an()) {
       n.Targeting.clear();
       l(e, o);
-      an(e);
+      en(e);
       n.HUD.update(e);
       return void n.Input.reset();
     }
@@ -978,9 +978,9 @@
       x(e);
       v(e);
       n.Skills.update(e, i.enemies, function (n) {
-        k(n, o);
+        H(n, o);
       });
-      an(e);
+      en(e);
       n.VFX.update(e);
       n.HUD.update(e);
       n.DownedUI.update(o);
@@ -993,7 +993,7 @@
         var t = i.player;
         e.t += a;
         if (e.t < 2.2) {
-          Pn(0, "Vận chuyển Đạo Dẫn thuật — linh khí trời đất tụ về tứ chi bách hài…");
+          Nn(0, "Vận chuyển Đạo Dẫn thuật — linh khí trời đất tụ về tứ chi bách hài…");
           e.a1 += a;
           if (e.a1 > .045) {
             e.a1 = 0;
@@ -1005,7 +1005,7 @@
         }
         else {
           if (e.t < 4.8) {
-            Pn(1, "Trọc khí tích tụ bao năm đang bị bức xuất khỏi lục phủ ngũ tạng!");
+            Nn(1, "Trọc khí tích tụ bao năm đang bị bức xuất khỏi lục phủ ngũ tạng!");
             e.a2 += a;
             if (e.a2 > .055) {
               e.a2 = 0;
@@ -1016,7 +1016,7 @@
           else {
             if (e.fail) {
               if (e.t < 6) {
-                if (Pn(2, "Trọc khí dồn ngược lên tâm mạch — không đẩy ra nổi!")) {
+                if (Nn(2, "Trọc khí dồn ngược lên tâm mạch — không đẩy ra nổi!")) {
                   n.VFX.spawnFlash(.4, "#5a2018");
                   n.VFX.spawnRing(t.x, t.y - 14, "#8a4a3a", 70, .8);
                   n.Camera.shake(5.5, .5);
@@ -1030,7 +1030,7 @@
               }
               else {
                 if (e.t < 7.2) {
-                  Pn(3, "Kinh mạch rát như bị đốt — thang thuốc hỏng mất rồi…");
+                  Nn(3, "Kinh mạch rát như bị đốt — thang thuốc hỏng mất rồi…");
                 }
                 else {
                   (function () {
@@ -1062,7 +1062,7 @@
             }
             else {
               if (e.t < 5.3) {
-                if (Pn(2, "Tẩy tuỷ phạt mao — thay xương đổi thịt!")) {
+                if (Nn(2, "Tẩy tuỷ phạt mao — thay xương đổi thịt!")) {
                   n.VFX.spawnFlash(.55);
                   n.VFX.spawnRing(t.x, t.y - 14, "#dff3ff", 95, .95);
                   n.VFX.spawnRing(t.x, t.y - 14, "#bff3d8", 62, .75);
@@ -1079,7 +1079,7 @@
               }
               else {
                 if (e.t < 7.6) {
-                  if (Pn(3, null)) {
+                  if (Nn(3, null)) {
                     n.VFX.spawnPillar(t.x, t.y, 2.1);
                   }
                   n.HUD.announce("LUYỆN KHÍ TẦNG 1 — Cảm Ứng Kỳ");
@@ -1095,7 +1095,7 @@
                     i.ritual = null;
                     a.sitLocked = !1;
                     n.HUD.setCaption(null);
-                    dn();
+                    yn();
                     n.HUD.openDialog("Phạt Mao Thành Công", "Lớp trọc khí cuối cùng tan hết trong dòng nước. Một luồng khí mát lạnh chui qua da thịt, men theo kinh mạch chảy về đan điền.\n\nCảm Ứng Kỳ — từ nay ngươi không còn là phàm nhân.\n\nXuống Rừng Trúc phía nam tìm Huấn Sư Huynh.", { reward: [{ icon: "bowl", name: "Cảnh giới: Luyện Khí Tầng 1", qty: 1 }, { icon: "flask", name: "Mở khoá Linh Lực & Đả Tọa", qty: 1 }] });
                   })();
                 }
@@ -1105,7 +1105,7 @@
         }
       })(e);
       o.update(e, r);
-      an(e);
+      en(e);
       l(e, o);
       return void n.HUD.update(e);
     }
@@ -1194,7 +1194,7 @@
                       n.HUD.setCaption(null);
                       n.HUD.refreshRealm();
                       n.HUD.refreshPortrait();
-                      dn();
+                      yn();
                       if (a.success) {
                         n.VFX.spawnText(e.x, e.y - 58, "Đạo Cơ đã thành", "#f4dc8e");
                         n.HUD.openDialog("Trúc Cơ Thành Công", a.why, { reward: [{ icon: "yin_yang", name: "Cảnh giới Trúc Cơ", qty: 1 }] });
@@ -1212,7 +1212,7 @@
         }
       })(e);
       o.update(e, r);
-      an(e);
+      en(e);
       l(e, o);
       return void n.HUD.update(e);
     }
@@ -1257,7 +1257,7 @@
               i.ascend = null;
               a.sitLocked = !1;
               n.HUD.setCaption(null);
-              dn();
+              yn();
               n.HUD.openDialog("Phá Quan Thành Công", 'Một tiếng "bực" khẽ vang trong kinh mạch — cửa quan vỡ ra. Linh khí ứ đọng bấy lâu ào ạt chảy thông khắp tứ chi bách hài.\n\nCảnh giới hiện tại: ' + a.realm + ".\n" + a.realmSub + "\n\nĐạo Hạnh trở về số không, nhưng sức chứa của đan điền thì rộng hơn trước nhiều." + function () {
                 var a = n.Quest;
                 var e = n.realmIndexById(n.Progress.realmId);
@@ -1294,7 +1294,7 @@
         }
       })(e);
       i.player.update(e, r);
-      an(e);
+      en(e);
       l(e, o);
       return void n.HUD.update(e);
     }
@@ -1339,11 +1339,11 @@
                 i.qiSurge = null;
                 a.sitLocked = !1;
                 n.HUD.setCaption(null);
-                dn();
+                yn();
                 var t = n.Breakthrough && n.Breakthrough.check(a);
                 var o = !!(e && "meditate_stone" === e.type && t && t.ready && !t.blocked && t.next);
                 n.HUD.openDialog("Tụ Khí Thành", "Dược lực tan vào kinh mạch, linh khí cuộn về đan điền. Đạo Hạnh đã VIÊN MÃN.\n\n" + (o ? "Nhân lúc linh khí đang đầy, phá quan lên " + t.next.name + " ngay tại đây." : "Đạo Hạnh đầy không tự lên tầng — ra đài đá bấm E để phá quan."), o ? { actionLabel: "Phá Quan Ngay", onAction: function () {
-                    Fn(e);
+                    Sn(e);
                   } } : { reward: [{ icon: "potion", name: "Đạo Hạnh viên mãn", qty: 1 }] });
               })();
             }
@@ -1358,7 +1358,7 @@
         }
       })(e);
       o.update(e, r);
-      an(e);
+      en(e);
       l(e, o);
       return void n.HUD.update(e);
     }
@@ -1451,7 +1451,7 @@
               }
             }
             n.Quest.save();
-            dn();
+            yn();
           }
           else {
             var l = r.brewRecipe(e.make);
@@ -1468,7 +1468,7 @@
               else {
                 n.HUD.openDialog("Ghép Yêu Đan", a && a.why || "Máy chủ chưa thể xử lý lần ghép này.");
               }
-              dn();
+              yn();
             };
             if (h()) {
               n.Gateway.cmd("brew", { recipeId: e.make }, s);
@@ -1485,7 +1485,7 @@
           }
         }
       })(e);
-      an(e);
+      en(e);
       l(e, o);
       return void n.HUD.update(e);
     }
@@ -1501,10 +1501,10 @@
             else if (i.fishing = null, n.HUD.setCaption(null), h()) {
               n.Gateway.cmd("fishing.catch", null, function (n) {
                 if (n && !1 !== n.ok) {
-                  Un(e, n.missed ? null : n.itemId);
+                  An(e, n.missed ? null : n.itemId);
                 }
                 else {
-                  Un(e, null);
+                  An(e, null);
                 }
               });
             }
@@ -1514,25 +1514,25 @@
                 n.Inventory.add(t, 1);
                 if (n.Quest.stage === n.Quest.LINH_NGU_STAGE) {
                   n.Quest.recordLinhNguCatch(t);
-                  dn();
+                  yn();
                 }
               }
-              Un(e, t);
+              An(e, t);
             }
         })(e);
-        an(e);
+        en(e);
         l(e, o);
         return void n.HUD.update(e);
       }
-      In();
+      Un();
     }
-    if (i.fishingAuto && (n.Input.hasManualMove && n.Input.hasManualMove() || n.Input.tap) && In(), n.Input.consumeMenu() && (n.HopUI && n.HopUI.open ? n.HopUI.back() : n.BiTichLuc.open ? n.BiTichLuc.back() : n.GachaUI.open ? n.GachaUI.back() : n.SkillBook.open ? n.SkillBook.back() : n.HUD.bagOpen ? n.HUD.closeBag() : n.HUD.dialogOpen ? n.HUD.closeDialog() : i.menuOpen ? Yn() : Rn()), n.Input.consumeBag() && (i.menuOpen || n.HUD.dialogOpen || n.HUD.toggleBag("trang-bi")), n.Input.consumeSkillBook() && (i.menuOpen || n.HUD.dialogOpen || n.SkillBook.toggle()), n.Input.consumeAutoToggle() && P(), n.Input.consumeFlyToggle() && function () {
+    if (i.fishingAuto && (n.Input.hasManualMove && n.Input.hasManualMove() || n.Input.tap) && Un(), n.Input.consumeMenu() && (n.HopUI && n.HopUI.open ? n.HopUI.back() : n.BiTichLuc.open ? n.BiTichLuc.back() : n.GachaUI.open ? n.GachaUI.back() : n.SkillBook.open ? n.SkillBook.back() : n.HUD.bagOpen ? n.HUD.closeBag() : n.HUD.dialogOpen ? n.HUD.closeDialog() : i.menuOpen ? $n() : Kn()), n.Input.consumeBag() && (i.menuOpen || n.HUD.dialogOpen || n.HUD.toggleBag("trang-bi")), n.Input.consumeSkillBook() && (i.menuOpen || n.HUD.dialogOpen || n.SkillBook.toggle()), n.Input.consumeAutoToggle() && P(), n.Input.consumeFlyToggle() && function () {
       var e = i.player;
       if (!(!e || n.HUD.dialogOpen || i.menuOpen || n.HUD.bagOpen || n.SkillBook.open)) {
         if (e.flying) {
           var t = e.x;
           var o = e.y;
-          return n.Player.landFly(e, i.map) ? (Ga.sample(Ga.KIND.land, Math.round(Math.hypot(e.x - t, e.y - o)), 1), n.Audio.play("land", { rate: .92 + .08 * Math.random() }), void E()) : (Ga.sample(Ga.KIND.land, 0, 0), Ga.count("hạ phi hành: không có chỗ đáp"), n.Audio.play("deny"), void n.VFX.spawnText(e.x, e.y - 52, "Bên dưới không có chỗ đặt chân", "#c9a45c"));
+          return n.Player.landFly(e, i.map) ? (Ra.sample(Ra.KIND.land, Math.round(Math.hypot(e.x - t, e.y - o)), 1), n.Audio.play("land", { rate: .92 + .08 * Math.random() }), void X()) : (Ra.sample(Ra.KIND.land, 0, 0), Ra.count("hạ phi hành: không có chỗ đáp"), n.Audio.play("deny"), void n.VFX.spawnText(e.x, e.y - 52, "Bên dưới không có chỗ đặt chân", "#c9a45c"));
         }
         var h = n.Player.flyMount();
         if (!h) {
@@ -1556,16 +1556,16 @@
           else {
             n.Player.mountFly(e);
             n.Audio.play("fly", { rate: .96 + .08 * Math.random() });
-            E();
+            X();
             if (n.Quest.markFirstFlight && n.Quest.markFirstFlight()) {
               n.Quest.save();
-              dn(!1);
+              yn(!1);
               n.VFX.spawnText(e.x, e.y - 64, "✓ Đã biết Phi Hành", "#bff3d8");
             }
           }
         }
       }
-    }(), n.Input.consumeDuel() && (h() ? n.Gateway.duelPress() : n.HUD.setCaption("Tỉ thí cần nối được máy chủ và có đạo hữu bên cạnh.")), n.Input.consumeDoSat() && (h() ? n.Gateway.doSatPress() : n.HUD.setCaption("Đồ sát cần nối được máy chủ.")), i.menuOpen || n.HUD.bagOpen || n.SkillBook.open || n.GachaUI.open || n.BiTichLuc.open || n.HopUI && n.HopUI.open) {
+    }(), !n.Input.consumeDuel() || n.ChienTruongUI && n.ChienTruongUI.chanLenh(o) || (h() ? n.Gateway.duelPress() : n.HUD.setCaption("Tỉ thí cần nối được máy chủ và có đạo hữu bên cạnh.")), !n.Input.consumeDoSat() || n.ChienTruongUI && n.ChienTruongUI.chanLenh(o) || (h() ? n.Gateway.doSatPress() : n.HUD.setCaption("Đồ sát cần nối được máy chủ.")), i.menuOpen || n.HUD.bagOpen || n.SkillBook.open || n.GachaUI.open || n.BiTichLuc.open || n.HopUI && n.HopUI.open) {
       if (!n.HUD.bagOpen || i.menuOpen || n.GachaUI.open || n.BiTichLuc.open || n.HopUI && n.HopUI.open || !i.autoOn) {
         l(e, o);
       }
@@ -1573,7 +1573,7 @@
         n.Input.reset();
         n.Targeting.refresh(o, r, i.enemies);
         if (!(n.HUD.dialogOpen || "sit" === o.state)) {
-          Y(e, o, r);
+          $(e, o, r);
         }
         s(e, o, r);
       }
@@ -1639,16 +1639,16 @@
         var T = m || y ? null : n.Targeting.pickAt(g, p);
         var b = m || T ? null : d;
         if (f) {
-          q(o, m.x - o.x, m.y - o.y);
-          en({ name: m.name || "Đạo hữu" });
+          Q(o, m.x - o.x, m.y - o.y);
+          tn({ name: m.name || "Đạo hữu" });
         }
         else if (m) {
-          L(m, o);
+          I(m, o);
         }
         else if (T) {
-          en(T);
+          tn(T);
           if (B()) {
-            tn(o);
+            on(o);
           }
         }
         else if (b) {
@@ -1680,18 +1680,18 @@
           n.HUD.closeDialog();
         }
         else if (B()) {
-          tn(o);
+          on(o);
         }
         else {
           n.Player.stand(o);
           var D = n.Targeting.currentEnemy() || n.Targeting.doiThuNguoi();
           if (D) {
-            q(o, D.x - o.x, D.y - o.y);
+            Q(o, D.x - o.x, D.y - o.y);
           }
-          n.Player.attack(o, D && !D.dead && C(o, D) ? D : null);
+          n.Player.attack(o, D && !D.dead && k(o, D) ? D : null);
         }
-      var H = n.Input.consumeSlot();
-      if (H && !n.HUD.dialogOpen ? A(o, H - 1) : n.HUD.dialogOpen || function (a) {
+      var C = n.Input.consumeSlot();
+      if (C && !n.HUD.dialogOpen ? A(o, C - 1) : n.HUD.dialogOpen || function (a) {
         var e = i.manualCast;
         if (e)
           if (n.Game.time > e.until) {
@@ -1701,7 +1701,7 @@
             var t = n.Skills.hotbarIndex(e.id);
             var o = n.Skills.hotbarDef(t);
             if (o) {
-              if (!(U(a, o))) {
+              if (!(M(a, o))) {
                 i.manualCast = null;
                 A(a, t);
               }
@@ -1711,16 +1711,16 @@
             }
           }
       }(o), n.Input.consumeSpell() && !n.HUD.dialogOpen) {
-        var w = I(o);
+        var w = L(o);
         if (w) {
           A(o, n.Skills.hotbarIndex(w.id));
         }
       }
-      if (n.Input.consumeMeditate() && (V() && (i.tmcNguoiLai = !0), "sit" === o.state ? n.Player.stand(o) : o.canMeditate ? n.Player.sit(o, !1) ? (E(), n.Audio.play("meditate"), n.VFX.spawnText(o.x, o.y - 52, "Đả tọa", "#bff3d8")) : o.meditatePvpLock > 0 && n.VFX.spawnText(o.x, o.y - 52, "Vừa bị người chơi đánh · chờ " + Math.ceil(o.meditatePvpLock) + "s", "#efb15c") : n.VFX.spawnText(o.x, o.y - 52, "Chưa dẫn khí nhập thể", "#c9a45c")), n.Input.consumeCycleTarget() && !n.HUD.dialogOpen) {
-        var M = n.Targeting.cycle();
-        if (M) {
+      if (!n.Input.consumeMeditate() || n.ChienTruongUI && n.ChienTruongUI.chanLenh(o) || (V() && (i.tmcNguoiLai = !0), "sit" === o.state ? n.Player.stand(o) : o.canMeditate ? n.Player.sit(o, !1) ? (X(), n.Audio.play("meditate"), n.VFX.spawnText(o.x, o.y - 52, "Đả tọa", "#bff3d8")) : o.meditatePvpLock > 0 && n.VFX.spawnText(o.x, o.y - 52, "Vừa bị người chơi đánh · chờ " + Math.ceil(o.meditatePvpLock) + "s", "#efb15c") : n.VFX.spawnText(o.x, o.y - 52, "Chưa dẫn khí nhập thể", "#c9a45c")), n.Input.consumeCycleTarget() && !n.HUD.dialogOpen) {
+        var U = n.Targeting.cycle();
+        if (U) {
           i.approach = null;
-          en(M);
+          tn(U);
         }
         else {
           n.VFX.spawnText(o.x, o.y - 52, "Quanh đây không có gì", "#c9a45c");
@@ -1731,7 +1731,7 @@
           n.HUD.closeDialog();
         }
         else {
-          tn(o);
+          on(o);
         }
       }
       (function (a) {
@@ -1775,7 +1775,7 @@
         }
       })(o);
       if (i.autoOn && !n.HUD.dialogOpen && "sit" !== o.state) {
-        Y(e, o, r);
+        $(e, o, r);
       }
       s(e, o, r);
     }
@@ -1798,7 +1798,7 @@
     if (c) {
       e = Math.round(e * (1 + r));
     }
-    H(a, e, o);
+    C(a, e, o);
     var u = n.Enemy.hit(a, e, n.Game.time);
     if ((c || u)) {
       a.linhAnBy = null;
@@ -1819,10 +1819,10 @@
   // Nghịch Tiên: đồng minh triệu hồi (trieu_hoi.js) đánh quái — quái chết vẫn rơi đồ, cộng Đạo Hạnh cho người chơi
   i.ntDanhQuai = function (a, t) {
     return !(!a || a.dead || !i.player) && D(a, t, function (n) {
-      k(n, i.player);
+      H(n, i.player);
     }, i.player);
   };
-  function H(a, e, t) {
+  function C(a, e, t) {
     var i = !!(a && a.def && a.def.isBoss);
     var o = !i && t && t.cfg && n.Audio.weaponImpactSfx ? n.Audio.weaponImpactSfx(t.cfg.weapon) : null;
     var h = i && n.Audio.bossHitSfx ? n.Audio.bossHitSfx(a.type) : null;
@@ -1837,17 +1837,19 @@
     var g = t && t.cfg && "luc_doc_cham" === t.cfg.weapon;
     var p = t && t.cfg && "hoa_kim_thuong" === t.cfg.weapon;
     var d = t && t.cfg && "hoang_loi_thuong" === t.cfg.weapon;
-    var y = t && t.cfg && "huyet_ma_phu" === t.cfg.weapon;
-    var m = t && t.cfg && "bich_nguc_ta_dao" === t.cfg.weapon;
-    var f = t && t.cfg && "truc_con" === t.cfg.weapon;
-    var T = t && t.cfg && "thiet_cot_nha_no" === t.cfg.weapon;
-    var v = t && t.cfg && "quat_phong" === t.cfg.weapon;
-    var x = t && t.cfg && "truc_kiem" === t.cfg.weapon;
-    var b = t && t.cfg && "sao_ngoc_luu" === t.cfg.weapon;
-    var _ = t && t.cfg && "truc_tieu" === t.cfg.weapon;
-    var D = t && t.cfg && "xich_viem_song_kich" === t.cfg.weapon;
-    var H = t && t.cfg && n.ITEMS && n.ITEMS[t.cfg.weapon] && n.ITEMS[t.cfg.weapon].roi;
-    if (m && n.VFX.spawnBichNgucTaDao) {
+    var y = t && t.cfg && "ma_tri_mac" === t.cfg.weapon;
+    var m = t && t.cfg && "tu_van_phien" === t.cfg.weapon;
+    var f = t && t.cfg && "huyet_ma_phu" === t.cfg.weapon;
+    var T = t && t.cfg && "bich_nguc_ta_dao" === t.cfg.weapon;
+    var v = t && t.cfg && "truc_con" === t.cfg.weapon;
+    var x = t && t.cfg && "thiet_cot_nha_no" === t.cfg.weapon;
+    var b = t && t.cfg && "quat_phong" === t.cfg.weapon;
+    var _ = t && t.cfg && "truc_kiem" === t.cfg.weapon;
+    var D = t && t.cfg && "sao_ngoc_luu" === t.cfg.weapon;
+    var C = t && t.cfg && "truc_tieu" === t.cfg.weapon;
+    var H = t && t.cfg && "xich_viem_song_kich" === t.cfg.weapon;
+    var w = t && t.cfg && n.ITEMS && n.ITEMS[t.cfg.weapon] && n.ITEMS[t.cfg.weapon].roi;
+    if (T && n.VFX.spawnBichNgucTaDao) {
       n.VFX.spawnBichNgucTaDao(a.x, a.y);
     }
     else {
@@ -1863,62 +1865,72 @@
             n.HoangLoiFX.spawnImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
           }
           else {
-            if (y && n.HuyetMaPhuFX) {
+            if (f && n.HuyetMaPhuFX) {
               n.HuyetMaPhuFX.spawnImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
             }
             else {
-              if (g && n.VFX.spawnLucDocChamImpact) {
-                n.VFX.spawnLucDocChamImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+              if (y && n.MaTriMacFX) {
+                n.MaTriMacFX.spawnImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
               }
               else {
-                if (s && n.VFX.spawnLinhCungImpact) {
-                  n.VFX.spawnLinhCungImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                if (m && n.TuVanPhienFX) {
+                  n.TuVanPhienFX.spawnImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
                 }
                 else {
-                  if (u && n.VFX.spawnBangLinhKiemImpact) {
-                    n.VFX.spawnBangLinhKiemImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                  if (g && n.VFX.spawnLucDocChamImpact) {
+                    n.VFX.spawnLucDocChamImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
                   }
                   else {
-                    if (T && n.VFX.spawnNhaNoImpact) {
-                      n.VFX.spawnNhaNoImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                    if (s && n.VFX.spawnLinhCungImpact) {
+                      n.VFX.spawnLinhCungImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
                     }
                     else {
-                      if (v && n.VFX.spawnFanAttackImpact) {
-                        n.VFX.spawnFanAttackImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                      if (u && n.VFX.spawnBangLinhKiemImpact) {
+                        n.VFX.spawnBangLinhKiemImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
                       }
                       else {
-                        if (x && n.VFX.spawnTrucKiemImpact) {
-                          n.VFX.spawnTrucKiemImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                        if (x && n.VFX.spawnNhaNoImpact) {
+                          n.VFX.spawnNhaNoImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
                         }
                         else {
-                          if (b && n.VFX.spawnSaoNgocLuuShot) {
-                            n.VFX.spawnSaoNgocLuuShot(t, a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                          if (b && n.VFX.spawnFanAttackImpact) {
+                            n.VFX.spawnFanAttackImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
                           }
                           else {
-                            if (_ && n.VFX.spawnTrucTieuShot) {
-                              n.VFX.spawnTrucTieuShot(t, a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                            if (_ && n.VFX.spawnTrucKiemImpact) {
+                              n.VFX.spawnTrucKiemImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
                             }
                             else {
-                              if (H && n.VFX.spawnLoiTienImpact) {
-                                n.VFX.spawnLoiTienImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1, t.cfg.weapon);
+                              if (D && n.VFX.spawnSaoNgocLuuShot) {
+                                n.VFX.spawnSaoNgocLuuShot(t, a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
                               }
                               else {
-                                if (D && n.VFX.spawnSongKichImpact) {
-                                  n.VFX.spawnSongKichImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                                if (C && n.VFX.spawnTrucTieuShot) {
+                                  n.VFX.spawnTrucTieuShot(t, a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
                                 }
                                 else {
-                                  if (r && n.VFX.spawnHuyetKiem) {
-                                    n.VFX.spawnHuyetKiem(a.x, a.y - 8);
-                                    if (n.VFX.spawnHuyetKiemImpact) {
-                                      n.VFX.spawnHuyetKiemImpact(a.x, a.y - 8, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
-                                    }
+                                  if (w && n.VFX.spawnLoiTienImpact) {
+                                    n.VFX.spawnLoiTienImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1, t.cfg.weapon);
                                   }
                                   else {
-                                    if (f && n.VFX.spawnTrucConImpact) {
-                                      n.VFX.spawnTrucConImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                                    if (H && n.VFX.spawnSongKichImpact) {
+                                      n.VFX.spawnSongKichImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
                                     }
                                     else {
-                                      n.VFX.spawnHitSpark(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                                      if (r && n.VFX.spawnHuyetKiem) {
+                                        n.VFX.spawnHuyetKiem(a.x, a.y - 8);
+                                        if (n.VFX.spawnHuyetKiemImpact) {
+                                          n.VFX.spawnHuyetKiemImpact(a.x, a.y - 8, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                                        }
+                                      }
+                                      else {
+                                        if (v && n.VFX.spawnTrucConImpact) {
+                                          n.VFX.spawnTrucConImpact(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                                        }
+                                        else {
+                                          n.VFX.spawnHitSpark(a.x, a.y - 10, t ? a.x - t.x : 0, t ? a.y - t.y : -1);
+                                        }
+                                      }
                                     }
                                   }
                                 }
@@ -1937,7 +1949,7 @@
       }
     }
   }
-  function k(a, e) {
+  function H(a, e) {
     if (!h()) {
       n.Quest.addKill(a.def);
       if (!(!(n.LuyenQuy && a.def && a.def.human) || n.ChinhDao && n.ChinhDao.laTaDo(a.def))) {
@@ -1970,7 +1982,7 @@
             var d = p && a && a.def ? String(a.def.name || a.type || "Boss").split("·")[0].trim() : null;
             i.drops.push({ kind: "item", itemId: l.item, n: l.n, lootId: null, owner: t || null, boss: p, bossName: d, age: 0, x: a.x, y: a.y - 26, vx: 2.4 * g.dx, vy: -70, gy: a.y + g.dy, state: "fall", t: 0, asked: !1, sortY: a.y });
           }
-        })(a, t, pa());
+        })(a, t, da());
         if (t.indexOf(n.Quest.MANH_HA) >= 0) {
           n.VFX.spawnRing(a.x, a.y - 10, "#f0d27a", 24, .55);
         }
@@ -1983,7 +1995,7 @@
       n.Player.addExp(e, o, !0);
       n.VFX.spawnText(a.x, a.y - 22, n.Player.expText(n.Progress.realmId, a.def, o), n.Player.expMau(n.Progress.realmId, a.def));
       n.VFX.spawnRing(a.x, a.y - 8, "#cfeba8", 20, .45);
-      dn();
+      yn();
     }
   }
   function w(n) {
@@ -1992,13 +2004,13 @@
     var i = 0 === n.dir ? 1 : 3 === n.dir ? -1 : 0;
     return { x: n.x + t * e, y: n.y + i * e };
   }
-  function C(a, e) {
+  function k(a, e) {
     var t = w(a);
     var i = e.x - t.x;
     var o = e.y - t.y;
     return Math.sqrt(i * i + o * o) <= n.Player.reach(a) + (e.def && e.def.bodyRadius || 0);
   }
-  function L(e, t, i) {
+  function I(e, t, i) {
     i = i || n.Input.tapClient;
     var o = n.Gateway;
     var h = e.name || "Đạo hữu";
@@ -2069,7 +2081,7 @@
     var v = e.realm && n.realmById(e.realm) ? n.realmById(e.realm).name : "";
     n.HUD.openMateMenu(h, v ? "Cảnh giới: " + v : "", u, i);
   }
-  function I(a) {
+  function L(a) {
     for (var e = n.Skills.autoRotation().filter(function (n) {
       return !n.thunder;
     }), t = 0; t < e.length; t++)
@@ -2078,7 +2090,7 @@
       }
     return e.length ? e[0] : n.Skills.active();
   }
-  i.showHitFx = H;
+  i.showHitFx = C;
   i.showKillFx = function (a) {
     var e = !!(a && a.def && a.def.isBoss);
     n.Audio.atPoint(e ? "boss_death" : "kill", a.x, a.y, { rate: e ? .94 + .1 * Math.random() : .9 + .2 * Math.random() });
@@ -2109,9 +2121,9 @@
                 }
               }
               else {
-                H(f);
+                C(f);
                 D(f, r, function (n) {
-                  k(n, a);
+                  H(n, a);
                 }, a);
                 g = !0;
               }
@@ -2120,15 +2132,15 @@
         }
       }
       if (u && l) {
-        H(l);
+        C(l);
         D(l, r, function (n) {
-          k(n, a);
+          H(n, a);
         }, a);
         g = !0;
         var b = n.Player.weaponThunder ? n.Player.weaponThunder(a) : null;
         if (b && !l.dead) {
           D(l, Math.max(1, Math.round(r * b.mult)), function (n) {
-            k(n, a);
+            H(n, a);
           }, a);
           if (n.VFX.spawnLoiTienThunder) {
             n.VFX.spawnLoiTienThunder(l.x, l.y - 10, a.cfg && a.cfg.weapon);
@@ -2142,7 +2154,7 @@
         }
       }
     }
-    function H(e) {
+    function C(e) {
       if (e && n.Skills) {
         if (p) {
           n.Skills.applyEffect(e, p);
@@ -2161,7 +2173,7 @@
     var e = n.Targeting.current && n.Targeting.current();
     var t = i.player;
     if (e && "player" === e.kind && e.obj && t) {
-      L(e.obj, t, a);
+      I(e.obj, t, a);
     }
   };
   i.onPlayerThunder = function (e) {
@@ -2198,7 +2210,7 @@
           if (!(Math.sqrt(m * m + f * f) > t.RADIUS)) {
             g++;
             D(y, p, function (n) {
-              k(n, e);
+              H(n, e);
             }, e);
           }
         }
@@ -2208,82 +2220,84 @@
       }
     }
   };
-  i.sanSangDauTien = I;
-  var M = a.PLAYER.SPELL_GAP + .5;
-  function U(n, a) {
+  i.sanSangDauTien = L;
+  var U = a.PLAYER.SPELL_GAP + .5;
+  function M(n, a) {
     return "attack" === n.state || "pose" === n.state || !a.thunder && n.spellCd > 0;
   }
   function A(e, t) {
-    var o = t >= 0 ? n.Skills.hotbarDef(t) : null;
-    if (o) {
-      var h = function (n, a) {
-        return a.thunder ? n.thunderCd > 0 ? n.thunderCd : 0 : n.spellCds && n.spellCds[a.id] || 0;
-      }(e, o);
-      if (h > 0) {
-        n.VFX.spawnText(e.x, e.y - 52, o.short + " còn " + Math.ceil(h) + "s", "#7fb6c9");
-      }
-      else if (U(e, o)) {
-        i.manualCast = { id: o.id, until: n.Game.time + M };
-      }
-      else if (i.manualCast = null, !o.needTarget || function (e, t) {
-        var i = t.range + (a.PLAYER && a.PLAYER.CAST_RANGE_SLACK || 0);
-        var o = n.Targeting.currentEnemy() || n.Targeting.doiThuNguoi();
-        if (o && !o.dead && S(e, o) <= i) {
-          return !0;
+    if (!n.ChienTruongUI || !n.ChienTruongUI.chanLenh(e)) {
+      var o = t >= 0 ? n.Skills.hotbarDef(t) : null;
+      if (o) {
+        var h = function (n, a) {
+          return a.thunder ? n.thunderCd > 0 ? n.thunderCd : 0 : n.spellCds && n.spellCds[a.id] || 0;
+        }(e, o);
+        if (h > 0) {
+          n.VFX.spawnText(e.x, e.y - 52, o.short + " còn " + Math.ceil(h) + "s", "#7fb6c9");
         }
-        if (t.autoFoe) {
-          var h = X(e);
-          if (h && S(e, h) <= i) {
+        else if (M(e, o)) {
+          i.manualCast = { id: o.id, until: n.Game.time + U };
+        }
+        else if (i.manualCast = null, !o.needTarget || function (e, t) {
+          var i = t.range + (a.PLAYER && a.PLAYER.CAST_RANGE_SLACK || 0);
+          var o = n.Targeting.currentEnemy() || n.Targeting.doiThuNguoi();
+          if (o && !o.dead && S(e, o) <= i) {
             return !0;
           }
-        }
-        return !1;
-      }(e, o))
-        if (n.Skills.testMode || !n.Skills.dangTreo(e, o)) {
-          n.Player.stand(e);
-          var c = n.Targeting.currentEnemy() || n.Targeting.doiThuNguoi();
-          if (c) {
-            q(e, c.x - e.x, c.y - e.y);
+          if (t.autoFoe) {
+            var h = E(e);
+            if (h && S(e, h) <= i) {
+              return !0;
+            }
           }
-          var r = o.thunder ? n.Player.castThunder(e) : n.Player.castSpell(e, o);
-          if (!0 === r) {
-            n.VFX.spawnText(e.x, e.y - 52, o.name + "!", o.colors.glow);
-          }
-          else {
-            if ("chua_hoc" === r) {
-              n.VFX.spawnText(e.x, e.y - 52, "Chưa có " + o.name, "#c9a45c");
+          return !1;
+        }(e, o))
+          if (n.Skills.testMode || !n.Skills.dangTreo(e, o)) {
+            n.Player.stand(e);
+            var c = n.Targeting.currentEnemy() || n.Targeting.doiThuNguoi();
+            if (c) {
+              Q(e, c.x - e.x, c.y - e.y);
+            }
+            var r = o.thunder ? n.Player.castThunder(e) : n.Player.castSpell(e, o);
+            if (!0 === r) {
+              n.VFX.spawnText(e.x, e.y - 52, o.name + "!", o.colors.glow);
             }
             else {
-              if ("chua_khai_mo" === r) {
-                n.VFX.spawnText(e.x, e.y - 52, "Chưa khai mở Linh Lực", "#7fb6c9");
+              if ("chua_hoc" === r) {
+                n.VFX.spawnText(e.x, e.y - 52, "Chưa có " + o.name, "#c9a45c");
               }
               else {
-                if ("thieu_linh_luc" === r) {
-                  n.VFX.spawnText(e.x, e.y - 52, "Linh Lực không đủ", "#7fb6c9");
+                if ("chua_khai_mo" === r) {
+                  n.VFX.spawnText(e.x, e.y - 52, "Chưa khai mở Linh Lực", "#7fb6c9");
                 }
                 else {
-                  if ("thieu_than_thuc" === r) {
-                    n.VFX.spawnText(e.x, e.y - 52, "Thần Thức không đủ", "#b58add");
+                  if ("thieu_linh_luc" === r) {
+                    n.VFX.spawnText(e.x, e.y - 52, "Linh Lực không đủ", "#7fb6c9");
                   }
                   else {
-                    if ("dang_bay" === r) {
-                      n.VFX.spawnText(e.x, e.y - 52, "Hạ xuống rồi hãy hóa thân", "#c9a45c");
+                    if ("thieu_than_thuc" === r) {
+                      n.VFX.spawnText(e.x, e.y - 52, "Thần Thức không đủ", "#b58add");
+                    }
+                    else {
+                      if ("dang_bay" === r) {
+                        n.VFX.spawnText(e.x, e.y - 52, "Hạ xuống rồi hãy hóa thân", "#c9a45c");
+                      }
                     }
                   }
                 }
               }
             }
           }
-        }
+          else {
+            n.VFX.spawnText(e.x, e.y - 52, o.short + " chưa đánh xong", "#c9a45c");
+          }
         else {
-          n.VFX.spawnText(e.x, e.y - 52, o.short + " chưa đánh xong", "#c9a45c");
+          n.VFX.spawnText(e.x, e.y - 52, "Cần mục tiêu trong tầm", "#c9a45c");
         }
-      else {
-        n.VFX.spawnText(e.x, e.y - 52, "Cần mục tiêu trong tầm", "#c9a45c");
       }
-    }
-    else {
-      n.VFX.spawnText(e.x, e.y - 52, "Ô này chưa có chiêu", "#c9a45c");
+      else {
+        n.VFX.spawnText(e.x, e.y - 52, "Ô này chưa có chiêu", "#c9a45c");
+      }
     }
   }
   function F(a) {
@@ -2297,10 +2311,7 @@
     return Math.sqrt(e * e + t * t);
   }
   function P(a) {
-    if (n.Gateway && n.Gateway.vanTieu && !i.autoOn) {
-      n.VFX.spawnText(i.player.x, i.player.y - 52, "Đang áp tải, không dùng Tự Động", "#ffb36b");
-    }
-    else {
+    if (i.autoOn || !n.ChienTruongUI || !n.ChienTruongUI.chanLenh(i.player)) {
       if (void 0 === a) {
         i.tmcTuBat = !1;
       }
@@ -2328,7 +2339,7 @@
     }
     var c = t.range + (a.PLAYER && a.PLAYER.CAST_RANGE_SLACK || 0);
     if (t.autoFoe && (!o || o.dead || S(e, o) > c)) {
-      var r = X(e);
+      var r = E(e);
       if (r && S(e, r) <= c) {
         o = r;
       }
@@ -2364,13 +2375,13 @@
   function B() {
     return n.Targeting.mucTieuTuongTac();
   }
-  function E() {
+  function X() {
     var n = t.$("#btn-fly");
     if (n) {
       n.classList.toggle("active", !(!i.player || !i.player.flying));
     }
   }
-  function X(n) {
+  function E(n) {
     for (var a = null, e = 1 / 0, o = i.enemies, h = 0; h < o.length; h++) {
       var c = o[h];
       if (!(c.dead || c.def && (c.def.human || c.def.tieuXa))) {
@@ -2400,9 +2411,28 @@
     }
     return e;
   }
-  var K = 6;
-  var O = 0;
-  function q(n, a, e) {
+  function K(e) {
+    var i = n.Gateway;
+    if (!h() || !i.remotes) {
+      return null;
+    }
+    var o = null;
+    var c = a.TARGET.RANGE;
+    for (var r in i.remotes) {
+      var u = i.remotes[r];
+      if (u && !u.downed && n.Targeting.thuDich(u)) {
+        var l = t.dist(e.x, e.y, u.x, u.y);
+        if (l <= c) {
+          c = l;
+          o = u;
+        }
+      }
+    }
+    return o;
+  }
+  var O = 6;
+  var q = 0;
+  function Q(n, a, e) {
     if (Math.abs(a) > Math.abs(e)) {
       n.dir = a > 0 ? 2 : 1;
     }
@@ -2412,7 +2442,7 @@
       }
     }
   }
-  function Q(a, e, t) {
+  function Y(a, e, t) {
     if ("attack" === a.state || "pose" === a.state) {
       return !1;
     }
@@ -2426,12 +2456,12 @@
     if (!(t)) {
       a.stop();
     }
-    q(a, o, h);
+    Q(a, o, h);
     a.castTarget = e;
     var u = r.def;
     return !0 === (u.thunder ? n.Player.castThunder(a) : n.Player.castSpell(a, u)) ? (i.autoSkillIdx = r.idx + 1, n.VFX.spawnText(a.x, a.y - 52, u.name + "!", u.colors.glow), !0) : (a.castTarget = null, !1);
   }
-  function Y(e, o, c) {
+  function $(e, o, c) {
     if (!i.manualCast && !(i.autoNghiDen && n.Game.time < i.autoNghiDen || n.HuThienUI && n.HuThienUI.giuYen && n.HuThienUI.giuYen(o) || n.YenLangUI && n.YenLangUI.giuYen && n.YenLangUI.giuYen(o))) {
       if (i.tuChiDuong && !o.path.length) {
         i.tuChiDuong = !1;
@@ -2476,42 +2506,35 @@
             return o;
           }
         }
-        var c = n.Hotbar && n.Hotbar.uuTien ? n.Hotbar.uuTien() : "auto";
-        var r = null;
-        if ("boss" === c) {
-          r = R(e, G);
+        var c = n.VanTieuUI && n.VanTieuUI.xe ? n.VanTieuUI.xe() : null;
+        if (c) {
+          var r = K(e);
+          if (r && t.dist(r.x, r.y, c.x, c.y) <= n.VanTieu.DAY_KEO) {
+            return r;
+          }
+          var u = .6 * n.VanTieu.DAY_KEO;
+          return R(e, function (n) {
+            return t.dist(n.x, n.y, c.x, c.y) <= u;
+          });
+        }
+        var l = n.Hotbar && n.Hotbar.uuTien ? n.Hotbar.uuTien() : "auto";
+        var s = null;
+        if ("boss" === l) {
+          s = R(e, G);
         }
         else {
-          if ("quai" === c) {
-            r = R(e, function (n) {
+          if ("quai" === l) {
+            s = R(e, function (n) {
               return !G(n);
             });
           }
           else {
-            if ("nguoi" === c) {
-              r = function (e) {
-                var i = n.Gateway;
-                if (!h() || !i.remotes) {
-                  return null;
-                }
-                var o = null;
-                var c = a.TARGET.RANGE;
-                for (var r in i.remotes) {
-                  var u = i.remotes[r];
-                  if (u && !u.downed && n.Targeting.thuDich(u)) {
-                    var l = t.dist(e.x, e.y, u.x, u.y);
-                    if (l <= c) {
-                      c = l;
-                      o = u;
-                    }
-                  }
-                }
-                return o;
-              }(e);
+            if ("nguoi" === l) {
+              s = K(e);
             }
             else {
-              if ("mau" === c) {
-                r = function (n) {
+              if ("mau" === l) {
+                s = function (n) {
                   for (var e = null, o = 1 / 0, h = 1 / 0, c = i.enemies, r = 0; r < c.length; r++) {
                     var u = c[r];
                     if (!(u.dead || u.def && (u.def.human || u.def.tieuXa))) {
@@ -2532,31 +2555,31 @@
             }
           }
         }
-        return r || X(e);
+        return s || E(e);
       }(o);
       if (l) {
         if (function (a) {
           var e;
           var t;
-          if (!(!n.Hotbar || !n.Hotbar.comboChoMucTieu || n.Game.time < O)) {
+          if (!(!n.Hotbar || !n.Hotbar.comboChoMucTieu || n.Game.time < q)) {
             if (n.Hotbar.comboChoMucTieu((t = (e = a) && e.def) ? t.human ? "nguoi" : G(e) ? "boss" : "quai" : "nguoi")) {
-              O = n.Game.time + K;
+              q = n.Game.time + O;
             }
           }
         }(l), r) {
           var s = o.path.slice();
-          if (!Q(o, l, !0) && "attack" !== o.state && "pose" !== o.state && C(o, l)) {
-            q(o, l.x - o.x, l.y - o.y);
+          if (!Y(o, l, !0) && "attack" !== o.state && "pose" !== o.state && k(o, l)) {
+            Q(o, l.x - o.x, l.y - o.y);
             n.Player.attack(o, l);
           }
           return void (!s.length || o.path.length || n.Input.hasManualMove() || Array.prototype.push.apply(o.path, s));
         }
-        if (!Q(o, l)) {
+        if (!Y(o, l)) {
           var g = l.x - o.x;
           var p = l.y - o.y;
-          if (Math.sqrt(g * g + p * p), C(o, l)) {
+          if (Math.sqrt(g * g + p * p), k(o, l)) {
             o.stop();
-            q(o, g, p);
+            Q(o, g, p);
             n.Player.attack(o, l);
           }
           else if (i.autoPathTimer -= e, i.autoTargetId !== l.id || i.autoPathTimer <= 0 || !o.path.length) {
@@ -2571,103 +2594,105 @@
       }
     }
   }
-  var $ = { 2: 12, 1: 8, 0: 5 };
-  var W = [];
+  var W = { 2: 12, 1: 8, 0: 5 };
   var j = [];
-  var z = !1;
-  var Z = -1;
-  var J = { than_thu_xich_long: 1, linh_ho_tran_son: 1, song_duc_ma_bao: 1 };
-  function nn() {
-    return !!(n.DaiHoiUI && n.DaiHoiUI.dangXem && n.DaiHoiUI.dangXem());
+  var z = [];
+  var Z = !1;
+  var J = -1;
+  var nn = { than_thu_xich_long: 1, linh_ho_tran_son: 1, song_duc_ma_bao: 1 };
+  function an() {
+    return !!(n.DaiHoiUI && n.DaiHoiUI.dangXem && n.DaiHoiUI.dangXem()) || !!(n.ChienTruongUI && n.ChienTruongUI.dangXem && n.ChienTruongUI.dangXem());
   }
-  function an(a) {
+  function en(a) {
     var e = i.player;
     n.Camera.update(n.Player.viewX(e), n.Player.viewY(e) - 12, n.Renderer.w, n.Renderer.h, i.map.pxWidth, i.map.pxHeight, a);
   }
-  function en(a) {
+  function tn(a) {
     if (a && i.player) {
       n.VFX.spawnText(i.player.x, i.player.y - 52, "» " + a.name, "#f7c822");
     }
   }
-  function tn(e) {
-    var t;
-    var o;
-    var h = n.Targeting.current();
-    if (h)
-      if (h.dist > h.r) {
-        !function (e, t) {
-          var o = n.Pathfinder.route(i.map, e.x, e.y, t.x, t.y, a.PLAYER.HITBOX_W / 2, a.PLAYER.HITBOX_H);
-          if (o.length) {
-            n.Player.stand(e);
-            e.setPath(o);
-            i.approach = { key: t.key, until: n.Game.time + a.TARGET.APPROACH_TIME };
-            n.VFX.spawnRipple(t.x, t.y, "#f7c822");
-          }
-          else {
-            n.VFX.spawnText(e.x, e.y - 52, "Không tới được " + t.name, "#c9a45c");
-          }
-        }(e, h);
-      }
-      else {
-        if (i.approach = null, e.stop(), "enemy" !== h.kind && "duel" !== h.kind && "dosat" !== h.kind && n.Audio.play("interact", { rate: .96 + .08 * Math.random() }), "duel" === h.kind || "dosat" === h.kind) {
-          q(e, h.x - e.x, h.y - e.y);
-          return void n.Player.attack(e, C(e, h.obj) ? h.obj : null);
-        }
-        if ("enemy" === h.kind) {
-          q(e, h.x - e.x, h.y - e.y);
-          return void n.Player.attack(e, C(e, h) ? h : null);
-        }
-        if ("scenery" === h.kind) {
-          if (n.BangNhanhUI && n.BangNhanhUI.onInteract(h.obj)) {
-            return;
-          }
-          if (n.PhongChoUI && n.PhongChoUI.onInteract(h.obj)) {
-            return;
-          }
-          return "bia_da" === h.obj.id ? (t = h.obj, void (0 === (o = n.Quest).stage || 1 === o.stage && !o.stageComplete() ? n.HUD.openDialog("Bia Đá Cổ Tự", 'Bia rêu phong khắc mấy dòng đã mờ:\n"Muốn dẫn khí nhập thể, trước phải gột trọc khí: hái ba ngọn Tẩy Uế Thảo ven suối, sắc thành thang ở đan lô, rồi ra đài đá mà ngồi."\n\nNgươi nhẩm đọc ba lượt — trong đầu hiện lên pháp môn Đạo Dẫn thuật.', { actionLabel: "Ghi Nhớ Cổ Pháp", onAction: function () {
-              o.start();
-              o.setFlag("doc_bia_da");
-              n.Audio.play("quest");
-              n.VFX.spawnText(i.player.x, i.player.y - 58, "Lĩnh ngộ: Đạo Dẫn thuật", "#bff3d8");
-              n.VFX.spawnRing(i.player.x, i.player.y - 14, "#cfe0b8", 34, .8);
-              dn();
-            } }) : n.HUD.openDialog(t.title, t.text))) : "ho_bich_thuy" === h.obj.id ? void function (a) {
-            var e = n.Quest;
-            var t = n.Farm;
-            if (e.stage < 8) {
-              n.VFX.spawnText(a.x, a.y - 30, "Chưa mở Vườn Cá Nhân", "#c9a45c");
+  function on(e) {
+    if (!n.ChienTruongUI || !n.ChienTruongUI.moRuongGan()) {
+      var t = n.Targeting.current();
+      if (t)
+        if (t.dist > t.r) {
+          !function (e, t) {
+            var o = n.Pathfinder.route(i.map, e.x, e.y, t.x, t.y, a.PLAYER.HITBOX_W / 2, a.PLAYER.HITBOX_H);
+            if (o.length) {
+              n.Player.stand(e);
+              e.setPath(o);
+              i.approach = { key: t.key, until: n.Game.time + a.TARGET.APPROACH_TIME };
+              n.VFX.spawnRipple(t.x, t.y, "#f7c822");
             }
             else {
-              var i = t.hasWaterAccess && t.hasWaterAccess();
-              n.HUD.openDialog("", "", { choiceOnly: !0, hideClose: !0, choices: [{ label: i ? "Múc nước ✓" : "Múc nước", icon: "flask", disabled: i, onChoose: function () {
-                      if (t.unlockWaterAccess && t.unlockWaterAccess()) {
-                        c("lake.scoop");
-                        n.VFX.spawnText(a.x, a.y - 30, "Đã mở nguồn nước vĩnh viễn", "#9fd8ea");
-                        n.VFX.spawnRipple(a.x + 10, a.y - 4, "#7fc0d3");
-                        n.HUD.updateQuest();
-                      }
-                    } }] });
+              n.VFX.spawnText(e.x, e.y - 52, "Không tới được " + t.name, "#c9a45c");
             }
-          }(h.obj) : !(r = h.obj) || "ho_bich_thuy_cong" !== r.id && "suoi_duoc_coc" !== r.id ? (q(e, h.x - e.x, h.y - e.y), void n.VFX.spawnQuanSat(h.x, h.topY - 6, h.obj.title, h.obj.text)) : void function (a) {
-            n.HUD.openDialog("", "", { choiceOnly: !0, hideClose: !0, choices: [{ label: "Thả câu", icon: "fish", onChoose: function () {
-                    Mn(a);
-                  } }, { label: "Tự động câu", icon: "fish", note: "Dừng bằng nút hoặc di chuyển", onChoose: function () {
-                    Mn(a, !0);
-                  } }] });
-          }(h.obj);
+          }(e, t);
         }
-        var r;
-        pn(h.obj);
-      }
+        else {
+          if (i.approach = null, e.stop(), "enemy" !== t.kind && "duel" !== t.kind && "dosat" !== t.kind && n.Audio.play("interact", { rate: .96 + .08 * Math.random() }), "duel" === t.kind || "dosat" === t.kind) {
+            Q(e, t.x - e.x, t.y - e.y);
+            return void n.Player.attack(e, k(e, t.obj) ? t.obj : null);
+          }
+          if ("enemy" === t.kind) {
+            Q(e, t.x - e.x, t.y - e.y);
+            return void n.Player.attack(e, k(e, t) ? t : null);
+          }
+          if ("scenery" === t.kind) {
+            if (n.BangNhanhUI && n.BangNhanhUI.onInteract(t.obj)) {
+              return;
+            }
+            if (n.PhongChoUI && n.PhongChoUI.onInteract(t.obj)) {
+              return;
+            }
+            return "bia_da" === t.obj.id ? (h = t.obj, void (0 === (r = n.Quest).stage || 1 === r.stage && !r.stageComplete() ? n.HUD.openDialog("Bia Đá Cổ Tự", 'Bia rêu phong khắc mấy dòng đã mờ:\n"Muốn dẫn khí nhập thể, trước phải gột trọc khí: hái ba ngọn Tẩy Uế Thảo ven suối, sắc thành thang ở đan lô, rồi ra đài đá mà ngồi."\n\nNgươi nhẩm đọc ba lượt — trong đầu hiện lên pháp môn Đạo Dẫn thuật.', { actionLabel: "Ghi Nhớ Cổ Pháp", onAction: function () {
+                r.start();
+                r.setFlag("doc_bia_da");
+                n.Audio.play("quest");
+                n.VFX.spawnText(i.player.x, i.player.y - 58, "Lĩnh ngộ: Đạo Dẫn thuật", "#bff3d8");
+                n.VFX.spawnRing(i.player.x, i.player.y - 14, "#cfe0b8", 34, .8);
+                yn();
+              } }) : n.HUD.openDialog(h.title, h.text))) : "ho_bich_thuy" === t.obj.id ? void function (a) {
+              var e = n.Quest;
+              var t = n.Farm;
+              if (e.stage < 8) {
+                n.VFX.spawnText(a.x, a.y - 30, "Chưa mở Vườn Cá Nhân", "#c9a45c");
+              }
+              else {
+                var i = t.hasWaterAccess && t.hasWaterAccess();
+                n.HUD.openDialog("", "", { choiceOnly: !0, hideClose: !0, choices: [{ label: i ? "Múc nước ✓" : "Múc nước", icon: "flask", disabled: i, onChoose: function () {
+                        if (t.unlockWaterAccess && t.unlockWaterAccess()) {
+                          c("lake.scoop");
+                          n.VFX.spawnText(a.x, a.y - 30, "Đã mở nguồn nước vĩnh viễn", "#9fd8ea");
+                          n.VFX.spawnRipple(a.x + 10, a.y - 4, "#7fc0d3");
+                          n.HUD.updateQuest();
+                        }
+                      } }] });
+              }
+            }(t.obj) : !(o = t.obj) || "ho_bich_thuy_cong" !== o.id && "suoi_duoc_coc" !== o.id ? (Q(e, t.x - e.x, t.y - e.y), void n.VFX.spawnQuanSat(t.x, t.topY - 6, t.obj.title, t.obj.text)) : void function (a) {
+              n.HUD.openDialog("", "", { choiceOnly: !0, hideClose: !0, choices: [{ label: "Thả câu", icon: "fish", onChoose: function () {
+                      Mn(a);
+                    } }, { label: "Tự động câu", icon: "fish", note: "Dừng bằng nút hoặc di chuyển", onChoose: function () {
+                      Mn(a, !0);
+                    } }] });
+            }(t.obj);
+          }
+          var o;
+          dn(t.obj);
+        }
+    }
+    var h;
+    var r;
   }
-  function on(a) {
+  function hn(a) {
     var e = function () {
       var e;
       if ("ly_thanh" === a.id) {
         if (!(n.VanTieuUI && n.VanTieuUI.moLyThanh(a, function () {
-          na(a);
+          aa(a);
         }))) {
-          na(a);
+          aa(a);
         }
       }
       else {
@@ -2679,18 +2704,18 @@
               var e = n.Quest;
               var t = n.Inventory;
               var i = a.name;
-              return !(e.stage > 4) && (e.stage >= 1 && e.stageComplete() && dn(!1), e.stage > 4 ? (n.HUD.openDialog(i, '"Tẩy tuỷ thành rồi! Xuống Rừng Trúc phía nam tìm Huấn Sư Huynh — nó đang cần người."'), !0) : e.stage <= 1 ? (n.HUD.openDialog(i, 'Thầy Ông Nội hé mắt nhìn con:\n\n"Thân phàm nặng trọc khí, ngồi cả năm cũng chẳng cảm nổi linh khí. Hái ba ngọn Tẩy Uế Thảo ven suối, đem vào đan lô trong sân này sắc thành thang — rồi tính tiếp."', { actionLabel: "Nhận Việc", onAction: function () {
+              return !(e.stage > 4) && (e.stage >= 1 && e.stageComplete() && yn(!1), e.stage > 4 ? (n.HUD.openDialog(i, '"Tẩy tuỷ thành rồi! Xuống Rừng Trúc phía nam tìm Huấn Sư Huynh — nó đang cần người."'), !0) : e.stage <= 1 ? (n.HUD.openDialog(i, 'Thầy Ông Nội hé mắt nhìn con:\n\n"Thân phàm nặng trọc khí, ngồi cả năm cũng chẳng cảm nổi linh khí. Hái ba ngọn Tẩy Uế Thảo ven suối, đem vào đan lô trong sân này sắc thành thang — rồi tính tiếp."', { actionLabel: "Nhận Việc", onAction: function () {
                   e.start();
                   e.setFlag("hoi_dao_dong");
-                  dn();
+                  yn();
                 } }), !0) : 2 === e.stage ? (n.HUD.openDialog(i, '"Tẩy Uế Thảo là khóm cỏ ba lá phát sáng ven suối. Đủ ba ngọn thì vào đan lô trong sân mà sắc."\n\nĐang có: ' + t.count("tay_ue_thao") + "/" + e.NEED_HERB + " ngọn."), !0) : 3 === e.stage ? (n.HUD.openDialog(i, '"Đan lô ở ngay trong sân, củi ta chất sẵn. Chọn Tẩy Tuỷ Thang rồi đợi lò sôi."'), !0) : e.flags.tay_tuy_that_bai && !t.has("tay_tuy_thang") ? (n.HUD.openDialog(i, '"Hỏng một lần là chuyện thường. Sắc lại một bát ở đan lô rồi ra đài đá thử lần nữa."'), !0) : (n.HUD.openDialog(i, '"Ra đài đá bên suối, uống lúc thang còn nóng rồi ngồi yên. Đau mấy cũng chớ đứng dậy."'), !0));
             }(a)) {
               var o;
               var h;
               if (!t || "escort" !== t.kind) {
-                return n.Quest.stage === n.Quest.BACH_KHOA_STAGE ? (o = a.name, void ((h = n.Quest).bachKhoaXong() ? Ba(o) : n.HUD.openDialog(o, 'Thầy Ông Nội lấy quyển Bách Khoa Tu Tiên đặt lên bàn:\n\n"Trong này ghi vật phẩm, nhiệm vụ, bản đồ và quái thú con đã gặp. Ta hỏi năm câu — không biết thì mở sách tra, sai cũng không bị phạt. Đủ năm câu ta cho 300 Linh Thạch làm vốn."\n\nTiến độ: ' + h.bachKhoaProgress() + "/" + h.BACH_KHOA_NEED + " câu đúng.", { choices: [{ label: "Bắt đầu Hỏi Đạo", onChoose: function () {
+                return n.Quest.stage === n.Quest.BACH_KHOA_STAGE ? (o = a.name, void ((h = n.Quest).bachKhoaXong() ? Xa(o) : n.HUD.openDialog(o, 'Thầy Ông Nội lấy quyển Bách Khoa Tu Tiên đặt lên bàn:\n\n"Trong này ghi vật phẩm, nhiệm vụ, bản đồ và quái thú con đã gặp. Ta hỏi năm câu — không biết thì mở sách tra, sai cũng không bị phạt. Đủ năm câu ta cho 300 Linh Thạch làm vốn."\n\nTiến độ: ' + h.bachKhoaProgress() + "/" + h.BACH_KHOA_NEED + " câu đúng.", { choices: [{ label: "Bắt đầu Hỏi Đạo", onChoose: function () {
                         Ea(o);
-                      } }, { label: "Mở Bách Khoa Tu Tiên", onChoose: Va }] }))) : void ("Phàm Nhân" !== e.realm ? n.HUD.openDialog(a.name, "Muốn tích Đạo Hạnh, hãy diệt yêu thú hoặc đả tọa.", { choices: [{ label: "Mở Bách Khoa Tu Tiên", note: "Tra cứu vật phẩm, nhiệm vụ, quái boss, bí cảnh và bản đồ", onChoose: function () {
+                      } }, { label: "Mở Bách Khoa Tu Tiên", onChoose: Ba }] }))) : void ("Phàm Nhân" !== e.realm ? n.HUD.openDialog(a.name, "Muốn tích Đạo Hạnh, hãy diệt yêu thú hoặc đả tọa.", { choices: [{ label: "Mở Bách Khoa Tu Tiên", note: "Tra cứu vật phẩm, nhiệm vụ, quái boss, bí cảnh và bản đồ", onChoose: function () {
                         if (n.Encyclopedia) {
                           n.Encyclopedia.open();
                         }
@@ -2705,7 +2730,7 @@
                   if (a) {
                     i.escortFollower = null;
                     n.VFX.spawnText(i.player.x, i.player.y - 58, "+" + a.reward + " Dược Công", "#f0d27a");
-                    dn(!1);
+                    yn(!1);
                   }
                 }, reward: [{ icon: "scroll", name: "Điểm Dược Công", qty: t.reward }, { icon: "spirit_stone", name: "Linh Thạch", qty: n.Quest.seedTaskStones(t) }], choices: [{ label: "Mở Bách Khoa Tu Tiên", note: "Vật phẩm · nhiệm vụ · quái boss · bản đồ và hoạt động", onChoose: function () {
                       if (n.Encyclopedia) {
@@ -2740,14 +2765,14 @@
                   }
                   if (e.stage !== e.DOC_DANG_STAGE)
                     if (e.canChonBinhKhi()) {
-                      Pa(r);
+                      Na(r);
                     }
-                    else if (Aa(e) || function (n) {
+                    else if (Fa(e) || function (n) {
                       return !!(n.stage >= 8 && n.stage <= n.DUOC_VIEN_LAST_STAGE && !n.autoAdvances() && n.stageComplete()) || n.duocVienArcDone() && !n.flags.bao_cong_4;
                     }(e) || !e.pointToTangKinh())
                       if (7 !== e.stage || e.flags.bai_kien_dai_phu) {
                         var l = e.stage >= 8 && !e.duocVienArcDone();
-                        if (!(e.stage >= 8) || e.stageComplete() || Aa(e) || e.duocVienArcDone() && !e.flags.bao_cong_4 || l && !e.hasActiveSeedQuest() || !La(r))
+                        if (!(e.stage >= 8) || e.stageComplete() || Fa(e) || e.duocVienArcDone() && !e.flags.bao_cong_4 || l && !e.hasActiveSeedQuest() || !La(r))
                           if (8 !== e.stage)
                             if (9 !== e.stage)
                               if (10 !== e.stage)
@@ -2760,9 +2785,9 @@
                                           t.add("duoc_y_boi", 1);
                                           t.add("hat_linh_diep", 3);
                                           t.add("hat_huyet_thao", 3);
-                                          dn(!1);
+                                          yn(!1);
                                           if (e.canChonBinhKhi()) {
-                                            Pa(r);
+                                            Na(r);
                                           }
                                         }
                                       }, reward: [{ icon: "gourd", name: "Dược Y Bội", qty: 1 }, { icon: "seed_luc", name: "Hạt Linh Diệp", qty: 3 }, { icon: "seed_huyet", name: "Hạt Huyết Thảo", qty: 3 }] }) : void g('"Đạo Hạnh đầy thì ra đài đá trong vườn, nuốt Tụ Khí Đan mà phá quan. Chưa đầy thì ngồi đài đá đả tọa, hoặc đi săn quái."') : void (!e.duocVienArcDone() || e.flags.bao_cong_4 ? g('"Dược Viên cứ để đấy mà dùng, gieo hái tuỳ ngươi — miễn đừng bỏ hoang."\n\n"Hết hạt thì tới tìm lão phu nhận việc nhân giống. Có nguyên liệu đổi hạt — không ai tu tiên mà chỉ ngửa tay xin mãi được. Linh thảo hái được cứ đem về đan lô trong làng luyện đan, đạo hạnh tự khắc tiến."') : n.HUD.openDialog(r, 'Lão nhân đặt hẳn dao cầu xuống, chắp tay sau lưng ngắm ngươi từ đầu tới chân:\n\n"Luyện Khí Tầng 3. Từ một kẻ phàm nhân gánh nước tới bước này, người khác mất ba năm, ngươi mất mấy hôm — phần lớn là nhờ chịu khó cúi xuống chăm cây."\n\n"Đường tu tiên dài lắm, nhưng cái lý thì có bấy nhiêu thôi: trồng gì gặt nấy."\n\nLão tháo chiếc hồ lô gỗ nhỏ đeo bên hông đưa cho ngươi.', { actionLabel: "Bái Tạ", onAction: function () {
@@ -2770,7 +2795,7 @@
                                         t.add("duoc_y_boi", 1);
                                         t.add("hat_linh_diep", 3);
                                         t.add("hat_huyet_thao", 3);
-                                        dn(!1);
+                                        yn(!1);
                                       }, reward: [{ icon: "gourd", name: "Dược Y Bội", qty: 1 }, { icon: "seed_luc", name: "Hạt Linh Diệp", qty: 3 }, { icon: "seed_huyet", name: "Hạt Huyết Thảo", qty: 3 }] }));
                                   }
                                   g('"Đủ vị thì luyện Tụ Khí Đan ở đan lô trong vườn."\n\n' + e.recipeLines(e.TU_KHI_DAN_RECIPE));
@@ -2794,13 +2819,13 @@
                             t.add("hat_linh_diep", e.NEED_LINH_DIEP);
                             t.add("hat_huyet_thao", e.NEED_HUYET_THAO);
                             n.VFX.spawnText(i.player.x, i.player.y - 58, "Nhận việc: chăm nom Dược Viên", "#bff3d8");
-                            dn();
+                            yn();
                           }, reward: [{ icon: "seed_luc", name: "Hạt Linh Diệp", qty: e.NEED_LINH_DIEP }, { icon: "seed_huyet", name: "Hạt Huyết Thảo", qty: e.NEED_HUYET_THAO }] });
                       }
                     else {
                       n.HUD.openDialog(r, 'Lão nhân dừng dao, nhìn ngươi chăm chú:\n\n"Kinh mạch thông tới tầng bốn rồi đấy. Lão phu chỉ biết thuốc — muốn học pháp quyết thì về làng tìm Tàng Kinh Lão Nhân. Cầm chiếc lá này, dẫn khí vào là nó cõng ngươi bay."\n\nTrang bị Phi Diệp vào ô Phi Hành (Hành Trang), rồi bấm nút Phi Hành (phím F) để bay.', { actionLabel: "Ghi Nhớ", onAction: function () {
                           n.VFX.spawnText(i.player.x, i.player.y - 58, "Về làng tìm Tàng Kinh Lão Nhân", "#e8dfa0");
-                          dn();
+                          yn();
                         }, reward: [{ icon: "phi_diep", name: "Phi Diệp", qty: 1 }] });
                     }
                   else if (e.stageComplete()) {
@@ -2812,7 +2837,7 @@
                           n.Inventory.add("phu_hoa", 1);
                           n.Inventory.add("hat_thanh_tam", 2);
                           n.Inventory.add("hat_linh_diep", 2);
-                          dn(!1);
+                          yn(!1);
                         }
                       }, reward: [{ icon: "phu_kim_giap", name: "Kim Giáp Phù", qty: 2 }, { icon: "phu_hoa", name: "Hoả Phù", qty: 1 }, { icon: "seed_thanh", name: "Hạt Thanh Tâm Hoa", qty: 2 }, { icon: "seed_luc", name: "Hạt Linh Diệp", qty: 2 }] });
                   }
@@ -2889,7 +2914,7 @@
                     else if (e.biTichComplete()) {
                       !function (a) {
                         var e = n.Quest;
-                        n.HUD.openDialog(a, 'Ngươi đặt hai mảnh giấy rách lên án. Lão nhân xoay chúng lại cho khớp, mép rách ăn vào nhau vừa in.\n\n"Đúng là một quyển. Nửa trên dạy dẫn khí rời Đan Điền, nửa dưới dạy đưa khí ra kinh mạch tay chân — thiếu một nửa thì đọc tới giữa chừng là tẩu hoả."\n\nLão khâu lại gáy sách cất vào tủ, rồi lụi cụi lôi ra bốn quyển xếp thành một hàng:\n"Ngươi đoạt sách về cho lão phu thì lão phu trả công. Bốn quyển sơ cấp, chọn LẤY MỘT. Duyên pháp mỗi đời một quyển — chọn rồi thì đừng quay lại đòi đổi."', { choices: e.BI_TICH_CHOICES.map(yn) });
+                        n.HUD.openDialog(a, 'Ngươi đặt hai mảnh giấy rách lên án. Lão nhân xoay chúng lại cho khớp, mép rách ăn vào nhau vừa in.\n\n"Đúng là một quyển. Nửa trên dạy dẫn khí rời Đan Điền, nửa dưới dạy đưa khí ra kinh mạch tay chân — thiếu một nửa thì đọc tới giữa chừng là tẩu hoả."\n\nLão khâu lại gáy sách cất vào tủ, rồi lụi cụi lôi ra bốn quyển xếp thành một hàng:\n"Ngươi đoạt sách về cho lão phu thì lão phu trả công. Bốn quyển sơ cấp, chọn LẤY MỘT. Duyên pháp mỗi đời một quyển — chọn rồi thì đừng quay lại đòi đổi."', { choices: e.BI_TICH_CHOICES.map(mn) });
                       }(t);
                     }
                     else if (e.flags.bi_tich_nhan_viec) {
@@ -2903,7 +2928,7 @@
                           n.HUD.openDialog(t, 'Lão nhân đặt quyển sách đang phơi xuống, nhìn thẳng vào đan điền ngươi một hồi rồi gật gù:\n\n"Kinh mạch tầng bốn, thông cả rồi. Đại Phu bảo ngươi tới đúng lúc lắm."\n\n"Tụ Khí chỉ giúp ngươi nhập môn. Muốn thật sự chiến đấu, phải có pháp quyết dẫn linh lực."\n\nLão thở dài, chỉ tay về phía tây làng:\n"Ngặt nỗi quyển vỡ lòng ấy lão phu để thất lạc trong Miếu Hoang từ đời nào, giờ lại rách làm đôi. Nửa trên còn nằm trên án thờ. Nửa dưới thì lũ yêu quái trong miễu tha đi mất — muốn lấy lại chỉ còn cách chém chúng mà đoạt."', { actionLabel: "Nhận Việc", onAction: function () {
                               if (e.startBiTichQuest()) {
                                 n.VFX.spawnText(i.player.x, i.player.y - 58, "Nhận việc: Duyên Pháp Bí Tịch", "#e8dfa0");
-                                dn();
+                                yn();
                               }
                             } });
                         }
@@ -2915,7 +2940,7 @@
                         n.HUD.openDialog(t, 'Lão nhân đưa cho ngươi một chiếc Phi Diệp gân bạc rồi chỉ vào Hành Trang:\n\n"Trước khi học pháp quyết, phải biết cưỡi lá mà đi. Nhấn [B], bấm Phi Diệp rồi chọn Trang Bị — nó nằm ở ô Phi Hành riêng, không đụng gì tới binh khí ngươi đang cầm."', { actionLabel: "Nhận Task Trang Bị", onAction: function () {
                             e.acceptEquipmentTask();
                             n.VFX.spawnText(i.player.x, i.player.y - 58, "Task: trang bị Phi Diệp", "#e8dfa0");
-                            dn(!1);
+                            yn(!1);
                           }, reward: [{ icon: "phi_diep", name: "Phi Diệp", qty: 1 }] });
                       }
                     }
@@ -2933,7 +2958,7 @@
                             n.Inventory.add("phu_toc_hanh", 1);
                             n.Inventory.add("hat_linh_diep", 2);
                             n.Inventory.add("hat_huyet_thao", 2);
-                            dn(!1);
+                            yn(!1);
                           }
                         }, reward: [{ icon: "phu_thanh_tam", name: "Thanh Tâm Phù", qty: 2 }, { icon: "phu_toc_hanh", name: "Tốc Hành Phù", qty: 1 }, { icon: "seed_luc", name: "Hạt Linh Diệp", qty: 2 }, { icon: "seed_huyet", name: "Hạt Huyết Thảo", qty: 2 }] });
                     }
@@ -2956,7 +2981,7 @@
                     }
                   }
                   else if (n.NTBot && n.NTBot.chapSu) {
-                    n.NTBot.chapSu(e);   // Nghịch Tiên: Chiến Bảng / Đại Hội đấu với bot khi không có máy chủ
+                    n.NTBot.chapSu(e);   // Nghịch Tiên: Chiến Bảng / Đại Hội / Chiến Trường đấu với bot khi không có máy chủ
                   }
                   else {
                     n.HUD.openDialog(e.name, 'Người ấy khép sổ lại:\n\n"Đại hội cần đông người mới thành hội. Đạo hữu đang tu một mình nơi hoang sơn, chưa nối được với Tiên Đồ — chờ khi nào nối được rồi hãy tới."');
@@ -2964,7 +2989,7 @@
                 }
                 else {
                   if ("tho_ren" === a.id) {
-                    Wn(a);
+                    jn(a);
                   }
                   else {
                     if (n.Market && a.id === n.Market.NPC_ID) {
@@ -2973,7 +2998,7 @@
                           var e = n.Auth && !n.Auth.localFixture && n.Auth.user;
                           if (e && n.Market && n.Market.CAN_EMAIL && !n.Market.emailThat(n.Auth.linkedEmail ? n.Auth.linkedEmail(e) : e.email)) {
                             n.HUD.openDialog(a.name || "Vạn Bảo Phường", "Liên kết email để mở Vạn Bảo Phường.", { choices: [{ label: "Liên kết email", note: "Cài Đặt → Tài khoản", onChoose: function () {
-                                    Rn();
+                                    Kn();
                                     var n = t.$("#account-email-open");
                                     if (n && !n.classList.contains("hidden")) {
                                       n.click();
@@ -2993,7 +3018,7 @@
                     }
                     else {
                       if ("ba_hang_com" === a.id) {
-                        mn(a);
+                        fn(a);
                       }
                       else {
                         if (n.PhongCho && a.id === n.PhongCho.NPC) {
@@ -3001,16 +3026,16 @@
                             if (n.HongTyUI) {
                               n.HongTyUI.open(a, { cfg: function () {
                                   return i.player && i.player.cfg;
-                                }, chiMuc: ["com", "phu"], buyFood: wn, eat: Cn, buyTalisman: kn });
+                                }, chiMuc: ["com", "phu"], buyFood: kn, eat: In, buyTalisman: wn });
                             }
                             else {
-                              mn(a);
+                              fn(a);
                             }
                           })(a);
                         }
                         else {
                           if ("tran_phap_su" === a.id) {
-                            Zn(a);
+                            Jn(a);
                           }
                           else {
                             if (n.Sect && a.id === n.Sect.NPC && n.QuanSuUI) {
@@ -3018,7 +3043,7 @@
                             }
                             else {
                               if ("tgt_thien_kiem_tong" === a.id) {
-                                Jn(a);
+                                na(a);
                               }
                               else {
                                 if (n.LuyenQuy && a.id === n.LuyenQuy.NPC) {
@@ -3040,19 +3065,19 @@
                                         var h = n.Skills;
                                         if (h && h.canBuyMaBaoAn && !n.Inventory.owns(h.MA_BAO_AN_BOOK)) {
                                           var c = h.canBuyMaBaoAn(n);
-                                          o.push({ label: "Mua Bí Tịch Ma Bạo Ấn", note: c.ok ? h.MA_BAO_AN_COST.toLocaleString("vi-VN") + " Linh Thạch" : c.why, icon: h.MA_BAO_AN_BOOK, disabled: !c.ok, onChoose: hn });
+                                          o.push({ label: "Mua Bí Tịch Ma Bạo Ấn", note: c.ok ? h.MA_BAO_AN_COST.toLocaleString("vi-VN") + " Linh Thạch" : c.why, icon: h.MA_BAO_AN_BOOK, disabled: !c.ok, onChoose: cn });
                                         }
                                         if (h && h.canBuyXichMa && !n.Inventory.owns(h.XICH_MA_BOOK)) {
                                           var r = h.canBuyXichMa(n);
-                                          o.push({ label: "Mua Bí Tịch Xích Ma Hóa Thân", note: r.ok ? h.XICH_MA_COST.toLocaleString("vi-VN") + " Linh Thạch" : r.why, icon: h.XICH_MA_BOOK, disabled: !r.ok, onChoose: cn });
+                                          o.push({ label: "Mua Bí Tịch Xích Ma Hóa Thân", note: r.ok ? h.XICH_MA_COST.toLocaleString("vi-VN") + " Linh Thạch" : r.why, icon: h.XICH_MA_BOOK, disabled: !r.ok, onChoose: rn });
                                         }
                                         o.push({ label: "Trả Hồn Phiên", note: "Bỏ Ma Đạo — mất hết Âm Hồn", icon: "hon_phien", onChoose: function () {
-                                            gn("Hồn Phiên", "Âm Hồn");
+                                            pn("Hồn Phiên", "Âm Hồn");
                                           } });
                                       }
                                       else {
                                         var u = e.xetThinhPhien(n);
-                                        o.push({ label: "Thỉnh Hồn Phiên", note: u || e.GIA_PHIEN + " Linh Thạch", icon: "hon_phien", disabled: !!u, onChoose: rn });
+                                        o.push({ label: "Thỉnh Hồn Phiên", note: u || e.GIA_PHIEN + " Linh Thạch", icon: "hon_phien", disabled: !!u, onChoose: un });
                                       }
                                       n.HUD.openDialog(t, 'Lão đẩy tới một lá phiên đen, cán bằng xương.\n\n"Hồn của kẻ vừa ngã tan trong chớp mắt. Có lá này thì nó không tan — nó về đây. Tám mươi mảnh phàm hồn kết thành một Âm Hồn, gọi ra thì nó đánh giúp ngươi."\n\n"Giá của nó không tính bằng Linh Thạch. Ngươi sẽ biết."\n\nLinh Thạch đang có: ' + (0 | n.Progress.stones) + ".", { choices: o });
                                     }
@@ -3060,7 +3085,7 @@
                                 }
                                 else {
                                   if (n.ChinhDao && a.id === n.ChinhDao.NPC) {
-                                    ln(a);
+                                    sn(a);
                                   }
                                   else {
                                     if (n.LuyenQuy && a.id === n.LuyenQuy.NPC_CUNG) {
@@ -3119,7 +3144,7 @@
                                           n.BachHoDuong.moNpc(a);   // Nghịch Tiên: báo danh Bạch Hổ Đường
                                         }
                                         else if (n.DiemDanh && a.id === n.DiemDanh.NPC) {
-                                          Tn(a);
+                                          vn(a);
                                         }
                                         else {
                                           if (!("huyet_anh_khach" === a.id && n.VanTieuUI && n.VanTieuUI.moBanh(a, function () {
@@ -3158,7 +3183,7 @@
       e();
     }
   }
-  function hn() {
+  function cn() {
     var a = n.Skills;
     var e = i.player;
     var t = function () {
@@ -3190,7 +3215,7 @@
       }
     }
   }
-  function cn() {
+  function rn() {
     var a = n.Skills;
     var e = i.player;
     var t = function () {
@@ -3222,7 +3247,7 @@
       }
     }
   }
-  function rn() {
+  function un() {
     var a = n.LuyenQuy;
     var e = i.player;
     var t = a.xetThinhPhien(n);
@@ -3239,16 +3264,16 @@
         if (a.hon && n.HonPhienUI) {
           n.HonPhienUI.dat(a.hon);
         }
-        un();
+        ln();
       });
     }
     else {
       if (a.thinhPhien(n).ok) {
-        un();
+        ln();
       }
     }
   }
-  function un() {
+  function ln() {
     var a = i.player;
     n.Audio.play("coin");
     n.VFX.spawnRing(a.x, a.y - 10, "#c22333", 26, .6);
@@ -3258,7 +3283,7 @@
       n.HonPhienUI.mo();
     }
   }
-  function ln(a) {
+  function sn(a) {
     var e = n.ChinhDao;
     var t = n.LuyenQuy;
     var o = a.name || "Chưởng Sự Chính Đạo";
@@ -3275,12 +3300,12 @@
             }
           } });
         r.push({ label: "Trả Kiếm Hạp", note: "Bỏ Chính Đạo — mất hết Kiếm Linh", icon: "kiem_hap", onChoose: function () {
-            gn("Kiếm Hạp", "Kiếm Linh");
+            pn("Kiếm Hạp", "Kiếm Linh");
           } });
       }
       else {
         var u = e.xetThinhHap(n);
-        r.push({ label: "Thỉnh Kiếm Hạp", note: u || e.GIA_HAP + " Linh Thạch", icon: "kiem_hap", disabled: !!u, onChoose: sn });
+        r.push({ label: "Thỉnh Kiếm Hạp", note: u || e.GIA_HAP + " Linh Thạch", icon: "kiem_hap", disabled: !!u, onChoose: gn });
       }
       var l = a;
       var s = i.player;
@@ -3307,7 +3332,7 @@
                   n.HUD.refreshBag();
                 }
                 if (!(h())) {
-                  ln(a);
+                  sn(a);
                 }
               }
               if (h()) {
@@ -3341,7 +3366,7 @@
                   n.HUD.refreshBag();
                 }
                 if (!(h())) {
-                  ln(a);
+                  sn(a);
                 }
               }
               if (h()) {
@@ -3367,7 +3392,7 @@
                 n.HUD.refreshBag();
               }
               if (!(h())) {
-                ln(a);
+                sn(a);
               }
             }
             if (h()) {
@@ -3392,7 +3417,7 @@
                 n.HUD.refreshBag();
               }
               if (!(h())) {
-                ln(a);
+                sn(a);
               }
             }
             if (h()) {
@@ -3417,7 +3442,7 @@
                 n.HUD.refreshBag();
               }
               if (!(h())) {
-                ln(a);
+                sn(a);
               }
             }
             if (h()) {
@@ -3431,7 +3456,7 @@
       n.HUD.openDialog(o, '"Hạ sơn tặc, trừ ma tu — chính khí của chúng tụ vào hạp này, luyện thành Kiếm Linh."\n\n"Ma tu nhìn tên vàng là biết ngươi. Gặp nhau thì đánh, mỗi người mỗi ngày một lần."\n\nLinh Thạch đang có: ' + (0 | n.Progress.stones) + ".", { choices: r });
     }
   }
-  function sn() {
+  function gn() {
     var a = n.ChinhDao;
     var e = i.player;
     var t = a.xetThinhHap(n);
@@ -3466,7 +3491,7 @@
       }
     }
   }
-  function gn(a, e) {
+  function pn(a, e) {
     var t = i.player;
     n.HUD.openDialog("Trả " + a, "Trả " + a + " là mất hết " + e + " đã luyện. Nguyên liệu trong túi vẫn giữ.\n\nChắc chưa?", { choices: [{ label: "Trả " + a, note: "Không lấy lại được", onChoose: function () {
             var e = function () {
@@ -3493,15 +3518,15 @@
             }
           } }] });
   }
-  function pn(a) {
+  function dn(a) {
     var e;
     if (!(n.HuyetSacUI && n.HuyetSacUI.interact(a) || n.LamLangUI && n.LamLangUI.interact(a) || n.YenLangUI && n.YenLangUI.interact(a))) {
       switch (a.type) {
         case "npc":
-          on(a);
+          hn(a);
           break;
         case "forge":
-          Wn(a);
+          jn(a);
           break;
         case "cave_entrance":
           !function (a) {
@@ -3514,7 +3539,7 @@
                     }
                     if (i.player.flying) {
                       n.Player.landFly(i.player, i.map);
-                      E();
+                      X();
                     }
                     i.switchMap("hang_dong_co", { tx: 14, ty: 16 });
                   } });
@@ -3543,7 +3568,7 @@
                 n.Progress.markHarvested(a.id);
                 n.VFX.spawnText(a.x, a.y - 26, "+1 Mảnh Bí Tịch · Thượng", "#f0d27a");
                 n.VFX.spawnRing(a.x, a.y - 6, "#f0d27a", 20, .5);
-                dn();
+                yn();
               }
             }
             else {
@@ -3566,7 +3591,7 @@
                 n.HUD.setCaption(null);
                 n.VFX.spawnRing(a.x, a.y - 12, "#f0d27a", 38, .9);
                 n.VFX.spawnText(a.x, a.y - 48, "Đủ nguyên liệu Phá Cảnh Đan!", "#e8d4ff");
-                dn();
+                yn();
                 n.HUD.openDialog("Linh Dược Rương Đã Mở", "Hạch đá vừa chạm ổ khoá thì tắt lịm, xích đá rơi xuống thành bụi. Trong rương, ba hộp ngọc vẫn giữ nguyên linh khí: Bích Vân Diệp xanh như mây, Long Huyết Thảo đỏ ánh kim và những hạt Linh Thúy trong vắt — đúng một lò Phá Cảnh Đan (cửa Tầng 7 → 8)." + (e.stage !== e.FORGE_STAGE || e.flags.ren_vu_khi_chinh ? "" : "\n\nViệc kế: mang 2 Huyền Thiết Khoáng về Thợ Rèn trong làng rèn một vũ khí."), { reward: t.map(function (a) {
                     var e = n.ITEMS[a.id];
                     return { icon: e.icon, name: e.name, qty: a.qty };
@@ -3589,16 +3614,16 @@
           break;
         case "ling_chi_prop":
           !function (n) {
-            ka(n, "nam_linh_chi", "#f0a080");
+            wa(n, "nam_linh_chi", "#f0a080");
           }(a);
           break;
         case "seed_bamboo_prop":
-          oa(a);
+          ha(a);
           break;
         case "co_thu_linh_moc":
           !function (a) {
-            if (n.Quest.chopAvailable(a.chopTask) || ha()) {
-              oa(a);
+            if (n.Quest.chopAvailable(a.chopTask) || ca()) {
+              ha(a);
             }
             else {
               n.HUD.openDialog(a.name, "Cây đại thụ choán cả góc thung, gốc bạnh thành mấy múi rễ nổi to bằng người ôm, vỏ nứt dọc như da trâu già. Trong kẽ tán, linh khí đọng lại thành từng vệt sáng xanh rồi rịn ra bay lên, mát rượi cả một khoảng đất.\n\nRễ nó ăn trúng mạch linh khí dưới lòng thung, hút suốt mấy trăm năm nên đến cành khô trên tán cũng còn dược tính. Đại Phu dặn: bổ dao cho cành khô rụng thì được, chớ phạm vào phần gỗ còn sống.");
@@ -3606,19 +3631,19 @@
           }(a);
           break;
         case "mach_han_tinh":
-          ka(a, "han_tinh_thach", "#a9e8ff");
+          wa(a, "han_tinh_thach", "#a9e8ff");
           break;
         case "mach_tu_tinh":
-          ka(a, "tu_tinh_thach", "#d9b6ff");
+          wa(a, "tu_tinh_thach", "#d9b6ff");
           break;
         case "mach_luc_tinh":
-          ka(a, "luc_tinh_thach", "#b8ffb0");
+          wa(a, "luc_tinh_thach", "#b8ffb0");
           break;
         case "phong_tinh_mach":
-          ka(a, "phong_tinh_thach", "#9df0fb");
+          wa(a, "phong_tinh_thach", "#9df0fb");
           break;
         case "phong_linh_thao":
-          ka(a, "phong_linh_thao", "#bdf0c2");
+          wa(a, "phong_linh_thao", "#bdf0c2");
           break;
         case "herb_plot":
           !function (a) {
@@ -3647,7 +3672,7 @@
                 if (l && l.icon) {
                   n.VFX.spawnItemPop(a.x, a.y - 40, l.icon);
                 }
-                return void dn();
+                return void yn();
               }
               if (e.isEmpty(c)) {
                 var g = e.seedsInBag();
@@ -3700,7 +3725,7 @@
               a.hidden = !0;
               n.VFX.spawnText(a.x, a.y - 26, "+1 Manh Mối", "#e8dfa0");
               n.VFX.spawnRing(a.x, a.y - 6, "#f0d27a", 18, .5);
-              dn();
+              yn();
             }
             else {
               n.VFX.spawnText(a.x, a.y - 26, "Chưa tới lúc", "#c8c0a0");
@@ -3727,7 +3752,7 @@
               var c = 2 === e.stage ? " · " + h + "/" + e.NEED_HERB : "";
               n.VFX.spawnText(a.x, a.y - 26, "+1 Tẩy Uế Thảo" + c, "#bff3d8");
               n.VFX.spawnRing(a.x, a.y - 6, "#cfeba8", 18, .5);
-              dn();
+              yn();
             }
           }(a);
           break;
@@ -3736,7 +3761,7 @@
             var e = n.Quest;
             var t = n.Inventory;
             if (10 === e.stage && t.has("tu_khi_duoc")) {
-              wa(a);
+              ka(a);
             }
             else {
               n.HUD.openDialog(a.name, "Mạch nước rỉ ra từ khe đá, theo ống tre cũ chảy xuống một bồn đá nhỏ. Nước trong đến mức nhìn rõ từng hạt sạn dưới đáy, hơi lạnh phả lên mặt.");
@@ -3786,7 +3811,7 @@
           }(a);
           break;
         case "meditate_stone":
-          An(a);
+          Fn(a);
           break;
         case "khu_board":
           if (n.KhuUI) {
@@ -3807,7 +3832,7 @@
       }
     }
   }
-  function dn(a) {
+  function yn(a) {
     var e = n.Quest;
     var t = !1;
     for (e.markLinhThuy(); e.isActive() && e.autoAdvances() && e.stageComplete();)
@@ -3837,7 +3862,7 @@
     }
     n.HUD.updateQuest();
   }
-  function yn(a) {
+  function mn(a) {
     var e = n.Skills;
     var t = n.ITEMS[a];
     var o = e.byBook(a);
@@ -3871,21 +3896,21 @@
                     n.VFX.spawnText(i.player.x, i.player.y - 74, "Lĩnh ngộ bị động: " + h.name, h.colors.glow);
                   }
                 }
-                dn();
+                yn();
               }
             }, reward: [{ icon: t.icon, name: t.name, qty: 1 }] });
         }(a);
       } };
   }
-  function mn(a) {
+  function fn(a) {
     var e = n.Food;
     var t = n.Talismans;
     if (n.AppearanceShop, n.HongTyUI) {
       n.HongTyUI.open(a, { cfg: function () {
           return i.player && i.player.cfg;
-        }, buyFood: wn, eat: Cn, buyTalisman: kn, openAppearance: function () {
+        }, buyFood: kn, eat: In, buyTalisman: wn, openAppearance: function () {
           n.HUD.closeDialog();
-          _n(a.name);
+          Dn(a.name);
         } });
     }
     else {
@@ -3906,12 +3931,12 @@
               var c = i.desc + "\n\nĂn xong no " + o.hours + " giờ đồng hồ THẬT — thoát ra rồi vào lại vẫn còn. Trong lúc ấy mỗi giây hồi " + o.hpPct + "% Khí Huyết tối đa, " + o.mp + " Linh Lực và " + o.bp + " Giáp, kể cả đang chạy hay đang đánh nhau.\n\nGiá: " + e.cost + " Linh Thạch một phần. Trong túi đang có " + n.Inventory.count(e.id) + " phần." + (e.perDay ? "\nHôm nay còn mua được " + t.leftToday(e.id) + "/" + e.perDay + " phần." : "") + (h > 0 ? "\nĐang no, còn " + t.fmtLeft(h) + " nữa." : "");
               var r = t.PACKS.map(function (a) {
                 return { label: "Mua " + a + " phần", note: e.cost * a + " Linh Thạch", icon: i.icon, disabled: (0 | n.Progress.stones) < e.cost * a || a > t.leftToday(e.id), onChoose: function () {
-                    wn(e, a);
+                    kn(e, a);
                   } };
               });
               if (n.Inventory.has(e.id, 1)) {
                 r.push({ label: "Ăn Ngay Một Bát", note: h > 0 ? "Cộng dồn vào phần còn lại" : "Bắt đầu hiệu lực " + o.hours + " giờ", icon: i.icon, onChoose: function () {
-                    Cn(e.id);
+                    In(e.id);
                   } });
               }
               n.HUD.openDialog(i.name, c, { choices: r });
@@ -3921,7 +3946,7 @@
       h.push({ label: "Tủ Ngoại Hình", note: (o = i.player && i.player.cfg, n.AppearanceShop.CATEGORIES.reduce(function (a, e) {
           return a + n.AppearanceShop.options(e.field, o || {}).length;
         }, 0) + " mẫu · 1 Linh Thạch mỗi lần đổi · không cộng chỉ số"), onChoose: function () {
-          _n(a.name);
+          Dn(a.name);
         } });
       var c = n.PhapBao ? n.PhapBao.list(n) : [];
       if (c.length) {
@@ -3954,7 +3979,7 @@
                     var o = i.desc + "\n\n" + t.tip + "\nHồi chiêu " + t.cooldown + " giây. Ngũ hành: " + t.element + ".\n\nGiá: " + a.cost + " Linh Thạch một lá. Trong túi đang có " + n.Inventory.count(t.item) + " lá.";
                     var h = e.PACKS.map(function (e) {
                       return { label: "Mua " + e + " lá", note: a.cost * e + " Linh Thạch", icon: i.icon, disabled: (0 | n.Progress.stones) < a.cost * e, onChoose: function () {
-                          kn(a, e);
+                          wn(a, e);
                         } };
                     });
                     n.HUD.openDialog(t.name, o, { choices: h });
@@ -3968,10 +3993,10 @@
     }
   }
   i.refreshQuest = function () {
-    dn();
+    yn();
   };
-  var fn = { tieu_su: { tieuDe: "Tiểu Sử Cõi Tu Tiên", trang: ["Mồng 5 tháng 9 năm 2026, nén hương đầu tiên được thắp dưới chân núi Tản Viên. tutien2d khai sơn từ đó.\n\nBuổi đầu chỉ có một ngôi làng, một con suối, một lối mòn lên núi. Phàm nhân bước vào, hái thuốc, luyện khí, rèn kiếm, rồi tự hỏi đạo của mình ở đâu.", "Từ đó đường mở dần: thành Thăng Long, Long Uyên Cốc, Mỏ Linh Thạch, những bí cảnh phải kết bạn mới qua nổi.\n\nTông môn tranh phong, chính tà phân lộ, Đại Hội luận võ mỗi ngày một náo nhiệt. Cõi này vẫn đang lớn — và đạo hữu đang viết thêm vào lai lịch của nó."] }, nguoi_lam: { tieuDe: "Người Dựng Cõi Này", trang: ["Ta là Mạnh ShopT1, tục danh Hà Đức Mạnh — kẻ dựng nên cõi này.", "Năm 2018 ta lập ShopT1, nơi tụ hội hàng trăm nghìn game thủ. Dẫn một đội cốt cán cùng gần trăm cộng tác viên, ta chỉ giữ ba chữ: Minh Bạch, Cộng Đồng, Đồng Hành.\n\nNay ta đem chừng ấy kinh nghiệm dựng một cõi tu tiên công bằng, rõ ràng. Có góp ý gì, cứ nói thẳng với ta."] } };
-  function Tn(a) {
+  var Tn = { tieu_su: { tieuDe: "Tiểu Sử Cõi Tu Tiên", trang: ["Mồng 5 tháng 9 năm 2026, nén hương đầu tiên được thắp dưới chân núi Tản Viên. tutien2d khai sơn từ đó.\n\nBuổi đầu chỉ có một ngôi làng, một con suối, một lối mòn lên núi. Phàm nhân bước vào, hái thuốc, luyện khí, rèn kiếm, rồi tự hỏi đạo của mình ở đâu.", "Từ đó đường mở dần: thành Thăng Long, Long Uyên Cốc, Mỏ Linh Thạch, những bí cảnh phải kết bạn mới qua nổi.\n\nTông môn tranh phong, chính tà phân lộ, Đại Hội luận võ mỗi ngày một náo nhiệt. Cõi này vẫn đang lớn — và đạo hữu đang viết thêm vào lai lịch của nó."] }, nguoi_lam: { tieuDe: "Người Dựng Cõi Này", trang: ["Ta là Mạnh ShopT1, tục danh Hà Đức Mạnh — kẻ dựng nên cõi này.", "Năm 2018 ta lập ShopT1, nơi tụ hội hàng trăm nghìn game thủ. Dẫn một đội cốt cán cùng gần trăm cộng tác viên, ta chỉ giữ ba chữ: Minh Bạch, Cộng Đồng, Đồng Hành.\n\nNay ta đem chừng ấy kinh nghiệm dựng một cõi tu tiên công bằng, rõ ràng. Có góp ý gì, cứ nói thẳng với ta."] } };
+  function vn(a) {
     var e = n.DiemDanh;
     var t = e.daNhan(n);
     var o = e.tong(n);
@@ -3997,10 +4022,10 @@
                   n.HUD.refreshBag();
                 }
                 var o = n.ITEMS.linh_thach;
-                n.HUD.openDialog(a.name || "Mạnh ShopT1", "Điểm danh ngày thứ " + e.tong(n) + ". Linh thạch lộ phí đã vào túi — mai ghé lại nhé.", { reward: [{ icon: o && o.icon, name: "Linh Thạch", qty: e.LINH_THACH }], choices: [{ label: fn.tieu_su.tieuDe, onChoose: function () {
-                        vn(a, "tieu_su", 0);
-                      } }, { label: fn.nguoi_lam.tieuDe, onChoose: function () {
-                        vn(a, "nguoi_lam", 0);
+                n.HUD.openDialog(a.name || "Mạnh ShopT1", "Điểm danh ngày thứ " + e.tong(n) + ". Linh thạch lộ phí đã vào túi — mai ghé lại nhé.", { reward: [{ icon: o && o.icon, name: "Linh Thạch", qty: e.LINH_THACH }], choices: [{ label: Tn.tieu_su.tieuDe, onChoose: function () {
+                        xn(a, "tieu_su", 0);
+                      } }, { label: Tn.nguoi_lam.tieuDe, onChoose: function () {
+                        xn(a, "nguoi_lam", 0);
                       } }] });
               }
               if (h()) {
@@ -4010,26 +4035,26 @@
                 o(e.nhan(n));
               }
             }(a);
-          } }, { label: fn.tieu_su.tieuDe, note: "tutien2d từ đâu mà có", onChoose: function () {
-            vn(a, "tieu_su", 0);
-          } }, { label: fn.nguoi_lam.tieuDe, note: "Mạnh ShopT1 là ai", onChoose: function () {
-            vn(a, "nguoi_lam", 0);
+          } }, { label: Tn.tieu_su.tieuDe, note: "tutien2d từ đâu mà có", onChoose: function () {
+            xn(a, "tieu_su", 0);
+          } }, { label: Tn.nguoi_lam.tieuDe, note: "Mạnh ShopT1 là ai", onChoose: function () {
+            xn(a, "nguoi_lam", 0);
           } }].concat(n.PhiPhong && n.PhiPhong.luaChonRem ? [n.PhiPhong.luaChonRem(a)] : []) });   // Nghịch Tiên: phi phong ở chỗ Rem
   }
-  function vn(a, e, t) {
-    var i = fn[e];
+  function xn(a, e, t) {
+    var i = Tn[e];
     var o = [];
     if (t + 1 < i.trang.length) {
       o.push({ label: "Nghe Tiếp", note: "Trang " + (t + 2) + "/" + i.trang.length, onChoose: function () {
-          vn(a, e, t + 1);
+          xn(a, e, t + 1);
         } });
     }
     o.push({ label: "Quay Lại", onChoose: function () {
-        Tn(a);
+        vn(a);
       } });
     n.HUD.openDialog((a.name || "Mạnh ShopT1") + " · " + i.tieuDe, i.trang[t], { choices: o });
   }
-  function xn(a, e) {
+  function bn(a, e) {
     var t;
     var i = e.id;
     if ("outfit" === a) {
@@ -4047,30 +4072,30 @@
     }
     return e.name || i;
   }
-  var bn = { wired: !1, category: null, selected: null, busy: !1, vendor: "" };
-  function _n(e) {
+  var _n = { wired: !1, category: null, selected: null, busy: !1, vendor: "" };
+  function Dn(e) {
     var o = n.AppearanceShop;
-    bn.vendor = e || "Hồng Tỷ";
-    bn.category = bn.category || o.CATEGORIES[0];
-    bn.selected = null;
-    bn.busy = !1;
-    if (!(bn.wired)) {
-      bn.wired = !0;
-      t.$("#appearance-x").addEventListener("click", Dn);
+    _n.vendor = e || "Hồng Tỷ";
+    _n.category = _n.category || o.CATEGORIES[0];
+    _n.selected = null;
+    _n.busy = !1;
+    if (!(_n.wired)) {
+      _n.wired = !0;
+      t.$("#appearance-x").addEventListener("click", Cn);
       t.$("#appearance-reset").addEventListener("click", function () {
-        bn.selected = null;
+        _n.selected = null;
         t.$("#appearance-status").textContent = "";
         Hn();
       });
       t.$("#appearance-apply").addEventListener("click", function () {
-        if (bn.selected) {
+        if (_n.selected) {
           (function (e, o) {
             var h = i.player;
             var c = n.AppearanceShop;
-            if (h && h.cfg && !bn.busy) {
-              bn.busy = !0;
+            if (h && h.cfg && !_n.busy) {
+              _n.busy = !0;
               t.$("#appearance-status").className = "appearance-status working";
-              t.$("#appearance-status").textContent = "Hồng Tỷ đang sửa soạn " + xn(e.field, o) + "…";
+              t.$("#appearance-status").textContent = "Hồng Tỷ đang sửa soạn " + bn(e.field, o) + "…";
               Hn();
               var r = n.Gateway;
               if (r && r.configured && r.configured()) {
@@ -4079,7 +4104,7 @@
               u(c.buy(e.field, o.id, n, h.cfg));
             }
             function u(i) {
-              if (bn.busy = !1, !i || !i.ok) {
+              if (_n.busy = !1, !i || !i.ok) {
                 n.Audio.play("deny");
                 n.VFX.spawnText(h.x, h.y - 52, i && i.why || "Không đổi được", "#c9a45c");
                 t.$("#appearance-status").className = "appearance-status error";
@@ -4094,7 +4119,7 @@
                 n.Progress.stones = 0 | i.stones;
               }
               h.cfg[i.field] = i.value;
-              bn.selected = null;
+              _n.selected = null;
               if (h.refreshSheet) {
                 h.refreshSheet();
               }
@@ -4102,26 +4127,26 @@
               if ("aura" === i.field) {
                 n.Audio.play("aura_activate");
               }
-              n.VFX.spawnText(h.x, h.y - 52, xn(e.field, o) + " · -" + i.cost + " Linh Thạch", "#f0d27a");
+              n.VFX.spawnText(h.x, h.y - 52, bn(e.field, o) + " · -" + i.cost + " Linh Thạch", "#f0d27a");
               t.$("#appearance-status").className = "appearance-status success";
-              t.$("#appearance-status").textContent = "Đã thay " + xn(e.field, o) + " · còn " + (0 | n.Progress.stones) + " Linh Thạch";
+              t.$("#appearance-status").textContent = "Đã thay " + bn(e.field, o) + " · còn " + (0 | n.Progress.stones) + " Linh Thạch";
               Hn();
             }
-          })(bn.category, bn.selected);
+          })(_n.category, _n.selected);
         }
       });
       t.$("#appearance-shop").addEventListener("click", function (n) {
         if (n.target === t.$("#appearance-shop")) {
-          Dn();
+          Cn();
         }
       });
       document.addEventListener("keydown", function (n) {
         if (!("Escape" !== n.key || t.$("#appearance-shop").classList.contains("hidden"))) {
-          Dn();
+          Cn();
         }
       });
     }
-    t.$("#appearance-title").textContent = bn.vendor + " · Tủ Ngoại Hình";
+    t.$("#appearance-title").textContent = _n.vendor + " · Tủ Ngoại Hình";
     t.$("#appearance-status").textContent = "";
     Hn();
     t.$("#appearance-shop").classList.remove("hidden");
@@ -4130,7 +4155,7 @@
       t.$("#appearance-x").focus();
     }, 0);
   }
-  function Dn() {
+  function Cn() {
     t.$("#appearance-shop").classList.add("hidden");
     n.HUD.dialogOpen = !1;
   }
@@ -4138,7 +4163,7 @@
     var a = n.AppearanceShop;
     var e = i.player;
     var o = e && e.cfg || {};
-    var h = bn.category || a.CATEGORIES[0];
+    var h = _n.category || a.CATEGORIES[0];
     var c = t.$("#appearance-categories");
     c.innerHTML = "";
     a.CATEGORIES.forEach(function (n) {
@@ -4151,8 +4176,8 @@
       i.title = n.name + " · " + e.length + " mẫu";
       i.addEventListener("click", function () {
         !function (n) {
-          bn.category = n;
-          bn.selected = null;
+          _n.category = n;
+          _n.selected = null;
           t.$("#appearance-status").textContent = "";
           Hn();
         }(n);
@@ -4168,7 +4193,7 @@
       var r = c.filter(function (n) {
         return e[a.field] === n.id;
       })[0] || c[0];
-      var u = bn.selected || r;
+      var u = _n.selected || r;
       var l = !!u && e[a.field] !== u.id;
       o.innerHTML = "";
       c.forEach(function (n) {
@@ -4177,17 +4202,17 @@
         var c = document.createElement("button");
         c.type = "button";
         c.className = "appearance-option" + (i ? " current" : "") + (h ? " selected" : "");
-        c.disabled = bn.busy;
+        c.disabled = _n.busy;
         c.setAttribute("aria-pressed", h ? "true" : "false");
         var r = document.createElement("span");
-        if (r.className = "appearance-option-name", r.textContent = xn(a.field, n), c.appendChild(r), i) {
+        if (r.className = "appearance-option-name", r.textContent = bn(a.field, n), c.appendChild(r), i) {
           var l = document.createElement("span");
           l.className = "appearance-option-badge";
           l.textContent = "✓";
           c.appendChild(l);
         }
         c.addEventListener("click", function () {
-          bn.selected = n;
+          _n.selected = n;
           t.$("#appearance-status").textContent = "";
           Hn();
         });
@@ -4205,17 +4230,17 @@
       n.SpriteFactory.drawFrame(d, g, 0, 6, 52, 22, 2.8, s);
       t.$("#appearance-preview-state").textContent = l ? "Đang thử" : "Đang mặc";
       t.$("#appearance-preview-state").className = l ? "trying" : "";
-      t.$("#appearance-preview-name").textContent = u ? xn(a.field, u) : "";
+      t.$("#appearance-preview-name").textContent = u ? bn(a.field, u) : "";
       var y = t.$("#appearance-reset");
       y.hidden = !l;
-      y.disabled = bn.busy;
+      y.disabled = _n.busy;
       var m = t.$("#appearance-apply");
       var f = u && i.priceOf ? i.priceOf(a.field, u.id) : i.COST;
-      m.disabled = !l || h < f || bn.busy;
-      m.textContent = bn.busy ? "Đang đổi…" : l ? h < f ? "Thiếu Linh Thạch" : "Đổi · " + f + " LT" : "Đang mặc";
+      m.disabled = !l || h < f || _n.busy;
+      m.textContent = _n.busy ? "Đang đổi…" : l ? h < f ? "Thiếu Linh Thạch" : "Đổi · " + f + " LT" : "Đang mặc";
     })(h, o);
   }
-  function kn(a, e) {
+  function wn(a, e) {
     var t = n.Talismans.buy(a.id, e, n);
     var o = i.player;
     if (!t.ok) {
@@ -4226,7 +4251,7 @@
     n.VFX.spawnText(o.x, o.y - 52, "+" + e + " " + n.ITEMS[t.itemId].name, "#f0d27a");
     n.HUD.renderBag();
   }
-  function wn(a, e) {
+  function kn(a, e) {
     var t = n.Food.buy(a.id, e, n);
     var o = i.player;
     if (!t.ok) {
@@ -4237,7 +4262,7 @@
     n.VFX.spawnText(o.x, o.y - 52, "+" + e + " " + n.ITEMS[a.id].name, "#f0d27a");
     n.HUD.renderBag();
   }
-  function Cn(a) {
+  function In(a) {
     var e = n.Food.eat(a, n);
     var t = i.player;
     if (!e.ok) {
@@ -4251,7 +4276,7 @@
       n.VFX.spawnText(t.x, t.y - 70, "Mất hiệu lực " + o, "#c9a45c");
     }
     n.HUD.renderBag();
-    dn(!1);
+    yn(!1);
   }
   function Ln() {
     for (var n = !!i.fishingAuto, a = [t.$("#btn-fishing-stop"), t.$("#btn-fishing-stop-touch")], e = 0; e < a.length; e++) {
@@ -4263,7 +4288,7 @@
       }
     }
   }
-  function In() {
+  function Un() {
     var a = !(!i.fishing && !i.fishingAuto);
     i.fishing = null;
     i.fishingAuto = !1;
@@ -4279,12 +4304,12 @@
   function Mn(a, o) {
     var h = i.player;
     if (h && !i.fishing && n.Fishing) {
-      if (ca(), i.approach = null, h.flying) {
+      if (ra(), i.approach = null, h.flying) {
         if (!n.Player.landFly(h, i.map)) {
           n.Audio.play("deny");
           return void n.VFX.spawnText(h.x, h.y - 52, "Bên dưới không có chỗ đặt chân", "#c9a45c");
         }
-        E();
+        X();
       }
       n.Player.stand(h);
       h.stop();
@@ -4308,7 +4333,7 @@
             }
         return r || { x: n.x, y: n.y };
       }(a, h);
-      q(h, c.x - h.x, c.y - h.y);
+      Q(h, c.x - h.x, c.y - h.y);
       i.fishing = { t: 0, duration: n.Fishing.waitTime(), bobX: c.x, bobY: c.y, waterName: a.title || a.name || "Bờ Nước", prop: a, auto: !!o };
       i.fishingAuto = !!o;
       Ln();
@@ -4317,7 +4342,7 @@
       n.HUD.setCaption(o ? "Đã bật tự động câu · chờ cá cắn câu" : "Đã thả mồi · chờ cá cắn câu");
     }
   }
-  function Un(a, e) {
+  function An(a, e) {
     var t = !(!a.auto || !i.fishingAuto);
     !function (a, e) {
       var t = i.player;
@@ -4340,28 +4365,28 @@
     }(a, e);
     if (!t || n.Input.hasManualMove && n.Input.hasManualMove() || n.Input.tap) {
       if (t) {
-        In();
+        Un();
       }
     }
     else {
       Mn(a.prop, !0);
     }
   }
-  function An(a) {
+  function Fn(a) {
     var e = n.Quest;
     var t = n.Inventory;
     var o = i.player;
     if (a.__boQuaTamKiep || !n.HacThiUI || !n.HacThiUI.chanDaiDa(a, function () {
       a.__boQuaTamKiep = !0;
       try {
-        An(a);
+        Fn(a);
       }
       finally {
         a.__boQuaTamKiep = !1;
       }
     }))
       if (10 === e.stage && t.has("tu_khi_duoc")) {
-        wa(a);
+        ka(a);
       }
       else {
         if (13 === e.stage && o.canMeditate && !n.Player.isFull(o) && !t.has("tay_tuy_thang")) {
@@ -4376,7 +4401,7 @@
                 e.x = a.x;
                 e.y = a.y - 4;
                 n.Player.sit(e, !0);
-                i.ritual = { t: 0, phase: -1, a1: 0, a2: 0, a3: 0, fail: Sn };
+                i.ritual = { t: 0, phase: -1, a1: 0, a2: 0, a3: 0, fail: Pn };
                 n.Inventory.remove("tay_tuy_thang", 1);
                 c("ritual.tayTuy");
               }(a);
@@ -4396,7 +4421,7 @@
               var o = "Ngươi ngồi lên phiến đá, nhắm mắt dò xét đan điền. Linh khí đã đầy ắp, chỉ chờ một hơi bức phá là sang " + t.next.name + ".\n\nĐIỀU KIỆN PHÁ QUAN:\n" + n.Breakthrough.describe(t);
               if (t.ready) {
                 n.HUD.openDialog("Đột Phá Cảnh Giới", o + "\n\nMọi thứ đã sẵn. Chỉ cần vận Đạo Dẫn thuật dồn toàn bộ linh khí lên cửa quan.", { actionLabel: "Bắt Đầu Phá Quan", onAction: function () {
-                    Fn(a);
+                    Sn(a);
                   } });
               }
               else {
@@ -4407,7 +4432,7 @@
         }(a);
       }
   }
-  function Fn(a) {
+  function Sn(a) {
     var e = i.player;
     n.Breakthrough.pay(e);
     e.x = a.x;
@@ -4415,32 +4440,32 @@
     n.Player.sit(e, !0);
     i.ascend = { t: 0, phase: -1, acc: 0, next: n.Breakthrough.nextRealm(e) };
   }
-  i.eatFood = Cn;
-  i.stopFishing = In;
+  i.eatFood = In;
+  i.stopFishing = Un;
   i.playFoundationBreakthrough = function (a) {
     var e = i.player;
     return !(!e || i.foundationBreakthrough || (n.Targeting.clear(), n.Player.sit(e, !0), i.foundationBreakthrough = { t: 0, phase: -1, gatherAcc: 0, settleAcc: 0, success: !!a.success, why: a.why || (a.success ? "Đạo cơ đã thành." : "Phá quan thất bại.") }, n.VFX.spawnFoundationFormation(e.x, e.y, !!a.success, 7.8), n.HUD.setCaption("Tĩnh tâm định tức — dẫn linh khí toàn thân về khí hải…"), 0));
   };
-  var Sn = !1;
-  function Pn(a, e) {
+  var Pn = !1;
+  function Nn(a, e) {
     var t = i.ritual;
     if (null != e) {
       n.HUD.setCaption(e);
     }
     return t.phase !== a && (t.phase = a, !0);
   }
-  var Nn = i.CULL = { remote: 336, enemy: 176, drop: 96, critter: 96 };
-  var Vn = i.cullStats = { remotes: 0, remotesDrawn: 0, enemies: 0, enemiesDrawn: 0 };
-  function Bn() {
+  var Vn = i.CULL = { remote: 336, enemy: 176, drop: 96, critter: 96 };
+  var Bn = i.cullStats = { remotes: 0, remotesDrawn: 0, enemies: 0, enemiesDrawn: 0 };
+  function Xn() {
     return n.Quality ? n.Quality.tier : 2;
   }
   var En = -1;
-  function Xn(n, a, e, t, i, o, h) {
+  function Gn(n, a, e, t, i, o, h) {
     return n > e - h && n < e + i + h && a > t - h && a < t + o + h;
   }
-  function Gn() {
+  function Rn() {
     if (i.menuOpen) {
-      Yn();
+      $n();
     }
     if (n.HUD && n.HUD.bagOpen) {
       n.HUD.closeBag();
@@ -4452,7 +4477,7 @@
       n.HUD.openDialog("Tông Môn", "Chưa nạp được bảng Tông Môn.");
     }
   }
-  function Rn() {
+  function Kn() {
     i.menuOpen = !0;
     t.$("#menu").classList.remove("hidden");
     var e = t.$("#menu-player");
@@ -4463,13 +4488,13 @@
     t.$("#menu-touch").textContent = "Điều khiển: " + ("touch" === n.Input.mode ? "Cảm ứng" : "Bàn phím");
     t.$("#menu-debug").textContent = "Lưới gỡ lỗi: " + (a.DEBUG ? "Bật" : "Tắt");
     t.$("#menu-theme").textContent = "Tông cảnh vật: " + n.Palette.WORLD.name;
-    t.$("#menu-zoom").textContent = qn();
+    t.$("#menu-zoom").textContent = Qn();
     var h = t.$("#menu-gfx");
     if (h) {
       h.classList.toggle("hidden", !n.Quality);
-      h.textContent = On();
+      h.textContent = qn();
     }
-    Kn();
+    On();
     var c = t.$("#menu-nguoi");
     if (c && n.Quality && n.Quality.nguoiLabel) {
       c.textContent = "Người chơi khác: " + n.Quality.nguoiLabel();
@@ -4500,15 +4525,15 @@
       g.textContent = p ? n.Auth.isGuest && n.Auth.isGuest() ? "Đăng xuất (khách)" : "Đăng xuất" : "Đăng nhập / Đăng ký";
     }
   }
-  function Kn() {
+  function On() {
     var a = t.$("#menu-weather");
     if (a && (a.classList.toggle("hidden", !n.Weather), n.Weather)) {
-      var e = Bn() < 2;
+      var e = Xn() < 2;
       a.disabled = e;
       a.textContent = e ? "Thời tiết: chỉ có ở đồ hoạ Bình thường" : "Thời tiết: " + n.Weather.modeLabel();
     }
   }
-  function On() {
+  function qn() {
     var a = n.Quality;
     if (!a) {
       return "Đồ hoạ: Bình thường";
@@ -4516,7 +4541,7 @@
     var e = a.get();
     return "Đồ hoạ: " + e.name + (e.fps ? " (" + e.fps + " FPS)" : "");
   }
-  function qn() {
+  function Qn() {
     var a = n.Renderer;
     return "Tỉ lệ phóng: " + a.view().name + " (" + a.zoom + "× · " + a.w + "×" + a.h + ")";
   }
@@ -4529,7 +4554,7 @@
     var g = n.Camera.renderY();
     var p = Math.floor(4 * i.waterTime);
     var y = n.Game.time;
-    var m = Bn();
+    var m = Xn();
     n.Renderer.clear(c.data.ambient);
     if (n.TamGioiSky && m > 0) {
       n.TamGioiSky.drawBack(h, c, s, g, u, l, y);
@@ -4559,6 +4584,9 @@
     if (n.HuThienUI) {
       n.HuThienUI.drawGround(h, s, g, y);
     }
+    if (n.ChienTruongUI) {
+      n.ChienTruongUI.drawGround(h, s, g, y);
+    }
     if (n.PondFish && m > 0) {
       n.PondFish.draw(h, c, s, g, y);
     }
@@ -4578,47 +4606,47 @@
       o.push({ y: v[x].sortY, pr: v[x] });
     for (var b = 0; b < i.drops.length; b++) {
       var _ = i.drops[b];
-      if (Xn(_.x, _.y, s, g, u, l, Nn.drop)) {
+      if (Gn(_.x, _.y, s, g, u, l, Vn.drop)) {
         o.push({ y: _.sortY, drop: _ });
       }
     }
-    for (var D = i.enemies, H = 0, k = 0, w = 0; w < D.length; w++) {
-      var C = D[w];
-      if (!(C.dead)) {
-        H++;
-        if (Xn(C.x, C.y, s, g, u, l, Nn.enemy)) {
-          k++;
-          o.push({ y: C.y, en: C });
+    for (var D = i.enemies, C = 0, H = 0, w = 0; w < D.length; w++) {
+      var k = D[w];
+      if (!(k.dead)) {
+        C++;
+        if (Gn(k.x, k.y, s, g, u, l, Vn.enemy)) {
+          H++;
+          o.push({ y: k.y, en: k });
         }
       }
     }
-    for (var L = 0; m > 0 && L < i.critters.length; L++) {
-      var I = i.critters[L];
-      if (Xn(I.x, I.y, s, g, u, l, Nn.critter)) {
-        o.push({ y: I.sortY, cr: I });
+    for (var I = 0; m > 0 && I < i.critters.length; I++) {
+      var L = i.critters[I];
+      if (Gn(L.x, L.y, s, g, u, l, Vn.critter)) {
+        o.push({ y: L.sortY, cr: L });
       }
     }
     if (i.escortFollower && o.push({ y: i.escortFollower.y, escort: i.escortFollower }), n.AmHon && n.Gateway.honBay && n.Gateway.honBay.length) {
-      for (var M = n.Gateway.honBay, U = n.Gateway.selfId, A = 0; A < M.length; A++) {
-        var F = M[A];
-        if (Xn(F.x, F.y, s, g, u, l, Nn.enemy)) {
-          o.push({ y: F.y, hon: F, honMinh: F.o === U });
+      for (var U = n.Gateway.honBay, M = n.Gateway.selfId, A = 0; A < U.length; A++) {
+        var F = U[A];
+        if (Gn(F.x, F.y, s, g, u, l, Vn.enemy)) {
+          o.push({ y: F.y, hon: F, honMinh: F.o === M });
         }
       }
     }
     if (n.KhoiLoiFX && n.Gateway.khoiLoiBay && n.Gateway.khoiLoiBay.length) {
       for (var S = n.Gateway.khoiLoiBay, P = 0; P < S.length; P++) {
         var N = S[P];
-        if (Xn(N.x, N.y, s, g, u, l, Nn.enemy)) {
+        if (Gn(N.x, N.y, s, g, u, l, Vn.enemy)) {
           o.push({ y: N.y, kl: N });
         }
       }
     }
     var V = n.Gateway.remotes;
     var B = 0;
-    var E = 0;
-    for (var X in W.length = 0, V) {
-      var G = V[X];
+    var X = 0;
+    for (var E in j.length = 0, V) {
+      var G = V[E];
       if (G.seen) {
         B++;
         if (n.Quality && n.Quality.anNguoi && n.Quality.anNguoi(G)) {
@@ -4627,9 +4655,9 @@
           }
         }
         else {
-          if (Xn(G.x, G.y, s, g, u, l, Nn.remote)) {
-            E++;
-            W.push(G);
+          if (Gn(G.x, G.y, s, g, u, l, Vn.remote)) {
+            X++;
+            j.push(G);
             o.push({ y: G.y, rm: G });
           }
           else {
@@ -4640,24 +4668,24 @@
         }
       }
     }
-    if (Vn.remotes = B, Vn.remotesDrawn = E, n.Quality && n.Quality.setCrowd) {
+    if (Bn.remotes = B, Bn.remotesDrawn = X, n.Quality && n.Quality.setCrowd) {
       var R = n.Game.time;
-      if (R - Z >= .5 || R < Z) {
-        Z = R;
-        z = !1;
+      if (R - J >= .5 || R < J) {
+        J = R;
+        Z = !1;
         for (var K = 0; K < i.enemies.length; K++)
-          if (!i.enemies[K].dead && J[i.enemies[K].type]) {
-            z = !0;
+          if (!i.enemies[K].dead && nn[i.enemies[K].type]) {
+            Z = !0;
             break;
           }
       }
-      n.Quality.setCrowd(W.length, z);
+      n.Quality.setCrowd(j.length, Z);
     }
-    Vn.remotesGian = function (a, e) {
+    Bn.remotesGian = function (a, e) {
       var t;
       var i;
       var o = n.Quality ? n.Quality.remoteTier ? n.Quality.remoteTier() : n.Quality.tier : 2;
-      var h = null != $[o] ? $[o] : 12;
+      var h = null != W[o] ? W[o] : 12;
       var c = n.Gateway;
       if (n.Quality && n.Quality.chamNguoi && n.Quality.chamNguoi()) {
         var r = 0;
@@ -4672,7 +4700,7 @@
           a[t].veGian = !1;
         return 0;
       }
-      for (j.length = 0, t = 0; t < a.length; t++)
+      for (z.length = 0, t = 0; t < a.length; t++)
         if (i = a[t], n.Targeting && n.Targeting.thuDich && n.Targeting.thuDich(i) || c.partyMember && c.partyMember(i.id)) {
           i.veGian = !1;
         }
@@ -4680,20 +4708,20 @@
           var u = i.x - e.x;
           var l = i.y - e.y;
           i.khoangCach2 = u * u + l * l;
-          j.push(i);
+          z.push(i);
         }
-      j.sort(function (n, a) {
+      z.sort(function (n, a) {
         return n.khoangCach2 - a.khoangCach2;
       });
-      var s = Math.max(0, h - (a.length - j.length));
+      var s = Math.max(0, h - (a.length - z.length));
       var g = 0;
-      for (t = 0; t < j.length; t++)
-        j[t].veGian = t >= s, j[t].veGian && g++;
+      for (t = 0; t < z.length; t++)
+        z[t].veGian = t >= s, z[t].veGian && g++;
       return g;
-    }(W, r);
-    Vn.enemies = H;
-    Vn.enemiesDrawn = k;
-    if (!(nn())) {
+    }(j, r);
+    Bn.enemies = C;
+    Bn.enemiesDrawn = H;
+    if (!(an())) {
       o.push({ y: r.y, p: r });
     }
     if (n.BangNhanhUI && n.BangNhanhUI.depthItems) {
@@ -4701,6 +4729,9 @@
     }
     if (n.PhongChoUI && n.PhongChoUI.depthItems) {
       n.PhongChoUI.depthItems(o);
+    }
+    if (n.ChienTruongUI && n.ChienTruongUI.depthItems) {
+      n.ChienTruongUI.depthItems(o);
     }
     if (n.TuAnhPhuocFX && n.TuAnhPhuocFX.depthItems) {
       n.TuAnhPhuocFX.depthItems(o);
@@ -4735,7 +4766,7 @@
             }
             else {
               if (q.drop) {
-                Ta(h, q.drop, s, g, y);
+                va(h, q.drop, s, g, y);
               }
               else {
                 if (q.en) {
@@ -4773,7 +4804,7 @@
         h.restore();
       }
     }
-    if (n.VFX.draw && n.VFX.draw(h, s, g, "front"), n.TruyenTongUI && n.TruyenTongUI.drawFront && n.TruyenTongUI.drawFront(h, s, g, y), n.HuThienUI && n.HuThienUI.drawFront(h, s, g, y), n.DaiTanArt && n.DaiTanArt.drawOverlay && n.DaiTanArt.drawOverlay(h, c, s, g, u, l, y), n.BaiDaArt && n.BaiDaArt.drawFx && n.BaiDaArt.drawFx(h, c, s, g, u, l, y, m), n.RungTrucArt && n.RungTrucArt.drawFx && n.RungTrucArt.drawFx(h, c, s, g, u, l, y, m), n.DuocCocArt && n.DuocCocArt.drawFx && n.DuocCocArt.drawFx(h, c, s, g, u, l, y, m), n.MieuHoangArt && n.MieuHoangArt.drawFx && n.MieuHoangArt.drawFx(h, c, s, g, u, l, y, m), n.MoLinhThachArt && n.MoLinhThachArt.drawFx && n.MoLinhThachArt.drawFx(h, c, s, g, u, l, y, m), n.LongUyenArt && n.LongUyenArt.drawFx && n.LongUyenArt.drawFx(h, c, s, g, u, l, y, m), n.ThungLungArt && n.ThungLungArt.drawFx && n.ThungLungArt.drawFx(h, c, s, g, u, l, y, m), n.PhongChoArt && n.PhongChoArt.drawFx && n.PhongChoArt.drawFx(h, c, s, g, u, l, y, m), n.HuThienArt && n.HuThienArt.drawFx && n.HuThienArt.drawFx(h, c, s, g, u, l, y, m), n.YenLangArt && n.YenLangArt.drawFx && n.YenLangArt.drawFx(h, c, s, g, u, l, y, m), n.SanDauArt && n.SanDauArt.drawFx && n.SanDauArt.drawFx(h, c, s, g, u, l, y, m), n.VeTay && n.VeTay.drawFx && n.VeTay.drawFx(h, c, s, g, u, l, y, m), n.LamLangArt && n.LamLangArt.drawFx && n.LamLangArt.drawFx(h, c, s, g, u, l, y, m), n.TanVienFxArt && n.TanVienFxArt.drawFx && n.TanVienFxArt.drawFx(h, c, s, g, u, l, y, m), n.HuyetSacUI && n.HuyetSacUI.drawSeals && n.HuyetSacUI.drawSeals(h, s, g, y), n.HuyetSacUI && n.HuyetSacUI.drawThu && n.HuyetSacUI.drawThu(h, s, g), n.YenLangUI && n.YenLangUI.draw && n.YenLangUI.draw(h, s, g, y), n.TamGioiSky && 2 === m && n.TamGioiSky.drawFront(h, c, s, g, u, l, y), n.Weather && 2 === m && n.Weather.draw(h, c, s, g, u, l, y), n.BossBoard && n.BossBoard.draw && n.BossBoard.draw(h, s, g), n.Chat && n.Chat.drawBubbles && n.Chat.drawBubbles(h, s, g, r), i.fishing && function (a, e, o, h, c) {
+    if (n.VFX.draw && n.VFX.draw(h, s, g, "front"), n.TruyenTongUI && n.TruyenTongUI.drawFront && n.TruyenTongUI.drawFront(h, s, g, y), n.HuThienUI && n.HuThienUI.drawFront(h, s, g, y), n.ChienTruongUI && n.ChienTruongUI.drawFront(h, s, g, y), n.DaiTanArt && n.DaiTanArt.drawOverlay && n.DaiTanArt.drawOverlay(h, c, s, g, u, l, y), n.BaiDaArt && n.BaiDaArt.drawFx && n.BaiDaArt.drawFx(h, c, s, g, u, l, y, m), n.RungTrucArt && n.RungTrucArt.drawFx && n.RungTrucArt.drawFx(h, c, s, g, u, l, y, m), n.DuocCocArt && n.DuocCocArt.drawFx && n.DuocCocArt.drawFx(h, c, s, g, u, l, y, m), n.MieuHoangArt && n.MieuHoangArt.drawFx && n.MieuHoangArt.drawFx(h, c, s, g, u, l, y, m), n.MoLinhThachArt && n.MoLinhThachArt.drawFx && n.MoLinhThachArt.drawFx(h, c, s, g, u, l, y, m), n.LongUyenArt && n.LongUyenArt.drawFx && n.LongUyenArt.drawFx(h, c, s, g, u, l, y, m), n.ThungLungArt && n.ThungLungArt.drawFx && n.ThungLungArt.drawFx(h, c, s, g, u, l, y, m), n.PhongChoArt && n.PhongChoArt.drawFx && n.PhongChoArt.drawFx(h, c, s, g, u, l, y, m), n.HuThienArt && n.HuThienArt.drawFx && n.HuThienArt.drawFx(h, c, s, g, u, l, y, m), n.YenLangArt && n.YenLangArt.drawFx && n.YenLangArt.drawFx(h, c, s, g, u, l, y, m), n.SanDauArt && n.SanDauArt.drawFx && n.SanDauArt.drawFx(h, c, s, g, u, l, y, m), n.VeTay && n.VeTay.drawFx && n.VeTay.drawFx(h, c, s, g, u, l, y, m), n.LamLangArt && n.LamLangArt.drawFx && n.LamLangArt.drawFx(h, c, s, g, u, l, y, m), n.TanVienFxArt && n.TanVienFxArt.drawFx && n.TanVienFxArt.drawFx(h, c, s, g, u, l, y, m), n.HuyetSacUI && n.HuyetSacUI.drawSeals && n.HuyetSacUI.drawSeals(h, s, g, y), n.HuyetSacUI && n.HuyetSacUI.drawThu && n.HuyetSacUI.drawThu(h, s, g), n.YenLangUI && n.YenLangUI.draw && n.YenLangUI.draw(h, s, g, y), n.TamGioiSky && 2 === m && n.TamGioiSky.drawFront(h, c, s, g, u, l, y), n.Weather && 2 === m && n.Weather.draw(h, c, s, g, u, l, y), n.BossBoard && n.BossBoard.draw && n.BossBoard.draw(h, s, g), n.Chat && n.Chat.drawBubbles && n.Chat.drawBubbles(h, s, g, r), i.fishing && function (a, e, o, h, c) {
       var r = i.player;
       var u = n.Pixel;
       var l = Math.round(n.Player.viewX(r) - o + (1 === r.dir ? -5 : 5));
@@ -4892,16 +4923,16 @@
       })(h, u, l);
     }
   };
-  var Qn = null;
-  function Yn() {
+  var Yn = null;
+  function $n() {
     i.menuOpen = !1;
     var n = t.$("#menu");
     if (n) {
       n.classList.add("hidden");
     }
   }
-  var $n = "";
-  function Wn(a) {
+  var Wn = "";
+  function jn(a) {
     var e = n.Forge;
     var t = (n.Inventory, "tho_ren" === a.id && n.Quest.stage === n.Quest.XICH_LONG_STAGE && n.Quest.stageComplete());
     if (t && n.Quest.khucBonKhoa && n.Quest.khucBonKhoa() && !n.Quest.TRUC_CO_STAGE && (t = !1, n.HUD.setCaption && n.HUD.setCaption(n.Quest.KHUC_BON_KHOA_TEXT || "Khúc tiếp theo sắp mở — chờ thông báo.")), t) {
@@ -4915,7 +4946,7 @@
                 n.Inventory.add(a[0], a[1]);
               });
             }
-            dn(!1);
+            yn(!1);
           }
         }, reward: i.map(function (a) {
           var e = n.ITEMS[a[0]] || {};
@@ -4927,7 +4958,7 @@
       var c = "Nhiệm vụ cần một vũ khí: chọn Thiết Kiếm, Thiết Đao hoặc Thiết Thương (2 Huyền Thiết + 50 Linh Thạch) để rèn, rồi trang bị.";
       if (n.ForgeUI) {
         n.ForgeUI.open(a, function (n) {
-          jn(a, n);
+          zn(a, n);
         }, o ? c : "Chọn một món để xem chi tiết, nguyên liệu và cách nhận.");
       }
       else {
@@ -4939,13 +4970,13 @@
             var r = "phi_hanh" === t.slot ? "Phi Hành" + (c ? " · Cần " + c.name : "") : "mu" === t.slot ? "Pháp Bảo" + (h ? " · " + h : "") + (c ? " · Cần " + c.name : "") : "giap" === t.slot ? "Giáp" + (h ? " · " + h : "") + (c ? " · Cần " + c.name : "") : "giay" === t.slot ? "Hành Ngoa" + (h ? " · " + h : "") + (c ? " · Cần " + c.name : "") : "nhan" === t.slot ? "Linh Giới" + (h ? " · " + h : "") + (c ? " · Cần " + c.name : "") : "phap_boi" === t.slot ? "Pháp Bội" + (h ? " · " + h : "") + (c ? " · Cần " + c.name : "") : "Công +" + t.atk;
             return t.dropOnly ? { label: t.name, note: r + " · " + e.dropNote(t, n), icon: n.ITEMS[t.id] ? n.ITEMS[t.id].icon : null, disabled: !0, onChoose: function () {
               } } : { label: t.name, note: e.priceLine(t) + " · " + r + (i.ok ? "" : " — " + i.why), icon: n.ITEMS[t.id] ? n.ITEMS[t.id].icon : null, disabled: !i.ok, onChoose: function () {
-                jn(a, t);
+                zn(a, t);
               } };
           }) });
       }
     }
   }
-  function jn(a, e) {
+  function zn(a, e) {
     c("forge", { itemId: e.id });
     var t = n.Quest.stage === n.Quest.FORGE_STAGE && "vu_khi" === e.slot && !n.Quest.flags.ren_vu_khi_chinh;
     if (!h()) {
@@ -4953,15 +4984,15 @@
       if (!i.ok) {
         return void n.HUD.setCaption(i.why);
       }
-      dn();
+      yn();
     }
     n.VFX.spawnRing(a.x, a.y - 18, "#ffb35c", 26, .5);
     n.HUD.setCaption(e.caption);
     var o = e.khoiLoi && n.KhoiLoi ? "bấm khôi lỗi, chọn Triệu Hồi (" + (n.KhoiLoi.byId(e.id) || {}).sp + " Thần Thức mỗi lần, tối đa " + n.KhoiLoi.TRAN + " con cùng lúc)." : "phi_hanh" === e.slot ? "bấm món phi hành, chọn Trang Bị vào ô Phi Hành." : "mu" === e.slot ? "bấm mũ vừa rèn, chọn Trang Bị vào ô Pháp Bảo để nhận chỉ số." : "giap" === e.slot ? "bấm giáp vừa rèn, chọn Trang Bị vào ô Giáp để nhận chỉ số." : "nhan" === e.slot ? "bấm nhẫn vừa rèn, chọn Trang Bị vào ô Linh Giới để nhận hồi Thần Thức." : "phap_boi" === e.slot ? "bấm bội vừa rèn, chọn Trang Bị vào ô Pháp Bội để nhận chỉ số." : "bấm món vũ khí, chọn Trang Bị vào ô Vũ Khí thì đòn đánh thường mới nặng thêm.";
     n.HUD.openDialog(e.name, e.caption + "\n\nMón vừa rèn xong nằm trong Hành Trang. Mở túi rồi " + o + (t ? "\n\nViệc rèn của nhiệm vụ đã xong" + (n.Quest.hangXong() ? " — bảng nhiệm vụ tự sang việc kế." : ".") : ""), { reward: [{ icon: n.ITEMS[e.id] ? n.ITEMS[e.id].icon : null, name: e.name, qty: 1 }] });
   }
-  var zn = { liet_hoa: "#e86b36", tu_linh: "#68d7b0", loan_loi_hoa: "#c68eff", tu_tuong: "#ffd678" };
-  function Zn(a) {
+  var Zn = { liet_hoa: "#e86b36", tu_linh: "#68d7b0", loan_loi_hoa: "#c68eff", tu_tuong: "#ffd678" };
+  function Jn(a) {
     var e = n.Formations;
     var t = i.player;
     var o = (n.LucTinhTrucKiem, 0 | n.Progress.stones);
@@ -4986,13 +5017,13 @@
                       return void n.HUD.setCaption("Không mua được: " + (i && i.why || "máy chủ từ chối"));
                     }
                     n.Audio.play("coin");
-                    n.VFX.spawnRing(a.x, a.y - 18, zn[t.id] || "#68d7b0", 26, .5);
+                    n.VFX.spawnRing(a.x, a.y - 18, Zn[t.id] || "#68d7b0", 26, .5);
                     n.HUD.setCaption("Đã mua " + n.ITEMS[t.item].name + " · -" + e.cost + " Linh Thạch");
                     if (n.HUD.refreshBag) {
                       n.HUD.refreshBag();
                     }
                     if (!(h())) {
-                      Zn(a);
+                      Jn(a);
                     }
                   }
                   if (h()) {
@@ -5008,7 +5039,7 @@
     });
     n.HUD.openDialog(a.name || "Trận Pháp Sư", 'Mặc Huyền đặt mấy mặt bàn đá lên tấm vải đen:\n\n"Trận bàn mua một lần, dựng mãi không mất. Gán nó vào một ô H J K L, kéo ra chỗ muốn đặt rồi buông tay là trận thành — rót Linh lực kích hoạt và lấy Linh Thạch trong hầu bao nuôi trận từng giây."\n\nĐang có: ' + o + " Linh Thạch", { choices: c });
   }
-  function Jn(a) {
+  function na(a) {
     var e = n.Skills;
     var t = i.player;
     var o = 0 | n.Progress.stones;
@@ -5032,7 +5063,7 @@
                     n.HUD.refreshBag();
                   }
                   if (!(h())) {
-                    Jn(a);
+                    na(a);
                   }
                 }
                 if (h()) {
@@ -5049,7 +5080,7 @@
       n.HUD.openDialog(a.name || "Chấp Sự Thiên Kiếm Tông", '"Hộp bí tịch của tông đã đóng. Muốn bí tịch trung cấp thì tới Tàng Kinh Các, rút ở Tàng Kinh Trung Cấp."');
     }
   }
-  function na(a) {
+  function aa(a) {
     var e = i.player;
     var t = n.Quest;
     if ("Phàm Nhân" === e.realm) {
@@ -5095,57 +5126,57 @@
           n.Inventory.add("truc_kiem", 1);
           n.Inventory.add("bat_com_linh_me", 1);
           n.VFX.spawnText(i.player.x, i.player.y - 58, "Nhận việc · Trúc Kiếm + Bát Cơm", "#bff3d8");
-          dn();
+          yn();
         }, reward: [{ icon: "bamboo_sword", name: "Trúc Kiếm", qty: 1 }, { icon: "com_bowl", name: "Bát Cơm Linh Mễ", qty: 1 }] });
     }
   }
-  var aa = { truc_gia: ["#e8dfa0", "#cfeba8", "#75844a", "#c8de7e"], duoc_moc: ["#e0c48a", "#a98a4a", "#5b3d22", "#b8946a"], linh_chi: ["#f0a080", "#d9644a", "#7a3b2a", "#d98d6a"] };
-  function ea(n) {
-    return aa[n] || aa.linh_chi;
+  var ea = { truc_gia: ["#e8dfa0", "#cfeba8", "#75844a", "#c8de7e"], duoc_moc: ["#e0c48a", "#a98a4a", "#5b3d22", "#b8946a"], linh_chi: ["#f0a080", "#d9644a", "#7a3b2a", "#d98d6a"] };
+  function ta(n) {
+    return ea[n] || ea.linh_chi;
   }
-  var ta = 3;
-  var ia = .34;
-  function oa(n) {
+  var ia = 3;
+  var oa = .34;
+  function ha(n) {
     if (!(i.chopping && i.chopping.prop === n)) {
-      i.chopping = { prop: n, swing: 0, t: ia };
+      i.chopping = { prop: n, swing: 0, t: oa };
     }
   }
-  function ha() {
+  function ca() {
     var a = n.QuanSuUI && n.QuanSuUI.nv && n.QuanSuUI.nv.dang;
     return !!(a && "chat_cay" === a.loai && a.co < a.can && n.Gateway && n.Gateway.cmd);
   }
-  function ca() {
+  function ra() {
     if (i.chopping) {
       i.chopping.prop.shakeUntil = 0;
       i.chopping = null;
     }
   }
-  var ra = null;
   var ua = null;
-  var la = n.Loot.PICK_R;
-  var sa = .2;
-  function ga(n) {
+  var la = null;
+  var sa = n.Loot.PICK_R;
+  var ga = .2;
+  function pa(n) {
     for (var a = 0; a < i.drops.length; a++)
       if (i.drops[a].lootId === n) {
         return i.drops[a];
       }
     return null;
   }
-  function pa() {
+  function da() {
     return n.Gateway && n.Gateway.selfId || null;
   }
-  function da(a) {
-    return "item" !== a.kind || !h() || n.Loot.canPick(a, pa(), a.age);
-  }
   function ya(a) {
-    return "item" === a.kind && n.Loot.autoPull(a, pa(), a.age);
+    return "item" !== a.kind || !h() || n.Loot.canPick(a, da(), a.age);
   }
-  function ma() {
+  function ma(a) {
+    return "item" === a.kind && n.Loot.autoPull(a, da(), a.age);
+  }
+  function fa() {
     for (var a = 0; a < i.drops.length; a++)
       i.drops[a].materialId && n.Quest.releaseSeedMaterial(i.drops[a].materialId);
     i.drops.length = 0;
   }
-  function fa(a) {
+  function Ta(a) {
     var e = n.Quest;
     if ("item" === a.kind) {
       var t = n.ITEMS[a.itemId];
@@ -5161,21 +5192,21 @@
       if (a.boss && n.Chat && n.Chat.line) {
         n.Chat.line("Nhận phần thưởng từ " + (a.bossName || "Boss") + ": +" + r + " " + c, "sys", { muc: "map" });
       }
-      return void dn(!1);
+      return void yn(!1);
     }
     if (e.claimSeedMaterial(a.task, a.materialId)) {
       var u = e.seedTaskInfo();
-      var l = ea(a.task);
+      var l = ta(a.task);
       var s = i.player;
       n.VFX.spawnText(s.x, s.y - 46, "+1 " + (u ? u.itemName : "Nguyên liệu"), l[0]);
       n.VFX.spawnRing(s.x, s.y - 6, l[1], 20, .45);
       if (e.seedQuestComplete()) {
         n.VFX.spawnText(s.x, s.y - 62, "Đã đủ — về giao Đại Phu", "#f0d27a");
       }
-      dn(!1);
+      yn(!1);
     }
   }
-  function Ta(a, e, i, o, h) {
+  function va(a, e, i, o, h) {
     var c = Math.round(e.x - i);
     var r = Math.round(e.y - o);
     if ("item" !== e.kind) {
@@ -5193,13 +5224,13 @@
       !function (a, e, i, o, h) {
         var c = n.ITEMS[e.itemId];
         if (c) {
-          var r = da(e);
+          var r = ya(e);
           var u = n.Loot.gradeOf(c);
           if ("fall" !== e.state) {
             var l = .72 + .28 * Math.sin(3.4 * h + .13 * e.x);
             var s = r ? 1 : .45;
             var g = n.Loot.GLOW_ITEMS && n.Loot.GLOW_ITEMS[e.itemId];
-            if (g && (0 === Bn() ? n.Pixel.ellipse(a, i, o - 4, 22, 9, t.alpha(g, .25), g) : function (n, a, e, i, o) {
+            if (g && (0 === Xn() ? n.Pixel.ellipse(a, i, o - 4, 22, 9, t.alpha(g, .25), g) : function (n, a, e, i, o) {
               var h = .75 + .25 * Math.sin(4 * i);
               n.save();
               n.globalCompositeOperation = "lighter";
@@ -5235,13 +5266,13 @@
               o -= Math.round(2 + 1.5 * Math.sin(5 * h + e.x));
             }
           }
-          if (a.save(), r || (a.globalAlpha = .5), n.drawItemIcon(a, c.icon, i - (va >> 1), o - va, va), a.restore(), "fly" !== e.state) {
+          if (a.save(), r || (a.globalAlpha = .5), n.drawItemIcon(a, c.icon, i - (xa >> 1), o - xa, xa), a.restore(), "fly" !== e.state) {
             a.save();
             if (!(r)) {
               a.globalAlpha = .45;
             }
             var d = c.name + ((0 | e.n) > 1 ? " ×" + e.n : "");
-            n.Pixel.text(a, i, o - va - 4, d, u.name, "#161310", xa, "center");
+            n.Pixel.text(a, i, o - xa - 4, d, u.name, "#161310", ba, "center");
             a.restore();
           }
         }
@@ -5251,7 +5282,7 @@
   i.onServerLoot = function (n) {
     for (var a = 0; a < n.length; a++) {
       var e = n[a];
-      if (!ga(e.id)) {
+      if (!pa(e.id)) {
         i.drops.push({ kind: "item", itemId: e.item, n: Math.max(1, 0 | e.n), lootId: e.id, owner: e.owner || null, boss: !!e.boss, bossName: e.bossName || null, daily: !!e.daily, khoa: 0 | e.khoa, ht: !!e.ht, vanMs: 0 | e.vn, age: e.age || 0, x: e.x, y: e.y - 26, vx: 0, vy: -70, gy: e.y, state: (e.age || 0) > 1 ? "ground" : "fall", t: 0, asked: !1, sortY: e.y });
         var t = i.drops[i.drops.length - 1];
         if ("ground" === t.state) {
@@ -5274,14 +5305,14 @@
     }
   };
   i.onServerLootGone = function (n, a) {
-    var e = ga(n);
+    var e = pa(n);
     if (e) {
-      return a && a === pa() ? (e.state = "fly", e.t = 0, void (e.granted = !0)) : void i.drops.splice(i.drops.indexOf(e), 1);
+      return a && a === da() ? (e.state = "fly", e.t = 0, void (e.granted = !0)) : void i.drops.splice(i.drops.indexOf(e), 1);
     }
   };
-  var va = 16;
-  var xa = "600 9px " + n.Pixel.MAP_FONT;
-  function ba() {
+  var xa = 16;
+  var ba = "600 9px " + n.Pixel.MAP_FONT;
+  function _a() {
     var a = i.map;
     if (a) {
       for (var e = a.props.concat(a.flatProps), t = 0; t < e.length; t++) {
@@ -5295,14 +5326,14 @@
       }
     }
   }
-  var _a = 20;
-  var Da = { mach_han_tinh: [300, 1200], mach_tu_tinh: [300, 1200], mach_luc_tinh: [1800, 3600], ling_chi_prop: [10, 10] };
+  var Da = 20;
+  var Ca = { mach_han_tinh: [300, 1200], mach_tu_tinh: [300, 1200], mach_luc_tinh: [1800, 3600], ling_chi_prop: [10, 10] };
   function Ha(a) {
     if (a && i.player) {
       n.VFX.spawnText(i.player.x, i.player.y - 58, "Đã đủ — về giao Đại Phu", "#f0d27a");
     }
   }
-  function ka(a, e, t) {
+  function wa(a, e, t) {
     var i = n.ITEMS[e];
     if (!a.harvestPending)
       if (h()) {
@@ -5321,9 +5352,9 @@
           if (n.HUD && n.HUD.refreshBag) {
             n.HUD.refreshBag();
           }
-          dn();
+          yn();
           a.hidden = !0;
-          a.regrowAt = n.Game.time + (Number(h.regrowAfter) || _a);
+          a.regrowAt = n.Game.time + (Number(h.regrowAfter) || Da);
           n.VFX.spawnText(o, c - 26, "+1 " + (i ? i.name : e), t);
           n.VFX.spawnRing(o, c - 6, t, 20, .5);
           Ha(h.du);
@@ -5338,11 +5369,11 @@
         else {
           n.Inventory.add(e, 1);
         }
-        dn();
+        yn();
         a.hidden = !0;
         a.regrowAt = n.Game.time + function (n) {
-          var a = Da[n.type];
-          return a ? a[0] + Math.random() * (a[1] - a[0]) : _a;
+          var a = Ca[n.type];
+          return a ? a[0] + Math.random() * (a[1] - a[0]) : Da;
         }(a);
         n.VFX.spawnText(a.x, a.y - 26, "+1 " + (i ? i.name : e), t);
         n.VFX.spawnRing(a.x, a.y - 6, t, 20, .5);
@@ -5351,7 +5382,7 @@
         }
       }
   }
-  function wa(a) {
+  function ka(a) {
     n.HUD.openDialog(a.name, 'Ngươi ngồi xuống phiến đá, hai tay bưng chén Linh Dược. Hơi nước lạnh từ lòng suối phả lên mặt, linh khí quanh chỗ ngồi đặc tới mức nhìn thấy được thành từng làn sương mỏng.\n\n"Uống xong là vận công ngay, chớ để dược lực tản mất" — lời Đại Phu dặn.', { actionLabel: "Uống Dược & Vận Công", onAction: function () {
         !function (a) {
           var e = i.player;
@@ -5364,9 +5395,9 @@
         }(a);
       } });
   }
-  function Ca(a, e) {
+  function Ia(a, e) {
     return [{ label: "Mở Quầy Đổi Hạt", note: "Đang có " + n.Progress.duocCong + " Dược Công", icon: "seed_luc", primary: Ma(), onChoose: function () {
-          Ua(a);
+          Aa(a);
         } }, { label: "Huỷ Nhiệm Vụ", note: "Hoàn lại 1 lượt nhận hôm nay · không mất Dược Công", icon: "scroll", onChoose: function () {
           !function (a, e) {
             var t = n.Quest;
@@ -5380,10 +5411,10 @@
                       if ("escort" === e.kind) {
                         i.escortFollower = null;
                       }
-                      ba();
-                      ma();
+                      _a();
+                      fa();
                       n.VFX.spawnText(i.player.x, i.player.y - 58, "Đã huỷ việc · hoàn lại lượt", "#e8dfa0");
-                      dn(!1);
+                      yn(!1);
                       La(a);
                     }
                   } }] });
@@ -5395,11 +5426,11 @@
     var t = (n.Inventory, e.seedTaskInfo());
     if (t) {
       if ("tournament" === t.kind) {
-        n.HUD.openDialog(a, "Việc Đại Hội đã được ghi vào sổ. Hãy thắng một trận đấu chính thức — trọng tài chốt kết quả xong sẽ tự ghi công và trao " + t.reward + " Điểm Dược Công + " + e.seedTaskStones(t) + " Linh Thạch. Mỗi ngày chỉ nhận thưởng một lần.", { choices: Ca(a, t) });
+        n.HUD.openDialog(a, "Việc Đại Hội đã được ghi vào sổ. Hãy thắng một trận đấu chính thức — trọng tài chốt kết quả xong sẽ tự ghi công và trao " + t.reward + " Điểm Dược Công + " + e.seedTaskStones(t) + " Linh Thạch. Mỗi ngày chỉ nhận thưởng một lần.", { choices: Ia(a, t) });
         return !0;
       }
       if ("escort" === t.kind) {
-        n.HUD.openDialog(a, 'Đại Phu nhìn sang người cháu đang theo sau ngươi rồi dặn kỹ:\n\n"Bệnh nó đã khỏi, chỉ là chân tay còn yếu. Dẫn nó qua Rừng Trúc, về làng Tản Viên rồi giao tận tay Thầy Ông Nội. Tới nơi, Thầy Ông Nội sẽ ghi công cho ngươi."\n\nThưởng khi hoàn thành: ' + t.reward + " Điểm Dược Công + " + e.seedTaskStones(t) + " Linh Thạch.", { choices: Ca(a, t) });
+        n.HUD.openDialog(a, 'Đại Phu nhìn sang người cháu đang theo sau ngươi rồi dặn kỹ:\n\n"Bệnh nó đã khỏi, chỉ là chân tay còn yếu. Dẫn nó qua Rừng Trúc, về làng Tản Viên rồi giao tận tay Thầy Ông Nội. Tới nơi, Thầy Ông Nội sẽ ghi công cho ngươi."\n\nThưởng khi hoàn thành: ' + t.reward + " Điểm Dược Công + " + e.seedTaskStones(t) + " Linh Thạch.", { choices: Ia(a, t) });
         return !0;
       }
       var o = e.seedQuestProgress();
@@ -5407,13 +5438,13 @@
       var c = t.reward || e.DUOC_CONG_PER_TASK;
       var r = h ? { actionLabel: "fishing" === t.kind ? "Giao Ba Cá" : "Giao Nguyên Liệu", actionFirst: !0, onAction: function () {
           if (e.completeSeedQuest()) {
-            ba();
-            ma();
+            _a();
+            fa();
             n.VFX.spawnText(i.player.x, i.player.y - 58, "+" + c + " Dược Công", "#f0d27a");
-            dn(!1);
-            Ua(a);
+            yn(!1);
+            Aa(a);
           }
-        }, reward: [{ icon: "scroll", name: "Điểm Dược Công", qty: c }, { icon: "spirit_stone", name: "Linh Thạch", qty: e.seedTaskStones(t) }], choices: Ca(a, t) } : { choices: Ca(a, t) };
+        }, reward: [{ icon: "scroll", name: "Điểm Dược Công", qty: c }, { icon: "spirit_stone", name: "Linh Thạch", qty: e.seedTaskStones(t) }], choices: Ia(a, t) } : { choices: Ia(a, t) };
       n.HUD.openDialog(a, h ? t.doneText || 'Đại Phu xem kỹ số nguyên liệu ngươi mang về, bẻ thử một mẩu rồi gật đầu:\n\n"Đủ rồi. Linh Chi giữ bào tử, Trúc Tâm giữ dược khí — có thứ này lão phu ủ lại đất, nhân một mẻ hạt mới cho ngươi được."' : "fishing" === t.kind ? '"Cá dùng làm thuốc lẫn nuôi linh thú đều phải còn tươi. ' + t.hint + '"\n\nĐã câu: ' + o + "/" + t.need + " cá." : '"Việc nhân hạt không thể làm tay không. ' + t.hint + '"\n\nĐã thu: ' + t.itemName + " " + o + "/" + t.need + ".", r);
       return !0;
     }
@@ -5422,7 +5453,7 @@
     }
     var u = e.availableSeedTasks().length;
     var l = [{ label: "Mở Quầy Đổi Hạt", note: Ma() ? "Đủ công đổi hạt · " + n.Progress.duocCong + " Dược Công" : "Đang có " + n.Progress.duocCong + " Dược Công", icon: "seed_luc", primary: Ma(), onChoose: function () {
-          Ua(a);
+          Aa(a);
         } }, { label: "Nhận Việc Dược Công", note: u ? "Còn " + n.Quest.seedTaskList().reduce(function (n, a) {
           return n + a.runsLeft;
         }, 0) + " lượt hôm nay" : "Hôm nay hết lượt · mai có việc mới", icon: "scroll", disabled: !u, primary: !Ma() && !!u, onChoose: function () {
@@ -5443,10 +5474,10 @@
                             if ("escort" === a.kind) {
                               p();
                             }
-                            ba();
-                            ma();
+                            _a();
+                            fa();
                             n.VFX.spawnText(i.player.x, i.player.y - 58, "escort" === a.kind ? "Cháu Đại Phu đang theo sau" : "fishing" === a.kind ? "Nhận việc: câu đủ ba cá" : "tournament" === a.kind ? "Nhận việc: thắng Đại Hội" : "Nhận việc: " + a.itemName, "#f0d27a");
-                            dn(!1);
+                            yn(!1);
                           }
                         }, reward: [{ icon: "scroll", name: "Điểm Dược Công", qty: t }, { icon: "spirit_stone", name: "Linh Thạch", qty: o.seedTaskStones(e) }] });
                     }(a, h, c);
@@ -5463,11 +5494,11 @@
     n.HUD.openDialog(a, "Dược Công: " + n.Progress.duocCong + " điểm. Muốn lấy hạt thì mở quầy, thiếu công thì nhận việc.", { oneCol: !0, choices: l });
     return !0;
   }
-  function Ia(a) {
+  function Ua(a) {
     var e = n.Quest.buySeedPack(a.id);
     if (e) {
       n.VFX.spawnText(i.player.x, i.player.y - 58, "Đổi được " + e.name, "#bff3d8");
-      dn(!1);
+      yn(!1);
     }
   }
   function Ma() {
@@ -5477,7 +5508,7 @@
       return a.packUnlocked(n) && e.duocCong >= n.cost;
     });
   }
-  function Ua(a) {
+  function Aa(a) {
     var e = n.Quest;
     var t = n.Progress;
     function i(n) {
@@ -5511,19 +5542,19 @@
               (function (a, e, t) {
                 var i = n.realmById(n.Progress.realmId);
                 n.HUD.openDialog(a, 'Lão nheo mắt nhìn đạo hữu một lượt.\n\n"Tu vi ' + (i ? i.name : "như ngươi") + " mà còn đổi " + e.name + "? Hạt ấy chỉ để làm " + e.note.split("— ")[1] + ", ngươi dùng chẳng mấy nữa. " + t.name + ' mới hợp sức ngươi."\n\nĐổi gói này tốn ' + e.cost + " Dược Công (đang có " + n.Progress.duocCong + ").", { choices: [{ label: "Thôi, để xem lại", onChoose: function () {
-                        Ua(a);
+                        Aa(a);
                       } }, { label: "Vẫn đổi " + e.name, note: "Trừ " + e.cost + " Dược Công · " + e.note, icon: n.ITEMS[e.give[0][0]] ? n.ITEMS[e.give[0][0]].icon : "seed_luc", onChoose: function () {
-                        Ia(e);
+                        Ua(e);
                       } }] });
               })(a, i, r);
             }
             else {
-              Ia(i);
+              Ua(i);
             }
           } };
       }) });
   }
-  function Aa(n) {
+  function Fa(n) {
     return 7 === n.stage && !n.flags.bai_kien_dai_phu || n.canChonBinhKhi();
   }
   i.applyMach = function () {
@@ -5572,41 +5603,41 @@
       }
     }
   };
-  var Fa = { thiet_kiem: "Nhẹ, ra đòn nhanh nhất · ngự kiếm bay tới", thiet_dao: "Mỗi nhát nặng nhất · ra đòn chậm", thiet_thuong: "Cân bằng · với xa nhất trong ba món" };
-  function Sa(a) {
+  var Sa = { thiet_kiem: "Nhẹ, ra đòn nhanh nhất · ngự kiếm bay tới", thiet_dao: "Mỗi nhát nặng nhất · ra đòn chậm", thiet_thuong: "Cân bằng · với xa nhất trong ba món" };
+  function Pa(a) {
     var e = n.CONFIG.PLAYER;
     var t = a.attackTime || e.ATTACK_TIME;
     var i = e.REACH + (a.reachBonus || 0);
     return "Tốc độ " + (1 / t).toFixed(2).replace(".", ",") + " đòn/giây · Tầm " + Math.round(i) + "px";
   }
-  function Pa(a) {
+  function Na(a) {
     var e = n.Quest;
     n.HUD.openDialog(a, 'Lão nhân kéo ra một bọc vải dầu, trong có ba món binh khí sắt:\n\n"Tầng 3 rồi mà còn cầm cây tre à? Yêu thú từ đây trở đi da dày lắm. Chọn LẤY MỘT món hợp tay."', { choices: e.BINH_KHI_CHOICES.map(function (e) {
         var t = n.ITEMS[e] || {};
-        return { label: t.name || e, icon: t.icon, stats: "+" + (t.atkBonus || 0) + " công", note: Sa(t), desc: Fa[e] || "", onChoose: function () {
+        return { label: t.name || e, icon: t.icon, stats: "+" + (t.atkBonus || 0) + " công", note: Pa(t), desc: Sa[e] || "", onChoose: function () {
             !function (a, e) {
               var t = n.Quest;
               var o = n.ITEMS[e] || {};
-              n.HUD.openDialog(o.name || e, (o.desc || "") + "\n\n" + (Fa[e] || "") + "\n+" + (o.atkBonus || 0) + " công · " + Sa(o) + ".\n\nChỉ được chọn một món, chọn rồi không đổi.", { actionLabel: "Nhận " + (o.name || "Món Này"), onAction: function () {
+              n.HUD.openDialog(o.name || e, (o.desc || "") + "\n\n" + (Sa[e] || "") + "\n+" + (o.atkBonus || 0) + " công · " + Pa(o) + ".\n\nChỉ được chọn một món, chọn rồi không đổi.", { actionLabel: "Nhận " + (o.name || "Món Này"), onAction: function () {
                   if (t.chonBinhKhi(e)) {
                     n.VFX.spawnText(i.player.x, i.player.y - 58, "Nhận: " + (o.name || e), "#e8dfa0");
-                    dn();
+                    yn();
                     n.HUD.openDialog(a, '"Cất đi — binh khí này đòi Luyện Khí Tầng 4 mới cầm nổi. Cửa ấy cần thêm một viên Tụ Khí Đan — trồng, săn Linh Thúy, luyện ở vườn như lần trước. Lên tầng rồi mở Hành Trang mà trang bị."');
                   }
                 }, reward: [{ icon: o.icon, name: o.name || e, qty: 1 }], choices: [{ label: "Xem món khác", icon: "scroll", onChoose: function () {
-                      Pa(a);
+                      Na(a);
                     } }] });
             }(a, e);
           } };
       }) });
   }
-  var Na = [[{ question: "Tụ Khí Đan dùng để làm gì?", answer: "Phá quan khi Đạo Hạnh đã đầy", choices: ["Phá quan khi Đạo Hạnh đã đầy", "Câu Linh Ngư", "Tăng số ô hành trang"] }, { question: "Yêu Cốt Vụn thường lấy từ đâu?", answer: "Yêu Quái Nhất Giai Hạ Phẩm ở Miếu Hoang", choices: ["Yêu Quái Nhất Giai Hạ Phẩm ở Miếu Hoang", "Cá ở Hồ Bích Thủy", "Đan lô trong làng"] }, { question: "Độc Đằng Độc Dịch rơi từ đâu?", answer: "Độc Đằng Yêu ở Thảo Dược Cốc", choices: ["Độc Đằng Yêu ở Thảo Dược Cốc", "Thợ Rèn làng Tản Viên", "Lão Đạo Hành Cước"] }, { question: "Bí Tịch dùng để làm gì?", answer: "Học pháp quyết mới", choices: ["Học pháp quyết mới", "Đổi lấy cá", "Mở luống linh thảo"] }], [{ question: "Có thể câu Linh Ngư ở đâu?", answer: "Hồ Bích Thủy hoặc Suối Dẫn Thủy", choices: ["Hồ Bích Thủy hoặc Suối Dẫn Thủy", "Miếu Hoang hoặc Long Uyên", "Đan Lô hoặc Rừng Trúc"] }, { question: "Muốn tìm Trúc Tâm thì nên tới đâu?", answer: "Rừng Trúc", choices: ["Rừng Trúc", "Huyết Xích Cấm Địa", "Hang Động"] }], [{ question: "Muốn vào Hang Động cần đạt cảnh giới nào?", answer: "Luyện Khí Tầng 7", choices: ["Luyện Khí Tầng 7", "Luyện Khí Tầng 3", "Phàm Nhân"] }, { question: "Ai chỉ đường vào Hang Động?", answer: "Lão Đạo Hành Cước ở cửa hang Long Uyên Cốc", choices: ["Lão Đạo Hành Cước ở cửa hang Long Uyên Cốc", "Đại Phu trong Dược Viên", "Chấp Sự ở Đại Hội"] }, { question: "Mở Linh Dược Rương cuối Hang Động cần vật gì?", answer: "Chìa Khoá", choices: ["Chìa Khoá", "Huyền Thiết Khoáng", "Linh Ngư"] }], [{ question: "Rèn Vũ Khí Huyền Thiết cần gì?", answer: "2 Huyền Thiết Khoáng và 50 Linh Thạch", choices: ["2 Huyền Thiết Khoáng và 50 Linh Thạch", "10 Yêu Cốt Vụn và 1 Linh Ngư", "3 Huyết Thảo và 2 Linh Thúy"] }, { question: "Mang nguyên liệu tới đâu để rèn vũ khí?", answer: "Thợ Rèn ở làng Tản Viên", choices: ["Thợ Rèn ở làng Tản Viên", "Đại Phu ở Thảo Dược Cốc", "Tàng Kinh Lão Nhân ở Miếu Hoang"] }, { question: "Huyền Thiết Khoáng chủ yếu dùng để làm gì?", answer: "Rèn vũ khí", choices: ["Rèn vũ khí", "Luyện Tụ Khí Đan", "Đổi lấy hạt giống"] }, { question: "Sau khi rèn xong vũ khí, người chơi sẽ bước vào phần nào?", answer: "Thử Lửa Đạo Tâm", choices: ["Thử Lửa Đạo Tâm", "Câu Một Linh Ngư", "Thu Hái Linh Thảo"] }], [{ question: "Muốn lấy Long Huyết cần làm gì?", answer: "Góp sức hạ Thần Thú Xích Long", choices: ["Góp sức hạ Thần Thú Xích Long", "Mở Linh Dược Rương", "Đổi bằng Dược Công"] }, { question: "Long Uyên nằm ở đâu?", answer: "Qua rìa phía đông Rừng Trúc", choices: ["Qua rìa phía đông Rừng Trúc", "Bên dưới Đan Lô", "Giữa Vườn Cá Nhân"] }, { question: "Bảng gỗ trước cửa Long Uyên dùng để làm gì?", answer: "Xem thời gian Xích Long xuất hiện", choices: ["Xem thời gian Xích Long xuất hiện", "Nhận Huyền Thiết Khoáng", "Học pháp quyết"] }, { question: "Huyết Xích Cấm Địa và Đại Hội Tu Tiên lần lượt thử điều gì?", answer: "Thử thân và thử tâm", choices: ["Thử thân và thử tâm", "Thử câu cá và luyện đan", "Thử trồng cây và khai khoáng"] }]];
-  function Va() {
+  var Va = [[{ question: "Tụ Khí Đan dùng để làm gì?", answer: "Phá quan khi Đạo Hạnh đã đầy", choices: ["Phá quan khi Đạo Hạnh đã đầy", "Câu Linh Ngư", "Tăng số ô hành trang"] }, { question: "Yêu Cốt Vụn thường lấy từ đâu?", answer: "Yêu Quái Nhất Giai Hạ Phẩm ở Miếu Hoang", choices: ["Yêu Quái Nhất Giai Hạ Phẩm ở Miếu Hoang", "Cá ở Hồ Bích Thủy", "Đan lô trong làng"] }, { question: "Độc Đằng Độc Dịch rơi từ đâu?", answer: "Độc Đằng Yêu ở Thảo Dược Cốc", choices: ["Độc Đằng Yêu ở Thảo Dược Cốc", "Thợ Rèn làng Tản Viên", "Lão Đạo Hành Cước"] }, { question: "Bí Tịch dùng để làm gì?", answer: "Học pháp quyết mới", choices: ["Học pháp quyết mới", "Đổi lấy cá", "Mở luống linh thảo"] }], [{ question: "Có thể câu Linh Ngư ở đâu?", answer: "Hồ Bích Thủy hoặc Suối Dẫn Thủy", choices: ["Hồ Bích Thủy hoặc Suối Dẫn Thủy", "Miếu Hoang hoặc Long Uyên", "Đan Lô hoặc Rừng Trúc"] }, { question: "Muốn tìm Trúc Tâm thì nên tới đâu?", answer: "Rừng Trúc", choices: ["Rừng Trúc", "Huyết Xích Cấm Địa", "Hang Động"] }], [{ question: "Muốn vào Hang Động cần đạt cảnh giới nào?", answer: "Luyện Khí Tầng 7", choices: ["Luyện Khí Tầng 7", "Luyện Khí Tầng 3", "Phàm Nhân"] }, { question: "Ai chỉ đường vào Hang Động?", answer: "Lão Đạo Hành Cước ở cửa hang Long Uyên Cốc", choices: ["Lão Đạo Hành Cước ở cửa hang Long Uyên Cốc", "Đại Phu trong Dược Viên", "Chấp Sự ở Đại Hội"] }, { question: "Mở Linh Dược Rương cuối Hang Động cần vật gì?", answer: "Chìa Khoá", choices: ["Chìa Khoá", "Huyền Thiết Khoáng", "Linh Ngư"] }], [{ question: "Rèn Vũ Khí Huyền Thiết cần gì?", answer: "2 Huyền Thiết Khoáng và 50 Linh Thạch", choices: ["2 Huyền Thiết Khoáng và 50 Linh Thạch", "10 Yêu Cốt Vụn và 1 Linh Ngư", "3 Huyết Thảo và 2 Linh Thúy"] }, { question: "Mang nguyên liệu tới đâu để rèn vũ khí?", answer: "Thợ Rèn ở làng Tản Viên", choices: ["Thợ Rèn ở làng Tản Viên", "Đại Phu ở Thảo Dược Cốc", "Tàng Kinh Lão Nhân ở Miếu Hoang"] }, { question: "Huyền Thiết Khoáng chủ yếu dùng để làm gì?", answer: "Rèn vũ khí", choices: ["Rèn vũ khí", "Luyện Tụ Khí Đan", "Đổi lấy hạt giống"] }, { question: "Sau khi rèn xong vũ khí, người chơi sẽ bước vào phần nào?", answer: "Thử Lửa Đạo Tâm", choices: ["Thử Lửa Đạo Tâm", "Câu Một Linh Ngư", "Thu Hái Linh Thảo"] }], [{ question: "Muốn lấy Long Huyết cần làm gì?", answer: "Góp sức hạ Thần Thú Xích Long", choices: ["Góp sức hạ Thần Thú Xích Long", "Mở Linh Dược Rương", "Đổi bằng Dược Công"] }, { question: "Long Uyên nằm ở đâu?", answer: "Qua rìa phía đông Rừng Trúc", choices: ["Qua rìa phía đông Rừng Trúc", "Bên dưới Đan Lô", "Giữa Vườn Cá Nhân"] }, { question: "Bảng gỗ trước cửa Long Uyên dùng để làm gì?", answer: "Xem thời gian Xích Long xuất hiện", choices: ["Xem thời gian Xích Long xuất hiện", "Nhận Huyền Thiết Khoáng", "Học pháp quyết"] }, { question: "Huyết Xích Cấm Địa và Đại Hội Tu Tiên lần lượt thử điều gì?", answer: "Thử thân và thử tâm", choices: ["Thử thân và thử tâm", "Thử câu cá và luyện đan", "Thử trồng cây và khai khoáng"] }]];
+  function Ba() {
     if (n.Encyclopedia) {
       n.Encyclopedia.open();
     }
   }
-  function Ba(a, e) {
+  function Xa(a, e) {
     var t = n.Quest;
     if (t.bachKhoaXong()) {
       if (e) {
@@ -5619,18 +5650,18 @@
     var e = n.Quest;
     var t = e.bachKhoaProgress();
     if (t >= e.BACH_KHOA_NEED) {
-      Ba(a);
+      Xa(a);
     }
     else {
-      var i = Na[t];
+      var i = Va[t];
       var o = i[Math.floor(Math.random() * i.length)];
       var h = o.choices.map(function (t) {
         return { label: t, onChoose: function () {
             if (t === o.answer) {
               if (e.recordBachKhoaAnswer(!0)) {
-                dn(!1);
+                yn(!1);
                 if (e.bachKhoaXong()) {
-                  Ba(a, !0);
+                  Xa(a, !0);
                 }
                 else {
                   n.HUD.openDialog(a, "Đúng rồi. Con đã trả lời đúng " + e.bachKhoaProgress() + "/" + e.BACH_KHOA_NEED + " câu.", { actionLabel: "Câu tiếp theo", onAction: function () {
@@ -5642,11 +5673,11 @@
             else {
               n.HUD.openDialog(a, "Chưa đúng. Con hãy mở Bách Khoa, xem lại mục liên quan rồi thử lại.\n\nGợi ý: " + o.answer + ".", { choices: [{ label: "Thử lại câu này", onChoose: function () {
                       Ea(a);
-                    } }, { label: "Mở Bách Khoa Tu Tiên", onChoose: Va }] });
+                    } }, { label: "Mở Bách Khoa Tu Tiên", onChoose: Ba }] });
             }
           } };
       });
-      h.push({ label: "Mở Bách Khoa Tu Tiên", note: "Tra cứu trước khi trả lời", onChoose: Va });
+      h.push({ label: "Mở Bách Khoa Tu Tiên", note: "Tra cứu trước khi trả lời", onChoose: Ba });
       n.HUD.openDialog(a, "Câu " + (t + 1) + "/" + e.BACH_KHOA_NEED + ":\n\n" + o.question, { choices: h });
     }
   }
@@ -5672,31 +5703,31 @@
     if (!i.transitioning) {
       if (h()) {
         var t = n.Game.time;
-        if (i.enterAsk && i.enterAsk.mapId === a && t - i.enterAsk.at < Xa) {
+        if (i.enterAsk && i.enterAsk.mapId === a && t - i.enterAsk.at < Ga) {
           return;
         }
         i.enterAsk = { mapId: a, at: t };
         return void n.Gateway.enter(a);
       }
-      Oa(a, e);
+      qa(a, e);
     }
   };
-  var Xa = 1.2;
-  var Ga = n.Probe || { on: !1, KIND: {}, now: function () {
+  var Ga = 1.2;
+  var Ra = n.Probe || { on: !1, KIND: {}, now: function () {
       return 0;
     }, time: function () {
     }, sample: function () {
     }, count: function () {
     }, warn: function () {
     } };
-  var Ra = null;
+  var Ka = null;
   i.enterServerMap = function (a) {
     if (i.enterAsk = null, i.player) {
       if (i.map && i.map.data && i.map.data.id === a.mapId) {
         (function () {
           if (i.transitioning) {
-            Ga.sample(Ga.KIND.mapCancel, Ka, Ka + 1);
-            Ka++;
+            Ra.sample(Ra.KIND.mapCancel, Oa, Oa + 1);
+            Oa++;
             i.transitioning = !1;
             var a = document.getElementById("fade");
             if (a) {
@@ -5718,15 +5749,15 @@
           n.Camera.snapTo(a.x, a.y, n.Renderer.w, n.Renderer.h, i.map.pxWidth, i.map.pxHeight);
         }
         i.enemies = [];
-        ma();
-        return void (ra = a.l || []);
+        fa();
+        return void (ua = a.l || []);
       }
-      ra = a.l || [];
-      ua = a.e || [];
-      Oa(a.mapId, null, { x: a.x, y: a.y, dir: a.dir });
+      ua = a.l || [];
+      la = a.e || [];
+      qa(a.mapId, null, { x: a.x, y: a.y, dir: a.dir });
     }
     else {
-      Ra = a;
+      Ka = a;
     }
   };
   i.cancelApproach = function () {
@@ -5737,11 +5768,11 @@
     }
     i.autoPathTimer = 0;
   };
-  var Ka = 0;
-  function Oa(a, t, o) {
-    var c = ++Ka;
-    var l = Ga.now();
-    Ga.sample(Ga.KIND.mapReq, c);
+  var Oa = 0;
+  function qa(a, t, o) {
+    var c = ++Oa;
+    var l = Ra.now();
+    Ra.sample(Ra.KIND.mapReq, c);
     i.transitioning = !0;
     var s = i.player;
     if (s) {
@@ -5750,7 +5781,7 @@
     var g = n.MapData.get ? n.MapData.get(a) : n.MapData[a.toUpperCase()] || n.MapData[a];
     if (!g) {
       console.error("[PNTT] Không tìm thấy dữ liệu map: " + a);
-      return void (c === Ka && (i.transitioning = !1));
+      return void (c === Oa && (i.transitioning = !1));
     }
     var d = document.getElementById("fade");
     if (d) {
@@ -5778,10 +5809,10 @@
       setTimeout(n, 380);
     });
     var D = n.Assets && n.Assets.ensureMap ? n.Assets.ensureMap(g, b ? b.mapProgress : null) : Promise.resolve([]);
-    var H = new Promise(function (n) {
+    var C = new Promise(function (n) {
       var a = Date.now() + 2e3;
       !function e() {
-        if (c !== Ka || Date.now() >= a || y.every(function (n) {
+        if (c !== Oa || Date.now() >= a || y.every(function (n) {
           return !n.choXong || n.choXong(g);
         })) {
           return n();
@@ -5789,16 +5820,16 @@
         setTimeout(e, 30);
       }();
     });
-    Promise.all([_, D, H]).then(function () {
-      if (c !== Ka) {
-        Ga.sample(Ga.KIND.mapCancel, c, Ka);
-        return void Ga.count("lượt chuyển cảnh bị lượt mới hơn thay thế");
+    Promise.all([_, D, C]).then(function () {
+      if (c !== Oa) {
+        Ra.sample(Ra.KIND.mapCancel, c, Oa);
+        return void Ra.count("lượt chuyển cảnh bị lượt mới hơn thay thế");
       }
       if (b) {
         b.mapHide();
       }
-      var a = Ga.now();
-      if (Ga.time("chuyển cảnh · chờ tải", a - l), i.map = n.TileMap.load(g), Ga.time("chuyển cảnh · dựng bản đồ", Ga.now() - a), n.Gateway && n.Gateway.reset(), i.applyMach(), h() ? (i.enemies = [], ua && n.Gateway.buildMobs && n.Gateway.buildMobs(ua), ua = null) : m(), i.critters = f(i.map), u(), n.Farm.syncProps(i.map), o) {
+      var a = Ra.now();
+      if (Ra.time("chuyển cảnh · chờ tải", a - l), i.map = n.TileMap.load(g), Ra.time("chuyển cảnh · dựng bản đồ", Ra.now() - a), n.Gateway && n.Gateway.reset(), i.applyMach(), h() ? (i.enemies = [], la && n.Gateway.buildMobs && n.Gateway.buildMobs(la), la = null) : m(), i.critters = f(i.map), u(), n.Farm.syncProps(i.map), o) {
         i.player.x = o.x;
         i.player.y = o.y;
         i.player.dir = 0 | o.dir;
@@ -5839,11 +5870,11 @@
       if (n.HuyetSacUI && n.HuyetSacUI.onMapEntered) {
         n.HuyetSacUI.onMapEntered();
       }
-      Ga.sample(Ga.KIND.mapCommit, c, Math.round(Ga.now() - l));
-      Ga.time("chuyển cảnh · tổng", Ga.now() - l);
+      Ra.sample(Ra.KIND.mapCommit, c, Math.round(Ra.now() - l));
+      Ra.time("chuyển cảnh · tổng", Ra.now() - l);
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-          if (c === Ka) {
+          if (c === Oa) {
             if (d) {
               d.classList.remove("on");
             }
@@ -5852,9 +5883,9 @@
         });
       });
     }).catch(function (n) {
-      Ga.count("chuyển bản đồ hỏng");
+      Ra.count("chuyển bản đồ hỏng");
       console.error("[PNTT] Chuyển bản đồ hỏng:", n);
-      if (c === Ka) {
+      if (c === Oa) {
         if (b) {
           b.mapHide();
         }

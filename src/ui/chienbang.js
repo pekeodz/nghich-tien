@@ -80,16 +80,16 @@
         f("Lượt hôm nay", n.luotCon + "/" + n.luotMoiNgay);
         var C = f("Chốt lúc 22:00", c(n.chotLuc - (Date.now() + i)), "cb-clock");
         s.appendChild(m);
-        var b = u("details", "cb-rules");
-        b.open = null === o ? !n.hangToi : o;
-        b.addEventListener("toggle", function () {
-          o = b.open;
+        var T = u("details", "cb-rules");
+        T.open = null === o ? !n.hangToi : o;
+        T.addEventListener("toggle", function () {
+          o = T.open;
         });
-        b.appendChild(u("summary", null, "Luật chơi & phần thưởng"));
-        var T = u("ul", "cb-note");
+        T.appendChild(u("summary", null, "Luật chơi & phần thưởng"));
+        var b = u("ul", "cb-note");
         if (["Mỗi ngày " + n.luotMoiNgay + " lượt, hồi lúc 22:00.", "Chỉ khiêu chiến tối đa 5 hạng phía trên (chưa có tên: 5 suất cuối). Thắng thì đổi chỗ.", "Mỗi trận thắng: +50 Linh Thạch.", "Đứng đầu lúc 22:00: 500 Linh Thạch, 1 Yêu Đan Cấp 3, 1 Yêu Đan Cấp 1."].forEach(function (n) {
-          T.appendChild(u("li", null, n));
-        }), b.appendChild(T), s.appendChild(b), n.lichSu && n.lichSu.length) {
+          b.appendChild(u("li", null, n));
+        }), T.appendChild(b), s.appendChild(T), n.lichSu && n.lichSu.length) {
           var v = u("p", "cb-history");
           v.appendChild(u("b", null, "Ngôi đầu gần đây"));
           v.appendChild(document.createTextNode(n.lichSu.map(function (n) {
@@ -191,6 +191,10 @@
           } }, { label: "Xem kết quả Đại Hội", note: "Xem chung bảng Luyện Khí và Trúc Cơ", onChoose: function () {
             if (n.BangNhanhUI) {
               n.BangNhanhUI.show();
+            }
+          } }, { label: "Vạn Hoang Chiến Trường", note: "Sinh tồn, bo thu dần · mỗi giờ một kỳ", onChoose: function () {
+            if (n.ChienTruongUI) {
+              n.ChienTruongUI.show();
             }
           } }] });
   };

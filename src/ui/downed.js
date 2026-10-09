@@ -38,6 +38,9 @@
           else if (c && c.map && c.map.data && "chien_bang_dai" === c.map.data.id) {
             o.close();
           }
+          else if (c && c.map && c.map.data && c.map.data.chienTruong) {
+            o.close();
+          }
           else {
             var s = e.HuThienUI;
             var h = s && s.hoiSinhConLai ? s.hoiSinhConLai(t) : null;

@@ -731,7 +731,7 @@
       }(e, n, l, i, f, h);
     }
   };
-  var O = { dai_hoi_cho: 1, tmc_cho: 1, dai_hoi_dau: 1, chien_bang_dai: 1, hac_phong_linh: 1, hac_thi: 1, tam_canh: 1, lam_lang: 1 };
+  var O = { dai_hoi_cho: 1, tmc_cho: 1, dai_hoi_dau: 1, chien_bang_dai: 1, hac_phong_linh: 1, hac_thi: 1, tam_canh: 1, lam_lang: 1, chien_truong_cho: 1 };
   var F = !1;
   var S = { ground: null, atlas: null, chunks: {}, count: 0, clock: 0 };
   var D = 36;

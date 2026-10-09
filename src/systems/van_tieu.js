@@ -45,7 +45,7 @@
   };
   var h = n.TranMach && n.TranMach.D || 18;
   a.D = h;
-  a.HANG = [{ id: "trang", ten: "Trắng", heSo: .9, hpD: 25, mau: "#ece8dc", vien: "#6b6558" }, { id: "luc", ten: "Lục", heSo: .87, hpD: 32, mau: "#58b85c", vien: "#14421a" }, { id: "do", ten: "Đỏ", heSo: .83, hpD: 42, mau: "#d8442e", vien: "#4a0c08" }, { id: "vang", ten: "Vàng", heSo: .8, hpD: 60, mau: "#f0c43a", vien: "#5a4208" }];
+  a.HANG = [{ id: "trang", ten: "Trắng", heSo: .9, hpD: 50, mau: "#ece8dc", vien: "#6b6558" }, { id: "luc", ten: "Lục", heSo: .87, hpD: 75, mau: "#58b85c", vien: "#14421a" }, { id: "do", ten: "Đỏ", heSo: .83, hpD: 112, mau: "#d8442e", vien: "#4a0c08" }, { id: "vang", ten: "Vàng", heSo: .8, hpD: 180, mau: "#f0c43a", vien: "#5a4208" }];
   a.hang = function (n) {
     for (var c = 0; c < a.HANG.length; c++)
       if (a.HANG[c].id === n) {

@@ -1,72 +1,75 @@
-!function (e) {
+!function (n) {
   "use strict";
-  function n() {
-    var n = document.getElementById("game-canvas");
-    e.LoadingScreen.init();
-    e.Audio.init();
-    e.Audio.bindUI();
-    e.UIScale.init();
-    e.Renderer.init(n);
-    e.Input.init(n);
-    e.Game.init();
-    e.HUD.init();
-    e.TouchUI.init();
-    e.SkillBook.init();
-    e.GachaUI.init();
-    if (e.HopUI) {
-      e.HopUI.init();
+  function e() {
+    var e = document.getElementById("game-canvas");
+    n.LoadingScreen.init();
+    n.Audio.init();
+    n.Audio.bindUI();
+    n.UIScale.init();
+    n.Renderer.init(e);
+    n.Input.init(e);
+    n.Game.init();
+    n.HUD.init();
+    n.TouchUI.init();
+    n.SkillBook.init();
+    n.GachaUI.init();
+    if (n.HopUI) {
+      n.HopUI.init();
     }
-    e.BiTichLuc.init();
-    e.WorldMap.init();
-    e.Hotbar.init();
-    e.TalismanBar.init();
-    e.FormationUI.init();
-    e.QuickSlots.init();
-    e.DownedUI.init();
-    e.Chat.init();
-    e.DaiHoiUI.init();
-    if (e.TongMonChienUI) {
-      e.TongMonChienUI.init();
+    n.BiTichLuc.init();
+    n.WorldMap.init();
+    n.Hotbar.init();
+    n.TalismanBar.init();
+    n.FormationUI.init();
+    n.QuickSlots.init();
+    n.DownedUI.init();
+    n.Chat.init();
+    n.DaiHoiUI.init();
+    if (n.TongMonChienUI) {
+      n.TongMonChienUI.init();
     }
-    if (e.InspectUI) {
-      e.InspectUI.init();
+    if (n.ChienTruongUI) {
+      n.ChienTruongUI.init();
     }
-    e.Palette.setWorldTheme(e.Utils.store.get(e.CONFIG.THEME_KEY, "moc"));
-    e.Tileset.build();
-    e.LoadingScreen.show("Đang khai mở Tiên Đồ…");
-    e.Assets.loadCore(e.LoadingScreen.phase("Đang khai mở Tiên Đồ…", 0, .45)).then(function () {
-      e.Tileset.build();
-      e.Game.start();
+    if (n.InspectUI) {
+      n.InspectUI.init();
+    }
+    n.Palette.setWorldTheme(n.Utils.store.get(n.CONFIG.THEME_KEY, "moc"));
+    n.Tileset.build();
+    n.LoadingScreen.show("Đang khai mở Tiên Đồ…");
+    n.Assets.loadCore(n.LoadingScreen.phase("Đang khai mở Tiên Đồ…", 0, .45)).then(function () {
+      n.Tileset.build();
+      n.Game.start();
       (function () {
-        if (e.Skills && e.Skills.testMode) {
-          return "undefined" != typeof location && /(?:^|[?&])creator=1(?:&|$)/.test(location.search || "") ? (e.CONFIG.STORAGE_KEY += "_creatorpreview", e.CONFIG.PROGRESS_KEY += "_creatorpreview", void a(!1)) : (e.CONFIG.STORAGE_KEY += "_skilltest", e.CONFIG.PROGRESS_KEY += "_skilltest", "undefined" != typeof location && /(?:^|[?&])authfixture=1(?:&|$)/.test(location.search || "") && e.Auth && e.Auth.enableLocalFixture && e.Auth.enableLocalFixture(), void a(!0));
+        if (n.Skills && n.Skills.testMode) {
+          return "undefined" != typeof location && /(?:^|[?&])creator=1(?:&|$)/.test(location.search || "") ? (n.CONFIG.STORAGE_KEY += "_creatorpreview", n.CONFIG.PROGRESS_KEY += "_creatorpreview", void a(!1)) : (n.CONFIG.STORAGE_KEY += "_skilltest", n.CONFIG.PROGRESS_KEY += "_skilltest", "undefined" != typeof location && /(?:^|[?&])authfixture=1(?:&|$)/.test(location.search || "") && n.Auth && n.Auth.enableLocalFixture && n.Auth.enableLocalFixture(), void a(!0));
         }
-        e.AuthUI.init();
-        var n = e.Net.init();
-        var r = e.Gateway.configured();
-        if (n || r) {
-          (n ? e.Auth.init().then(function (n) {
-            return !!n || (e.LoadingScreen.hide(), e.AuthUI.show().then(function (n) {
-              if (n) {
-                e.LoadingScreen.show("Đang tiếp dẫn…");
+        n.AuthUI.init();
+        var e = n.Net.init();
+        var r = n.Gateway.configured();
+        if (e || r) {
+          (e ? n.Auth.init().then(function (e) {
+            return !!e || (n.LoadingScreen.hide(), n.AuthUI.show().then(function (e) {
+              if (e) {
+                n.LoadingScreen.show("Đang tiếp dẫn…");
               }
-              return n;
+              return e;
             }));
           }) : Promise.resolve(!0)).then(function (c) {
-            return n && !c ? o() : r ? i(n ? 0 : t).then(function (t) {
+            return e && !c ? o() : r ? i(e ? 0 : t).then(function (t) {
               if (!t) {
-                if (n) {
-                  var i = e.Gateway.biChan && e.Gateway.biChan();
-                  e.LoadingScreen.show();
-                  return void e.LoadingScreen.fail(i && i.msg ? i.msg : "Không nối được máy chủ game. Kiểm tra mạng rồi tải lại trang (F5).");
+                if (e) {
+                  var i = n.Gateway.biChan && n.Gateway.biChan();
+                  n.LoadingScreen.show();
+                  return void n.LoadingScreen.fail(i && i.msg ? i.msg : "Không nối được máy chủ game. Kiểm tra mạng rồi tải lại trang (F5).");
                 }
                 console.warn("[PNTT] Chưa nối được máy chủ game — tạm chơi ngoại tuyến.");
                 return a(!1);
               }
               a(t.hasChar);
             }) : o();
-          }).catch(function (e) {
-            console.error("[PNTT] Cửa vào gặp lỗi:", e);
+          }).catch(function (n) {
+            console.error("[PNTT] Cửa vào gặp lỗi:", n);
             a(!1);
           });
         }
@@ -74,99 +77,99 @@
           a(!1);
         }
       })();
-      console.info("%c" + e.CONFIG.NAME + " v" + e.CONFIG.VERSION, "color:#9dbb87;font-weight:bold");
+      console.info("%c" + n.CONFIG.NAME + " v" + n.CONFIG.VERSION, "color:#9dbb87;font-weight:bold");
       console.info("Mẹo: gõ PNTT.CONFIG.DEBUG = true để xem lưới va chạm.");
-    }).catch(function (n) {
-      console.error("[PNTT] Khởi động hỏng:", n);
-      e.LoadingScreen.fail("Không mở được Tiên Đồ — thử tải lại trang.");
+    }).catch(function (e) {
+      console.error("[PNTT] Khởi động hỏng:", e);
+      n.LoadingScreen.fail("Không mở được Tiên Đồ — thử tải lại trang.");
     });
   }
-  e.applyWorldTheme = function (n, t) {
-    e.Palette.setWorldTheme(n);
-    e.Tileset.build();
-    e.ObjectArt.clear();
-    ["UUynhVucArt", "ThienDaoArt", "HuyetXichArt", "TanVienArt", "BaiDaArt", "RungTrucArt", "DuocCocArt", "MieuHoangArt", "LongUyenArt", "ThungLungArt"].forEach(function (n) {
-      if (e[n] && e[n].quen) {
-        e[n].quen();
+  n.applyWorldTheme = function (e, t) {
+    n.Palette.setWorldTheme(e);
+    n.Tileset.build();
+    n.ObjectArt.clear();
+    ["UUynhVucArt", "ThienDaoArt", "HuyetXichArt", "TanVienArt", "BaiDaArt", "RungTrucArt", "DuocCocArt", "MieuHoangArt", "LongUyenArt", "ThungLungArt"].forEach(function (e) {
+      if (n[e] && n[e].quen) {
+        n[e].quen();
       }
     });
-    if (e.clearItemIcons) {
-      e.clearItemIcons();
+    if (n.clearItemIcons) {
+      n.clearItemIcons();
     }
     if (t) {
-      e.Utils.store.set(e.CONFIG.THEME_KEY, n);
+      n.Utils.store.set(n.CONFIG.THEME_KEY, e);
     }
-    return e.Palette.WORLD_THEME;
+    return n.Palette.WORLD_THEME;
   };
   var t = 4;
-  function i(n) {
-    return e.Gateway.login(1e4).then(function (o) {
-      return o || (n >= t || e.Gateway.biChan && e.Gateway.biChan() ? null : (e.LoadingScreen.show("Chưa nối được máy chủ — đang thử lại (" + (n + 2) + "/" + (t + 1) + ")…"), i(n + 1)));
+  function i(e) {
+    return n.Gateway.login(1e4).then(function (o) {
+      return o || (e >= t || n.Gateway.biChan && n.Gateway.biChan() ? null : (n.LoadingScreen.show("Chưa nối được máy chủ — đang thử lại (" + (e + 2) + "/" + (t + 1) + ")…"), i(e + 1)));
     });
   }
   function o() {
-    return e.CloudSave.pull().then(function (n) {
-      e.CloudSave.start();
-      a(n.found);
+    return n.CloudSave.pull().then(function (e) {
+      n.CloudSave.start();
+      a(e.found);
     });
   }
-  function a(n) {
-    if (!e.__daXemTienTruyen && e.ScenePrologue && "undefined" != typeof location && /(?:^|[?&])tientruyen=1(?:&|$)/.test(location.search || "")) {
-      e.__daXemTienTruyen = !0;
-      e.LoadingScreen.hide();
-      return void e.Game.changeScene(e.ScenePrologue, { cfg: e.Utils.store.get(e.CONFIG.STORAGE_KEY, null) || e.DEFAULT_CHARACTER, onDone: function () {
-          a(n);
+  function a(e) {
+    if (!n.__daXemTienTruyen && n.ScenePrologue && "undefined" != typeof location && /(?:^|[?&])tientruyen=1(?:&|$)/.test(location.search || "")) {
+      n.__daXemTienTruyen = !0;
+      n.LoadingScreen.hide();
+      return void n.Game.changeScene(n.ScenePrologue, { cfg: n.Utils.store.get(n.CONFIG.STORAGE_KEY, null) || n.DEFAULT_CHARACTER, onDone: function () {
+          a(e);
         } }, !0);
     }
-    if (!n) {
-      e.LoadingScreen.hide();
-      e.Game.changeScene(e.SceneCharCreate, null, !0);
-      return void e.Assets.idle(function () {
-        e.Assets.ensureMap(e.SceneWorld.startMapData());
+    if (!e) {
+      n.LoadingScreen.hide();
+      n.Game.changeScene(n.SceneCharCreate, null, !0);
+      return void n.Assets.idle(function () {
+        n.Assets.ensureMap(n.SceneWorld.startMapData());
       });
     }
-    var t = e.SceneWorld.startMapData();
-    e.LoadingScreen.show();
-    var i = e.LoadingScreen.phase("Đang tới " + (t.name || "thế giới") + "…", .45, 1);
-    e.Assets.ensureMap(t, i).then(function () {
-      return e.SceneWorld.nuongNenDau(t);
+    var t = n.SceneWorld.startMapData();
+    n.LoadingScreen.show();
+    var i = n.LoadingScreen.phase("Đang tới " + (t.name || "thế giới") + "…", .45, 1);
+    n.Assets.ensureMap(t, i).then(function () {
+      return n.SceneWorld.nuongNenDau(t);
     }).then(function () {
-      e.LoadingScreen.hide();
-      e.Game.changeScene(e.SceneWorld, null, !0);
-    }).catch(function (n) {
-      console.error("[PNTT] Nạp bản đồ đầu hỏng:", n);
-      e.LoadingScreen.hide();
-      e.Game.changeScene(e.SceneWorld, null, !0);
+      n.LoadingScreen.hide();
+      n.Game.changeScene(n.SceneWorld, null, !0);
+    }).catch(function (e) {
+      console.error("[PNTT] Nạp bản đồ đầu hỏng:", e);
+      n.LoadingScreen.hide();
+      n.Game.changeScene(n.SceneWorld, null, !0);
     });
   }
   if (!(window.__PNTT_BROWSER_GUARDS__)) {
     window.__PNTT_BROWSER_GUARDS__ = !0;
-    document.addEventListener("contextmenu", function (e) {
-      if (!((function (e) {
-        if (!e) {
+    document.addEventListener("contextmenu", function (n) {
+      if (!((function (n) {
+        if (!n) {
           return !1;
         }
-        var n = String(e.tagName || "").toUpperCase();
-        return "INPUT" === n || "TEXTAREA" === n || "SELECT" === n || !0 === e.isContentEditable;
-      })(e.target))) {
-        e.preventDefault();
-        e.stopPropagation();
+        var e = String(n.tagName || "").toUpperCase();
+        return "INPUT" === e || "TEXTAREA" === e || "SELECT" === e || !0 === n.isContentEditable;
+      })(n.target))) {
+        n.preventDefault();
+        n.stopPropagation();
       }
     }, !0);
-    document.addEventListener("keydown", function (e) {
-      var n = String(e.key || "").toLowerCase();
-      var t = e.ctrlKey || e.metaKey;
-      if (("F12" === e.code || t && e.shiftKey && -1 !== ["i", "j", "c", "k"].indexOf(n) || t && e.altKey && -1 !== ["i", "j", "c"].indexOf(n) || t && "u" === n)) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
+    document.addEventListener("keydown", function (n) {
+      var e = String(n.key || "").toLowerCase();
+      var t = n.ctrlKey || n.metaKey;
+      if (("F12" === n.code || t && n.shiftKey && -1 !== ["i", "j", "c", "k"].indexOf(e) || t && n.altKey && -1 !== ["i", "j", "c"].indexOf(e) || t && "u" === e)) {
+        n.preventDefault();
+        n.stopPropagation();
+        n.stopImmediatePropagation();
       }
     }, !0);
   }
   if ("loading" === document.readyState) {
-    document.addEventListener("DOMContentLoaded", n);
+    document.addEventListener("DOMContentLoaded", e);
   }
   else {
-    n();
+    e();
   }
 }(window.PNTT);
