@@ -12,6 +12,7 @@
  *
  *  Sprite: 4 hàng theo hướng game (xuống, trái, phải, lên), khung 140x174 (độ phân giải gốc, vẽ thu 0.46), chân ở (70,148).
  *  Cột 0-7 đi, 8-15 đánh, 16-17 ngồi, 18 đứng yên. Cắt bằng tools/noel/cat.py.
+ *  Bé Hòa Bình (be_hoa_binh.png): khung 280x210, chân (140,196), cột 0-3 đi, 4-7 đánh, 8-10 ngồi, 11-13 đứng yên.
  *  Thêm mặt nạ khác: thêm một mục vào MAT_NA với ảnh cùng bố cục.
  * ==========================================================================*/
 (function (P) {
@@ -21,12 +22,13 @@
   var MAT_NA = MN.DS = {
     mat_na_noel: { hinh: "noel", anh: "assets/sprites/ngoai_trang/noel.png", fw: 140, fh: 174, ax: 70, ay: 148, tiLe: 0.46,
       di: [0, 8], danh: [8, 8], ngoi: [16, 2], dung: 18, fpsDi: 11, fpsDanh: 14, fpsNgoi: 1.1 },
-    // Liễu Như Yên: 8 khung đi, 8 khung đánh mỗi hướng; ngồi 2 khung; đứng 1 khung (cắt bằng tools/lieu_nhu_yen/cat.py)
-    mat_na_lieu_nhu_yen: { hinh: "lieu_nhu_yen", anh: "assets/sprites/ngoai_trang/lieu_nhu_yen.png", fw: 150, fh: 180, ax: 75, ay: 160, tiLe: 0.5,
-      di: [0, 8], danh: [8, 8], ngoi: [16, 2], dung: 18, fpsDi: 10, fpsDanh: 14, fpsNgoi: 1.1 }
+    // Bé Hòa Bình: 4 khung đi, 4 khung đánh mỗi hướng; ngồi 3 khung, đứng yên 3 khung (nhìn trước, dùng chung mọi hướng)
+    // cắt bằng tools/be_hoa_binh/cat.py
+    mat_na_be_hoa_binh: { hinh: "be_hoa_binh", anh: "assets/sprites/ngoai_trang/be_hoa_binh.png", fw: 280, fh: 210, ax: 140, ay: 196, tiLe: 0.34,
+      di: [0, 4], danh: [4, 4], ngoi: [8, 3], dung: [11, 3], fpsDi: 7, fpsDanh: 10, fpsNgoi: 1.2, fpsDung: 2.5 }
   };
-  var ICON_LNY = "assets/items/icon_mat_na_lieu_nhu_yen.png";
-  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON_LNY] = 8730; P.ASSET_MANIFEST[MAT_NA.mat_na_lieu_nhu_yen.anh] = 256920; }
+  var ICON_BHB = "assets/items/icon_mat_na_be_hoa_binh.png";
+  if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON_BHB] = 6345; P.ASSET_MANIFEST[MAT_NA.mat_na_be_hoa_binh.anh] = 336245; }
   var ICON = "assets/items/icon_mat_na_noel.png";
   if (P.ASSET_MANIFEST) { P.ASSET_MANIFEST[ICON] = 6881; P.ASSET_MANIFEST[MAT_NA.mat_na_noel.anh] = 286997; }
 
@@ -36,10 +38,10 @@
     ngoaiTrang: true, matNa: "noel", icon: "mat_na_noel",
     desc: "Đeo vào là hoá thành Ông Già Noel vác bao quà. Đi đâu, đánh gì, cưỡi thú hay ngồi thiền cũng vẫn là Ông Già Noel. Phi phong và thú cưỡi tạm ẩn, chỉ số vẫn giữ."
   };
-  P.ITEMS.mat_na_lieu_nhu_yen = {
-    id: "mat_na_lieu_nhu_yen", name: "Mặt Nạ Liễu Như Yên", type: "vat_pham", slot: "mat_na", grade: "Linh phẩm thượng",
-    ngoaiTrang: true, matNa: "lieu_nhu_yen", icon: "mat_na_lieu_nhu_yen",
-    desc: "Đeo vào là hoá thành Liễu Như Yên — nữ hiệp đội mão bạc hình trăng khuyết, áo xanh ngọc, bước đi gió cuốn theo chân. Đi, đánh, cưỡi thú hay ngồi thiền cũng vẫn là Liễu Như Yên. Phi phong và thú cưỡi tạm ẩn, chỉ số vẫn giữ."
+  P.ITEMS.mat_na_be_hoa_binh = {
+    id: "mat_na_be_hoa_binh", name: "Mặt Nạ Bé Hòa Bình", type: "vat_pham", slot: "mat_na", grade: "Linh phẩm thượng",
+    ngoaiTrang: true, matNa: "be_hoa_binh", icon: "mat_na_be_hoa_binh",
+    desc: "Đeo vào là hoá thành Bé Hòa Bình — cậu bé áo trắng quàng khăn đỏ, đi dép cói, mặt lúc nào cũng nghiêm. Đi, đánh, cưỡi thú hay ngồi thiền cũng vẫn là Bé Hòa Bình. Phi phong và thú cưỡi tạm ẩn, chỉ số vẫn giữ."
   };
   var INV = P.Inventory;
   if (INV && INV.slots && !INV.slots.some(function (s) { return s.id === "mat_na"; })) {
@@ -80,7 +82,7 @@
   function layAnh(m) {
     var a = anh[m.anh];
     if (a) return a.complete && a.naturalWidth ? a : null;
-    a = anh[m.anh] = new Image(); a.src = m.anh + "?v=8";
+    a = anh[m.anh] = new Image(); a.src = m.anh + "?v=9";
     return null;
   }
 
@@ -113,8 +115,13 @@
       var nua = Math.floor(soDanh / 2), dau = (col & 1) ? nua : 0;
       return m.danh[0] + dau + Math.floor(t * m.fpsDanh) % nua;
     }
-    if (col === 8 || col === 9 || col === 22 || col === 23) return m.ngoi[0] + (col & 1);    // ngồi thiền / ngã
-    return m.dung != null ? m.dung : m.di[0];                                                 // đứng yên (hai chân thẳng), bị đánh
+    if (col === 8 || col === 9 || col === 22 || col === 23) {                                // ngồi thiền / ngã
+      if (m.ngoi[1] > 2) return m.ngoi[0] + Math.floor(t * m.fpsNgoi) % m.ngoi[1];         // ngồi nhiều khung: chạy theo giờ
+      return m.ngoi[0] + (col & 1);
+    }
+    if (m.dung == null) return m.di[0];
+    if (typeof m.dung === "number") return m.dung;                                            // đứng yên (hai chân thẳng), bị đánh
+    return m.dung[0] + Math.floor(t * (m.fpsDung || 2)) % m.dung[1];                          // đứng yên nhiều khung
   }
   // (x,y) = góc trái trên ô nhân vật 32x64 như SpriteFactory; chân ở (x+16, y+62)
   function veNoel(ctx, m, dir, col, x, y, s, cfg) {

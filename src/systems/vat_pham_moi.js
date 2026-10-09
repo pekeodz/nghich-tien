@@ -12,10 +12,11 @@
   // (Huyết Ma Phủ đã có trong items.js bản mới của tác giả — không khai báo lại ở đây.)
 
   // Vật phẩm đã gỡ khỏi game: xoá khỏi túi đồ của người chơi cũ khi vào game
-  var DA_GO = ["bi_tich_nhan_kiem_hop_nhat"];
+  var DA_GO = ["bi_tich_nhan_kiem_hop_nhat", "mat_na_lieu_nhu_yen"];
   function donTui() {
     var INV = P.Inventory; if (!INV || !INV.bag) return false;
-    DA_GO.forEach(function (id) { if (id in INV.bag) delete INV.bag[id]; if (INV.bound && id in INV.bound) delete INV.bound[id]; });
+    DA_GO.forEach(function (id) { if (id in INV.bag) delete INV.bag[id]; if (INV.bound && id in INV.bound) delete INV.bound[id];
+      var eq = INV.equipment; if (eq) for (var k in eq) if (eq[k] === id) eq[k] = null; });
     return true;
   }
   var lan = 0, hen = setInterval(function () { donTui(); if (++lan > 60) clearInterval(hen); }, 1000);
