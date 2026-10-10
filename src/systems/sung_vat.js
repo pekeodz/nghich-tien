@@ -267,8 +267,23 @@
     var o = [[-1, -0.35], [1.1, 0.2], [-1.1, 0.2], [0.6, 1]][p.dir & 3] || [-1, 0];
     var tx = p.x + o[0] * CH.TAM_THEO, ty = p.y + 4 + o[1] * 14;
     var kc2 = Math.hypot(tx - pet.x, ty - pet.y);
-    var dangDi = kc2 > 10 && diToi(tx, ty, CH.TOC * (kc2 > 90 ? 1.9 : 1.1), dt);
-    if (dangDi) { pet.tt = "di"; pet.nghiTu = Math.max(pet.nghiTu, now - 1); return; }
+    // chủ đang đi (đo theo quãng chủ dịch chuyển mỗi khung) → sủng vật đi theo liền mạch, không giật về đứng yên
+    var bc = Math.hypot(p.x - (pet.chuX == null ? p.x : pet.chuX), p.y - (pet.chuY == null ? p.y : pet.chuY));
+    pet.chuX = p.x; pet.chuY = p.y;
+    var tocChu = dt > 0 ? bc / dt : 0;
+    if (tocChu > 15) pet.chuDiDen = now + 0.25;            // giữ trạng thái "đang đi" thêm chút cho khỏi chớp
+    var chuDi = now < (pet.chuDiDen || 0);
+    var theo = pet.tt === "di" ? (chuDi || kc2 > 3) : (kc2 > 16 || (chuDi && kc2 > 5));   // ngưỡng vào/ra khác nhau (khỏi bật tắt liên tục)
+    if (theo) {
+      // nhanh hơn chủ một chút để bắt kịp, gần tới chỗ thì chậm lại cho mềm
+      var toc = Math.max(CH.TOC * (kc2 > 90 ? 1.9 : 1), tocChu * 1.08);
+      if (kc2 < 24) toc = Math.max(tocChu, Math.min(toc, kc2 * 6));
+      diToi(tx, ty, toc, dt);
+      if (pet.tt !== "di") pet.tt = "di";
+      if (kc2 <= 3 && chuDi) pet.dir = p.dir & 3;
+      pet.nghiTu = Math.max(pet.nghiTu, now - 1);
+      return;
+    }
     if (p.state === "sit" || now - pet.nghiTu > 12) {
       if (pet.tt !== "nghi") { pet.tt = "nghi"; pet.t = 0; }
     } else { if (pet.tt !== "dung") pet.t = 0; pet.tt = "dung"; pet.dir = p.dir & 3; }
@@ -353,15 +368,14 @@
     var tt = pet.dangDanh ? "danh" : pet.tt, t = pet.dangDanh ? pet.dangDanh.t / pet.dangDanh.dai : pet.t;
     SV.veKhung(ctx, d, SV.khung(d, tt, t, pet.dir), pet.dir, x, y);
     // tên + cấp
-    // tên vẽ giống tên người chơi (chữ điểm ảnh FVF Fernando, viền đen), dòng dưới là cấp như dòng cảnh giới
+    // tên vẽ giống tên người chơi (chữ điểm ảnh FVF Fernando, viền đen); cấp chỉ xem trong bảng Sủng Vật
     var s = du().co[pet.id], PX = P.Pixel;
     var dinh = y - Math.round((d.cao || d.ay) * d.tiLe) + 6;   // sát trên chóp nón
     if (PX && PX.text && PX.MAP_FONT) {
-      PX.text(ctx, x, dinh - 9, String(d.ten).toLowerCase(), "#f0d27a", "#000000", "700 8.4px " + PX.MAP_FONT, "center");
-      PX.text(ctx, x, dinh, "Cấp " + (s ? s.lv : 1), "#cfe0b8", "#000000", "700 7px " + PX.MAP_FONT, "center");
+      PX.text(ctx, x, dinh, String(d.ten).toLowerCase(), "#f0d27a", "#000000", "700 8.4px " + PX.MAP_FONT, "center");
     } else {
       ctx.save(); ctx.font = "bold 9px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#f0d27a";
-      ctx.fillText(d.ten + " · " + (s ? s.lv : 1), x, dinh); ctx.restore();
+      ctx.fillText(d.ten, x, dinh); ctx.restore();
     }
     // biểu tượng kỹ năng bật lên trên đầu
     if (pet.knHien > 0) {
