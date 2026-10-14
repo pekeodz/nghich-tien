@@ -6,7 +6,17 @@
   "ngang": "frame_di_ngang_*.png",
   "len": "frame_di_len_*.png",
   "ngang_huong": "trai",
-  "ha": {}
+  "hover": 21,
+  "yen": {
+   "ngang": [
+    185,
+    90
+   ],
+   "len": [
+    75,
+    123
+   ]
+  }
  },
  "sat_lang": {
   "src": "nguon/sprite_sat_lang_hoa_thanh_di_chuyen/sprite_sat_lang_hoa_thanh_di_chuyen/",
@@ -16,8 +26,19 @@
   "len": "frame_di_len_*.png",
   "ngang_huong": "phai",
   "dung": "../../sprite_sat_lang_hoa_thanh_dung_yen/sprite_sat_lang_hoa_thanh_dung_yen/frame_dung_yen_*.png",
-  "ha": {
-   "0": 20
+  "hover": 23,
+  "yen": {
+   "ngang": [
+    175,
+    101
+   ],
+   "len": [
+    75,
+    106
+   ]
+  },
+  "k_hang": {
+   "0": 0.75
   }
  },
  "xe_ma": {
@@ -28,8 +49,19 @@
   "len": "frame_di_len_*.png",
   "ngang_huong": "phai",
   "dung": "../../sprite_ghost_rider_dung_yen/sprite_ghost_rider_dung_yen/frame_dung_yen_*.png",
-  "ha": {
-   "0": 4
+  "k_hang": {
+   "3": 0.7
+  },
+  "hover": 19,
+  "yen": {
+   "ngang": [
+    175,
+    107
+   ],
+   "len": [
+    105,
+    192
+   ]
   }
  },
  "hoang_lan": {
@@ -44,7 +76,17 @@
   "nhac": {
    "3": 74
   },
-  "ha": {}
+  "hover": 27,
+  "yen": {
+   "ngang": [
+    190,
+    141
+   ],
+   "len": [
+    75,
+    203
+   ]
+  }
  },
  "phuong_hoang": {
   "src": "nguon/sprite_di_chuyen_phuong_hoang/sprite_di_chuyen_phuong_hoang/",
@@ -57,6 +99,12 @@
   "loi": 10,
   "r": 28,
   "bay": 37,
-  "ha": {}
+  "hover": 37,
+  "yen": {
+   "ngang": [
+    205,
+    128
+   ]
+  }
  }
 }

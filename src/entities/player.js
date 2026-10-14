@@ -845,7 +845,7 @@
       var r = Math.floor(l * n.cols.length);
       return e.poseWalking ? x(t.name, r, n.cols[r], e.poseWalkT) : n.cols[r];
     }
-    var o = e.flying && i.flySeated(e.cfg) && !e.downed && "attack" !== e.state ? "sit" : e.flying && "walk" === e.state ? "idle" : e.state;
+    var o = e.flying && i.flySeated(e.cfg) && !e.downed && "attack" !== e.state ? (window.NTCuoiNgoi && window.NTCuoiNgoi(e) || "sit") : e.flying && "walk" === e.state ? "idle" : e.state;   // Nghịch Tiên: dáng ngồi cưỡi
     var s = a.ANIM[o] || a.ANIM.idle;
     if ("attack" === e.state) {
       var f = i.attackTime(e) * g;

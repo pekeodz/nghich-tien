@@ -100,7 +100,7 @@
   function s(i) {
     var r = "pose" === i.state && i.pose ? i.pose : i.state;
     if (i.flying && e.Player && e.Player.flySeated && e.Player.flySeated(i.cfg) && !i.downed && "attack" !== r && "hurt" !== r) {
-      r = "sit";
+      r = window.NTCuoiNgoi && window.NTCuoiNgoi(i) || "sit";   // Nghịch Tiên: dáng ngồi cưỡi
     }
     else {
       if (i.flying && "walk" === r) {

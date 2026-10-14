@@ -62,6 +62,87 @@ window.NTBayCao = function (v) {
     ctx.restore();
   };
 
+  /* ---------------- DÁNG NGỒI CƯỠI: hai chân hai bên thân thú ----------------
+   * Bản gốc khi cưỡi dùng dáng ngồi thiền (cột 8-9). Thú cưỡi có mount.ngoi = true dùng dáng "ride"
+   * (cột ảo 36-37): lấy khung đứng yên (cột 6-7) của chính nhân vật rồi bẻ phần chân từ hông (RIG.LEG_Y):
+   *   - quay ngang: đùi đưa ra trước, cẳng chân thả xuống (gối co) -> ngồi trên yên;
+   *   - quay xuống / quay lên: hai chân dạng sang hai bên -> ôm hai bên hông thú.
+   * Áo, giày, vũ khí đều lấy từ khung gốc nên đổi trang phục vẫn khớp. player.js / remote.js gọi window.NTCuoiNgoi. */
+  var CF = P.CONFIG;
+  if (CF && CF.ANIM && !CF.ANIM.ride) CF.ANIM.ride = { cols: [36, 37], fps: 1.1 };
+  window.NTCuoiNgoi = function (v) {
+    var cfg = v && v.cfg, it = cfg && cfg.fly && P.ITEMS && P.ITEMS[cfg.fly];
+    return it && it.fly && it.fly.art === "ngua" && it.mount && it.mount.ngoi ? "ride" : null;
+  };
+  var khoKhung = typeof WeakMap === "function" ? new WeakMap() : null, LE = 24;   // LE: lề thêm mỗi bên cho chân dạng ra
+  // dang = khoảng dạng chân (px) khi quay xuống / quay lên, tuỳ thú to hay nhỏ (mount.dang)
+  function khungCuoi(sh, dang) {
+    if (!sh || !sh.canvas || !khoKhung) return null;
+    dang = Math.max(0, Math.min(LE - 2, dang | 0));
+    var bo = khoKhung.get(sh.canvas);
+    if (bo && bo[dang]) return bo[dang];
+    var cols = sh.cols || 36, i;
+    if (sh.built) for (var r = 0; r < 4; r++) for (i = 6; i <= 7; i++) if (!sh.built[r * cols + i]) return null;   // khung đứng chưa dựng xong
+    var ss = sh.ss || 1, W = sh.fw * ss, H = sh.fh * ss, L = LE * ss, W2 = W + 2 * L;
+    var cv = document.createElement("canvas"); cv.width = W2 * 2; cv.height = H * 4;
+    var cx = cv.getContext("2d"), sx = sh.canvas.getContext ? sh.canvas.getContext("2d") : null;
+    if (!sx) return null;
+    var HONG = ((P.CharArt && P.CharArt.RIG && P.CharArt.RIG.LEG_Y) || 42), DUI = 7;
+    for (var d = 0; d < 4; d++) for (var j = 0; j < 2; j++) {
+      var src = sx.getImageData((6 + j) * W, d * H, W, H), out = cx.createImageData(W2, H);
+      var a = src.data, o = out.data, ngang = d === 1 || d === 2, f = d === 2 ? 1 : -1, giua = (sh.fw / 2) * ss;
+      for (var y = 0; y < H; y++) {
+        var yy = y / ss - HONG, dl = 0, dr = 0;
+        if (yy >= 0) {
+          if (ngang) { dl = dr = Math.round(f * Math.min(yy, 9) * 0.8 * ss); }          // đùi đưa ra trước rồi thả cẳng chân (gối co)
+          else { var k = Math.round(dang * Math.min(yy, DUI) / DUI * ss); dl = -k; dr = k; }   // đùi dạng ngang ra hai bên, cẳng chân thả dọc hông thú
+        }
+        for (var x = 0; x < W; x++) {
+          var si = (y * W + x) * 4; if (!a[si + 3]) continue;
+          var nx = x + L + (x < giua ? dl : dr); if (nx < 0 || nx >= W2) continue;
+          var di = (y * W2 + nx) * 4;
+          o[di] = a[si]; o[di + 1] = a[si + 1]; o[di + 2] = a[si + 2]; o[di + 3] = a[si + 3];
+        }
+      }
+      cx.putImageData(out, j * W2, d * H);
+    }
+    var c = { canvas: cv, fw: sh.fw, fh: sh.fh, ss: ss, W2: W2, H: H, le: LE };
+    if (!bo) { bo = {}; khoKhung.set(sh.canvas, bo); }
+    bo[dang] = c;
+    return c;
+  }
+  P.ThuCuoi.khungCuoi = khungCuoi;
+  var tamTrong = null;   // tấm trong suốt: chỉ để bản gốc vẽ vũ khí cầm tay (lớp overlay) đúng chỗ
+  function bocVeNguoi() {
+    var SF = P.SpriteFactory;
+    if (!SF || !SF.drawFrame) return false;
+    if (SF.drawFrame.__cuoi) return true;
+    var g = SF.drawFrame;
+    SF.drawFrame = function (ctx, sh, dir, col, x, y, sc, cfg) {
+      if (col === 36 || col === 37) {
+        var k = null;
+        try {
+          var it = cfg && cfg.fly && P.ITEMS[cfg.fly], m = it && it.mount;
+          k = khungCuoi(sh, m && m.dang || 0);
+        } catch (e) { k = null; }
+        if (k) {
+          sc = sc || 1;
+          ctx.drawImage(k.canvas, (col - 36) * k.W2, dir * k.H, k.W2, k.H, (x | 0) - k.le * sc, y | 0, (k.fw + 2 * k.le) * sc, k.fh * sc);
+          if (P.WeaponArt && P.WeaponArt.overlayOf && cfg && P.WeaponArt.overlayOf(cfg)) {
+            if (!tamTrong) { var t = document.createElement("canvas"); t.width = k.fw * k.ss * 2; t.height = k.fh * k.ss * 4; tamTrong = { canvas: t, fw: k.fw, fh: k.fh, cols: 2, rows: 4, ss: k.ss }; }
+            g.call(this, ctx, tamTrong, dir, col - 36, x, y, sc, cfg);
+          }
+          return;
+        }
+        col -= 28;                                   // chưa dựng được thì dùng dáng ngồi cũ (8-9)
+      }
+      return g.call(this, ctx, sh, dir, col, x, y, sc, cfg);
+    };
+    SF.drawFrame.__cuoi = true;
+    return true;
+  }
+  if (!bocVeNguoi()) { var lanVe = 0, henVe = setInterval(function () { if (bocVeNguoi() || ++lanVe > 300) clearInterval(henVe); }, 100); }
+
   /* ---------------- PHẨM THIÊN (cao nhất): viền vàng ----------------
    * Bản gốc chỉ có Phàm / Linh / Địa nên đồ "Thiên phẩm" bị tô như đồ thường. */
   (function () {
@@ -89,7 +170,7 @@ window.NTBayCao = function (v) {
     var m = o.mount;
     var mount = { path: SP, frameW: m.fw, frameH: m.fh, frames: m.di[0], idleFrames: m.dung[0] || 0, rows: 4,
                   fps: m.fps, idleFps: m.idleFps, drawW: m.fw, drawH: m.fh, anchorX: m.fw / 2, anchorY: m.gy - m.hover,
-                  hover: m.hover, di: m.di, dung: m.dung, cotKhung: cotKhung };
+                  hover: m.hover, di: m.di, dung: m.dung, cotKhung: cotKhung, ngoi: true, dang: m.dang || 0 };
     if (m.ha) {   // hàng nào được hạ xuống trong sheet thì người cưỡi nâng lên đúng chừng đó (chân thú vẫn chạm đất)
       for (var d = 0; d < 4; d++) if (m.ha[d]) { mount.hoverHuong = mount.hoverHuong || {}; mount.hoverHuong[d] = m.hover + m.ha[d]; }
     }
@@ -106,33 +187,33 @@ window.NTBayCao = function (v) {
   }
 
   themThu("trau_linh", {
-    name: "Trâu", grade: "Linh phẩm trung", realm: "luyen_khi_5", speed: 1.75, ver: "m5c", bytes: [36116, 6908],
+    name: "Trâu", grade: "Linh phẩm trung", realm: "luyen_khi_5", speed: 1.75, ver: "m5f", bytes: [36723, 6908],
     stat: { bpBonus: 20 },
-    mount: { fw: 110, fh: 85, gy: 82, ha: [0, 0, 0, 0], di: [5, 6, 6, 5], dung: [1, 1, 1, 1], fps: 8, idleFps: 1, hover: 21 },
+    mount: { fw: 122, fh: 113, gy: 82, ha: [0, 18, 18, 28], di: [5, 6, 6, 5], dung: [1, 1, 1, 1], fps: 8, idleFps: 1, hover: 15, dang: 16 },
     desc: "Trâu cày lưng rộng của vùng đồng bằng, khoác yên gấm đỏ. Đi không nhanh nhưng bền sức, gánh nổi người mặc giáp nặng. Cần Luyện Khí Tầng 5."
   });
   themThu("xe_ma_toc_do", {
-    name: "Xe Của Ma Tốc Độ", grade: "Địa phẩm thượng", realm: "truc_co_1", speed: 2.05, ver: "m5c", bytes: [89662, 8451],
+    name: "Xe Của Ma Tốc Độ", grade: "Địa phẩm thượng", realm: "truc_co_1", speed: 2.05, ver: "m5f", bytes: [77153, 8451],
     stat: { mpRegen: 2, spRegen: 1 }, lua: { sau: 30 },
-    mount: { fw: 126, fh: 124, gy: 115, ha: [4, 0, 0, 0], di: [9, 6, 6, 8], dung: [4, 1, 1, 1], fps: 14, idleFps: 6, hover: 19 },
+    mount: { fw: 142, fh: 100, gy: 81, ha: [6, 0, 0, 16], di: [9, 6, 6, 8], dung: [4, 1, 1, 1], fps: 14, idleFps: 6, hover: 17, dang: 11 },
     desc: "Cỗ xe sắt hai bánh của quỷ tốc độ, đầu lâu làm đèn, bánh xe cháy lửa địa ngục. Lao qua đâu là để lại vệt lửa cháy trên mặt đất. Cần Trúc Cơ."
   });
   themThu("sat_lang_hoa_thanh", {
-    name: "Sát Lang Hỏa Thánh", grade: "Thiên phẩm thượng", realm: "truc_co_1", speed: 2.25, ver: "m5c", bytes: [115503, 7524],
+    name: "Sát Lang Hỏa Thánh", grade: "Thiên phẩm thượng", realm: "truc_co_1", speed: 2.25, ver: "m5f", bytes: [96295, 7774],
     stat: { mpRegen: 4, bpBonus: 30 }, lua: { sau: 34 },
-    mount: { fw: 128, fh: 124, gy: 99, ha: [20, 0, 0, 0], di: [10, 9, 9, 10], dung: [7, 1, 1, 1], fps: 12, idleFps: 5, hover: 23 },
+    mount: { fw: 132, fh: 128, gy: 94, ha: [0, 2, 2, 31], di: [10, 9, 9, 10], dung: [7, 1, 1, 1], fps: 12, idleFps: 5, hover: 23, dang: 13 },
     desc: "Thánh thú sói lửa của Hỏa Ngục, lông đen như mực, bờm và đuôi cháy rực không bao giờ tắt. Chạy đến đâu lửa cháy theo vết chân đến đó. Thú cưỡi hàng đầu, cần Trúc Cơ."
   });
   themThu("hoang_lan", {
-    name: "Hoàng Lân", grade: "Thiên phẩm thượng", realm: "truc_co_1", speed: 2.25, ver: "m5c", bytes: [118054, 5701],
+    name: "Hoàng Lân", grade: "Thiên phẩm thượng", realm: "truc_co_1", speed: 2.25, ver: "m5f", bytes: [120271, 5701],
     stat: { mpRegen: 4, bpBonus: 30 }, lua: { sau: 36 },
-    mount: { fw: 118, fh: 136, gy: 105, ha: [0, 0, 0, 0], di: [12, 9, 9, 9], dung: [8, 1, 1, 1], fps: 12, idleFps: 6, hover: 27 },
+    mount: { fw: 152, fh: 144, gy: 105, ha: [8, 0, 0, 8], di: [12, 9, 9, 9], dung: [8, 1, 1, 1], fps: 12, idleFps: 6, hover: 19, dang: 15 },
     desc: "Kỳ lân vảy vàng mang huyết mạch Hoàng Long, sừng tím, bờm đỏ, chóp đuôi là ngọn lửa bất diệt. Ai cưỡi được Hoàng Lân là người được trời đất chọn. Thú cưỡi hàng đầu, cần Trúc Cơ."
   });
   themThu("phuong_hoang_hoa", {
-    name: "Phượng Hoàng", grade: "Thiên phẩm thượng", realm: "truc_co_1", speed: 2.3, ver: "m5c", bytes: [95213, 5233],
+    name: "Phượng Hoàng", grade: "Thiên phẩm thượng", realm: "truc_co_1", speed: 2.3, ver: "m5f", bytes: [97329, 5233],
     stat: { mpRegen: 5, bpBonus: 25 },
-    mount: { fw: 132, fh: 115, gy: 93, ha: [0, 0, 0, 0], di: [9, 8, 8, 9], dung: [0, 0, 0, 0], fps: 12, idleFps: 8, hover: 37 },
+    mount: { fw: 190, fh: 131, gy: 93, ha: [13, 0, 0, 16], di: [9, 8, 8, 9], dung: [0, 0, 0, 0], fps: 12, idleFps: 8, hover: 21, dang: 7 },
     desc: "Thần điểu lửa tắm mình trong lửa mà tái sinh, mỗi lần vỗ cánh rơi xuống một trận mưa tàn lửa. Cưỡi Phượng Hoàng là bay giữa không trung, chẳng con thú nào đuổi kịp. Thú cưỡi hàng đầu, cần Trúc Cơ."
   });
   P.ThuCuoi.MOI = MOI;
