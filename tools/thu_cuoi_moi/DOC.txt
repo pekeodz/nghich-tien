@@ -1,0 +1,9 @@
+Ghép sprite 5 thú cưỡi mới (Trâu, Xe Của Ma Tốc Độ, Sát Lang Hỏa Thánh, Hoàng Lân, Phượng Hoàng).
+1. Giải nén các file rar ảnh lẻ vào thư mục nguon/ cạnh file này (giữ nguyên tên thư mục trong rar).
+2. Chạy:  python3 ghep.py cau_hinh.json <ten> <thu_muc_ra>   (ten: trau, xe_ma, sat_lang, hoang_lan, phuong_hoang)
+   -> sheet.png (4 hàng: xuống, trái, phải, lên; mỗi hàng [khung đi][khung đứng]), icon.png, meta.json
+3. Chép sheet.png thành assets/sprites/mount/<id>.png, icon.png thành assets/items/icon_<id>.png,
+   rồi chép fw/fh/gy/ha/di/dung trong meta.json vào khối themThu(...) trong src/systems/thu_cuoi.js
+   (bytes = dung lượng 2 file ảnh, đổi ver để trình duyệt tải ảnh mới).
+Thông số cấu hình: k = tỉ lệ thu nhỏ; k_dung = tỉ lệ riêng cho ảnh đứng yên; ha = hạ hàng xuống để
+nâng người cưỡi khi quay mặt xuống; nhac = nâng mốc chân ở hàng lên (đuôi thòng xuống); bay = thú bay.

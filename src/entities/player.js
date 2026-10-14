@@ -3257,6 +3257,9 @@
       else {
         u = n && 1 === n.dir;
       }
+      if (o.cotKhung) {
+        f = o.cotKhung(o, n, d, h);   // Nghịch Tiên: số khung đi / đứng riêng từng hướng
+      }
       a.save();
       a.translate(t, i);
       if (u) {

@@ -1,0 +1,62 @@
+{
+ "trau": {
+  "src": "nguon/sprite_pet_trau_di_chuyen/sprite_pet_trau_di_chuyen/",
+  "k": 0.31,
+  "xuong": "frame_di_xuong_*.png",
+  "ngang": "frame_di_ngang_*.png",
+  "len": "frame_di_len_*.png",
+  "ngang_huong": "trai",
+  "ha": {}
+ },
+ "sat_lang": {
+  "src": "nguon/sprite_sat_lang_hoa_thanh_di_chuyen/sprite_sat_lang_hoa_thanh_di_chuyen/",
+  "k": 0.36,
+  "xuong": "frame_di_xuong_*.png",
+  "ngang": "frame_di_chuyen_ngang_*.png",
+  "len": "frame_di_len_*.png",
+  "ngang_huong": "phai",
+  "dung": "../../sprite_sat_lang_hoa_thanh_dung_yen/sprite_sat_lang_hoa_thanh_dung_yen/frame_dung_yen_*.png",
+  "ha": {
+   "0": 20
+  }
+ },
+ "xe_ma": {
+  "src": "nguon/sprite_ghost_rider_di_chuyen/sprite_ghost_rider_di_chuyen/",
+  "k": 0.35,
+  "xuong": "frame_di_xuong_*.png",
+  "ngang": "frame_di_ngang_*.png",
+  "len": "frame_di_len_*.png",
+  "ngang_huong": "phai",
+  "dung": "../../sprite_ghost_rider_dung_yen/sprite_ghost_rider_dung_yen/frame_dung_yen_*.png",
+  "ha": {
+   "0": 4
+  }
+ },
+ "hoang_lan": {
+  "src": "nguon/sprite_hoang_lan_di_chuyen/sprite_hoang_lan_di_chuyen/",
+  "k": 0.38,
+  "xuong": "frame_di_xuong_*.png",
+  "ngang": "frame_di_ngang_*.png",
+  "len": "frame_di_len_*.png",
+  "ngang_huong": "phai",
+  "dung": "../../sprite_hoang_lan_dung_yen/sprite_hoang_lan_dung_yen/frame_dung_yen_*.png",
+  "k_dung": 0.217,
+  "nhac": {
+   "3": 74
+  },
+  "ha": {}
+ },
+ "phuong_hoang": {
+  "src": "nguon/sprite_di_chuyen_phuong_hoang/sprite_di_chuyen_phuong_hoang/",
+  "k": 0.42,
+  "xuong": "frame_di_xuong_*.png",
+  "ngang": "frame_di_ngang_*.png",
+  "len": "frame_di_len_*.png",
+  "ngang_huong": "phai",
+  "dung_la_di": true,
+  "loi": 10,
+  "r": 28,
+  "bay": 37,
+  "ha": {}
+ }
+}

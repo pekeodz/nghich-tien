@@ -24,7 +24,6 @@ PNTT.LootRates = {
   HUYET_SAC_BOSS_CHANCE: 0.02, // Tử Tinh Dương Thần Bội từ boss Huyết Sắc
   XICH_PHI_KIEM_CHANCE: 0.005, // Xích Phi Kiếm từ boss Huyết Sắc
   LUC_PHI_KIEM_CHANCE: 0.005,  // Lục Phi Kiếm từ Hoàng Cửu Báo
-  KY_LAN_CHANCE: 0.02,         // thú cưỡi Xích Diễm Kỳ Lân từ Thần Thú Xích Long (thu_cuoi.js)
 
   // --- Yêu Đan (bản gốc do máy chủ cấp, bản offline trước đây không bao giờ rơi) ---
   YEU_DAN_BOSS_CHANCE: 1.0,    // boss: chắc chắn (đúng như Bách Khoa trong game ghi)
