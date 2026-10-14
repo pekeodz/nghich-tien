@@ -370,9 +370,18 @@
     // tên + cấp
     // tên vẽ giống tên người chơi (chữ điểm ảnh FVF Fernando, viền đen); cấp chỉ xem trong bảng Sủng Vật
     var s = du().co[pet.id], PX = P.Pixel;
-    var dinh = y - Math.round((d.cao || d.ay) * d.tiLe) + 6;   // sát trên chóp nón
+    var dinh = y - Math.round((d.cao || d.ay) * d.tiLe) + 4;   // ngay trên chóp nón
     if (PX && PX.text && PX.MAP_FONT) {
-      PX.text(ctx, x, dinh, String(d.ten).toLowerCase(), "#f0d27a", "#000000", "700 8.4px " + PX.MAP_FONT, "center");
+      // chữ tên đi qua lớp chữ nổi của game (vẽ sau cùng, không theo phép dời của ctx lúc này)
+      // → đổi sẵn toạ độ theo phép biến đổi hiện tại để tên luôn nằm ngay trên đầu sủng vật
+      var tx = x, ty = dinh;
+      var ov = PX.textWidthFor && PX.mapTextWidth && PX.textWidthFor(ctx, "a") === PX.mapTextWidth("a");   // ctx này dùng lớp chữ nổi
+      if (ov && ctx.getTransform && PX.overlayScale) {
+        // ctx gốc của thế giới là scale(GFX); phần dời thêm (rung màn hình, làm tròn camera…) đổi về cùng đơn vị
+        var m = ctx.getTransform(), k = (P.CONFIG && P.CONFIG.GFX) || 1;
+        tx = (m.a * x + m.c * dinh + m.e) / k; ty = (m.b * x + m.d * dinh + m.f) / k;
+      }
+      PX.text(ctx, tx, ty, String(d.ten).toLowerCase(), "#f0d27a", "#000000", "700 8.4px " + PX.MAP_FONT, "center");
     } else {
       ctx.save(); ctx.font = "bold 9px sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#f0d27a";
       ctx.fillText(d.ten, x, dinh); ctx.restore();
